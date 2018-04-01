@@ -30,6 +30,7 @@ class Hat {
         answeredWords.add(currentWord!!)
 
         currentWord = null
+        getWord()
     }
 
     fun returnWord(word: Word) = wordsQueue.add(word)

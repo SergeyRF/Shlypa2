@@ -33,6 +33,8 @@ class HatTests {
 
     @Test fun answerCountTest() {
         hat.getWord()
+        assertEquals(0, hat.answeredWords.size)
+
         for(i in 0..4) {
             println("Test case num $i")
             hat.answer(true)
