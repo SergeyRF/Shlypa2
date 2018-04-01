@@ -3,4 +3,7 @@
     <string name="play">Го катать</string>
     <string name="rules">Rules</string>
     <string name="qwest">Вопрос?</string>
+    <string name="time">Время на ход </string>
+    <string name="words">Колличество слов игрока</string>
+    <string name="comadN">Колличество команд     </string>
 </resources>

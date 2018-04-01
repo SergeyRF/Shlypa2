@@ -11,6 +11,13 @@ object Game {
     private val teams = mutableListOf<Team>()
 
     private val allWords = mutableListOf<Word>()
+    var time = 30
+    var command =2
+    var words = 5
+    var minimalComma = 2
+
+    fun maxiCommand():Int = players.size/2
+
 
     fun addPlayer(player: Player): Boolean {
         return if(players.containsKey(player.name)) {
@@ -20,6 +27,7 @@ object Game {
             true
         }
     }
+
 
     fun removePlayer(player: Player) {
         players.remove(player.name)

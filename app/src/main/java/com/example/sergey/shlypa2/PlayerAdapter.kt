@@ -11,26 +11,24 @@ import android.widget.TextView
  */
 class PlayerAdapter():RecyclerView.Adapter<Holder>(){
 
-    var player = mutableListOf<Player>()
+    var players: List<Player>?= null
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        holder.bind(player[position].name)
+        val player : Player = players!![position]
+        holder.bind(player.name)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): Holder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         val view: View = LayoutInflater.from(parent?.context).inflate(R.layout.holder_player,parent,false)
         return Holder(view)
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        return player.size
+        return if(players == null) 0 else players!!.size
     }
 
-    fun setPeople(data : MutableList<Player>){
-        player = data
+    fun setPeople(data : List<Player>?){
+        players = data
         notifyDataSetChanged()}
 
 }
