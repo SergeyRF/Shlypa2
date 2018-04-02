@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".PlayersActivity" />
         <activity android:name=".StateActivity" />
-        <activity android:name=".CommandActivity"></activity>
+        <activity android:name=".CommandActivity" />
+        <activity android:name=".TeemActivity"></activity>
     </application>
 
 </manifest>

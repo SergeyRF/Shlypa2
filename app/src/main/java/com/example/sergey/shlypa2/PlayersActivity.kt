@@ -31,7 +31,7 @@ class PlayersActivity : AppCompatActivity() {
         playerRv.adapter=adapter
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         viewModel.getPlayersLiveData().observe(this, Observer { list -> onPlayersChanged(list) });
-        for (i in 0..2){
+        for (i in 0..10){
             viewModel.addPlayer(Player("FAPPPP$i"))
         }
 

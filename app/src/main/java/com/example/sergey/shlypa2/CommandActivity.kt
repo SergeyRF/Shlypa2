@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -27,6 +28,10 @@ class CommandActivity : AppCompatActivity() {
                  Toast.LENGTH_LONG).show()
          minusButton.setOnClickListener(View.OnClickListener { stateVM.getMinusCommLD()      })
          plusButton.setOnClickListener(View.OnClickListener { stateVM.getPlusCommLD() })
+        val button =findViewById<Button>(R.id.cancel_command)
+        button.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this, TeemActivity::class.java))
+        })
     }
 
     private fun onCommands(i:Int?){ commands.text = i.toString()}
