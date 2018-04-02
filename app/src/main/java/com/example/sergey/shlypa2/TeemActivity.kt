@@ -23,12 +23,9 @@ class TeemActivity : AppCompatActivity() {
         adapterTeam = TeemAdapter()
         teemRv.layoutManager=LinearLayoutManager(this)
         teemRv.adapter = adapterTeam
-        //teamVM = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
-        //teamVM.createTeams()
+        teamVM = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
+        teamVM.getTeamsLiveData().observe(this, Observer { list -> setTeemRv(list) })
 
-        //teamVM.getTeamsLiveData().observe(this, Observer { list -> setTeemRv(list) })
-        Game.createTeams(Game.command)
-        adapterTeam.setTeem(Game.getTeams())
         Toast.makeText(this, Game.getTeams().size.toString(), Toast.LENGTH_LONG).show()
         val button = findViewById<Button>(R.id.cancel_teem)
         button.setOnClickListener(View.OnClickListener {

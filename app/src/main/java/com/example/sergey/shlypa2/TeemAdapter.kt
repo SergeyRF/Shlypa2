@@ -34,19 +34,19 @@ class TeemAdapter(): RecyclerView.Adapter<Holder1>(){
 }
 
 class Holder1(view:View):RecyclerView.ViewHolder(view){
-    val teemName: TextView = view.findViewById(R.id.teem_name)
-    val teemScores:TextView = view.findViewById(R.id.teem_scores)
-    val listPlayers:TextView = view.findViewById(R.id.list_playrs)
+    val teemName   = view.findViewById<TextView>(R.id.teem_name)
+    val teemScores = view.findViewById<TextView>(R.id.teem_scores)
+    val listPlayers= view.findViewById<TextView>(R.id.list_players)
 
     fun bind(teem:Team){
         teemName.text=teem.name
         teemScores.text = teem.scores.toString()
-        listPlayers.text = "Oleg"
-       /* var player:StringBuffer = StringBuffer("")
+
+        var player = StringBuffer("")
         for (i in 0 until teem.players.size-1){
-            player.append(teem.players[i].name + ", ")
+            player.append(teem.players[i].name + " ")
         }
-        listPlayers.text =player*/
+        listPlayers.text =player
 
     }
 }
