@@ -21,17 +21,12 @@ class CommandActivity : AppCompatActivity() {
         val plusButton = findViewById<Button>(R.id.plusCommand)
         val commands = findViewById<TextView>(R.id.commands)
         stateVM = ViewModelProviders.of(this).get(StateViewModel::class.java)
-       // stateVM.getCommandLD().observe(this, Observer { Int-> onCommands(Int) });
-        //stateVM.setCommandLD(stateVM.getCommandMaxLD().value!!.toInt())
-        stateVM.updateStateData()
-         Toast.makeText(this, "${stateVM.getCommandMinlLD().value}...${stateVM.getCommandMaxLD().value}",
+        stateVM.getCommandLD().observe(this, Observer { Int-> onCommands(Int) });
+
+         Toast.makeText(this, "${stateVM.getCommandMinLD().value}...${stateVM.getCommandMaxLD().value}",
                  Toast.LENGTH_LONG).show()
-         minusButton.setOnClickListener(View.OnClickListener {
-             if (commands.text.toString().toInt() == stateVM.getCommandMinlLD().value){
-                 Toast.makeText(this,"No",Toast.LENGTH_LONG).show()
-             }
-             else stateVM.setCommandLD(stateVM.getCommandLD().value!!.toInt()-1)
-         })
+         minusButton.setOnClickListener(View.OnClickListener { stateVM.getMinusCommLD()      })
+         plusButton.setOnClickListener(View.OnClickListener { stateVM.getPlusCommLD() })
     }
 
     private fun onCommands(i:Int?){ commands.text = i.toString()}

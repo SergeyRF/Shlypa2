@@ -39,7 +39,10 @@ class PlayersActivity : AppCompatActivity() {
             if(editName.text.isNotEmpty()){
                 if(viewModel.addPlayer(Player(editName.text.toString()))){
                 }
-                else Toast.makeText(this,"Bje bilo eto imyachko",Toast.LENGTH_LONG).show()
+                else {
+                    Toast.makeText(this,"Bje bilo eto imyachko",Toast.LENGTH_LONG).show()
+                }
+                editName.setText("")
             }
         else Toast.makeText(this,"Pishi Imya",Toast.LENGTH_LONG).show() })
 

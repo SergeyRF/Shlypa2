@@ -9,7 +9,7 @@ import android.arch.lifecycle.ViewModel
  */
 class StateViewModel: ViewModel(){
     private val timeLiveData = MutableLiveData<Int>()
-    private val commandLivaData = MutableLiveData<Int>()
+    private val commandLiveData = MutableLiveData<Int>()
     private val wordsLiveData= MutableLiveData<Int>()
     private val teamCount = MutableLiveData<Int>()
     private val maxCount = MutableLiveData<Int>()
@@ -19,25 +19,35 @@ class StateViewModel: ViewModel(){
         Game.time = i
         updateStateData()
     }
-    fun getCommandLD():LiveData<Int> = commandLivaData
-    fun setCommandLD(i:Int){
-        Game.command = i
+    fun getCommandLD():LiveData<Int> {
+        updateStateData()
+        return commandLiveData
+    }
+    fun getMinusCommLD(){
+        if(Game.command!= Game.minimalComma){
+            Game.command--
+        }
         updateStateData()
     }
-
-    fun getCommandMinlLD():LiveData<Int> = teamCount
-
+    fun getPlusCommLD(){
+        if (Game.command!=Game.maxiCommand()){
+            Game.command++
+        }
+        updateStateData()
+    }
+    fun getCommandMinLD():LiveData<Int> = teamCount
+    fun getCommandMaxLD():LiveData<Int> = maxCount
     fun getWorldsLD():LiveData<Int> = wordsLiveData
     fun setWorlds(i:Int){
         Game.words= i
         updateStateData()
     }
-    fun getCommandMaxLD():LiveData<Int> = maxCount
+
 
 
     fun updateStateData(){
         timeLiveData.value = Game.time
-        commandLivaData.value = Game.command
+        commandLiveData.value = Game.command
         wordsLiveData.value = Game.words
         teamCount.value = Game.minimalComma
         maxCount.value = Game.maxiCommand()
