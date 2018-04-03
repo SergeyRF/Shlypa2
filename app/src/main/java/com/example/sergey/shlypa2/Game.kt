@@ -12,11 +12,12 @@ object Game {
     private var currentTeamPosition = 0
 
     private val allWords = mutableListOf<Word>()
-
-    var time = 30
+    var time = 60
     var command =2
     var words = 5
     var minimalComma = 2
+    val miniTime = 30
+    val miniWords = 3
 
     fun maxiCommand():Int = players.size/2
 

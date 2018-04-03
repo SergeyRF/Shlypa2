@@ -26,7 +26,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="-"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         />
 
     <TextView
@@ -37,7 +37,7 @@
         app:layout_constraintRight_toLeftOf="@id/plusCommand"
         app:layout_constraintLeft_toRightOf="@+id/minusCommand"
         app:layout_constraintTop_toBottomOf="@+id/stateCommands"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         />
     <Button
         android:layout_width= "wrap_content"
@@ -48,14 +48,101 @@
         app:layout_constraintLeft_toRightOf="@id/commands"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stateCommands"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
+
+
+    <TextView
+        android:layout_width= "match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stateTime"
+        android:textSize="40dp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/timeN"
+        app:layout_constraintTop_toBottomOf="@id/plusCommand"/>
+
+
+    <Button
+        android:layout_width= "wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/minusTime"
+        app:layout_constraintTop_toBottomOf="@+id/stateTime"
+        app:layout_constraintRight_toLeftOf="@+id/time"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="-"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:layout_width= "wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/time"
+        app:layout_constraintRight_toLeftOf="@id/plusTime"
+        app:layout_constraintLeft_toRightOf="@+id/minusTime"
+        app:layout_constraintTop_toBottomOf="@+id/stateTime"
+
+        />
+    <Button
+        android:layout_width= "wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/plusTime"
+        android:textSize="20dp"
+        android:text="+"
+        app:layout_constraintLeft_toRightOf="@id/time"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stateTime"
+        />
+
+    <TextView
+        android:layout_width= "match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/stateWord"
+        android:textSize="40dp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/wordN"
+        app:layout_constraintTop_toBottomOf="@id/plusTime"/>
+
+
+    <Button
+        android:layout_width= "wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/minusWord"
+        app:layout_constraintTop_toBottomOf="@+id/stateWord"
+        app:layout_constraintRight_toLeftOf="@+id/word"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="-"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:layout_width= "wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/word"
+        app:layout_constraintRight_toLeftOf="@id/plusWord"
+        app:layout_constraintLeft_toRightOf="@+id/minusWord"
+        app:layout_constraintTop_toBottomOf="@+id/stateWord"
+
+        />
+    <Button
+        android:layout_width= "wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/plusWord"
+        android:textSize="20dp"
+        android:text="+"
+        app:layout_constraintLeft_toRightOf="@id/word"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stateWord"
+        />
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cancel_command"
-        app:layout_constraintTop_toBottomOf="@+id/minusCommand"
+        app:layout_constraintTop_toBottomOf="@+id/plusWord"
         android:text="@string/play"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

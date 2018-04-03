@@ -29,7 +29,7 @@ class TeemActivity : AppCompatActivity() {
         Toast.makeText(this, Game.getTeams().size.toString(), Toast.LENGTH_LONG).show()
         val button = findViewById<Button>(R.id.cancel_teem)
         button.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(this, FirstActivity::class.java))
+            startActivity(Intent(this, WordsInActivity::class.java))
         })
     }
 

@@ -19,7 +19,8 @@
         <activity android:name=".PlayersActivity" />
         <activity android:name=".StateActivity" />
         <activity android:name=".CommandActivity" />
-        <activity android:name=".TeemActivity"></activity>
+        <activity android:name=".TeemActivity" />
+        <activity android:name=".WordsInActivity"></activity>
     </application>
 
 </manifest>

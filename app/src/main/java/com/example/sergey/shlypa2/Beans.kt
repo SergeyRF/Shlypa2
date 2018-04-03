@@ -31,7 +31,7 @@ class Team(var name: String) {
     }
 }
 
-class Word(word: String) {
+class Word(var word: String) {
     var play: Boolean = false
     var right: Boolean = false
 
