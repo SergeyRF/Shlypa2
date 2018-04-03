@@ -7,4 +7,7 @@
     <string name="words">Колличество слов игрока</string>
     <string name="comadN">Колличество команд     </string>
     <string name="Teem">Комманды</string>
+    <string name="WordsIn">Вводит слова игрок</string>
+    <string name="timeN">Время хода</string>
+    <string name="wordN">Сколько слов</string>
 </resources>

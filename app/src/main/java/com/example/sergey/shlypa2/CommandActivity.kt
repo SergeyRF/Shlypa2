@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -14,25 +15,46 @@ import kotlinx.android.synthetic.main.activity_command.*
 class CommandActivity : AppCompatActivity() {
 
     lateinit var stateVM :StateViewModel
+    lateinit var time:TextView
+    lateinit var words:TextView
+    lateinit var commands:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_command)
-
+        time = findViewById<TextView>(R.id.time)
+        val timePlus = findViewById<Button>(R.id.plusTime)
+        val timeMinus =findViewById<Button>(R.id.minusTime)
+        words=findViewById<TextView>(R.id.word)
+        val wordMinus =findViewById<Button>(R.id.minusWord)
+        val wordPlus = findViewById<Button>(R.id.plusWord)
         val minusButton = findViewById<Button>(R.id.minusCommand)
         val plusButton = findViewById<Button>(R.id.plusCommand)
-        val commands = findViewById<TextView>(R.id.commands)
+        commands = findViewById<TextView>(R.id.commands)
         stateVM = ViewModelProviders.of(this).get(StateViewModel::class.java)
         stateVM.getCommandLD().observe(this, Observer { Int-> onCommands(Int) });
-
+        stateVM.getWordsLD().observe(this, Observer { Int->onWord(Int) })
+        stateVM.getTimeLD().observe(this, Observer { Int->onTime(Int) })
          Toast.makeText(this, "${stateVM.getCommandMinLD().value}...${stateVM.getCommandMaxLD().value}",
                  Toast.LENGTH_LONG).show()
-         minusButton.setOnClickListener(View.OnClickListener { stateVM.getMinusCommLD()      })
+
+         minusButton.setOnClickListener(View.OnClickListener { stateVM.getMinusCommLD()})
          plusButton.setOnClickListener(View.OnClickListener { stateVM.getPlusCommLD() })
+
+        timeMinus.setOnClickListener(View.OnClickListener { stateVM.minusTimeLD() })
+        timePlus.setOnClickListener(View.OnClickListener { stateVM.plusTimeLD() })
+        wordMinus.setOnClickListener(View.OnClickListener { stateVM.minusWord() })
+        wordPlus.setOnClickListener(View.OnClickListener { stateVM.plusWord() })
         val button =findViewById<Button>(R.id.cancel_command)
         button.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this, TeemActivity::class.java))
         })
+
+
     }
 
-    private fun onCommands(i:Int?){ commands.text = i.toString()}
+    private fun onCommands(i:Int?){
+        Log.d("EGEG","onCommand $i")
+        commands.text = i.toString()}
+    private fun onTime(i:Int?){time.text = i.toString()}
+    private fun onWord(i:Int?){words.text = i.toString()}
 }
