@@ -25,9 +25,12 @@ class Hat {
        return currentWord
     }
 
-    fun answer(correct : Boolean) {
-        currentWord?.right = correct
-        answeredWords.add(currentWord!!)
+    fun answer(correct : Boolean, playerId : Int) {
+        if(currentWord != null) {
+            currentWord?.right = correct
+            currentWord?.answeredBy = playerId
+            answeredWords.add(currentWord!!)
+        }
 
         currentWord = null
         getWord()

@@ -9,8 +9,10 @@ object Game {
     private val players = mutableMapOf<String, Player>()
 
     private val teams = mutableListOf<Team>()
+    private var currentTeamPosition = 0
 
     private val allWords = mutableListOf<Word>()
+
     var time = 30
     var command =2
     var words = 5
@@ -27,7 +29,6 @@ object Game {
             true
         }
     }
-
 
     fun removePlayer(player: Player) {
         players.remove(player.name)
@@ -57,6 +58,15 @@ object Game {
     fun addWord(word: Word) = allWords.add(word)
     fun getTeams(): List<Team> = teams
     fun getWords(): List<Word> = allWords
+
+
+    fun getCurrentTeam() : Team = teams[currentTeamPosition]
+
+    fun nextTeam() : Team {
+        currentTeamPosition++
+        if(currentTeamPosition >= teams.size) currentTeamPosition = 0
+        return teams[currentTeamPosition]
+    }
 
     fun clear() {
         allWords.clear()

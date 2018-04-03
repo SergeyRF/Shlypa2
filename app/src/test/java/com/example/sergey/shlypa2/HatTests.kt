@@ -22,7 +22,7 @@ class HatTests {
         var word : Word? = hat.getWord()
         var count = 1
         while (true) {
-            hat.answer(false)
+            hat.answer(false, 0)
             word = hat.getWord()
             if(word == null) break
             else count++
@@ -37,7 +37,7 @@ class HatTests {
 
         for(i in 0..4) {
             println("Test case num $i")
-            hat.answer(true)
+            hat.answer(true, 0)
         }
 
         assertEquals(5, hat.answeredWords.size)
