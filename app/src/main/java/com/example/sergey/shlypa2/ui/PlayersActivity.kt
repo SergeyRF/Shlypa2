@@ -32,7 +32,10 @@ class PlayersActivity : AppCompatActivity() {
         val playerRv = findViewById<RecyclerView>(R.id.list_playrs)
         val buttonNext = findViewById<Button>(R.id.goNext)
         adapter = PlayerAdapter()
-        playerRv.layoutManager = LinearLayoutManager(this)
+        val linLayout = LinearLayoutManager(this)
+        linLayout.stackFromEnd = true
+        linLayout.reverseLayout = true
+        playerRv.layoutManager = linLayout
         playerRv.adapter=adapter
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         viewModel.getPlayersLiveData().observe(this, Observer { list -> onPlayersChanged(list) });
