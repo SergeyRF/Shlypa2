@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayersActivity"></activity>
+        <activity android:name=".PlayersActivity" />
+        <activity android:name=".StateActivity" />
+        <activity android:name=".CommandActivity" />
+        <activity android:name=".TeemActivity"></activity>
     </application>
 
 </manifest>

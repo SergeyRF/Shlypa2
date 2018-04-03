@@ -13,7 +13,13 @@ class PlayersViewModel : ViewModel(){
     private val teamsLiveData = MutableLiveData<List<Team>>()
 
     fun getPlayersLiveData() : LiveData<List<Player>> = playersLiveData
-    fun getTeamsLiveData() : LiveData<List<Team>> = teamsLiveData
+    fun getTeamsLiveData() : LiveData<List<Team>> {
+        if (teamsLiveData.value==null){
+            createTeams()
+        }
+        return teamsLiveData
+    }
+
 
     fun addPlayer(player: Player) : Boolean{
         val success = Game.addPlayer(player)
@@ -24,6 +30,10 @@ class PlayersViewModel : ViewModel(){
 
     fun removePlayer(player: Player) {
         Game.removePlayer(player)
+        updateData()
+    }
+    fun createTeams(){
+        Game.createTeams(Game.command)
         updateData()
     }
 
