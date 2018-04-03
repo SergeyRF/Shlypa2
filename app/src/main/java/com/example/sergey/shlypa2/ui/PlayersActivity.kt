@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -12,6 +12,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
+import com.example.sergey.shlypa2.PlayerAdapter
+import com.example.sergey.shlypa2.viewModel.PlayersViewModel
+import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.Player
 
 class PlayersActivity : AppCompatActivity() {
 
@@ -50,7 +55,7 @@ class PlayersActivity : AppCompatActivity() {
             if (Game.getPlayers().size<4){
                 Toast.makeText(this,"Malo Igrokov",Toast.LENGTH_LONG).show()
             }
-            else startActivity( Intent(this,CommandActivity::class.java))
+            else startActivity( Intent(this, CommandActivity::class.java))
         })
     }
 

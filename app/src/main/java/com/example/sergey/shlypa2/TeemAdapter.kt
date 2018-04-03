@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.sergey.shlypa2.game.Team
 
 /**
  * Created by sergey on 4/2/18.
@@ -14,7 +15,7 @@ class TeemAdapter(): RecyclerView.Adapter<Holder1>(){
      var  teems: List<Team>? = null
 
     override fun onBindViewHolder(holder: Holder1, position: Int) {
-        val teem :Team = teems!![position]
+        val teem : Team = teems!![position]
         holder.bind(teem)
     }
 
@@ -38,7 +39,7 @@ class Holder1(view:View):RecyclerView.ViewHolder(view){
     val teemScores = view.findViewById<TextView>(R.id.teem_scores)
     val listPlayers= view.findViewById<TextView>(R.id.list_players)
 
-    fun bind(teem:Team){
+    fun bind(teem: Team){
         teemName.text=teem.name
         teemScores.text = teem.scores.toString()
 

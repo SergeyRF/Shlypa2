@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.game
 
 import java.util.*
 /**

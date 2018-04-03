@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -10,6 +10,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.viewModel.StateViewModel
+import com.example.sergey.shlypa2.WordAdapter
+import com.example.sergey.shlypa2.game.Word
 
 class WordsInActivity : AppCompatActivity() {
 

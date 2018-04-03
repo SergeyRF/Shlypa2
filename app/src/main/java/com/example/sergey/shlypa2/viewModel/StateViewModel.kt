@@ -1,8 +1,11 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.viewModel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.example.sergey.shlypa2.Constants
+import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.Word
 
 /**
  * Created by sergey on 4/1/18.
@@ -31,7 +34,7 @@ class StateViewModel : ViewModel() {
 
     fun getTimeLD(): LiveData<Int> = timeLiveData
     fun minusTimeLD(){
-        if (Game.time>Game.miniTime) {
+        if (Game.time> Constants.MIN_ROUND_TIME) {
             Game.time-=10
         }
         updateStateData()
@@ -46,15 +49,15 @@ class StateViewModel : ViewModel() {
 
 
     fun getMinusCommLD() {
-        if (Game.command != Game.minimalComma) {
-            Game.command--
+        if (Game.teamsCount != Constants.MIN_TEAM_COUNT) {
+            Game.teamsCount--
         }
         updateStateData()
     }
 
     fun getPlusCommLD() {
-        if (Game.command != Game.maxiCommand()) {
-            Game.command++
+        if (Game.teamsCount != Game.maxTeamsCount()) {
+            Game.teamsCount++
         }
         updateStateData()
     }
@@ -63,7 +66,7 @@ class StateViewModel : ViewModel() {
     fun getCommandMaxLD(): LiveData<Int> = maxCount
     fun getWordsLD(): LiveData<Int> = wordsLiveData
     fun minusWord(){
-        if (Game.words>Game.miniWords){
+        if (Game.words> Constants.MIN_WORDS_COUNT){
             Game.words--
         }
         updateStateData()
@@ -77,10 +80,10 @@ class StateViewModel : ViewModel() {
 
     fun updateStateData() {
         timeLiveData.value = Game.time
-        commandLiveData.value = Game.command
+        commandLiveData.value = Game.teamsCount
         wordsLiveData.value = Game.words
-        teamCount.value = Game.minimalComma
-        maxCount.value = Game.maxiCommand()
+        teamCount.value = Constants.MIN_TEAM_COUNT
+        maxCount.value = Game.maxTeamsCount()
         hatWords.value = Game.getWords()
     }
 }

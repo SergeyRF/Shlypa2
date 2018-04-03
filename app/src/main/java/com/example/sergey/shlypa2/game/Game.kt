@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.game
 
 import java.util.*
 
@@ -13,13 +13,11 @@ object Game {
 
     private val allWords = mutableListOf<Word>()
     var time = 60
-    var command =2
+    var teamsCount =2
     var words = 5
-    var minimalComma = 2
-    val miniTime = 30
-    val miniWords = 3
 
-    fun maxiCommand():Int = players.size/2
+
+    fun maxTeamsCount():Int = players.size/2
 
 
     fun addPlayer(player: Player): Boolean {

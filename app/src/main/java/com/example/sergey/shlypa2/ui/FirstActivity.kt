@@ -1,11 +1,11 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.ui
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
+import com.example.sergey.shlypa2.R
 
 class FirstActivity : AppCompatActivity() {
 

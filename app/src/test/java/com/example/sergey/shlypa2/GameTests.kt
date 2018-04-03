@@ -1,5 +1,7 @@
 package com.example.sergey.shlypa2
 
+import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.Player
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals

@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -10,11 +10,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_command.*
+import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.viewModel.StateViewModel
 
 class CommandActivity : AppCompatActivity() {
 
-    lateinit var stateVM :StateViewModel
+    lateinit var stateVM : StateViewModel
     lateinit var time:TextView
     lateinit var words:TextView
     lateinit var commands:TextView

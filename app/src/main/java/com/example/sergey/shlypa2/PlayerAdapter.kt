@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.sergey.shlypa2.game.Player
 
 /**
  * Created by sergey on 3/29/18.

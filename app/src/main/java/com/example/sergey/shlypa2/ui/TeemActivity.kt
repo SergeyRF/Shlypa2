@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -10,6 +10,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import com.example.sergey.shlypa2.viewModel.PlayersViewModel
+import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.TeemAdapter
+import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.Team
 
 class TeemActivity : AppCompatActivity() {
 
