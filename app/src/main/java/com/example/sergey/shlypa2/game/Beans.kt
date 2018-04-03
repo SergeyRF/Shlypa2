@@ -31,11 +31,10 @@ class Team(var name: String) {
     }
 }
 
-class Word(var word: String) {
+class Word(var word: String, var addedBy : Int = -1) {
     var play: Boolean = false
     var right: Boolean = false
 
     var answeredBy = -1
-    var addedBy = -1
 }
 

@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import android.widget.TextView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.viewModel.StateViewModel
 import com.example.sergey.shlypa2.WordAdapter
+import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.Word
 
 class WordsInActivity : AppCompatActivity() {
@@ -44,9 +46,22 @@ class WordsInActivity : AppCompatActivity() {
                 editWord.text.clear()
         }
         })
+
+        var btStart : Button = findViewById(R.id.btBeginGame)
+        btStart.setOnClickListener {
+            Game.beginNextRound()
+            startActivity(Intent(this, RoundActivity::class.java)) }
     }
 
     fun setWordRv(w:List<Word>?){
         adpterW.setWords(w)
+    }
+
+    fun addFakeWords() {
+        for(player in Game.getPlayers()) {
+            for (i in 0..5) {
+                Game.addWord(Word("Word $i", player.id))
+            }
+        }
     }
 }

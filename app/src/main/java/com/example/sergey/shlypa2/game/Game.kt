@@ -11,6 +11,8 @@ object Game {
     private val teams = mutableListOf<Team>()
     private var currentTeamPosition = 0
 
+    private var currentRound : Round? = null
+
     private val allWords = mutableListOf<Word>()
     var time = 60
     var teamsCount =2
@@ -54,10 +56,7 @@ object Game {
         }
     }
 
-    fun addWord(word: Word) = allWords.add(word)
     fun getTeams(): List<Team> = teams
-    fun getWords(): List<Word> = allWords
-
 
     fun getCurrentTeam() : Team = teams[currentTeamPosition]
 
@@ -65,6 +64,23 @@ object Game {
         currentTeamPosition++
         if(currentTeamPosition >= teams.size) currentTeamPosition = 0
         return teams[currentTeamPosition]
+    }
+
+    fun addWord(word: Word) = allWords.add(word)
+
+    fun getWords(): List<Word> = allWords
+
+    fun getRound() : Round = currentRound!!
+
+    fun hasRound() = currentRound == null
+
+    fun beginNextRound() {
+        currentRound = Round(allWords)
+    }
+
+    fun finishRound() {
+        currentRound?.countScores()
+        currentRound = null
     }
 
     fun clear() {

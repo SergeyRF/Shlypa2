@@ -20,7 +20,8 @@
         <activity android:name=".StateActivity" />
         <activity android:name=".ui.CommandActivity" />
         <activity android:name=".ui.TeemActivity" />
-        <activity android:name=".ui.WordsInActivity"></activity>
+        <activity android:name=".ui.WordsInActivity" />
+        <activity android:name=".ui.RoundActivity"></activity>
     </application>
 
 </manifest>

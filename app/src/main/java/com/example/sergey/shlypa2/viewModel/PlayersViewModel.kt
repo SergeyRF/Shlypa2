@@ -35,6 +35,7 @@ class PlayersViewModel : ViewModel(){
         Game.removePlayer(player)
         updateData()
     }
+
     fun createTeams(){
         Game.createTeams(Game.teamsCount)
         updateData()
