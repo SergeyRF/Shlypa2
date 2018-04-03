@@ -27,6 +27,14 @@ class PlayersViewModel : ViewModel(){
         updateData()
     }
 
+    fun createTeams(count : Int) : Boolean{
+        return if(Game.getPlayers().size >= count) {
+            Game.createTeams(count)
+            updateData()
+            true
+        } else false
+    }
+
     private fun updateData() {
         playersLiveData.value = Game.getPlayers()
         teamsLiveData.value = Game.getTeams()
