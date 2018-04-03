@@ -43,7 +43,7 @@ class Holder1(view:View):RecyclerView.ViewHolder(view){
         teemScores.text = teem.scores.toString()
 
         var player = StringBuffer("")
-        for (i in 0 until teem.players.size-1){
+        for (i in 0 until teem.players.size){
             player.append(teem.players[i].name + " ")
         }
         listPlayers.text =player
