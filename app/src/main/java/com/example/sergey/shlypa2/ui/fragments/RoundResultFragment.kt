@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui
+package com.example.sergey.shlypa2.ui.fragments
 
 
 import android.os.Bundle
@@ -13,13 +13,13 @@ import com.example.sergey.shlypa2.R
 /**
  * A simple [Fragment] subclass.
  */
-class GameFragment : Fragment() {
+class RoundResultFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_game, container, false)
+        return inflater!!.inflate(R.layout.fragment_round_result, container, false)
     }
 
-}
+}// Required empty public constructor

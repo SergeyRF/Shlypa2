@@ -48,7 +48,9 @@ class WordsInActivity : AppCompatActivity() {
         })
 
         var btStart : Button = findViewById(R.id.btBeginGame)
+
         btStart.setOnClickListener {
+            addFakeWords()
             Game.beginNextRound()
             startActivity(Intent(this, RoundActivity::class.java)) }
     }
