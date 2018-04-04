@@ -5,32 +5,19 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Word
 
 /**
  * Created by sergey on 4/1/18.
  */
 class StateViewModel : ViewModel() {
     private val timeLiveData = MutableLiveData<Int>()
-    private val commandLiveData = MutableLiveData<Int>()
     private val wordsLiveData = MutableLiveData<Int>()
-    private val teamCount = MutableLiveData<Int>()
+    private val minCount = MutableLiveData<Int>()
     private val maxCount = MutableLiveData<Int>()
-    private val hatWords = MutableLiveData<List<Word>>()
+
     init {
         updateStateData()
     }
-
-
-
-
-    fun addWordLD(s: String) {
-        Game.addWord(Word(s))
-        updateStateData()
-    }
-
-    fun getWordPlayer(): LiveData<List<Word>> = hatWords
-
 
     fun getTimeLD(): LiveData<Int> = timeLiveData
     fun minusTimeLD(){
@@ -44,26 +31,14 @@ class StateViewModel : ViewModel() {
         updateStateData()
     }
 
-
-    fun getCommandLD(): LiveData<Int> =commandLiveData
-
-
-    fun getMinusCommLD() {
-        if (Game.teamsCount != Constants.MIN_TEAM_COUNT) {
-            Game.teamsCount--
-        }
-        updateStateData()
-    }
-
-    fun getPlusCommLD() {
-        if (Game.teamsCount != Game.maxTeamsCount()) {
-            Game.teamsCount++
-        }
-        updateStateData()
-    }
-
-    fun getCommandMinLD(): LiveData<Int> = teamCount
+    fun getCommandMinLD(): LiveData<Int> = minCount
     fun getCommandMaxLD(): LiveData<Int> = maxCount
+    fun createTeams(count : Int) : Boolean{
+        return if(Game.getPlayers().size >= count) {
+            Game.createTeams(count)
+            true
+        } else false
+    }
     fun getWordsLD(): LiveData<Int> = wordsLiveData
     fun minusWord(){
         if (Game.words> Constants.MIN_WORDS_COUNT){
@@ -76,14 +51,11 @@ class StateViewModel : ViewModel() {
         updateStateData()
     }
 
-
-
     fun updateStateData() {
         timeLiveData.value = Game.time
-        commandLiveData.value = Game.teamsCount
         wordsLiveData.value = Game.words
-        teamCount.value = Constants.MIN_TEAM_COUNT
+        minCount.value = Constants.MIN_TEAM_COUNT
         maxCount.value = Game.maxTeamsCount()
-        hatWords.value = Game.getWords()
+
     }
 }

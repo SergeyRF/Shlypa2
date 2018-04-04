@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2.viewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.Player
 import com.example.sergey.shlypa2.game.Team
@@ -14,14 +15,12 @@ class PlayersViewModel : ViewModel(){
 
     private val playersLiveData = MutableLiveData<List<Player>>()
     private val teamsLiveData = MutableLiveData<List<Team>>()
+    init {
+        updateData()
+    }
 
     fun getPlayersLiveData() : LiveData<List<Player>> = playersLiveData
-    fun getTeamsLiveData() : LiveData<List<Team>> {
-        if (teamsLiveData.value==null){
-            createTeams()
-        }
-        return teamsLiveData
-    }
+    fun getTeamsLiveData() : LiveData<List<Team>> = teamsLiveData
 
 
     fun addPlayer(player: Player) : Boolean{
@@ -36,18 +35,7 @@ class PlayersViewModel : ViewModel(){
         updateData()
     }
 
-    fun createTeams(){
-        Game.createTeams(Game.teamsCount)
-        updateData()
-    }
 
-    fun createTeams(count : Int) : Boolean{
-        return if(Game.getPlayers().size >= count) {
-            Game.createTeams(count)
-            updateData()
-            true
-        } else false
-    }
 
     private fun updateData() {
         playersLiveData.value = Game.getPlayers()
