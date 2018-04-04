@@ -11,15 +11,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
-import com.example.sergey.shlypa2.PlayerAdapter
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.Player
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 
 class PlayersActivity : AppCompatActivity() {
 
-    lateinit var adapter: PlayerAdapter
+    lateinit var adapter: RvAdapter
 
     lateinit var viewModel: PlayersViewModel
 
@@ -38,7 +38,7 @@ class PlayersActivity : AppCompatActivity() {
 
         rvPlayers = findViewById<RecyclerView>(R.id.list_playrs)
         rvPlayers.layoutManager = linLayout
-        adapter = PlayerAdapter()
+        adapter = RvAdapter()
         rvPlayers.adapter = adapter
 
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
@@ -64,7 +64,7 @@ class PlayersActivity : AppCompatActivity() {
     }
 
     private fun onPlayersChanged(players: List<Player>?) {
-        adapter.setPeople(players)
+        adapter.setData(players)
         rvPlayers.scrollToPosition(0)
     }
 

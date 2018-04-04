@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.WordAdapter
+import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.ui.RoundActivity
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 
@@ -29,8 +29,8 @@ class TurnResultFragment : Fragment() {
         // Inflate the layout for this fragment
         val root = inflater!!.inflate(R.layout.fragment_turn_result, container, false)
 
-        val adapter = WordAdapter()
-        adapter.wordS = viewModel.getTurnResults()
+        val adapter = RvAdapter()
+        adapter.setData(viewModel.getTurnResults())
 
         val rv : RecyclerView = root.findViewById(R.id.rvWordsTurnResult)
         rv.layoutManager = LinearLayoutManager(context)
