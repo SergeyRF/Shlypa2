@@ -9,6 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/welcam"
+    android:textSize="@dimen/text_medium"
     android:text="@string/WordsIn"
     android:gravity="center"
     />
@@ -16,6 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/playerWho"
+        android:gravity="center"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintTop_toBottomOf="@+id/welcam"
         />
 
@@ -23,8 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/wordIn"
+        android:textSize="@dimen/text_smoll"
         app:layout_constraintTop_toBottomOf="@+id/playerWho"
-        android:hint="@string/WordsIn"
+        android:hint="@string/vvodi"
         />
 
     <android.support.v7.widget.RecyclerView
@@ -40,6 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/wordIn"
         android:id="@+id/knock"
         android:text="@string/play"
+        android:textSize="@dimen/text_smoll"
         app:layout_constraintRight_toRightOf="parent"
         />
 

@@ -24,7 +24,7 @@ class TeamHolder(view: View): BaseHolder(view){
 
         var player = StringBuffer("")
         for (i in 0 until teem.players.size){
-            player.append(teem.players[i].name + " ")
+            player.append(teem.players[i].name + "\n")
         }
         listPlayers.text =player
 
