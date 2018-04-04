@@ -8,18 +8,21 @@
     <TextView
         android:id="@+id/tvRoundDescription"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_medium"/>
 
     <TextView
         android:id="@+id/tvRoundRules"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintTop_toBottomOf="@id/tvRoundDescription"/>
 
     <Button
         android:id="@+id/btBeginRound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_smoll"
         app:layout_constraintTop_toBottomOf="@id/tvRoundRules"/>
 
 </android.support.constraint.ConstraintLayout>

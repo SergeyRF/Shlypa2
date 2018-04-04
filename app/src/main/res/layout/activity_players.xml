@@ -7,31 +7,38 @@
     tools:context="com.example.sergey.shlypa2.ui.PlayersActivity">
 
     <EditText
+        android:id="@+id/EtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/EtName"
-        android:hint="Введи Имячко"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/goNext"
-        app:layout_constraintTop_toBottomOf="@+id/list_playrs"
-        android:text="@string/play"/>
-
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/EtName"
-        android:id="@+id/list_playrs"
-         />
+        android:textSize="@dimen/text_smoll"
+        android:hint="Введи Имячко" />
 
     <RadioButton
         android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
+        android:checked="true"
         />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_playrs"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/goNext"
+        app:layout_constraintTop_toBottomOf="@+id/EtName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/goNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_smoll"
+        android:text="@string/play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

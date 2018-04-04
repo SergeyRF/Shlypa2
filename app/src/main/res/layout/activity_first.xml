@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:gravity="center"
-        android:textSize="45dp"
+        android:textSize="@dimen/text_Big"
         android:textColor="@color/colorPrimaryDark"/>
     <Button
         android:layout_width="wrap_content"
@@ -21,6 +21,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/play"
+        android:textSize="@dimen/text_smoll"
         android:id="@+id/play"
         />
     <Button
@@ -29,6 +30,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/play"
+        android:textSize="@dimen/text_smoll"
         android:text="@string/rules"/>
 
 

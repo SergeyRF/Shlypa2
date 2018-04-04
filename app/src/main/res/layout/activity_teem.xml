@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/teem"
         android:text="@string/Teem"
-        android:textSize="30dp"
+        android:textSize="@dimen/text_Big"
         android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/cancel_teem"
         android:text="@string/play"
+        android:textSize="@dimen/text_smoll"
         app:layout_constraintTop_toBottomOf="@id/rvTeem"
         app:layout_constraintRight_toRightOf="parent"/>
 
