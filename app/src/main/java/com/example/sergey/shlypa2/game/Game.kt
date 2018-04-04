@@ -15,7 +15,6 @@ object Game {
 
     private val allWords = mutableListOf<Word>()
     var time = 60
-    var teamsCount =2
     var words = 5
 
 
