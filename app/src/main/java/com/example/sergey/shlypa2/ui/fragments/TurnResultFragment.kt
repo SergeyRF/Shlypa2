@@ -45,4 +45,4 @@ class TurnResultFragment : Fragment() {
         return root
     }
 
-}// Required empty public constructor
+}

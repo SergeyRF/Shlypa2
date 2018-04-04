@@ -54,7 +54,9 @@ class RoundViewModel : ViewModel() {
     fun finishTurn() {
         round.nextPlayer()
         timerStarted = false
+        handler.removeCallbacksAndMessages(null)
         timeLeft = Game.time
+        timerLiveData.value = timeLeft
         finishTurnCall.value = false
     }
 

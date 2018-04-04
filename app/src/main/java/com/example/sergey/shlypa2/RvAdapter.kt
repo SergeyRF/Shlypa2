@@ -4,19 +4,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.sergey.shlypa2.game.Player
 import com.example.sergey.shlypa2.game.Team
 import com.example.sergey.shlypa2.game.Word
 
 
-class RvAdapter() :RecyclerView.Adapter<BaseHolder>(){
+class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
 
-    private var data: List<Any>?= null
+    private var data: List<Any>? = null
 
     override fun onBindViewHolder(holder: BaseHolder, position: Int) {
         val item = data!![position]
-        when(holder) {
+        when (holder) {
             is PlayerHolder -> holder.bind(item as Player)
             is WordsHolder -> holder.bind(item as Word)
             is TeamHolder -> holder.bind(item as Team)
@@ -24,8 +23,8 @@ class RvAdapter() :RecyclerView.Adapter<BaseHolder>(){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseHolder {
-        val view: View = LayoutInflater.from(parent?.context).inflate(viewType ,parent,false)
-        return when(viewType) {
+        val view: View = LayoutInflater.from(parent?.context).inflate(viewType, parent, false)
+        return when (viewType) {
             VIEW_TYPE_PLAYER -> PlayerHolder(view)
             VIEW_TYPE_WORD -> WordsHolder(view)
             VIEW_TYPE_TEAM -> TeamHolder(view)
@@ -34,20 +33,20 @@ class RvAdapter() :RecyclerView.Adapter<BaseHolder>(){
     }
 
     override fun getItemCount(): Int {
-        return if(data == null) 0 else data!!.size
+        return if (data == null) 0 else data!!.size
     }
 
     override fun getItemViewType(position: Int): Int {
         val item = data!![position]
-        return when(item) {
-            is Player -> R.layout.holder_player
-            is Word -> R.layout.holder_player
-            is Team -> R.layout.holder_teem
+        return when (item) {
+            is Player -> VIEW_TYPE_PLAYER
+            is Word -> VIEW_TYPE_WORD
+            is Team -> VIEW_TYPE_TEAM
             else -> throw RuntimeException("Unsupported item type")
         }
     }
 
-    fun setData(list : List<Any>?) {
+    fun setData(list: List<Any>?) {
         data = list
         notifyDataSetChanged()
     }

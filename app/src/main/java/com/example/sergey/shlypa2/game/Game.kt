@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.game
 
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -8,21 +9,26 @@ import java.util.*
 object Game {
     private val players = mutableMapOf<String, Player>()
 
+    private val rounds = listOf(RoundDescriptor("First round", "Simple rules"),
+            RoundDescriptor("Second round", "Simple rules"),
+            RoundDescriptor("Third round", "Guess word or fuck yourself"))
+
     private val teams = mutableListOf<Team>()
     private var currentTeamPosition = 0
 
-    private var currentRound : Round? = null
+    private var currentRound: Round? = null
+    private var currentRoundPosition = -1
 
     private val allWords = mutableListOf<Word>()
     var time = 60
     var words = 5
 
 
-    fun maxTeamsCount():Int = players.size/2
+    fun maxTeamsCount(): Int = players.size / 2
 
 
     fun addPlayer(player: Player): Boolean {
-        return if(players.containsKey(player.name)) {
+        return if (players.containsKey(player.name)) {
             false
         } else {
             players[player.name] = player
@@ -36,14 +42,14 @@ object Game {
 
     fun getPlayers(): List<Player> = players.values.toList()
 
-    fun createTeams(count : Int) {
-        val shuffledPlayers : MutableList<Player> = players.values.toMutableList()
+    fun createTeams(count: Int) {
+        val shuffledPlayers: MutableList<Player> = players.values.toMutableList()
         Collections.shuffle(shuffledPlayers)
 
         val playersQueue = ArrayDeque<Player>()
         playersQueue.addAll(shuffledPlayers)
 
-        for(i in 0 until  count) {
+        for (i in 0 until count) {
             teams.add(Team("Team $i"))
         }
 
@@ -51,17 +57,17 @@ object Game {
         while (playersQueue.isNotEmpty()) {
             teams[currentTeam].players.add(playersQueue.remove())
 
-            currentTeam = if(currentTeam >= teams.size - 1) 0 else currentTeam + 1
+            currentTeam = if (currentTeam >= teams.size - 1) 0 else currentTeam + 1
         }
     }
 
     fun getTeams(): List<Team> = teams
 
-    fun getCurrentTeam() : Team = teams[currentTeamPosition]
+    fun getCurrentTeam(): Team = teams[currentTeamPosition]
 
-    fun nextTeam() : Team {
+    fun nextTeam(): Team {
         currentTeamPosition++
-        if(currentTeamPosition >= teams.size) currentTeamPosition = 0
+        if (currentTeamPosition >= teams.size) currentTeamPosition = 0
         return teams[currentTeamPosition]
     }
 
@@ -69,12 +75,18 @@ object Game {
 
     fun getWords(): List<Word> = allWords
 
-    fun getRound() : Round = currentRound!!
+    fun getRound(): Round = currentRound!!
 
-    fun hasRound() = currentRound == null
+    fun hasRound() = currentRound != null
 
     fun beginNextRound() {
-        currentRound = Round(allWords)
+        currentRoundPosition++
+        Timber.d("current round $currentRoundPosition rounds ${rounds.size}")
+        if (currentRoundPosition < rounds.size) {
+            currentRound = Round(allWords)
+            currentRound?.description = rounds[currentRoundPosition].description
+            currentRound?.rules = rounds[currentRoundPosition].rules
+        }
     }
 
     fun finishRound() {

@@ -1,12 +1,14 @@
 package com.example.sergey.shlypa2.ui
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.ui.fragments.*
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import timber.log.Timber
 
 class RoundActivity : AppCompatActivity() {
 
@@ -20,8 +22,6 @@ class RoundActivity : AppCompatActivity() {
         Game.time = 10
 
         viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)
-
-
 
         startStartFragment()
     }
@@ -64,5 +64,16 @@ class RoundActivity : AppCompatActivity() {
                 }
 
         startFragment(fragment)
+    }
+
+    fun onRoundFinish() {
+        Game.beginNextRound()
+        if(Game.hasRound()) {
+            startActivity(Intent(this, RoundActivity::class.java))
+            Timber.d("Start next round")
+        } else {
+            Timber.d("No more rounds ")
+        }
+        finish()
     }
 }
