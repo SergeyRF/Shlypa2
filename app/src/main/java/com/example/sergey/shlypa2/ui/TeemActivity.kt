@@ -12,20 +12,20 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.TeemAdapter
+import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.Team
 
 class TeemActivity : AppCompatActivity() {
 
     lateinit var teamVM: PlayersViewModel
-    lateinit var adapterTeam: TeemAdapter
+    lateinit var adapterTeam: RvAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teem)
         val teemRv = findViewById<RecyclerView>(R.id.rvTeem)
-        adapterTeam = TeemAdapter()
+        adapterTeam = RvAdapter()
         teemRv.layoutManager=LinearLayoutManager(this)
         teemRv.adapter = adapterTeam
         teamVM = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
@@ -39,6 +39,6 @@ class TeemActivity : AppCompatActivity() {
     }
 
     fun setTeemRv(teem: List<Team>?) {
-        adapterTeam.setTeem(teem)
+        adapterTeam.setData(teem)
     }
 }

@@ -13,7 +13,7 @@ class Round(val words: List<Word>) {
     private var currentWord: Word? = null
     var answeredWords = mutableListOf<Word>()
 
-    private var wordsAnsweredByPlayer = mutableListOf<Word>()
+    var wordsAnsweredByPlayer = mutableListOf<Word>()
 
     private var currentTeam : Team = Game.getCurrentTeam()
 

@@ -7,14 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.viewModel.StateViewModel
-import com.example.sergey.shlypa2.WordAdapter
+import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.Player
 import com.example.sergey.shlypa2.game.Word
@@ -25,7 +23,7 @@ class WordsInActivity : AppCompatActivity() {
     lateinit var editWord: EditText
     lateinit var rvWord:RecyclerView
     lateinit var player:TextView
-    private lateinit var adpterW: WordAdapter
+    private lateinit var wordsAdapter: RvAdapter
     lateinit var viewStateModel: PlayerWordsModel
     lateinit var buttonKnock:Button
 
@@ -37,9 +35,9 @@ class WordsInActivity : AppCompatActivity() {
         rvWord = findViewById(R.id.RvWords)
         buttonKnock = findViewById(R.id.knock)
         player = findViewById(R.id.playerWho)
-        adpterW = WordAdapter()
+        wordsAdapter = RvAdapter()
         rvWord.layoutManager=LinearLayoutManager(this)
-        rvWord.adapter = adpterW
+        rvWord.adapter = wordsAdapter
         viewStateModel = ViewModelProviders.of(this).get(PlayerWordsModel::class.java)
         viewStateModel.getWordPlayer().observe(this, Observer { list->setWordRv(list) })
         viewStateModel.getPlayer().observe(this, Observer { Player->setPlayer(Player) })
@@ -63,14 +61,15 @@ class WordsInActivity : AppCompatActivity() {
         })
 
         var btStart : Button = findViewById(R.id.btBeginGame)
-        btStart.setOnClickListener {
 
+        btStart.setOnClickListener {
+            addFakeWords()
             Game.beginNextRound()
             startActivity(Intent(this, RoundActivity::class.java)) }
     }
 
-    fun setWordRv(w:List<Word>?){
-        adpterW.setWords(w)
+    fun setWordRv(words :List<Word>?){
+        wordsAdapter.setData(words)
     }
     fun setPlayer(p:Player?){
         player.text = p!!.name

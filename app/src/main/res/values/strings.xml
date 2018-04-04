@@ -14,4 +14,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go">Go</string>
+    <string name="name_not_unic">Player already exists</string>
+    <string name="player_name_empty">Player name shoud not be empty</string>
+    <string name="not_enough_players">Add more players</string>
 </resources>
