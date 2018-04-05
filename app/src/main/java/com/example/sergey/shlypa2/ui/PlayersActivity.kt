@@ -44,7 +44,9 @@ class PlayersActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         viewModel.getPlayersLiveData().observe(this, Observer { list -> onPlayersChanged(list) })
 
-        createFakePlayers()
+        if (Game.getTeams().isEmpty()) {
+            createFakePlayers()
+        }
 
         buttonName.setOnClickListener {
             if (editName.text.isNotEmpty()) {

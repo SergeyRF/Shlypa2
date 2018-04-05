@@ -49,6 +49,9 @@ object Game {
         val playersQueue = ArrayDeque<Player>()
         playersQueue.addAll(shuffledPlayers)
 
+        // why not?
+        Game.teams.clear()
+
         for (i in 0 until count) {
             teams.add(Team("Team $i"))
         }

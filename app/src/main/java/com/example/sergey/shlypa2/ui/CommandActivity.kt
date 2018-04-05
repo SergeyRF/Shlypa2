@@ -61,12 +61,14 @@ class CommandActivity : AppCompatActivity() {
         wordPlus.setOnClickListener(View.OnClickListener { stateVM.plusWord() })
         val button = findViewById<Button>(R.id.cancel_command)
         button.setOnClickListener(View.OnClickListener {
+
             stateVM.createTeams(teamNeed)
             startActivity(Intent(this, TeemActivity::class.java))
         })
 
 
     }
+
 
     private fun onCommands(i: Int?) {
         commands.text = i.toString()

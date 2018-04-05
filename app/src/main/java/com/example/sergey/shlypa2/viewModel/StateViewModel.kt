@@ -39,6 +39,7 @@ class StateViewModel : ViewModel() {
             true
         } else false
     }
+
     fun getWordsLD(): LiveData<Int> = wordsLiveData
     fun minusWord(){
         if (Game.words> Constants.MIN_WORDS_COUNT){
