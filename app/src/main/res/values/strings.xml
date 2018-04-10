@@ -11,6 +11,13 @@
     <string name="timeN">Время хода</string>
     <string name="wordN">Сколько слов</string>
     <string name="vvodi">Пиши слово</string>
+    <string name="dificult">Сложность добавляемых слов</string>
+    <string name="setAll">Добавить все слова автоматически</string>
+    <string-array name="difecult">
+        <item>легкий</item>
+        <item>средний</item>
+        <item>трудный</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
