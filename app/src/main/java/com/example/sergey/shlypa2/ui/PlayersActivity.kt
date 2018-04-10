@@ -38,10 +38,6 @@ class PlayersActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         viewModel.getPlayersLiveData().observe(this, Observer { list -> onPlayersChanged(list) })
 
-        if (Game.getTeams().isEmpty()) {
-            createFakePlayers()
-        }
-
         radioButton.setOnClickListener {
             if (etName.text.isNotEmpty()) {
                 if (viewModel.addPlayer(Player(etName.text.toString()))) {
@@ -57,16 +53,15 @@ class PlayersActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.not_enough_players, Toast.LENGTH_LONG).show()
             } else startActivity(Intent(this, CommandActivity::class.java))
         }
+
+        btAddRandomPlayer.setOnClickListener{
+            viewModel.addRandomPlayer()
+        }
     }
 
     private fun onPlayersChanged(players: List<Player>?) {
         adapter.setData(players)
-        rvPlayers.scrollToPosition(0)
-    }
-
-    private fun createFakePlayers() {
-        for (i in 0..10) {
-            viewModel.addPlayer(Player("FAPPPP$i"))
-        }
+        val position = players?.size ?: 0
+        rvPlayers.scrollToPosition(position - 1)
     }
 }

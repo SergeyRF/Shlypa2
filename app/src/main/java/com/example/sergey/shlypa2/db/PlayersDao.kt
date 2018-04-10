@@ -13,7 +13,7 @@ import com.example.sergey.shlypa2.beans.Player
 @Dao
 interface PlayersDao {
 
-    @Query("SELECT * FROM ${Contract.PLAYER_TABLE}")
+    @Query("SELECT * FROM ${Contract.PLAYER_TABLE} ORDER BY RANDOM()")
     fun getAllPlayers() : List<Player>
 
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} WHERE ${Contract.PLAYER_ID} = :id")

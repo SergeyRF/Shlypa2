@@ -16,6 +16,9 @@ interface WordsDao {
     @Query("SELECT * FROM ${Contract.WORD_TABLE}")
     fun getAllWords() : List<Word>
 
+    @Query("SELECT * FROM ${Contract.WORD_TABLE} ORDER BY RANDOM() LIMIT :wordsLimit")
+    fun getRandomWords(wordsLimit : Int) : List<Word>
+
     @Query("SELECT * FROM ${Contract.WORD_TABLE} WHERE ${Contract.WORD_ID} = :id")
     fun getWordById(id : Long) : Word
 

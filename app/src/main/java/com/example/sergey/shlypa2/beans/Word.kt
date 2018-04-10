@@ -11,14 +11,24 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = Contract.WORD_TABLE)
 class Word(@ColumnInfo(name = Contract.WORD_COLUMN) var word: String = "",
-           @PrimaryKey @ColumnInfo(name = Contract.WORD_ID) var id: Int = -1,
+           @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Contract.WORD_ID) var id: Long = 0,
            @ColumnInfo(name = Contract.WORD_LANG) var lang: String = "RU",
-           @Ignore var addedBy: Int = -1) {
+           @Ignore var addedBy: Long = 0) {
     @Ignore
     var play: Boolean = false
     @Ignore
     var right: Boolean = false
 
     @Ignore
-    var answeredBy = -1
+    var answeredBy = 0L
+
+    override fun equals(other: Any?): Boolean {
+        return if(other is Word) {
+            id == other.id || word == other.word
+        } else false
+    }
+
+    override fun toString(): String {
+        return "words $word id $id"
+    }
 }

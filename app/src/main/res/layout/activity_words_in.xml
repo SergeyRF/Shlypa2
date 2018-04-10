@@ -8,7 +8,7 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/welcam"
+    android:id="@+id/tvWelcome"
     android:textSize="@dimen/text_medium"
     android:text="@string/WordsIn"
     android:gravity="center"
@@ -16,33 +16,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/playerWho"
+        android:id="@+id/playerName"
         android:gravity="center"
         android:textSize="@dimen/text_medium"
-        app:layout_constraintTop_toBottomOf="@+id/welcam"
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
         />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/wordIn"
+        android:id="@+id/etWord"
         android:textSize="@dimen/text_smoll"
-        app:layout_constraintTop_toBottomOf="@+id/playerWho"
+        app:layout_constraintTop_toBottomOf="@+id/playerName"
         android:hint="@string/vvodi"
         />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/knock"
-        android:id="@+id/RvWords"
+        app:layout_constraintTop_toBottomOf="@+id/btNext"
+        android:id="@+id/rvWords"
 
         />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/wordIn"
-        android:id="@+id/knock"
+        app:layout_constraintTop_toBottomOf="@+id/etWord"
+        android:id="@+id/btNext"
         android:text="@string/play"
         android:textSize="@dimen/text_smoll"
         app:layout_constraintRight_toRightOf="parent"
@@ -54,4 +54,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/btRandomWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 </android.support.constraint.ConstraintLayout>
