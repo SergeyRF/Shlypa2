@@ -1,5 +1,8 @@
 package com.example.sergey.shlypa2.game
 
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Word
+
 /**
  * Created by alex on 4/10/18.
  */

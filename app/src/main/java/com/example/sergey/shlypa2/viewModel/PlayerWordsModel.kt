@@ -4,9 +4,9 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.provider.UserDictionary
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Player
-import com.example.sergey.shlypa2.game.Word
 
 /**
  * Created by sergey on 4/3/18.

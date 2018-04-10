@@ -1,7 +1,7 @@
 package com.example.sergey.shlypa2
 
+import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Player
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import org.junit.Before
 import org.junit.Test

@@ -1,5 +1,7 @@
 package com.example.sergey.shlypa2.game
 
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Word
 import timber.log.Timber
 import java.util.*
 
@@ -9,8 +11,7 @@ import java.util.*
 object Game {
 
     var state : GameState = GameState()
-    var time = 60
-    var words = 5
+    var settings : Settings = Settings()
 
     var currentRound: Round? = null
 

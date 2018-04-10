@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.ui.RoundActivity
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import timber.log.Timber
@@ -42,7 +43,7 @@ class GameFragment : Fragment() {
         btOk.setOnClickListener{viewModel.answerWord(true)}
         btReturn.setOnClickListener{viewModel.answerWord(false)}
 
-        viewModel.wordLiveData.observe(this, Observer{word ->
+        viewModel.wordLiveData.observe(this, Observer{word : Word? ->
             if (word != null) tvWord.text = word.word})
 
         viewModel.finishTurnCall.observe(this, Observer { if (it != null && it) finishTurn()})

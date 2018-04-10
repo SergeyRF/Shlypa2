@@ -1,14 +1,11 @@
 package com.example.sergey.shlypa2.game
 
+import com.example.sergey.shlypa2.beans.Player
+
 /**
  * Created by sergey on 3/29/18.
  */
-class Player(val name: String, var words: MutableList<String>? = null, var scores: Int = 0, var id : Int = -1) {
 
-    override fun toString(): String {
-        return "Player $name scores $scores"
-    }
-}
 
 class Team(var name: String) {
     val players : MutableList<Player> = mutableListOf()
@@ -29,13 +26,6 @@ class Team(var name: String) {
     override fun toString(): String {
         return "Team $name players: $players"
     }
-}
-
-class Word(var word: String, var addedBy : Int = -1) {
-    var play: Boolean = false
-    var right: Boolean = false
-
-    var answeredBy = -1
 }
 
 class RoundDescriptor(var description : String, var rules : String)

@@ -1,5 +1,7 @@
 package com.example.sergey.shlypa2.game
 
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Word
 import java.util.*
 /**
  * Created by alex on 4/3/18.
