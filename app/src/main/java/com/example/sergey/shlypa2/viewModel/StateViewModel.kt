@@ -17,6 +17,7 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
     private val wordsLiveData = MutableLiveData<Int>()
     private val minCount = MutableLiveData<Int>()
     private val maxCount = MutableLiveData<Int>()
+    private val teemNeed = MutableLiveData<Int>()
 
     val settingsProvider = SettingsProviderImpl(application)
 
@@ -24,22 +25,21 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         updateStateData()
+        if (teemNeed.value == null) teemNeed.value=Constants.MIN_TEAM_COUNT
     }
 
     fun getTimeLD(): LiveData<Int> = timeLiveData
-    fun minusTimeLD(){
-        if (settings.time> Constants.MIN_ROUND_TIME) {
-            settings.time-=10
-        }
-        updateStateData()
-    }
-    fun plusTimeLD(){
-        settings.time+=10
+    fun setTimeLD(i:Int){
+        settings.time = i
         updateStateData()
     }
 
     fun getCommandMinLD(): LiveData<Int> = minCount
     fun getCommandMaxLD(): LiveData<Int> = maxCount
+    fun getTeemNeed():LiveData<Int> = teemNeed
+    fun setTeemNeed(i:Int){
+        teemNeed.value=i
+    }
     fun createTeams(count : Int) : Boolean{
         return if(Game.getPlayers().size >= count) {
             Game.createTeams(count)
@@ -48,16 +48,10 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getWordsLD(): LiveData<Int> = wordsLiveData
-    fun minusWord(){
-        if (settings.word> Constants.MIN_WORDS_COUNT){
-            settings.word--
-        }
-        updateStateData()
-    }
-    fun plusWord(){
-        settings.word++
-        updateStateData()
-    }
+   fun setWordsLD(i:Int){
+       settings.word=i
+       updateStateData()
+   }
 
     fun updateStateData() {
         timeLiveData.value = settings.time
