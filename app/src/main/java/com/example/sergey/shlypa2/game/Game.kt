@@ -20,8 +20,9 @@ object Game {
     private var currentRoundPosition = -1
 
     private val allWords = mutableListOf<Word>()
-    var time = 60
-    var words = 5
+
+    var settings:Settings= Settings()
+
 
 
     fun maxTeamsCount(): Int = players.size / 2

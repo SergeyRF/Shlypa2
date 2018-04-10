@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.ui.fragments.*
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.example.sergey.shlypa2.viewModel.StateViewModel
 import timber.log.Timber
 
 class RoundActivity : AppCompatActivity() {
@@ -15,11 +16,12 @@ class RoundActivity : AppCompatActivity() {
     lateinit var viewModel: RoundViewModel
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //For debug only
-        Game.time = 10
+        Game.settings.time = 10
 
         viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)
 

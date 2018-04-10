@@ -34,7 +34,7 @@ class PlayerWordsModel():ViewModel(){
     }
     fun GoGame() = help
     fun needWord():Boolean{
-        return words.size != Game.words
+        return words.size != Game.settings.word
     }
     fun getPlayer():LiveData<Player> {
        return playerLivaData
