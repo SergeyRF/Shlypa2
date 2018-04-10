@@ -14,6 +14,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.ui.RoundActivity
+import timber.log.Timber
 
 
 /**
@@ -30,11 +31,12 @@ class RoundResultFragment : Fragment() {
         btNextRound.setOnClickListener{(activity as RoundActivity).onRoundFinish()}
 
         val adapter = RvAdapter()
-        adapter.setData(Game.getTeams())
+        adapter.setData(Game.getRoundResults())
 
         val rvTeams : RecyclerView = root.findViewById(R.id.rvRoundResult)
         rvTeams.layoutManager = LinearLayoutManager(context)
         rvTeams.adapter = adapter
+
 
         return root
     }

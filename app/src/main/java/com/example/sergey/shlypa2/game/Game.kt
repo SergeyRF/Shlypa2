@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.game
 
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.game.Game.state
 import timber.log.Timber
 import java.util.*
 
@@ -58,6 +59,22 @@ object Game {
     }
 
     fun getTeams(): List<Team> = state.teams
+
+    fun getRoundResults() : List<TeamWithScores> {
+
+        val teamWithScores = state.teams.map { TeamWithScores(it) }
+        val scoresMap = currentRound?.getScores() ?: mapOf()
+
+        //Split scores for teams
+        teamWithScores.forEach{
+            val map = it.scoresMap
+            it.team.players.forEach {
+                map[it.id] = scoresMap[it.id] ?: 0
+            }
+        }
+
+        return teamWithScores
+    }
 
     fun getCurrentTeam(): Team = state.teams[state.currentTeamPosition]
 

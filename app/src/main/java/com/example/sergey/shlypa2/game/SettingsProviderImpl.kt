@@ -6,6 +6,7 @@ import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.google.gson.GsonBuilder
+import timber.log.Timber
 
 
 /**
@@ -18,7 +19,7 @@ class SettingsProviderImpl(context: Context) : SettingsProvider {
 
     override fun getSettings(): Settings {
         var settingsJson = preferences[SAVED_SETTINGS, "{}"]
-        print(settingsJson)
+        Timber.d(settingsJson)
         var settings : Settings = gson.fromJson(settingsJson, Settings::class.java)
 
         return settings
@@ -26,6 +27,7 @@ class SettingsProviderImpl(context: Context) : SettingsProvider {
 
     override fun writeSettings(settings: Settings) {
        var settingsJson : String = gson.toJson(settings)
+        Timber.d(settingsJson)
         preferences[SAVED_SETTINGS] = settingsJson
     }
 
