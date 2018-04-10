@@ -1,9 +1,10 @@
 package com.example.sergey.shlypa2
 
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Player
 import com.example.sergey.shlypa2.game.Round
-import com.example.sergey.shlypa2.game.Word
+
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals

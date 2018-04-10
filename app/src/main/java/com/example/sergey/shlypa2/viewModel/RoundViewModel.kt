@@ -3,8 +3,9 @@ package com.example.sergey.shlypa2.viewModel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.os.Handler
+import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Word
+
 import timber.log.Timber
 
 

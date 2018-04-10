@@ -4,9 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.sergey.shlypa2.game.Player
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Team
-import com.example.sergey.shlypa2.game.Word
+
 
 
 class RvAdapter : RecyclerView.Adapter<BaseHolder>() {

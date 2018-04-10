@@ -3,9 +3,10 @@ package com.example.sergey.shlypa2
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
-import com.example.sergey.shlypa2.game.Player
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Team
-import com.example.sergey.shlypa2.game.Word
+
 
 /**
  * Created by alex on 4/4/18.

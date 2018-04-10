@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.db.DataBase
+import timber.log.Timber
 
 class FirstActivity : AppCompatActivity() {
 
@@ -20,5 +23,11 @@ class FirstActivity : AppCompatActivity() {
             //Toast.makeText(this,"Hello",Toast.LENGTH_LONG).show()
         })
 
+        val db = DataBase.getInstance(applicationContext)
+        db.playersDao().insertPlayer(Player(name = "Vasya"))
+        val players = db.playersDao().getAllPlayers()
+        for(player in players) {
+            Timber.d("player $player")
+        }
     }
 }

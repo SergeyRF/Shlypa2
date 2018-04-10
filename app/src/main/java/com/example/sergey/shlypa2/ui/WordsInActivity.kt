@@ -13,9 +13,9 @@ import android.widget.EditText
 import android.widget.TextView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Player
-import com.example.sergey.shlypa2.game.Word
 import com.example.sergey.shlypa2.viewModel.PlayerWordsModel
 
 class WordsInActivity : AppCompatActivity() {
@@ -40,7 +40,7 @@ class WordsInActivity : AppCompatActivity() {
         rvWord.adapter = wordsAdapter
         viewStateModel = ViewModelProviders.of(this).get(PlayerWordsModel::class.java)
         viewStateModel.getWordPlayer().observe(this, Observer { list->setWordRv(list) })
-        viewStateModel.getPlayer().observe(this, Observer { Player->setPlayer(Player) })
+        viewStateModel.getPlayer().observe(this, Observer { setPlayer(it) })
         buttonKnock.setOnClickListener(View.OnClickListener {
             if (!viewStateModel.GoGame()) {
                 if (viewStateModel.needWord()) {
@@ -71,14 +71,14 @@ class WordsInActivity : AppCompatActivity() {
     fun setWordRv(words :List<Word>?){
         wordsAdapter.setData(words)
     }
-    fun setPlayer(p:Player?){
+    fun setPlayer(p: Player?){
         player.text = p!!.name
     }
 
     fun addFakeWords() {
         for(player in Game.getPlayers()) {
             for (i in 0..5) {
-                Game.addWord(Word("Word $i", player.id))
+                Game.addWord(Word("Word $i", addedBy = player.id))
             }
         }
     }

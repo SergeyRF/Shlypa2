@@ -6,7 +6,7 @@ import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.google.gson.GsonBuilder
-import timber.log.Timber
+
 
 /**
  * Created by alex on 4/10/18.
