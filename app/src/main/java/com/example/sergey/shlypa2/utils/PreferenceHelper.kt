@@ -1,3 +1,5 @@
+package com.example.sergey.shlypa2.utils
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager

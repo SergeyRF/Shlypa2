@@ -40,3 +40,5 @@ class Word(var word: String, var addedBy : Int = -1) {
 
 class RoundDescriptor(var description : String, var rules : String)
 
+class Settings(var time : Int = 30)
+
