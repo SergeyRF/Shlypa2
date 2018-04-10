@@ -11,10 +11,12 @@ import android.widget.*
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.game.Dificult
-import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.viewModel.StateViewModel
 import kotlinx.android.synthetic.main.activity_command.*
-import java.util.*
+import android.widget.AdapterView
+import android.widget.Toast
+import timber.log.Timber
+
 
 class CommandActivity : AppCompatActivity() {
 
@@ -73,24 +75,31 @@ class CommandActivity : AppCompatActivity() {
             }
 
         })
-
+        onDificult(stateVM.getDificultLD().value)
         stateVM.getTeemNeed().observe(this, Observer { Int->onCommands(Int) })
         stateVM.getWordsLD().observe(this, Observer { Int -> onWord(Int) })
         stateVM.getTimeLD().observe(this, Observer { Int -> onTime(Int) })
         Toast.makeText(this, "${stateVM.getCommandMinLD().value}...${stateVM.getCommandMaxLD().value}",
                 Toast.LENGTH_LONG).show()
 
+
+
+        onCheckBoks(stateVM.getAutoAddWord().value!!)
+
+
         val button = findViewById<Button>(R.id.cancel_command)
         button.setOnClickListener(View.OnClickListener {
 
             stateVM.createTeams(commands.text.toString().toInt())
+            stateVM.setAutoAddWord(cbAddAutoWord.isChecked)
+            stateVM.setDificultLD(spinnerDificult.selectedItem as Dificult)
             stateVM.onFinish()
             startActivity(Intent(this, TeemActivity::class.java))
         })
 
 
         val adapter = ArrayAdapter<Dificult>(this, android.R.layout.simple_list_item_1, Dificult.values())
-        spinner.adapter = adapter
+        spinnerDificult.adapter = adapter
 
     }
 
@@ -105,5 +114,12 @@ class CommandActivity : AppCompatActivity() {
 
     private fun onWord(i: Int?) {
         word.text = i.toString()
+    }
+    private fun onDificult(d:Dificult?){
+        spinnerDificult.setSelection(Dificult.values().indexOf(d))
+    }
+    private fun onCheckBoks(b:Boolean){
+        Timber.d("$b")
+        cbAddAutoWord.isChecked = b
     }
 }
