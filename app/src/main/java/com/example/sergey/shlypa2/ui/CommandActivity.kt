@@ -63,6 +63,7 @@ class CommandActivity : AppCompatActivity() {
         button.setOnClickListener(View.OnClickListener {
 
             stateVM.createTeams(teamNeed)
+            stateVM.onFinish()
             startActivity(Intent(this, TeemActivity::class.java))
         })
 

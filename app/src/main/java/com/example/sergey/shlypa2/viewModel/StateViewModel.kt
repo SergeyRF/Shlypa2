@@ -1,19 +1,26 @@
 package com.example.sergey.shlypa2.viewModel
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.SettingsProviderImpl
 
 /**
  * Created by sergey on 4/1/18.
  */
-class StateViewModel : ViewModel() {
+class StateViewModel(application: Application) : AndroidViewModel(application) {
     private val timeLiveData = MutableLiveData<Int>()
     private val wordsLiveData = MutableLiveData<Int>()
     private val minCount = MutableLiveData<Int>()
     private val maxCount = MutableLiveData<Int>()
+
+    val settingsProvider = SettingsProviderImpl(application)
+
+    var settings = settingsProvider.getSettings()
 
     init {
         updateStateData()
@@ -21,13 +28,13 @@ class StateViewModel : ViewModel() {
 
     fun getTimeLD(): LiveData<Int> = timeLiveData
     fun minusTimeLD(){
-        if (Game.time> Constants.MIN_ROUND_TIME) {
-            Game.time-=10
+        if (settings.time> Constants.MIN_ROUND_TIME) {
+            settings.time-=10
         }
         updateStateData()
     }
     fun plusTimeLD(){
-        Game.time+=10
+        settings.time+=10
         updateStateData()
     }
 
@@ -42,21 +49,26 @@ class StateViewModel : ViewModel() {
 
     fun getWordsLD(): LiveData<Int> = wordsLiveData
     fun minusWord(){
-        if (Game.words> Constants.MIN_WORDS_COUNT){
-            Game.words--
+        if (settings.word> Constants.MIN_WORDS_COUNT){
+            settings.word--
         }
         updateStateData()
     }
     fun plusWord(){
-        Game.words++
+        settings.word++
         updateStateData()
     }
 
     fun updateStateData() {
-        timeLiveData.value = Game.time
-        wordsLiveData.value = Game.words
+        timeLiveData.value = settings.time
+        wordsLiveData.value =settings.word
         minCount.value = Constants.MIN_TEAM_COUNT
         maxCount.value = Game.maxTeamsCount()
 
+    }
+
+    fun onFinish() {
+        Game.settings = settings
+        settingsProvider.writeSettings(settings)
     }
 }
