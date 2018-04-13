@@ -55,7 +55,7 @@ class PlayersActivity : AppCompatActivity() {
         btGoNext.setOnClickListener {
             if (Game.getPlayers().size < 4) {
                 Toast.makeText(this, R.string.not_enough_players, Toast.LENGTH_LONG).show()
-            } else startActivity(Intent(this, CommandActivity::class.java))
+            } else startActivity(Intent(this, GameSettingsActivity::class.java))
         }
 
         btAddRandomPlayer.setOnClickListener{

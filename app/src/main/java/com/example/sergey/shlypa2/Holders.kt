@@ -11,9 +11,9 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Team
 import com.example.sergey.shlypa2.game.TeamWithScores
-import com.example.sergey.shlypa2.utils.gone
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
+import timber.log.Timber
 
 
 /**
@@ -65,7 +65,7 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
 }
 
 class PlayerHolder(view: View) : BaseHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.playerName)
+    val tvName: TextView = view.findViewById(R.id.wordInject)
     val etName: EditText = view.findViewById(R.id.etRename)
     val btOnRename: Button = view.findViewById(R.id.btOnRename)
     fun bind(player: Player) {
@@ -103,11 +103,36 @@ class PlayerWithScoreHolder(view: View) : BaseHolder(view) {
 }
 
 class WordsHolder(view: View) : BaseHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.playerName)
+    val tvName: TextView = view.findViewById(R.id.wordInject)
 
     fun bind(word: Word) {
         tvName.text = word.word
+        Timber.d("${word.word}")
     }
+    /*val tvName: TextView = view.findViewById(R.id.wordInject)
+    val etName: EditText = view.findViewById(R.id.etRename)
+    val btOnRename: Button = view.findViewById(R.id.btOnRename)
+    fun bind(word:Word) {
+        etName.hide()
+        btOnRename.hide()
+        tvName.text = word.word
+        itemView.setOnClickListener{
+            tvName.hide()
+            etName.show()
+            btOnRename.show()
+            etName.setText(word.word)
+        }
+        btOnRename.setOnClickListener{
+            if (etName.text.isNotEmpty()) {
+                word.word = etName.text.toString()
+            }
+            tvName.show()
+            tvName.text = word.word
+            etName.hide()
+            btOnRename.hide()
+            listener?.invoke(word)
+        }
+        }*/
 }
 
 class WordResaltHolder(view: View):BaseHolder(view){

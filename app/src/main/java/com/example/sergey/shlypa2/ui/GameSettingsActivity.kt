@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.ui
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -16,17 +17,20 @@ import com.example.sergey.shlypa2.utils.onChange
 import timber.log.Timber
 
 
-class CommandActivity : AppCompatActivity() {
+class GameSettingsActivity : AppCompatActivity() {
 
     lateinit var stateVM: StateViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_settings)
 
+
         stateVM = ViewModelProviders.of(this).get(StateViewModel::class.java)
 
         seekCommand.max = (stateVM.getCommandMaxLD().value!!.toInt() - Constants.MIN_TEAM_COUNT)
+        helpTeem.text = "(${Constants.MIN_TEAM_COUNT} ... ${stateVM.getCommandMaxLD().value!!.toInt()})"
         seekCommand.progress = stateVM.getTeemNeed().value!!.toInt() - Constants.MIN_TEAM_COUNT
         seekCommand?.onChange{_, _, _ ->
             stateVM.setTeemNeed(seekCommand.progress+Constants.MIN_TEAM_COUNT)
@@ -67,11 +71,16 @@ class CommandActivity : AppCompatActivity() {
         spinnerDificult.adapter = adapter
 
         onDificult(stateVM.getDificultLD().value)
+        stateTeems.setOnClickListener {
+            Toast.makeText(this,"Выбери сколько будет комманд от ${Constants.MIN_TEAM_COUNT} " +
+                    "до ${stateVM.getCommandMaxLD().value!!.toInt()}",Toast.LENGTH_LONG).show()
+        }
     }
 
 
     private fun onCommands(i: Int?) {
         commands.text = i.toString()
+        Timber.d("inject ${i.toString()} ")
     }
 
     private fun onTime(i: Int?) {

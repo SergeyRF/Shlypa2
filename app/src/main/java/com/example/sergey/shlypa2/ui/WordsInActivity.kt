@@ -11,6 +11,8 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.utils.hide
+import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.PlayerWordsModel
 import kotlinx.android.synthetic.main.activity_words_in.*
 
@@ -37,14 +39,23 @@ class WordsInActivity : AppCompatActivity() {
 
         viewStateModel.inputFinishCallBack.observe(this, Observer { bool ->
             if(bool != null && bool) onStartGame() })
-
-        btNext.setOnClickListener{
+        btNext.hide()
+        ibAddWord.setOnClickListener{
             if(viewStateModel.needWord()) {
                 if (etWord.text.toString().isNotEmpty()) {
                     viewStateModel.addWord(etWord.text.toString())
                     etWord.text.clear()
                 }
-            } else viewStateModel.nextPlayer()
+            }
+            if(!viewStateModel.needWord()){
+                btNext.show()
+                ibAddWord.hide()
+            }
+        }
+        btNext.setOnClickListener{
+            viewStateModel.nextPlayer()
+            btNext.hide()
+            ibAddWord.show()
         }
 
 
@@ -56,6 +67,8 @@ class WordsInActivity : AppCompatActivity() {
 
         btRandomWord.setOnClickListener{
             viewStateModel.fillWithRandomWords()
+            btNext.show()
+            ibAddWord.hide()
         }
 
     }
@@ -64,7 +77,7 @@ class WordsInActivity : AppCompatActivity() {
         wordsAdapter.setData(words)
     }
     fun setPlayer(p: Player?){
-        playerName.text = p!!.name
+        wordInject.text = p!!.name
     }
 
     fun addFakeWords() {
