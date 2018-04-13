@@ -9,7 +9,6 @@ import com.example.sergey.shlypa2.beans.Player
 
 class Team(var name: String) {
     val players : MutableList<Player> = mutableListOf()
-    var scores : Int = 0
 
     var id = -1
 
@@ -26,6 +25,12 @@ class Team(var name: String) {
     override fun toString(): String {
         return "Team $name players: $players"
     }
+}
+
+class TeamWithScores(val team : Team) {
+    var scores = 0
+    //keeps scores for players: key - player id, value - scores
+    var scoresMap : MutableMap<Long, Int> = mutableMapOf()
 }
 
 class RoundDescriptor(var description : String, var rules : String)

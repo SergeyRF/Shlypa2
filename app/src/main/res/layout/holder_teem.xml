@@ -2,31 +2,26 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/teem_name"
+        android:id="@+id/team_name"
         android:gravity="left"
         android:textSize="@dimen/text_medium"
-        android:text="Name"
+        tools:text="Name"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/teem_scores"
-        android:text="Ball"
-        android:textSize="@dimen/text_medium"
-        app:layout_constraintRight_toRightOf="parent"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_players"
+        android:id="@+id/tvPlayers"
         android:gravity="left"
         android:layout_marginLeft="15dp"
-        android:text="Gamers"
+        tools:text="Gamers"
         android:textSize="@dimen/text_smoll"
-        app:layout_constraintTop_toBottomOf="@+id/teem_name"
+        app:layout_constraintTop_toBottomOf="@+id/team_name"
         android:layout_marginBottom="10dp"/>
 </android.support.constraint.ConstraintLayout>

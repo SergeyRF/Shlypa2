@@ -21,11 +21,13 @@ class Round(val words: List<Word>) {
 
     private var currentPlayer : Player = currentTeam.getPlayer()
 
+    var results : MutableMap<Long, MutableList<Long>> = mutableMapOf()
+
     init {
         val listCopy = words.toMutableList()
         Collections.shuffle(listCopy)
 
-        wordsQueue = ArrayDeque<Word>()
+        wordsQueue = ArrayDeque()
         wordsQueue.addAll(listCopy)
     }
 
@@ -34,10 +36,19 @@ class Round(val words: List<Word>) {
     }
 
     fun nextPlayer() : Player {
+        val playerList : MutableList<Long>
+
+        if(results.containsKey(currentPlayer.id)) {
+            playerList = results[currentPlayer.id]!!
+        } else {
+            playerList = mutableListOf()
+            results[currentPlayer.id] = playerList
+        }
+
+        wordsAnsweredByPlayer.forEach { playerList.add(it.id) }
         wordsAnsweredByPlayer.clear()
 
         currentTeam = Game.nextTeam()
-
         currentPlayer = currentTeam.nextPlayer()
 
         return currentPlayer
@@ -75,6 +86,11 @@ class Round(val words: List<Word>) {
     fun countScores() {
         Game.getTeams().flatMap { it.players }
                 .forEach{player -> answeredWords.forEach{if (it.answeredBy == player.id) player.scores++}}
+    }
+
+    fun getScores() : Map<Long, Int>{
+        val scoresMap : Map<Long, Int> = results.mapValues { it.value.size }
+        return scoresMap
     }
 
 }

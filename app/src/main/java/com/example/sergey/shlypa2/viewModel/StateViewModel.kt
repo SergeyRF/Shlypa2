@@ -28,6 +28,7 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
     var settings = settingsProvider.getSettings()
 
     init {
+        Timber.d("Dificulty ${settings.dificult}")
         updateStateData()
         if (teemNeed.value == null) teemNeed.value=Constants.MIN_TEAM_COUNT
     }
