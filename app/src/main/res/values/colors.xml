@@ -6,4 +6,7 @@
     <color name="Black">#060505</color>
     <color name="Pink">#fa0075</color>
     <color name="Grey">#afafaf</color>
+
+    <color name="LightGray">#e0e0e0</color>
+    <color name="Green">#43a047</color>
 </resources>

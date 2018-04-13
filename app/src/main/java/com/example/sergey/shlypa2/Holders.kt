@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
@@ -83,6 +85,16 @@ class WordsHolder(view: View) : BaseHolder(view) {
     }
 }
 
-class WordResaltHolder(view: View):BaseHolder(view){
+class WordResultHolder(view: View):BaseHolder(view) {
+    val wordRv: TextView = view.findViewById(R.id.word_out)
+    val radioGroup : RadioGroup = view.findViewById(R.id.groupCorrect)
 
+    fun bind(word: Word) {
+        wordRv.text = word.word
+        radioGroup.check(if(word.right) R.id.radioCorrect else R.id.radioWrong)
+
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            word.right = checkedId == R.id.right
+        }
+    }
 }

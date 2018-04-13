@@ -30,6 +30,7 @@ class TurnResultFragment : Fragment() {
         val root = inflater!!.inflate(R.layout.fragment_turn_result, container, false)
 
         val adapter = RvAdapter()
+        adapter.altMode = true
         adapter.setData(viewModel.getTurnResults())
 
         val rv : RecyclerView = root.findViewById(R.id.rvWordsTurnResult)
