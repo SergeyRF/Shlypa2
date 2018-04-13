@@ -11,6 +11,9 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Team
 import com.example.sergey.shlypa2.game.TeamWithScores
+import com.example.sergey.shlypa2.utils.gone
+import com.example.sergey.shlypa2.utils.hide
+import com.example.sergey.shlypa2.utils.show
 
 
 /**
@@ -63,14 +66,27 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
 
 class PlayerHolder(view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.playerName)
-    val etName: EditText = view.findViewById(R.id.etName)
+    val etName: EditText = view.findViewById(R.id.etRename)
     val btOnRename: Button = view.findViewById(R.id.btOnRename)
     fun bind(player: Player) {
-
+        etName.hide()
+        btOnRename.hide()
         tvName.text = player.name
         itemView.setOnClickListener{
-           // listener?.invoke(player)
-
+            tvName.hide()
+            etName.show()
+            btOnRename.show()
+            etName.setText(player.name)
+        }
+        btOnRename.setOnClickListener{
+           if (etName.text.isNotEmpty()) {
+               player.name = etName.text.toString()
+           }
+            tvName.show()
+            tvName.text = player.name
+            etName.hide()
+            btOnRename.hide()
+            listener?.invoke(player)
         }
 
     }
