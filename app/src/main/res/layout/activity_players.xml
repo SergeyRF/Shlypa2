@@ -4,21 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sergey.shlypa2.ui.PlayersActivity">
+    tools:context="com.example.sergey.shlypa2.ui.PlayersActivity"
+    >
 
     <EditText
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_smoll"
+        android:textSize="@dimen/text_medium"
         android:hint="Введи Имячко" />
 
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:checked="true"
+        android:src="@drawable/ic_action_name"
         />
 
 
@@ -34,10 +35,8 @@
 
     <Button
         android:id="@+id/btGoNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_smoll"
         android:text="@string/play"
+        style="@style/Button_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

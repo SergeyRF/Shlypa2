@@ -14,6 +14,8 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
 
     private var data: List<Any>? = null
 
+    var listener:((Any) -> Unit)? = null
+
     override fun onBindViewHolder(holder: BaseHolder, position: Int) {
         val item = data!![position]
         when (holder) {
@@ -26,13 +28,16 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseHolder {
         val view: View = LayoutInflater.from(parent?.context).inflate(viewType, parent, false)
-        return when (viewType) {
+        val holder = when (viewType) {
             VIEW_TYPE_PLAYER -> PlayerHolder(view)
             VIEW_TYPE_WORD -> WordsHolder(view)
             VIEW_TYPE_TEAM -> TeamHolder(view)
             VIEW_TYPE_TEAM_SCORES -> TeamWithScoreHolder(view)
             else -> throw RuntimeException("Unsupported item type")
         }
+
+        holder.listener = listener
+        return holder
     }
 
     override fun getItemCount(): Int {
@@ -54,6 +59,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
         data = list
         notifyDataSetChanged()
     }
+
 
     companion object {
         const val VIEW_TYPE_PLAYER = R.layout.holder_player

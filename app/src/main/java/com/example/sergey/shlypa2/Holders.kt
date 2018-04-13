@@ -3,6 +3,8 @@ package com.example.sergey.shlypa2
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.sergey.shlypa2.beans.Player
@@ -15,7 +17,9 @@ import com.example.sergey.shlypa2.game.TeamWithScores
  * Created by alex on 4/4/18.
  */
 
-abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view)
+abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view) {
+    var listener : ((Any) -> Unit)? = null
+}
 
 class TeamHolder(view: View) : BaseHolder(view) {
     val teamName = view.findViewById<TextView>(R.id.team_name)
@@ -59,9 +63,16 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
 
 class PlayerHolder(view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.playerName)
-
+    val etName: EditText = view.findViewById(R.id.etName)
+    val btOnRename: Button = view.findViewById(R.id.btOnRename)
     fun bind(player: Player) {
+
         tvName.text = player.name
+        itemView.setOnClickListener{
+           // listener?.invoke(player)
+
+        }
+
     }
 }
 

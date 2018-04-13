@@ -11,7 +11,7 @@ import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.game.Dificult
 import com.example.sergey.shlypa2.viewModel.StateViewModel
-import kotlinx.android.synthetic.main.activity_command.*
+import kotlinx.android.synthetic.main.activity_game_settings.*
 import com.example.sergey.shlypa2.utils.onChange
 import timber.log.Timber
 
@@ -22,7 +22,7 @@ class CommandActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_command)
+        setContentView(R.layout.activity_game_settings)
 
         stateVM = ViewModelProviders.of(this).get(StateViewModel::class.java)
 
