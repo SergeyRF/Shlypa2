@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/stateCommands"
         android:textSize="@dimen/text_medium"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/primary_text"
         android:gravity="left"
         android:text="@string/comadN"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -19,6 +19,7 @@
         android:layout_width= "wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
+        android:textColor="@color/primary_text"
         android:id="@+id/commands"
         android:layout_marginRight="10dp"
         app:layout_constraintRight_toLeftOf="parent"
@@ -51,7 +52,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/stateTime"
         android:textSize="@dimen/text_medium"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/primary_text"
         android:gravity="left"
         android:text="@string/timeN"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -63,6 +64,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
         android:id="@+id/time"
+        android:textColor="@color/primary_text"
         android:layout_marginRight="10dp"
         app:layout_constraintRight_toRightOf="parent"
        app:layout_constraintBaseline_toBaselineOf="@+id/stateTime"
@@ -96,7 +98,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/stateWord"
         android:textSize="@dimen/text_medium"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/primary_text"
         android:gravity="left"
         android:text="@string/wordN"
         app:layout_constraintTop_toBottomOf="@id/view2"/>
@@ -106,6 +108,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
         android:id="@+id/word"
+        android:textColor="@color/primary_text"
         android:layout_marginRight="10dp"
         app:layout_constraintRight_toRightOf="parent"
        app:layout_constraintBaseline_toBaselineOf="@+id/stateWord"
@@ -138,6 +141,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dificult"
         android:id="@+id/dificult"
+        android:textColor="@color/primary_text"
         android:textSize="@dimen/text_medium"
         app:layout_constraintTop_toBottomOf="@+id/view3"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -168,6 +172,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/allWords"
+        android:textColor="@color/primary_text"
         android:text="@string/setAll"
         android:textSize="@dimen/text_medium"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -196,12 +201,8 @@
     </View>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Button_next"
         android:id="@+id/cancel_command"
-        app:layout_constraintTop_toBottomOf="@+id/allWords"
         android:text="@string/play"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

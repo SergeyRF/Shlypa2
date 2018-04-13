@@ -3,6 +3,8 @@ package com.example.sergey.shlypa2
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -11,13 +13,18 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Team
 import com.example.sergey.shlypa2.game.TeamWithScores
+import com.example.sergey.shlypa2.utils.gone
+import com.example.sergey.shlypa2.utils.hide
+import com.example.sergey.shlypa2.utils.show
 
 
 /**
  * Created by alex on 4/4/18.
  */
 
-abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view)
+abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view) {
+    var listener : ((Any) -> Unit)? = null
+}
 
 class TeamHolder(view: View) : BaseHolder(view) {
     val teamName = view.findViewById<TextView>(R.id.team_name)
@@ -61,9 +68,29 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
 
 class PlayerHolder(view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.playerName)
-
+    val etName: EditText = view.findViewById(R.id.etRename)
+    val btOnRename: Button = view.findViewById(R.id.btOnRename)
     fun bind(player: Player) {
+        etName.hide()
+        btOnRename.hide()
         tvName.text = player.name
+        itemView.setOnClickListener{
+            tvName.hide()
+            etName.show()
+            btOnRename.show()
+            etName.setText(player.name)
+        }
+        btOnRename.setOnClickListener{
+           if (etName.text.isNotEmpty()) {
+               player.name = etName.text.toString()
+           }
+            tvName.show()
+            tvName.text = player.name
+            etName.hide()
+            btOnRename.hide()
+            listener?.invoke(player)
+        }
+
     }
 }
 

@@ -34,11 +34,15 @@ class PlayersActivity : AppCompatActivity() {
         rvPlayers.layoutManager = linLayout
         adapter = RvAdapter()
         rvPlayers.adapter = adapter
+        adapter.listener= {player:Any ->
+            etName.setText( (player as Player).name)
+
+        }
 
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         viewModel.getPlayersLiveData().observe(this, Observer { list -> onPlayersChanged(list) })
 
-        radioButton.setOnClickListener {
+        imageButton.setOnClickListener {
             if (etName.text.isNotEmpty()) {
                 if (viewModel.addPlayer(Player(etName.text.toString()))) {
                 } else {

@@ -10,9 +10,12 @@
     </style>
 
     <!--Hyase -->
-    <style name="Proba" >
-        <item name="android:textSize">@dimen/text_smoll</item>
-        <item name="android:textColor">@color/Pink</item>
+    <style name="Button_next" >
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/text_or_icon</item>
+        <item name="android:background">@color/primary_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
 
     </style>
 

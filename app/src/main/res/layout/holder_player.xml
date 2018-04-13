@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="4dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:elevation ="4dp"
-    >
+    android:elevation="4dp">
   <android.support.constraint.ConstraintLayout
 
     android:layout_width="match_parent"
@@ -19,8 +18,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_smoll"
+            android:layout_marginLeft="8dp"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/primary_text"
             android:id="@+id/playerName"/>
+      <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="8dp"
+          android:textSize="@dimen/text_medium"
+          android:textColor="@color/primary_text"
+          android:id="@+id/etRename"
+          app:layout_constraintRight_toLeftOf="@+id/btOnRename"
+          />
+      <Button
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:id="@+id/btOnRename"
+          app:layout_constraintRight_toRightOf="parent"/>
 
  </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
