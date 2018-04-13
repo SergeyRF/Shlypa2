@@ -16,11 +16,14 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
 
     var listener:((Any) -> Unit)? = null
 
+    var altMode = false
+
     override fun onBindViewHolder(holder: BaseHolder, position: Int) {
         val item = data!![position]
         when (holder) {
             is PlayerHolder -> holder.bind(item as Player)
             is WordsHolder -> holder.bind(item as Word)
+            is WordResultHolder -> holder.bind(item as Word)
             is TeamHolder -> holder.bind(item as Team)
             is TeamWithScoreHolder -> holder.bind(item as TeamWithScores)
         }
@@ -31,6 +34,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
         val holder = when (viewType) {
             VIEW_TYPE_PLAYER -> PlayerHolder(view)
             VIEW_TYPE_WORD -> WordsHolder(view)
+            VIEW_TYPE_WORD_RESULT -> WordResultHolder(view)
             VIEW_TYPE_TEAM -> TeamHolder(view)
             VIEW_TYPE_TEAM_SCORES -> TeamWithScoreHolder(view)
             else -> throw RuntimeException("Unsupported item type")
@@ -48,7 +52,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
         val item = data!![position]
         return when (item) {
             is Player -> VIEW_TYPE_PLAYER
-            is Word -> VIEW_TYPE_WORD
+            is Word -> if(altMode) VIEW_TYPE_WORD_RESULT else VIEW_TYPE_WORD
             is Team -> VIEW_TYPE_TEAM
             is TeamWithScores -> VIEW_TYPE_TEAM_SCORES
             else -> throw RuntimeException("Unsupported item type")
@@ -64,6 +68,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
     companion object {
         const val VIEW_TYPE_PLAYER = R.layout.holder_player
         const val VIEW_TYPE_WORD = R.layout.holder_word
+        const val VIEW_TYPE_WORD_RESULT = R.layout.holder_word_resalt
         const val VIEW_TYPE_TEAM = R.layout.holder_teem
         const val VIEW_TYPE_TEAM_SCORES = R.layout.holder_team_score
     }

@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00796b</color>
     <color name="colorAccent">#009688</color>
     <color name="Black">#060505</color>
+    <color name="Pink">#fa0075</color>
     <color name="Grey">#afafaf</color>
 
 
@@ -15,4 +16,7 @@
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
     <color name="divider_color">#BDBDBD</color>
+
+    <color name="LightGray">#e0e0e0</color>
+    <color name="Green">#43a047</color>
 </resources>
