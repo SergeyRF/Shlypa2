@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.utils
 
+import android.view.View
 import android.widget.SeekBar
 
 /**
@@ -20,4 +21,16 @@ fun SeekBar.onChange( listener : (seekBar: SeekBar?, progress: Int, fromUser: Bo
 
         }
     })
+}
+
+fun View.hide(){
+    this.visibility = View.INVISIBLE
+}
+
+fun View.show() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.gone() {
+    this.visibility = View.GONE
 }

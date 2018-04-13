@@ -74,6 +74,7 @@ class RoundActivity : AppCompatActivity() {
             startActivity(Intent(this, RoundActivity::class.java))
             Timber.d("Start next round")
         } else {
+            startActivity(Intent(this, GameResultActivity::class.java))
             Timber.d("No more rounds ")
         }
         finish()

@@ -21,7 +21,9 @@ class GameState {
 
     val players = mutableMapOf<String, Player>()
 
-    fun createRound() : Round {
+    fun createRound() : Round? {
+        if(currentRoundPosition >= rounds.size) return null
+
         val round = Round(allWords)
         round.description = rounds[currentRoundPosition].description
         round.rules = rounds[currentRoundPosition].rules

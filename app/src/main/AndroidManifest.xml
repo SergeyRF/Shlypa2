@@ -22,7 +22,8 @@
         <activity android:name=".ui.CommandActivity" />
         <activity android:name=".ui.TeemActivity" />
         <activity android:name=".ui.WordsInActivity" />
-        <activity android:name=".ui.RoundActivity"></activity>
+        <activity android:name=".ui.RoundActivity" />
+        <activity android:name=".ui.GameResultActivity"></activity>
     </application>
 
 </manifest>
