@@ -10,19 +10,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.FirstActivity">
+        <activity android:name=".ui.FirstActivity"
+            android:label="@string/start_actyvity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.PlayersActivity" />
-        <activity android:name=".StateActivity" />
-        <activity android:name=".ui.CommandActivity" />
-        <activity android:name=".ui.TeemActivity" />
-        <activity android:name=".ui.WordsInActivity" />
-        <activity android:name=".ui.RoundActivity"></activity>
+        <activity android:name=".ui.PlayersActivity"
+            android:label="@string/player_actyvity"/>
+
+        <activity android:name=".ui.CommandActivity"
+            android:label="@string/state_actyvity"/>
+        <activity android:name=".ui.TeemActivity"
+            android:label="@string/teem_actyvity"/>
+        <activity android:name=".ui.WordsInActivity"
+            android:label="@string/word_actyvity"/>
+        <activity android:name=".ui.RoundActivity"
+            android:label="@string/start_actyvity"></activity>
     </application>
 
 </manifest>
