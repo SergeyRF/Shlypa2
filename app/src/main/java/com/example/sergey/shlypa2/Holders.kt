@@ -82,3 +82,7 @@ class WordsHolder(view: View) : BaseHolder(view) {
         tvName.text = word.word
     }
 }
+
+class WordResaltHolder(view: View):BaseHolder(view){
+
+}

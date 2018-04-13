@@ -17,13 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.PlayersActivity" />
-        <activity android:name=".StateActivity" />
-        <activity android:name=".ui.CommandActivity" />
-        <activity android:name=".ui.TeemActivity" />
-        <activity android:name=".ui.WordsInActivity" />
-        <activity android:name=".ui.RoundActivity" />
-        <activity android:name=".ui.GameResultActivity"></activity>
+        <activity android:name=".ui.PlayersActivity"
+            android:label="@string/player_actyvity"/>
+
+        <activity android:name=".ui.CommandActivity"
+            android:label="@string/state_actyvity"/>
+        <activity android:name=".ui.TeemActivity"
+            android:label="@string/teem_actyvity"/>
+        <activity android:name=".ui.WordsInActivity"
+            android:label="@string/word_actyvity"/>
+        <activity android:name=".ui.RoundActivity"
+            android:label="@string/start_actyvity"></activity>
     </application>
 
 </manifest>
