@@ -14,6 +14,7 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import kotlinx.android.synthetic.main.activity_players.*
+import timber.log.Timber
 
 class PlayersActivity : AppCompatActivity() {
 
@@ -44,7 +45,7 @@ class PlayersActivity : AppCompatActivity() {
 
         imageButton.setOnClickListener {
             if (etName.text.isNotEmpty()) {
-                if (viewModel.addPlayer(Player(etName.text.toString()))) {
+                if (viewModel.addPlayer(Player(etName.text.toString().trim()))) {
                 } else {
                     Toast.makeText(this, R.string.name_not_unic, Toast.LENGTH_LONG).show()
                 }

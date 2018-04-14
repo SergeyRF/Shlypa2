@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shlypa2</string>
+    <string name="app_name">Шляпа</string>
     <string name="play">Дальше</string>
     <string name="rules">Rules</string>
     <string name="qwest">Вопрос?</string>
@@ -14,7 +14,7 @@
     <string name="dificult">Сложность добавляемых слов</string>
     <string name="setAll">Добавить все слова автоматически</string>
     <string name="player_actyvity">Игроки</string>
-    <string name="start_actyvity">ШЛЯПА!!!!</string>
+    <string name="start_actyvity">ШЛЯПА</string>
     <string name="teem_actyvity">Комманды</string>
     <string name="state_actyvity">Параметры игры</string>
     <string name="word_actyvity">Слова</string>
