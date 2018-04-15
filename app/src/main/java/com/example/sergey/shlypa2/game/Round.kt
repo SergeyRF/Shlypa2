@@ -22,7 +22,7 @@ class Round(val words: List<Word>) {
 
     private var currentPlayer: Player = currentTeam.getPlayer()
 
-    var results: MutableMap<Long, MutableList<Long>> = mutableMapOf()
+    private var results: MutableMap<Long, MutableList<Long>> = mutableMapOf()
 
     init {
         val listCopy = words.toMutableList()
@@ -87,14 +87,8 @@ class Round(val words: List<Word>) {
         wordsAnsweredByPlayer.remove(word)
     }
 
-    fun countScores() {
-        Game.getTeams().flatMap { it.players }
-                .forEach { player -> answeredWords.forEach { if (it.answeredBy == player.id) player.scores++ } }
-    }
-
-    fun getScores(): Map<Long, Int> {
-        val scoresMap: Map<Long, Int> = results.mapValues { it.value.size }
-        return scoresMap
+    fun getResults(): RoundResults {
+        return RoundResults(results)
     }
 
 }

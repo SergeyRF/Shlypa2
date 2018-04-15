@@ -2,8 +2,6 @@ package com.example.sergey.shlypa2.game
 
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.game.Game.state
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -63,13 +61,47 @@ object Game {
     fun getRoundResults() : List<TeamWithScores> {
 
         val teamWithScores = state.teams.map { TeamWithScores(it) }
-        val scoresMap = currentRound?.getScores() ?: mapOf()
+        val results = currentRound?.getResults()
+
+        val scoresMap = results?.getScores() ?: mapOf()
 
         //Split scores for teams
         teamWithScores.forEach{
             val map = it.scoresMap
             it.team.players.forEach {
                 map[it.id] = scoresMap[it.id] ?: 0
+            }
+        }
+
+        return teamWithScores
+    }
+
+    fun getGameResults() : List<TeamWithScores>{
+        val teamWithScores = state.teams.map { TeamWithScores(it) }
+        val resultsMap : List<Map<Long, Int>> = state.resultsList.map { it.getScores() }
+
+
+        return calculateGameResults(teamWithScores, resultsMap)
+    }
+
+    fun calculateGameResults(teamWithScores: List<TeamWithScores>,
+                                     resultsMap : List<Map<Long, Int>>) : List<TeamWithScores> {
+
+        val mapOfPlayers : MutableMap<Long, Int> = mutableMapOf()
+
+        //Sum score for player for each round.
+        resultsMap.forEach {
+            it.forEach{
+                var scores = mapOfPlayers[it.key] ?: 0
+                scores += it.value
+                mapOfPlayers[it.key] = scores
+            }
+        }
+
+        teamWithScores.forEach {
+            val map = it.scoresMap
+            it.team.players.forEach {
+                map[it.id] = mapOfPlayers[it.id] ?: 0
             }
         }
 
@@ -93,13 +125,11 @@ object Game {
     fun hasRound() = currentRound != null
 
     fun beginNextRound() {
+        val results = currentRound?.getResults()
+        if(results != null) state.saveRoundResults(results)
+
         state.currentRoundPosition++
         currentRound = state.createRound()
-    }
-
-    fun finishRound() {
-        currentRound?.countScores()
-        currentRound = null
     }
 
     fun clear() {

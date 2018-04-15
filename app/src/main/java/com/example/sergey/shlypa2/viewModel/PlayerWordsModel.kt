@@ -76,7 +76,7 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
     }
 
     private fun loadRandomWords() {
-        var dbWords = db.getRandomWords(100)
+        var dbWords = db.getRandomWords(100, Game.settings.dificult)
         for (w in dbWords) Timber.d("$w")
 
         var unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !words.contains(it) }

@@ -11,6 +11,8 @@ class GameState {
             RoundDescriptor("Second round", "Simple rules"),
             RoundDescriptor("Third round", "Guess word or fuck yourself"))
 
+    val resultsList: MutableList<RoundResults> = mutableListOf()
+
     val teams = mutableListOf<Team>()
     var currentTeamPosition = 0
 
@@ -20,6 +22,10 @@ class GameState {
     val allWords = mutableListOf<Word>()
 
     val players = mutableMapOf<String, Player>()
+
+    fun saveRoundResults(results: RoundResults) {
+        resultsList.add(results)
+    }
 
     fun createRound() : Round? {
         if(currentRoundPosition >= rounds.size) return null
