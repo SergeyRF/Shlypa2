@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2
 
 import android.support.v7.widget.RecyclerView
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -16,6 +17,11 @@ import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
 import timber.log.Timber
+import android.view.KeyEvent.KEYCODE_ENTER
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
+
+
 
 
 /**
@@ -90,7 +96,18 @@ class PlayerHolder(view: View) : BaseHolder(view) {
             btOnRename.hide()
             listener?.invoke(player)
         }
-
+        etName.setOnEditorActionListener { v, actionId, event ->
+            if (actionId== EditorInfo.IME_ACTION_NEXT&&etName.text.isNotEmpty()) {
+                // обработка нажатия Enter
+                player.name = etName.text.toString()
+                tvName.show()
+                tvName.text = player.name
+                etName.hide()
+                btOnRename.hide()
+                listener?.invoke(player)
+                true
+            } else true
+        }
     }
 }
 

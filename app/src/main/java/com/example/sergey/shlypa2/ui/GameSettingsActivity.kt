@@ -1,6 +1,5 @@
 package com.example.sergey.shlypa2.ui
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -11,6 +10,8 @@ import android.widget.*
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.game.Dificult
+import com.example.sergey.shlypa2.utils.gone
+import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.viewModel.StateViewModel
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import com.example.sergey.shlypa2.utils.onChange
@@ -28,9 +29,15 @@ class GameSettingsActivity : AppCompatActivity() {
 
 
         stateVM = ViewModelProviders.of(this).get(StateViewModel::class.java)
-
+        if (stateVM.getCommandMaxLD().value!!.toInt()==Constants.MIN_TEAM_COUNT){
+            seekCommand.hide()
+            stateTeems.setOnClickListener {
+                Toast.makeText(this,"При таком колличестве игроков " +
+                        "\nкомманд может быть только две",
+                        Toast.LENGTH_LONG).show()
+            }
+        }
         seekCommand.max = (stateVM.getCommandMaxLD().value!!.toInt() - Constants.MIN_TEAM_COUNT)
-        helpTeem.text = "(${Constants.MIN_TEAM_COUNT} ... ${stateVM.getCommandMaxLD().value!!.toInt()})"
         seekCommand.progress = stateVM.getTeemNeed().value!!.toInt() - Constants.MIN_TEAM_COUNT
         seekCommand?.onChange{_, _, _ ->
             stateVM.setTeemNeed(seekCommand.progress+Constants.MIN_TEAM_COUNT)
@@ -51,9 +58,7 @@ class GameSettingsActivity : AppCompatActivity() {
         stateVM.getWordsLD().observe(this, Observer { Int -> onWord(Int) })
         stateVM.getTimeLD().observe(this, Observer { Int -> onTime(Int) })
 
-
-
-        onCheckBox(stateVM.getAutoAddWord().value!!)
+        onSwitch(stateVM.getAutoAddWord().value!!)
 
 
         val button = findViewById<Button>(R.id.cancel_command)
@@ -71,10 +76,7 @@ class GameSettingsActivity : AppCompatActivity() {
         spinnerDificult.adapter = adapter
 
         onDificult(stateVM.getDificultLD().value)
-        stateTeems.setOnClickListener {
-            Toast.makeText(this,"Выбери сколько будет комманд от ${Constants.MIN_TEAM_COUNT} " +
-                    "до ${stateVM.getCommandMaxLD().value!!.toInt()}",Toast.LENGTH_LONG).show()
-        }
+
     }
 
 
@@ -94,7 +96,7 @@ class GameSettingsActivity : AppCompatActivity() {
         Timber.d("Difficulty $d position ${Dificult.values().indexOf(d)}")
         spinnerDificult.setSelection(Dificult.values().indexOf(d))
     }
-    private fun onCheckBox(b:Boolean){
+    private fun onSwitch(b:Boolean){
         Timber.d("$b")
         cbAddAutoWord.isChecked = b
     }

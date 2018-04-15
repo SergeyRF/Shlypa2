@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
@@ -61,6 +62,13 @@ class PlayersActivity : AppCompatActivity() {
 
         btAddRandomPlayer.setOnClickListener{
             viewModel.addRandomPlayer()
+        }
+        etName.setOnEditorActionListener { v, actionId, event ->
+            if (actionId== EditorInfo.IME_ACTION_NEXT&&etName.text.isNotEmpty()) {
+                // обработка нажатия Enter
+                viewModel.addPlayer(Player(etName.text.toString().trim()))
+                true
+            } else true
         }
     }
 

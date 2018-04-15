@@ -9,13 +9,16 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/cancel_teem"
         android:id="@+id/rvTeem"
 
-         />
+        />
+
+
+
     <Button
        style="@style/Button_next"
         android:id="@+id/cancel_teem"

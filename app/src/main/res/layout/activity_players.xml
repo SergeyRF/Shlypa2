@@ -11,6 +11,9 @@
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:textSize="@dimen/text_medium"
         android:hint="Введи Имячко" />
 
