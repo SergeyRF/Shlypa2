@@ -20,7 +20,7 @@
         <activity android:name=".ui.PlayersActivity"
             android:label="@string/player_actyvity"/>
 
-        <activity android:name=".ui.CommandActivity"
+        <activity android:name=".ui.GameSettingsActivity"
             android:label="@string/state_actyvity"/>
         <activity android:name=".ui.TeemActivity"
             android:label="@string/teem_actyvity"/>

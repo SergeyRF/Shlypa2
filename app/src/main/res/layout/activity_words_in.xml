@@ -11,12 +11,14 @@
     android:id="@+id/tvWelcome"
     android:textSize="@dimen/text_medium"
     android:text="@string/WordsIn"
+    android:textColor="@color/primary_text"
     android:gravity="center"
     />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/playerName"
+        android:id="@+id/wordInject"
+        android:textColor="@color/primary_text"
         android:gravity="center"
         android:textSize="@dimen/text_medium"
         app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
@@ -26,26 +28,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etWord"
-        android:textSize="@dimen/text_smoll"
-        app:layout_constraintTop_toBottomOf="@+id/playerName"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintTop_toBottomOf="@+id/wordInject"
         android:hint="@string/vvodi"
         />
+    <android.support.v7.widget.AppCompatImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/ibAddWord"
+        app:layout_constraintTop_toBottomOf="@+id/wordInject"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btNext"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/etWord"
         android:id="@+id/rvWords"
-
+        app:layout_constraintBottom_toTopOf="@+id/btNext"
         />
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/etWord"
+        style="@style/Button_next"
         android:id="@+id/btNext"
         android:text="@string/play"
         android:textSize="@dimen/text_smoll"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <Button
