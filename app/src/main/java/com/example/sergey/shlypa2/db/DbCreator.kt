@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.db
 
 import android.content.Context
+import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import timber.log.Timber
@@ -39,7 +40,9 @@ object DbCreator {
 
         while(line != null) {
             Timber.d("load words from asset $line")
-            dataBase.wordDao().insertWord(Word(line))
+            dataBase.wordDao().insertWord(Word("$line easy", type = Contract.WordType.EASY))
+            dataBase.wordDao().insertWord(Word("$line hard", type = Contract.WordType.HARD))
+            dataBase.wordDao().insertWord(Word("$line med", type = Contract.WordType.MEDIUM))
             line = wordsBufferedReader.readLine()
         }
     }
