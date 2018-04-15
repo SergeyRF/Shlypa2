@@ -7,9 +7,11 @@ object Contract {
     const val DB_VERSION = 5
     const val DB_NAME = "shlyapa_db"
 
+    //Players table columns
     const val PLAYER_TABLE = "players"
     const val PLAYER_ID = "player_id"
     const val PLAYER_NAME = "player_name"
+    const val PLAYER_TYPE = "player_type"
 
     //Word table columns
     const val WORD_TABLE = "words"
@@ -20,5 +22,9 @@ object Contract {
 
     enum class WordType{
         EASY, MEDIUM, HARD, VERY_HARD, USER
+    }
+
+    enum class PlayerType {
+        STANDARD, USER
     }
 }
