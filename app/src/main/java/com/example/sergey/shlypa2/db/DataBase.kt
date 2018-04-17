@@ -14,7 +14,7 @@ import com.example.sergey.shlypa2.beans.Word
  */
 
 @Database(entities = arrayOf(Player::class, Word::class), version = Contract.DB_VERSION)
-@TypeConverters(WordTypeConverter::class)
+@TypeConverters(WordTypeConverter::class, PlayerTypeConverter::class)
 abstract class DataBase : RoomDatabase(){
 
     abstract fun playersDao() : PlayersDao

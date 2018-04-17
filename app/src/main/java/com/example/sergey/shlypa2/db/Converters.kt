@@ -9,7 +9,6 @@ import com.example.sergey.shlypa2.beans.Contract
 
 class WordTypeConverter {
 
-
     @TypeConverter
     fun typeToString(type: Contract.WordType): String {
         return type.toString()
@@ -27,4 +26,21 @@ class WordTypeConverter {
         }
     }
 
+}
+
+class PlayerTypeConverter {
+
+    @TypeConverter
+    fun typeToString(type: Contract.PlayerType) : String {
+        return type.toString()
+    }
+
+    @TypeConverter
+    fun stringToType(type : String) : Contract.PlayerType {
+        return when (type) {
+            Contract.PlayerType.USER.toString() -> Contract.PlayerType.USER
+            Contract.PlayerType.STANDARD.toString() -> Contract.PlayerType.STANDARD
+            else -> throw RuntimeException("Unsupported type")
+        }
+    }
 }
