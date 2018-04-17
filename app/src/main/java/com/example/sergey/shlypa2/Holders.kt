@@ -43,6 +43,11 @@ class TeamHolder(val view: View) : BaseHolder(view) {
         ivRename.setOnClickListener {
             listener?.invoke(team)
         }
+
+        teamName.setOnLongClickListener {
+            listener?.invoke(team)
+            true
+        }
     }
 }
 
@@ -70,11 +75,12 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
     }
 }
 
-class PlayerHolder(view: View) : BaseHolder(view) {
+class PlayerHolder(val view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.wordInject)
     val etName: EditText = view.findViewById(R.id.etRename)
     val btOnRename: Button = view.findViewById(R.id.btOnRename)
     fun bind(player: Player) {
+        tvName.show()
         etName.hide()
         btOnRename.hide()
         tvName.text = player.name
@@ -83,29 +89,38 @@ class PlayerHolder(view: View) : BaseHolder(view) {
             etName.show()
             btOnRename.show()
             etName.setText(player.name)
+            etName.requestFocus()
+        }
+        etName.setOnFocusChangeListener { view, hasFocus ->
+            Timber.d(" focus changed$hasFocus")
+            if (!hasFocus) {
+                tvName.show()
+                etName.hide()
+                btOnRename.hide()
+            }
         }
         btOnRename.setOnClickListener{
            if (etName.text.isNotEmpty()) {
                player.name = etName.text.toString()
            }
             tvName.show()
-            tvName.text = player.name
             etName.hide()
             btOnRename.hide()
             listener?.invoke(player)
         }
-        etName.setOnEditorActionListener { v, actionId, event ->
+        //если здесь обрабатывать некст то потом не открывает клавиатуру на ввод нового имени
+
+        /*etName.setOnEditorActionListener { v, actionId, event ->
             if (actionId== EditorInfo.IME_ACTION_NEXT&&etName.text.isNotEmpty()) {
                 // обработка нажатия Enter
                 player.name = etName.text.toString()
                 tvName.show()
-                tvName.text = player.name
                 etName.hide()
                 btOnRename.hide()
                 listener?.invoke(player)
                 true
             } else true
-        }
+        }*/
     }
 }
 

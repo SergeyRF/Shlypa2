@@ -6,8 +6,10 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.example.sergey.shlypa2.Constants
+import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.db.DataProvider
+import com.example.sergey.shlypa2.game.Dificult
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.Team
 import timber.log.Timber
@@ -20,7 +22,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
 
     private val playersLiveData = MutableLiveData<List<Player>>()
     private val teamsLiveData = MutableLiveData<List<Team>>()
-
+    private var db = DataProvider(application)
     private val dataProvider = DataProvider(application)
 
     init {
@@ -44,6 +46,17 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         updateData()
     }
 
+    fun reNamePlayer(player: Player){
+        if (player.type ==Contract.PlayerType.USER) {
+            Game.reNamePlayer(player)
+        }
+        else{
+            removePlayer(player)
+            addPlayer(player)
+        }
+        updateData()
+    }
+
     fun addRandomPlayer() {
         //Todo replace this ugly code
         val playersList = dataProvider.getPlayers()
@@ -58,6 +71,16 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         if(player != null) Game.addPlayer(player)
 
         updateData()
+    }
+
+    fun AddAllWords(d:Dificult){
+        if (Game.getWords().isEmpty()||d != Game.getWords()[0].type) {
+            var dbWords = db.getRandomWords((Game.settings.word * Game.getPlayers().size),
+                    Game.settings.dificult)
+            for (word in dbWords) {
+                Game.addWord(word)
+            }
+        }
     }
 
     private fun updateData() {

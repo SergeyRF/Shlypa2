@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
         android:textColor="@color/primary_text"
-        android:id="@+id/commands"
+        android:id="@+id/teemSize"
         android:layout_marginRight="10dp"
         app:layout_constraintRight_toRightOf="parent"
 

@@ -10,7 +10,6 @@ import android.widget.*
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.game.Dificult
-import com.example.sergey.shlypa2.utils.gone
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.viewModel.StateViewModel
 import kotlinx.android.synthetic.main.activity_game_settings.*
@@ -64,7 +63,7 @@ class GameSettingsActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.cancel_command)
         button.setOnClickListener(View.OnClickListener {
 
-            stateVM.createTeams(commands.text.toString().toInt())
+            stateVM.createTeams(teemSize.text.toString().toInt())
             stateVM.setAutoAddWord(cbAddAutoWord.isChecked)
             stateVM.setDificultLD(spinnerDificult.selectedItem as Dificult)
             stateVM.onFinish()
@@ -81,7 +80,7 @@ class GameSettingsActivity : AppCompatActivity() {
 
 
     private fun onCommands(i: Int?) {
-        commands.text = i.toString()
+        teemSize.text = i.toString()
         Timber.d("inject ${i.toString()} ")
     }
 

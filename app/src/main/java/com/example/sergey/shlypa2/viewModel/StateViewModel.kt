@@ -39,7 +39,6 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
         updateStateData()
     }
 
-    fun getCommandMinLD(): LiveData<Int> = minCount
     fun getCommandMaxLD(): LiveData<Int> = maxCount
     fun getTeemNeed():LiveData<Int> = teemNeed
     fun setTeemNeed(i:Int){
@@ -79,6 +78,7 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
         autoAddWord.value = settings.autoAddWords
         dificult.value = settings.dificult
     }
+
 
     fun onFinish() {
         Game.settings = settings

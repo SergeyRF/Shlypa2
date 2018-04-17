@@ -75,6 +75,7 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
         updateData()
     }
 
+
     private fun loadRandomWords() {
         var dbWords = db.getRandomWords(100, Game.settings.dificult)
         for (w in dbWords) Timber.d("$w")
