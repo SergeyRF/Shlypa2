@@ -16,6 +16,11 @@ interface PlayersDao {
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} ORDER BY RANDOM()")
     fun getAllPlayers() : List<Player>
 
+    @Query("SELECT * FROM ${Contract.PLAYER_TABLE} " +
+            "WHERE ${Contract.PLAYER_TYPE}= :type " +
+            "ORDER BY RANDOM()")
+    fun getPlayersByType(type : Contract.PlayerType) : List<Player>
+
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} WHERE ${Contract.PLAYER_ID} = :id")
     fun getPlayerById(id : Long) : Player?
 

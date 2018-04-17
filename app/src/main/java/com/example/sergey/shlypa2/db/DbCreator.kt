@@ -22,7 +22,7 @@ object DbCreator {
                     "Givi", "Samir", "Magamet", "Azamat", "Ahmad")
 
             for(name in names) {
-                dataBase.playersDao().insertPlayer(Player(name = name))
+                dataBase.playersDao().insertPlayer(Player(name = name, type = Contract.PlayerType.STANDARD))
             }
         }
 
@@ -43,6 +43,7 @@ object DbCreator {
             dataBase.wordDao().insertWord(Word("$line easy", type = Contract.WordType.EASY))
             dataBase.wordDao().insertWord(Word("$line hard", type = Contract.WordType.HARD))
             dataBase.wordDao().insertWord(Word("$line med", type = Contract.WordType.MEDIUM))
+            dataBase.wordDao().insertWord(Word("$line very hard", type = Contract.WordType.VERY_HARD))
             line = wordsBufferedReader.readLine()
         }
     }

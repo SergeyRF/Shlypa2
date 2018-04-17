@@ -12,7 +12,9 @@ import com.example.sergey.shlypa2.game.Dificult
 class DataProvider(val context: Context) {
     val db = DataBase.getInstance(context)
 
-    fun getPlayers() : List<Player> = db.playersDao().getAllPlayers()
+    fun getPlayers(type : Contract.PlayerType = Contract.PlayerType.STANDARD) : List<Player>
+            = db.playersDao().getPlayersByType(type)
+
 
     fun getPlayer(id : Long) = db.playersDao().getPlayerById(id)
 

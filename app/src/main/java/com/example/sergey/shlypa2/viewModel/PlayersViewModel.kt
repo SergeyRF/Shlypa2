@@ -48,12 +48,6 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         //Todo replace this ugly code
         val playersList = dataProvider.getPlayers()
 
-        for(p in playersList) {
-            Timber.d("$p")
-        }
-
-        Collections.shuffle(playersList)
-
         val player : Player? = playersList.find { !Game.getPlayers().contains(it) }
         if(player != null) Game.addPlayer(player)
 
