@@ -28,6 +28,7 @@
             android:label="@string/word_actyvity"/>
         <activity android:name=".ui.RoundActivity"
             android:label="@string/start_actyvity"></activity>
+        <activity android:name=".ui.GameResultActivity" />
     </application>
 
 </manifest>

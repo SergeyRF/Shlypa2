@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2.db
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
@@ -13,6 +14,7 @@ import com.example.sergey.shlypa2.beans.Word
  */
 
 @Database(entities = arrayOf(Player::class, Word::class), version = Contract.DB_VERSION)
+@TypeConverters(WordTypeConverter::class)
 abstract class DataBase : RoomDatabase(){
 
     abstract fun playersDao() : PlayersDao

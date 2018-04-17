@@ -7,8 +7,8 @@ import com.example.sergey.shlypa2.beans.Player
  */
 
 
-class Team(var name: String) {
-    val players : MutableList<Player> = mutableListOf()
+class Team(var name: String, val players : MutableList<Player> = mutableListOf()) {
+
 
     var id = -1
 

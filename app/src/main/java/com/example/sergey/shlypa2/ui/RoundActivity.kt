@@ -20,7 +20,7 @@ class RoundActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //For debug only
+        //TODO Remove this debug shit
         Game.settings.time = 10
 
         viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)

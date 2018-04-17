@@ -68,19 +68,6 @@ class RoundTests {
     }
 
     @Test
-    fun testScoresCount() {
-        for (i in 0..4) {
-            for (a in 0..9) {
-                round.getWord()
-                round.answer(true)
-            }
-            round.nextPlayer()
-        }
-
-        round.countScores()
-    }
-
-    @Test
     fun testPlayersQueue() {
         for(i in 0..50) println("${round.nextPlayer()}")
     }

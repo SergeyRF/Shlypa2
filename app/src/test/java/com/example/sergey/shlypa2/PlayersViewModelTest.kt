@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2
 
+import android.app.Instrumentation
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
@@ -7,6 +8,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
@@ -19,7 +21,7 @@ class PlayersViewModelTest {
     @Before
     fun setup() {
         Game.clear()
-        playersViewModel = PlayersViewModel()
+        playersViewModel = PlayersViewModel(RuntimeEnvironment.application)
         playersViewModel.addPlayer(Player("John"))
         playersViewModel.addPlayer(Player("Jack"))
         playersViewModel.addPlayer(Player("Soul"))
