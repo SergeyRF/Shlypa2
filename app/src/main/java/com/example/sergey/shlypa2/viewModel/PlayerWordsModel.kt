@@ -84,6 +84,15 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
 
         randomWords.addAll(unicWords)
     }
+    fun deleteWord(word:Word){
+        words.remove(word)
+        updateData()
+    }
+    fun renameWord(word:Word){
+        val randomez:List<Word> = randomWords.filter { !words.contains(it) }
+        words[words.indexOf(word)].word = randomez[0].word
+        updateData()
+    }
 
     private fun updateData() {
         wordsLiveData.value = words

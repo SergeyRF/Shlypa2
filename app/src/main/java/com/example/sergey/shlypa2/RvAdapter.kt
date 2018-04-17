@@ -15,6 +15,8 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
     private var data: List<Any>? = null
 
     var listener:((Any) -> Unit)? = null
+    var listenerTwo:((Any)->Unit)? = null
+    var listenerThree:((Any)->Unit)? = null
 
     var altMode = false
 
@@ -41,6 +43,8 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
         }
 
         holder.listener = listener
+        holder.listenerTwo= listenerTwo
+        holder.listenerThree = listenerThree
         return holder
     }
 
