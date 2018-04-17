@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.game
 
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
 
 /**
@@ -18,23 +19,27 @@ class GameState {
 
 
     var currentRoundPosition = -1
+    var currentRound : Round? = null
 
     val allWords = mutableListOf<Word>()
 
+    val savedTime = System.currentTimeMillis()
+
+    //todo keep players by id instead of name
     val players = mutableMapOf<String, Player>()
 
     fun saveRoundResults(results: RoundResults) {
         resultsList.add(results)
     }
 
-    fun createRound() : Round? {
-        if(currentRoundPosition >= rounds.size) return null
+    fun createRound() : Boolean {
+        if(currentRoundPosition >= rounds.size) return false
 
-        val round = Round(allWords)
-        round.description = rounds[currentRoundPosition].description
-        round.rules = rounds[currentRoundPosition].rules
+        currentRound = Round(allWords)
+        currentRound!!.description = rounds[currentRoundPosition].description
+        currentRound!!.rules = rounds[currentRoundPosition].rules
 
-        return round
+        return true
     }
 
 }

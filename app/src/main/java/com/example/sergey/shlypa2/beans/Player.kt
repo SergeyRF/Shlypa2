@@ -9,12 +9,11 @@ import android.arch.persistence.room.*
         indices = [Index(value = Contract.PLAYER_NAME, unique = true)])
 class Player(@ColumnInfo(name = Contract.PLAYER_NAME) var name: String = "Nameless",
              @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Contract.PLAYER_ID) var id : Long = 0,
-             @ColumnInfo(name = Contract.PLAYER_TYPE) var type: Contract.PlayerType = Contract.PlayerType.USER,
-             @Ignore var words: MutableList<String>? = null,
-             @Ignore var scores: Int = 0) {
+             @ColumnInfo(name = Contract.PLAYER_TYPE) var type: Contract.PlayerType = Contract.PlayerType.USER
+             ) {
 
     override fun toString(): String {
-        return "Player $name id $id scores $scores"
+        return "Player $name id $id "
     }
 
     override fun equals(other: Any?): Boolean {

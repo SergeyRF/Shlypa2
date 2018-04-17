@@ -1,7 +1,10 @@
 package com.example.sergey.shlypa2.game
 
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
+import com.google.gson.GsonBuilder
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -9,10 +12,8 @@ import java.util.*
  */
 object Game {
 
-    var state : GameState = GameState()
-    var settings : Settings = Settings()
-
-    var currentRound: Round? = null
+    var state: GameState = GameState()
+    var settings: Settings = Settings()
 
     fun maxTeamsCount(): Int = state.players.size / 2
 
@@ -58,15 +59,15 @@ object Game {
 
     fun getTeams(): List<Team> = state.teams
 
-    fun getRoundResults() : List<TeamWithScores> {
+    fun getRoundResults(): List<TeamWithScores> {
 
         val teamWithScores = state.teams.map { TeamWithScores(it) }
-        val results = currentRound?.getResults()
+        val results = state.currentRound?.getResults()
 
         val scoresMap = results?.getScores() ?: mapOf()
 
         //Split scores for teams
-        teamWithScores.forEach{
+        teamWithScores.forEach {
             val map = it.scoresMap
             it.team.players.forEach {
                 map[it.id] = scoresMap[it.id] ?: 0
@@ -76,22 +77,22 @@ object Game {
         return teamWithScores
     }
 
-    fun getGameResults() : List<TeamWithScores>{
+    fun getGameResults(): List<TeamWithScores> {
         val teamWithScores = state.teams.map { TeamWithScores(it) }
-        val resultsMap : List<Map<Long, Int>> = state.resultsList.map { it.getScores() }
+        val resultsMap: List<Map<Long, Int>> = state.resultsList.map { it.getScores() }
 
 
         return calculateGameResults(teamWithScores, resultsMap)
     }
 
     fun calculateGameResults(teamWithScores: List<TeamWithScores>,
-                                     resultsMap : List<Map<Long, Int>>) : List<TeamWithScores> {
+                             resultsMap: List<Map<Long, Int>>): List<TeamWithScores> {
 
-        val mapOfPlayers : MutableMap<Long, Int> = mutableMapOf()
+        val mapOfPlayers: MutableMap<Long, Int> = mutableMapOf()
 
         //Sum score for player for each round.
         resultsMap.forEach {
-            it.forEach{
+            it.forEach {
                 var scores = mapOfPlayers[it.key] ?: 0
                 scores += it.value
                 mapOfPlayers[it.key] = scores
@@ -120,16 +121,16 @@ object Game {
 
     fun getWords(): List<Word> = state.allWords
 
-    fun getRound(): Round = currentRound!!
+    fun getRound(): Round = state.currentRound!!
 
-    fun hasRound() = currentRound != null
+    fun hasRound() = state.currentRound != null
 
     fun beginNextRound() {
-        val results = currentRound?.getResults()
-        if(results != null) state.saveRoundResults(results)
+        val results = state.currentRound?.getResults()
+        if (results != null) state.saveRoundResults(results)
 
         state.currentRoundPosition++
-        currentRound = state.createRound()
+        state.createRound()
     }
 
     fun clear() {

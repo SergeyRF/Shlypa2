@@ -17,9 +17,8 @@ import android.widget.Toast
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Team
-
 class TeemActivity : AppCompatActivity() {
 
     lateinit var teamVM: PlayersViewModel
