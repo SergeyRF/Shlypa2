@@ -1,15 +1,8 @@
 package com.example.sergey.shlypa2
 
 import android.support.v7.widget.RecyclerView
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Team
@@ -17,11 +10,8 @@ import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
 import timber.log.Timber
-import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView.OnEditorActionListener
-
-
+import android.widget.*
 
 
 /**
@@ -32,24 +22,28 @@ abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view) {
     var listener : ((Any) -> Unit)? = null
 }
 
-class TeamHolder(view: View) : BaseHolder(view) {
-    val teamName = view.findViewById<TextView>(R.id.team_name)
+class TeamHolder(val view: View) : BaseHolder(view) {
+    val teamName = view.findViewById<TextView>(R.id.tvTeamName)
     val listPlayers = view.findViewById<TextView>(R.id.tvPlayers)
-
-    fun bind(teem: Team) {
-        teamName.text = teem.name
+    val ivRename = view.findViewById<ImageButton>(R.id.ibTeemRename)
+    lateinit var inflater: LayoutInflater
+    fun bind(team: Team) {
+        teamName.text = team.name
 
         var player = StringBuffer("")
-        for (i in 0 until teem.players.size) {
-            player.append(teem.players[i].name + "\n")
+        for (i in 0 until team.players.size) {
+            player.append(team.players[i].name + "\n")
         }
         listPlayers.text = player
 
+        ivRename.setOnClickListener {
+            listener?.invoke(team)
+        }
     }
 }
 
 class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
-    private val teamName : TextView = view.findViewById(R.id.team_name)
+    private val teamName : TextView = view.findViewById(R.id.tvTeamName)
     private val teemScores : TextView = view.findViewById(R.id.tvTeamScores)
     private val listPlayers : LinearLayout = view.findViewById(R.id.linearPlayers)
 

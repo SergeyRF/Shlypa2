@@ -63,6 +63,8 @@ class PlayersActivity : AppCompatActivity() {
         btAddRandomPlayer.setOnClickListener{
             viewModel.addRandomPlayer()
         }
+
+        //enter
         etName.setOnEditorActionListener { v, actionId, event ->
             if (actionId== EditorInfo.IME_ACTION_NEXT&&etName.text.isNotEmpty()) {
                 // обработка нажатия Enter
