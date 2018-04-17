@@ -49,13 +49,13 @@ class WordsInActivity : AppCompatActivity() {
             }
             if(!viewStateModel.needWord()){
                 btNext.show()
-                ibAddWord.hide()
+                btRandomWord.hide()
             }
         }
         btNext.setOnClickListener{
             viewStateModel.nextPlayer()
             btNext.hide()
-            ibAddWord.show()
+            btRandomWord.show()
         }
 
 
@@ -69,6 +69,7 @@ class WordsInActivity : AppCompatActivity() {
             viewStateModel.fillWithRandomWords()
             btNext.show()
             ibAddWord.hide()
+            btRandomWord.hide()
         }
 
     }
