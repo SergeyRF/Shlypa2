@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -9,11 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.ui.RoundActivity
+import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import timber.log.Timber
 
 
@@ -27,8 +30,13 @@ class RoundResultFragment : Fragment() {
         // Inflate the layout for this fragment
         val root = inflater!!.inflate(R.layout.fragment_round_result, container, false)
 
+        val viewModel = ViewModelProviders.of(activity).get(RoundViewModel::class.java)
+
         val btNextRound : Button = root.findViewById(R.id.btNextRound)
         btNextRound.setOnClickListener{(activity as RoundActivity).onRoundFinish()}
+
+        val tvRound: TextView = root.findViewById(R.id.tvRoundNumber)
+        tvRound.text = viewModel.roundDescription
 
         val adapter = RvAdapter()
         adapter.setData(Game.getRoundResults())

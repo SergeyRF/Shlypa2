@@ -24,6 +24,7 @@
     <string name="minus_bal">Вычитать балы за пропуск слов</string>
     <string name="how_minus_bal">Сколько балов вычитать</string>
     <string name="player_game">Объясняет игрок:</string>
+    <string name="game_results">Шляпа пуста</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

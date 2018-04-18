@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
@@ -29,6 +30,7 @@ class TurnResultFragment : Fragment() {
         // Inflate the layout for this fragment
         val root = inflater!!.inflate(R.layout.fragment_turn_result, container, false)
 
+
         val adapter = RvAdapter()
         adapter.altMode = true
         adapter.setData(viewModel.getTurnResults())
@@ -41,6 +43,7 @@ class TurnResultFragment : Fragment() {
 
         finishBt.setOnClickListener{ viewModel.finishTurn()
             (activity as RoundActivity).onTurnFinished() }
+
 
 
         return root

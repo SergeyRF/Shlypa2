@@ -5,12 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
+
     <TextView
         android:id="@+id/tvTeamName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
+        android:textColor="@color/primary_text"
         android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/small_margin"
         tools:text="Name" />
 
     <TextView
@@ -18,6 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
+        android:textColor="@color/primary_text"
+        android:layout_marginRight="@dimen/small_margin"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvTeamName" />
 
@@ -26,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="@dimen/big_margin"
         android:gravity="left"
         android:orientation="vertical"
         android:textSize="@dimen/text_smoll"

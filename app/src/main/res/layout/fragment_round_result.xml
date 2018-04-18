@@ -5,6 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.sergey.shlypa2.ui.fragments.RoundResultFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/tvRoundNumber"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_Big"
+        android:gravity="center"
+
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvRoundResult"
         android:layout_width="0dp"
@@ -12,7 +23,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvRoundNumber" />
 
     <Button
         android:id="@+id/btNextRound"
