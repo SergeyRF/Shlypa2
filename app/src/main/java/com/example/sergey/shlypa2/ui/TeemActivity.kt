@@ -25,7 +25,6 @@ import com.example.sergey.shlypa2.viewModel.StateViewModel
 class TeemActivity : AppCompatActivity() {
 
     lateinit var teamVM: PlayersViewModel
-    lateinit var stateVM:StateViewModel
     lateinit var adapterTeam: RvAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +32,6 @@ class TeemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teem)
         val teemRv = findViewById<RecyclerView>(R.id.rvTeem)
-        stateVM = ViewModelProviders.of(this).get(StateViewModel::class.java)
 
         adapterTeam = RvAdapter()
         teemRv.layoutManager=LinearLayoutManager(this)
@@ -45,8 +43,7 @@ class TeemActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.cancel_teem)
         button.setOnClickListener(View.OnClickListener {
 
-            stateVM.getAutoAddWord().observe(this,
-                    Observer { bool ->startActivity (setIntent (bool)) })
+           startActivity (Intent(this, WordsInActivity::class.java))
         })
 
 
@@ -76,18 +73,4 @@ class TeemActivity : AppCompatActivity() {
         adapterTeam.setData(teem)
     }
 
-    fun setIntent( b:Boolean?):Intent {
-
-        if (b!!){
-                teamVM.AddAllWords(stateVM.getDificultLD().value as Dificult)
-
-            Game.beginNextRound()
-            intent = Intent(this, RoundActivity::class.java)
-        }
-        else {
-
-            intent = Intent(this, WordsInActivity::class.java)
-        }
-        return intent
-    }
 }

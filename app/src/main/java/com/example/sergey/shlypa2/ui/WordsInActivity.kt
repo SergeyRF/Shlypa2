@@ -41,21 +41,27 @@ class WordsInActivity : AppCompatActivity() {
 
         viewStateModel.getPlayerLiveData().observe(this, Observer { setPlayer(it) })
 
+        viewStateModel.needWord.observe(this, Observer { bool -> buttonLook(bool) })
+
         viewStateModel.inputFinishCallBack.observe(this, Observer { bool ->
             if(bool != null && bool) onStartGame() })
-        buttonLook()
+
         ibAddWord.setOnClickListener{
                 if (etWord.text.toString().isNotEmpty()) {
                     viewStateModel.addWord(etWord.text.toString())
                     etWord.text.clear()
                 }
-                buttonLook()
         }
 
         btNext.setOnClickListener{
-            viewStateModel.nextPlayer()
-            etWord.text.clear()
-            buttonLook()
+            if (viewStateModel.needWord()){
+
+            }
+            else{
+                viewStateModel.nextPlayer()
+                etWord.text.clear()
+            }
+
         }
 
         btBeginGame.setOnClickListener {
@@ -65,7 +71,6 @@ class WordsInActivity : AppCompatActivity() {
 
         btRandomWord.setOnClickListener{
             viewStateModel.fillWithRandomWords()
-            buttonLook()
         }
 
         wordsAdapter.listener = {word:Any->
@@ -74,7 +79,6 @@ class WordsInActivity : AppCompatActivity() {
         wordsAdapter.listenerTwo = {word:Any->
             viewStateModel.deleteWord(word as Word)
             wordsAdapter.notifyDataSetChanged()
-            buttonLook()
         }
         wordsAdapter.listenerThree = {word:Any->
             viewStateModel.renameWord(word as Word)
@@ -90,10 +94,17 @@ class WordsInActivity : AppCompatActivity() {
         wordInject.text = p!!.name
     }
 
-    fun buttonLook(){
-        if (viewStateModel.needWord()){
-            btNext.hide()
-            btRandomWord.show()
+    fun buttonLook(b:Boolean?){
+
+        if (b!!){
+            if (viewStateModel.randomWord()){
+                btNext.hide()
+                btRandomWord.show()
+            }
+            else{
+                btNext.show()
+                btRandomWord.hide()
+            }
             ibAddWord.show()
         }
         else{

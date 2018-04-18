@@ -73,15 +73,6 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         updateData()
     }
 
-    fun AddAllWords(d:Dificult){
-        if (Game.getWords().isEmpty()||d != Game.getWords()[0].type) {
-            var dbWords = db.getRandomWords((Game.settings.word * Game.getPlayers().size),
-                    Game.settings.dificult)
-            for (word in dbWords) {
-                Game.addWord(word)
-            }
-        }
-    }
 
     private fun updateData() {
         playersLiveData.value = Game.getPlayers()

@@ -21,6 +21,8 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
 
     val inputFinishCallBack = MutableLiveData<Boolean>()
 
+    val needWord = MutableLiveData<Boolean>()
+
     private var pos: Int = 0
     private var words: MutableList<Word> = mutableListOf()
 
@@ -51,6 +53,8 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
         Timber.d("words size ${words.size} game settings words ${Game.settings.word}")
         return words.size < Game.settings.word
     }
+
+    fun randomWord():Boolean = Game.settings.autoAddWords
 
     fun getPlayerLiveData(): LiveData<Player> {
         return playerLivaData
@@ -99,5 +103,6 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
         wordsLiveData.value = words
         //todo index of bound exception here
         playerLivaData.value = Game.getPlayers()[pos]
+        needWord.value = needWord()
     }
 }
