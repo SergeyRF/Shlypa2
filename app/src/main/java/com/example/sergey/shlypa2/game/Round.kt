@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.game
 
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
 import java.util.*
 
@@ -13,16 +14,15 @@ class Round(val words: List<Word>) {
     var rules = "Guess word or fuck yourself"
 
     var wordsQueue: ArrayDeque<Word>
-    private var currentWord: Word? = null
-    var answeredWords = mutableListOf<Word>()
-
     var wordsAnsweredByPlayer = mutableListOf<Word>()
 
-    private var currentTeam: Team = Game.getCurrentTeam()
+    var results: MutableMap<Long, MutableList<Long>> = mutableMapOf()
 
-    private var currentPlayer: Player = currentTeam.getPlayer()
+    var currentTeam: Team = Game.getCurrentTeam()
+    var currentPlayer: Player = currentTeam.getPlayer()
 
-    private var results: MutableMap<Long, MutableList<Long>> = mutableMapOf()
+    private var currentWord: Word? = null
+
 
     init {
         val listCopy = words.toMutableList()
@@ -70,7 +70,6 @@ class Round(val words: List<Word>) {
         if (currentWord != null) {
             currentWord!!.right = correct
             currentWord!!.answeredBy = currentPlayer.id
-            answeredWords.add(currentWord!!)
             wordsAnsweredByPlayer.add(currentWord!!)
         }
 
@@ -83,7 +82,6 @@ class Round(val words: List<Word>) {
      */
     fun returnWord(word: Word) {
         wordsQueue.add(word)
-        answeredWords.remove(word)
         wordsAnsweredByPlayer.remove(word)
     }
 

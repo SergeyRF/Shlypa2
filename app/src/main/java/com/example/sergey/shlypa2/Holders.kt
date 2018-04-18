@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.game.Team
 import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
@@ -14,6 +13,9 @@ import timber.log.Timber
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import com.example.sergey.shlypa2.beans.Contract
+import com.example.sergey.shlypa2.beans.Team
+import com.example.sergey.shlypa2.game.GameState
+import com.example.sergey.shlypa2.utils.Functions
 
 
 /**
@@ -186,6 +188,25 @@ class WordResultHolder(view: View):BaseHolder(view) {
 
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             word.right = checkedId == R.id.right
+        }
+    }
+}
+
+class SavedStateHolder(val view : View) : BaseHolder(view) {
+    val tvDate : TextView = view.findViewById(R.id.tvDateState)
+    val tvPlayers : TextView = view.findViewById(R.id.tvPlayersState)
+
+    fun bind(state : GameState) {
+        tvDate.text = Functions.timeToLocalDate(state.savedTime, view.context)
+        val builder = StringBuilder()
+        state.players.forEach{
+            builder.append("${it.value.name},")
+        }
+
+        tvPlayers.text = builder.toString()
+
+        view.setOnClickListener {
+            listener?.invoke(state)
         }
     }
 }

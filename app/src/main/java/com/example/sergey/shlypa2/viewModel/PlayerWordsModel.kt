@@ -50,11 +50,11 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
     }
 
     fun needWord(): Boolean {
-        Timber.d("words size ${words.size} game settings words ${Game.settings.word}")
-        return words.size < Game.settings.word
+        Timber.d("words size ${words.size} game settings words ${Game.getSettings().word}")
+        return words.size < Game.getSettings().word
     }
 
-    fun randomWord():Boolean = Game.settings.autoAddWords
+    fun randomWord():Boolean = Game.getSettings().autoAddWords
 
     fun getPlayerLiveData(): LiveData<Player> {
         return playerLivaData
@@ -68,7 +68,7 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
     }
 
     fun fillWithRandomWords() {
-        val needWordsCount = Game.settings.word - words.size
+        val needWordsCount = Game.getSettings().word - words.size
 
         if (randomWords.size < needWordsCount) loadRandomWords()
 
@@ -81,7 +81,7 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
 
 
     private fun loadRandomWords() {
-        var dbWords = db.getRandomWords(100, Game.settings.dificult)
+        var dbWords = db.getRandomWords(100, Game.getSettings().dificult)
         for (w in dbWords) Timber.d("$w")
 
         var unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !words.contains(it) }

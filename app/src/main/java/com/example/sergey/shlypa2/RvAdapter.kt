@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.game.Team
+import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.TeamWithScores
 
 
@@ -28,6 +29,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
             is WordResultHolder -> holder.bind(item as Word)
             is TeamHolder -> holder.bind(item as Team)
             is TeamWithScoreHolder -> holder.bind(item as TeamWithScores)
+            is SavedStateHolder -> holder.bind(item as GameState)
         }
     }
 
@@ -39,6 +41,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
             VIEW_TYPE_WORD_RESULT -> WordResultHolder(view)
             VIEW_TYPE_TEAM -> TeamHolder(view)
             VIEW_TYPE_TEAM_SCORES -> TeamWithScoreHolder(view)
+            VIEW_TYPE_SAVED_STATE -> SavedStateHolder(view)
             else -> throw RuntimeException("Unsupported item type")
         }
 
@@ -59,6 +62,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
             is Word -> if(altMode) VIEW_TYPE_WORD_RESULT else VIEW_TYPE_WORD
             is Team -> VIEW_TYPE_TEAM
             is TeamWithScores -> VIEW_TYPE_TEAM_SCORES
+            is GameState -> VIEW_TYPE_SAVED_STATE
             else -> throw RuntimeException("Unsupported item type")
         }
     }
@@ -75,6 +79,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
         const val VIEW_TYPE_WORD_RESULT = R.layout.holder_word_resalt
         const val VIEW_TYPE_TEAM = R.layout.holder_teem
         const val VIEW_TYPE_TEAM_SCORES = R.layout.holder_team_score
+        const val VIEW_TYPE_SAVED_STATE = R.layout.holder_saved_state
     }
 }
 
