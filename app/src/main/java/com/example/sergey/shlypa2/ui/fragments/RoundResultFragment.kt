@@ -25,6 +25,7 @@ import timber.log.Timber
  */
 class RoundResultFragment : Fragment() {
 
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -33,7 +34,7 @@ class RoundResultFragment : Fragment() {
         val viewModel = ViewModelProviders.of(activity).get(RoundViewModel::class.java)
 
         val btNextRound : Button = root.findViewById(R.id.btNextRound)
-        btNextRound.setOnClickListener{(activity as RoundActivity).onRoundFinish()}
+        btNextRound.setOnClickListener{ viewModel.finishRound()}
 
         val tvRound: TextView = root.findViewById(R.id.tvRoundNumber)
         tvRound.text = viewModel.roundDescription

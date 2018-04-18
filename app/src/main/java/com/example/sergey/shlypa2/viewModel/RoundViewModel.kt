@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.os.Handler
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.utils.SingleLiveEvent
 
 import timber.log.Timber
 
@@ -14,21 +15,20 @@ import timber.log.Timber
  */
 class RoundViewModel : ViewModel() {
 
+    val commandCallback : MutableLiveData<Command> = SingleLiveEvent()
+
     val round = Game.getRound()
 
     var roundDescription = round.description
     var roundRules = round.rules
 
     val wordLiveData = MutableLiveData<Word>()
-    val finishTurnCall = MutableLiveData<Boolean>()
 
     val timerLiveData = MutableLiveData<Int>()
     var timeLeft = Game.getSettings().time
     var timerStarted = true
 
     val handler = Handler()
-
-    var roundFinished = false
 
     init {
         wordLiveData.value = round.getWord()
@@ -43,22 +43,48 @@ class RoundViewModel : ViewModel() {
         if (word != null) {
             wordLiveData.value = word
         } else {
-            roundFinished = true
-            finishTurnCall.value = true
+            finishTurn()
         }
+    }
+
+    fun beginRound() {
+        commandCallback.value = Command.GET_READY
+    }
+
+    fun finishRound() {
+        Game.beginNextRound()
+
+        val command = if(Game.hasRound()) Command.START_NEXT_ROUND else Command.SHOW_GAME_RESULTS
+
+        commandCallback.value = command
+    }
+
+    fun startTurn() {
+        commandCallback.value = Command.START_TURN
+    }
+
+    private fun finishTurn() {
+        //TODO save state of game here or in the finish round function
+        timerStarted = false
+
+        commandCallback.value = Command.FINISH_TURN
+
+        handler.removeCallbacksAndMessages(null)
+        timeLeft = Game.getSettings().time
+        timerLiveData.value = timeLeft
     }
 
     fun getTurnResults(): List<Word> {
         return round.wordsAnsweredByPlayer
     }
 
-    fun finishTurn() {
+    fun nextTurn() {
         round.nextPlayer()
-        timerStarted = false
-        handler.removeCallbacksAndMessages(null)
-        timeLeft = Game.getSettings().time
-        timerLiveData.value = timeLeft
-        finishTurnCall.value = false
+        if(round.getWord() != null) {
+            commandCallback.value = Command.GET_READY
+        } else {
+            commandCallback.value = Command.SHOW_ROUND_RESULTS
+        }
     }
 
     fun startTimer() {
@@ -79,10 +105,19 @@ class RoundViewModel : ViewModel() {
             if (timeLeft >= 0) {
                 timerLiveData.value = timeLeft
             } else {
-                finishTurnCall.value = true
+                finishTurn()
             }
 
             if (timerStarted) handler.postDelayed(this, 1000)
         }
+    }
+
+    enum class Command {
+        GET_READY,
+        START_TURN,
+        FINISH_TURN,
+        SHOW_ROUND_RESULTS,
+        START_NEXT_ROUND,
+        SHOW_GAME_RESULTS
     }
 }

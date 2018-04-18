@@ -53,13 +53,9 @@ class GameFragment : Fragment() {
         btOk.setOnClickListener{viewModel.answerWord(true)}
         btReturn.setOnClickListener{viewModel.answerWord(false)}
 
-
-        viewModel.finishTurnCall.observe(this, Observer { if (it != null && it) finishTurn()})
         viewModel.timerLiveData.observe(this, Observer { time -> tvTime.text = "$time" })
 
-
         return root
-
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -81,11 +77,6 @@ class GameFragment : Fragment() {
                 return true
             }
         })
-    }
-
-    fun finishTurn() {
-        Timber.d("finish turn")
-        (activity as RoundActivity).startTurnFinishFragment()
     }
 
     override fun onResume() {

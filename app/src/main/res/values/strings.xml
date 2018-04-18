@@ -33,4 +33,5 @@
     <string name="player_name_empty">Player name shoud not be empty</string>
     <string name="not_enough_players">Add more players</string>
     <string name="loadGame">Load game</string>
+    <string name="no_answers">No one words were answered</string>
 </resources>

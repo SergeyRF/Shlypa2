@@ -33,7 +33,7 @@ class TurnStartFragment : Fragment() {
         val startButton : Button = root.findViewById(R.id.btTurnStart)
 
         playerTv.text = viewModel.getPlayer().name
-        startButton.setOnClickListener{(activity as RoundActivity).startGameFragment()}
+        startButton.setOnClickListener{viewModel.startTurn()}
 
         return root
     }

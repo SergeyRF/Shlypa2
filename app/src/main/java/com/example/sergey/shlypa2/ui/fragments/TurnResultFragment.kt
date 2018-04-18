@@ -14,7 +14,10 @@ import android.widget.TextView
 
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.ui.RoundActivity
+import com.example.sergey.shlypa2.utils.gone
+import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 
 
@@ -23,30 +26,44 @@ import com.example.sergey.shlypa2.viewModel.RoundViewModel
  */
 class TurnResultFragment : Fragment() {
 
+    lateinit var viewModel: RoundViewModel
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val viewModel = ViewModelProviders.of(activity).get(RoundViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity).get(RoundViewModel::class.java)
         // Inflate the layout for this fragment
         val root = inflater!!.inflate(R.layout.fragment_turn_result, container, false)
 
+        recyclerView = root.findViewById(R.id.rvWordsTurnResult)
 
-        val adapter = RvAdapter()
-        adapter.altMode = true
-        adapter.setData(viewModel.getTurnResults())
+        val wordsList = viewModel.getTurnResults()
 
-        val rv : RecyclerView = root.findViewById(R.id.rvWordsTurnResult)
-        rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = adapter
+        if(wordsList.isNotEmpty()) {
+            setRecycler(wordsList)
+        } else {
+            val textNoWords : TextView = root.findViewById(R.id.tvNoAnswers)
+
+            textNoWords.show()
+            recyclerView.gone()
+        }
+
+        //todo implement words right - wrong selection
 
         val finishBt : Button = root.findViewById(R.id.btFinishTurn)
 
-        finishBt.setOnClickListener{ viewModel.finishTurn()
-            (activity as RoundActivity).onTurnFinished() }
-
-
+        finishBt.setOnClickListener{ viewModel.nextTurn() }
 
         return root
+    }
+
+    private fun setRecycler(words : List<Word>) {
+        val adapter = RvAdapter()
+        adapter.altMode = true
+        adapter.setData(words)
+
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
     }
 
 }
