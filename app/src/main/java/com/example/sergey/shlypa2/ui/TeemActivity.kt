@@ -1,10 +1,8 @@
 package com.example.sergey.shlypa2.ui
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -17,10 +15,8 @@ import android.widget.Toast
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
-import com.example.sergey.shlypa2.game.Dificult
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.viewModel.StateViewModel
 
 class TeemActivity : AppCompatActivity() {
 

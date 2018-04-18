@@ -4,7 +4,6 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.game.Dificult
 import com.example.sergey.shlypa2.game.Game
@@ -14,14 +13,14 @@ import timber.log.Timber
 /**
  * Created by sergey on 4/1/18.
  */
-class StateViewModel(application: Application) : AndroidViewModel(application) {
+class SettingsViewModel(application: Application) : AndroidViewModel(application) {
     private val timeLiveData = MutableLiveData<Int>()
     private val wordsLiveData = MutableLiveData<Int>()
     private val minCount = MutableLiveData<Int>()
     private val maxCount = MutableLiveData<Int>()
     private val teemNeed = MutableLiveData<Int>()
     private val dificult =MutableLiveData<Dificult>()
-    private val autoAddWord =MutableLiveData<Boolean>()
+    private val allowRandom =MutableLiveData<Boolean>()
     private val minusBal = MutableLiveData<Boolean>()
     private val numberMinusBal = MutableLiveData<Int>()
 
@@ -66,9 +65,9 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
         updateStateData()
     }
 
-    fun getAutoAddWord():LiveData<Boolean> = autoAddWord
-    fun setAutoAddWord(b:Boolean){
-        settings.autoAddWords = b
+    fun getAllowRandom():LiveData<Boolean> = allowRandom
+    fun setAllowRandom(b:Boolean){
+        settings.allowRandomWords = b
         updateStateData()
     }
 
@@ -89,7 +88,7 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
         wordsLiveData.value =settings.word
         minCount.value = Constants.MIN_TEAM_COUNT
         maxCount.value = Game.maxTeamsCount()
-        autoAddWord.value = settings.autoAddWords
+        allowRandom.value = settings.allowRandomWords
         dificult.value = settings.dificult
         minusBal.value = settings.minusBal
         numberMinusBal.value = settings.numberMinusBal

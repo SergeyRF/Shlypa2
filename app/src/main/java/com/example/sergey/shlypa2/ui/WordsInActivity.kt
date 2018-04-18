@@ -7,6 +7,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.example.sergey.shlypa2.R
@@ -14,11 +15,12 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.gone
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.PlayerWordsModel
 import kotlinx.android.synthetic.main.activity_words_in.*
-import timber.log.Timber
 
 class WordsInActivity : AppCompatActivity() {
 
@@ -41,7 +43,7 @@ class WordsInActivity : AppCompatActivity() {
 
         viewStateModel.getPlayerLiveData().observe(this, Observer { setPlayer(it) })
 
-        viewStateModel.needWord.observe(this, Observer { bool -> buttonLook(bool) })
+        viewStateModel.needWord.observe(this, Observer { needWords -> if(needWords != null) onNeedWordsChanged(needWords) })
 
         viewStateModel.inputFinishCallBack.observe(this, Observer { bool ->
             if(bool != null && bool) onStartGame() })
@@ -53,33 +55,25 @@ class WordsInActivity : AppCompatActivity() {
                 }
         }
 
-        btNext.setOnClickListener{
-            if (viewStateModel.needWord()){
 
-            }
-            else{
+        btNext.setOnClickListener{
+            if (viewStateModel.needWord() && viewStateModel.randomAllowed()){
+                viewStateModel.fillWithRandomWords()
+            } else{
                 viewStateModel.nextPlayer()
                 etWord.text.clear()
             }
-
-        }
-
-        btBeginGame.setOnClickListener {
-            addFakeWords()
-            Game.beginNextRound()
-            startActivity(Intent(this, RoundActivity::class.java)) }
-
-        btRandomWord.setOnClickListener{
-            viewStateModel.fillWithRandomWords()
         }
 
         wordsAdapter.listener = {word:Any->
              dialog(word as Word)
         }
+
         wordsAdapter.listenerTwo = {word:Any->
             viewStateModel.deleteWord(word as Word)
             wordsAdapter.notifyDataSetChanged()
         }
+
         wordsAdapter.listenerThree = {word:Any->
             viewStateModel.renameWord(word as Word)
             wordsAdapter.notifyDataSetChanged()
@@ -94,31 +88,20 @@ class WordsInActivity : AppCompatActivity() {
         wordInject.text = p!!.name
     }
 
-    fun buttonLook(b:Boolean?){
-
-        if (b!!){
-            if (viewStateModel.randomWord()){
+    fun onNeedWordsChanged(needWords : Boolean){
+        if (needWords){
+            if (viewStateModel.randomAllowed()){
+                btNext.text = getString(R.string.add_random)
+            } else{
                 btNext.hide()
-                btRandomWord.show()
-            }
-            else{
-                btNext.show()
-                btRandomWord.hide()
             }
             ibAddWord.show()
-        }
-        else{
+            etWord.show()
+        } else{
             btNext.show()
-            ibAddWord.hide()
-            btRandomWord.hide()
-        }
-    }
-
-    fun addFakeWords() {
-        for(player in Game.getPlayers()) {
-            for (i in 0..5) {
-                Game.addWord(Word("Word $i", addedBy = player.id))
-            }
+            ibAddWord.gone()
+            etWord.gone()
+            btNext.text = getString(R.string.play)
         }
     }
 
@@ -127,6 +110,7 @@ class WordsInActivity : AppCompatActivity() {
         Game.beginNextRound()
         startActivity(Intent(this, RoundActivity::class.java))
     }
+
     fun dialog(word: Word){
         val dialog= Dialog(this)
         dialog.setContentView(R.layout.dialog_edit_text)

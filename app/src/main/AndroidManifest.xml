@@ -25,9 +25,9 @@
         <activity android:name=".ui.TeemActivity"
             android:label="@string/teem_actyvity"/>
         <activity android:name=".ui.WordsInActivity"
-            android:label="@string/word_actyvity"/>
+            android:label="@string/word_actyvity" />
         <activity android:name=".ui.RoundActivity"
-            android:label="@string/start_actyvity"></activity>
+            android:label="@string/start_actyvity"/>
         <activity android:name=".ui.GameResultActivity" />
     </application>
 

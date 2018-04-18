@@ -1,6 +1,8 @@
 package com.example.sergey.shlypa2.utils
 
 import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import java.text.DateFormat
 import java.util.*
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
@@ -24,6 +26,11 @@ object Functions {
 
         Timber.d("Game id is $id")
         return  id
+    }
+
+    fun hideKeyboard(context: Context, focusableView : View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromInputMethod(focusableView.windowToken, 0)
     }
 
 }

@@ -54,7 +54,7 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
         return words.size < Game.getSettings().word
     }
 
-    fun randomWord():Boolean = Game.getSettings().autoAddWords
+    fun randomAllowed():Boolean = Game.getSettings().allowRandomWords
 
     fun getPlayerLiveData(): LiveData<Player> {
         return playerLivaData

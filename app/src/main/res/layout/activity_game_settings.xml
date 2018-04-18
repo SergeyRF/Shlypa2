@@ -7,285 +7,262 @@
     tools:context="com.example.sergey.shlypa2.ui.GameSettingsActivity">
 
     <TextView
-        android:layout_width= "wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/stateTeems"
-        android:textSize="@dimen/text_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/primary_text"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:text="@string/comadN"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width= "wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_medium"
-        android:textColor="@color/primary_text"
         android:id="@+id/teemSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintRight_toRightOf="parent"
 
         />
 
     <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/seekCommand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/stateTeems"
-        android:id="@+id/seekCommand"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="10dp"
-        >
-    </android.support.v7.widget.AppCompatSeekBar>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stateTeems"/>
 
     <View
+        android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"
         android:background="@color/Grey"
-        android:id="@+id/view1"
-        app:layout_constraintTop_toBottomOf="@+id/seekCommand"
-        >
-    </View>
+        app:layout_constraintTop_toBottomOf="@+id/seekCommand"/>
 
     <TextView
-        android:layout_width= "0dp"
-        android:layout_height="wrap_content"
         android:id="@+id/stateTime"
-        android:textSize="@dimen/text_medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/primary_text"
         android:gravity="left"
         android:text="@string/timeN"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view1"/>
+        app:layout_constraintTop_toBottomOf="@id/view1" />
 
 
     <TextView
-        android:layout_width= "wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_medium"
         android:id="@+id/time"
-        android:textColor="@color/primary_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintBaseline_toBaselineOf="@+id/stateTime"
         app:layout_constraintRight_toRightOf="parent"
-       app:layout_constraintBaseline_toBaselineOf="@+id/stateTime"
 
         />
+
     <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/seekTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/stateTime"
-        android:id="@+id/seekTime"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="10dp"
-        >
-    </android.support.v7.widget.AppCompatSeekBar>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stateTime"/>
 
     <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"
         android:background="@color/Grey"
-        android:id="@+id/view2"
-        app:layout_constraintTop_toBottomOf="@+id/seekTime"
-        >
-    </View>
-
+        app:layout_constraintTop_toBottomOf="@+id/seekTime"/>
 
 
     <TextView
-        android:layout_width= "0dp"
-        android:layout_height="wrap_content"
         android:id="@+id/stateWord"
-        android:textSize="@dimen/text_medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:textColor="@color/primary_text"
         android:gravity="left"
         android:text="@string/wordN"
-        app:layout_constraintTop_toBottomOf="@id/view2"/>
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view2" />
 
     <TextView
-        android:layout_width= "wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_medium"
         android:id="@+id/word"
-        android:textColor="@color/primary_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintBaseline_toBaselineOf="@+id/stateWord"
         app:layout_constraintRight_toRightOf="parent"
-       app:layout_constraintBaseline_toBaselineOf="@+id/stateWord"
 
         />
+
     <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/seekWord"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/stateWord"
-        android:id="@+id/seekWord"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="10dp"
-        >
-    </android.support.v7.widget.AppCompatSeekBar>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stateWord"/>
 
     <View
+        android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"
         android:background="@color/Grey"
-        android:id="@+id/view3"
-        app:layout_constraintTop_toBottomOf="@+id/seekWord"
-        >
-    </View>
+        app:layout_constraintTop_toBottomOf="@+id/seekWord"/>
 
 
     <TextView
+        android:id="@+id/dificult"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:text="@string/dificult"
-        android:id="@+id/dificult"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_medium"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
 
 
         />
 
     <Spinner
+        android:id="@+id/spinnerDificult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinnerDificult"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/dificult"
-        android:gravity="right"
         android:layout_marginRight="10dp"
-        >
-    </Spinner>
+        android:gravity="right"
+        app:layout_constraintBottom_toBottomOf="@+id/dificult"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3"/>
+
     <View
+        android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"
         android:background="@color/Grey"
-        android:id="@+id/view4"
-        app:layout_constraintTop_toBottomOf="@+id/dificult"
-        >
-    </View>
+        app:layout_constraintTop_toBottomOf="@+id/dificult"/>
+
     <TextView
+        android:id="@+id/tvAllowRandom"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/allWords"
-        android:textColor="@color/primary_text"
-        android:text="@string/setAll"
-        android:textSize="@dimen/text_medium"
         android:layout_marginLeft="20dp"
+        android:text="@string/allow_random"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
 
     <Switch
+        android:id="@+id/cbAllowRandom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cbAddAutoWord"
-        app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintRight_toRightOf="parent"
-       android:layout_marginRight="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintBottom_toTopOf="@+id/view5"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4"
 
         />
+
     <View
+        android:id="@+id/view5"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"
         android:background="@color/Grey"
-        android:id="@+id/view5"
-        app:layout_constraintTop_toBottomOf="@+id/allWords"
-        >
-    </View>
+        app:layout_constraintTop_toBottomOf="@+id/tvAllowRandom"/>
 
     <TextView
+        android:id="@+id/tvMinusBal"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tvMinusBal"
-        android:textColor="@color/primary_text"
-        android:text="@string/minus_bal"
-        android:textSize="@dimen/text_medium"
         android:layout_marginLeft="20dp"
+        android:text="@string/minus_bal"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
+
     <Switch
+        android:id="@+id/cbMinusBal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cbMinusBal"
-        app:layout_constraintTop_toBottomOf="@+id/view5"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="10dp"
         app:layout_constraintBottom_toTopOf="@+id/view6"
-        />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
 
     <View
+        android:id="@+id/view6"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"
         android:background="@color/Grey"
-        android:id="@+id/view6"
-        app:layout_constraintTop_toBottomOf="@+id/tvMinusBal"
-        >
-    </View>
+        app:layout_constraintTop_toBottomOf="@+id/tvMinusBal"/>
 
     <TextView
+        android:id="@+id/tvHowBal"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tvHowBal"
-        android:textColor="@color/primary_text"
-        android:text="@string/how_minus_bal"
-        android:textSize="@dimen/text_medium"
         android:layout_marginLeft="20dp"
+        android:text="@string/how_minus_bal"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view6"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/view6" />
 
     <TextView
+        android:id="@+id/tvNumberMinusBal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvNumberMinusBal"
-        app:layout_constraintTop_toBottomOf="@+id/view6"
+        android:layout_marginRight="@dimen/big_margin"
         android:textColor="@color/primary_text"
-        app:layout_constraintRight_toRightOf="parent"
         android:textSize="@dimen/text_medium"
-        android:layout_marginRight="@dimen/big_margin"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view6" />
 
 
     <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/seekMinusBal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvHowBal"
-        android:id="@+id/seekMinusBal"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="10dp"
-        >
-    </android.support.v7.widget.AppCompatSeekBar>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHowBal"/>
 
     <View
+        android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="3dp"
         android:background="@color/Grey"
-        android:id="@+id/view7"
-        app:layout_constraintTop_toBottomOf="@+id/seekMinusBal"
-        >
-    </View>
-
+        app:layout_constraintTop_toBottomOf="@+id/seekMinusBal"/>
 
 
     <Button
-        style="@style/Button_next"
         android:id="@+id/cancel_command"
+        style="@style/Button_next"
         android:text="@string/play"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>
