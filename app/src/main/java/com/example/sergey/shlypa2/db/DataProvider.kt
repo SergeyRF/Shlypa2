@@ -48,4 +48,8 @@ class DataProvider(val context: Context) {
         val represent = StateRepresent(0, state.gameId, System.currentTimeMillis(), gson.toJson(state))
         db.stateDao().insertState(represent)
     }
+
+    fun deleteState(gameId : Int) {
+        db.stateDao().deleteState(gameId)
+    }
 }

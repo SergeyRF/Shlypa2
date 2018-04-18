@@ -1,9 +1,6 @@
 package com.example.sergey.shlypa2.db
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.StateRepresent
 
@@ -18,4 +15,7 @@ interface StateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertState(stateRepresent: StateRepresent)
+
+    @Query("DELETE FROM ${Contract.STATE_TABLE} WHERE ${Contract.STATE_GAME_ID} = :gameId")
+    fun deleteState(gameId : Int)
 }

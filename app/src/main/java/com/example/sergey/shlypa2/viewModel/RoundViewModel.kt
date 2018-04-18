@@ -1,9 +1,12 @@
 package com.example.sergey.shlypa2.viewModel
 
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.os.Handler
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 
@@ -13,7 +16,9 @@ import timber.log.Timber
 /**
  * Created by alex on 4/3/18.
  */
-class RoundViewModel : ViewModel() {
+class RoundViewModel(application: Application) : AndroidViewModel(application) {
+
+    val dataProvider = DataProvider(application)
 
     val commandCallback : MutableLiveData<Command> = SingleLiveEvent()
 
@@ -54,9 +59,13 @@ class RoundViewModel : ViewModel() {
     fun finishRound() {
         Game.beginNextRound()
 
-        val command = if(Game.hasRound()) Command.START_NEXT_ROUND else Command.SHOW_GAME_RESULTS
-
-        commandCallback.value = command
+        if(Game.hasRound()) {
+            dataProvider.insertState(Game.state)
+            commandCallback.value = Command.START_NEXT_ROUND
+        } else {
+            dataProvider.deleteState(Game.state.gameId)
+            commandCallback.value = Command.SHOW_GAME_RESULTS
+        }
     }
 
     fun startTurn() {
@@ -79,6 +88,8 @@ class RoundViewModel : ViewModel() {
     }
 
     fun nextTurn() {
+        dataProvider.insertState(Game.state)
+
         round.nextPlayer()
         if(round.getWord() != null) {
             commandCallback.value = Command.GET_READY
