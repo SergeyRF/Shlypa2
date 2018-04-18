@@ -9,6 +9,9 @@
         android:id="@+id/tvRoundDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/primary_text"
         android:textSize="@dimen/text_medium"/>
 
     <TextView
@@ -16,13 +19,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
+        android:gravity="center"
+        android:textColor="@color/primary_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvRoundDescription"/>
 
     <Button
         android:id="@+id/btBeginRound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_smoll"
-        app:layout_constraintTop_toBottomOf="@id/tvRoundRules"/>
+        style="@style/Button_next"
+        android:text="@string/play"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

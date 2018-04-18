@@ -5,21 +5,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.sergey.shlypa2.ui.fragments.TurnStartFragment">
 
+<TextView
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/tvPlayerGame"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:gravity="left"
+    android:textColor="@color/primary_text"
+    android:text="@string/player_game"
+    android:textSize="@dimen/text_medium"
+    android:layout_marginLeft="@dimen/small_margin"
+    />
 
     <TextView
         android:id="@+id/tvTurnPlayerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/primary_text"
+        app:layout_constraintTop_toBottomOf="@+id/tvPlayerGame"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"/>
+        android:gravity="center"
+        android:textSize="@dimen/text_medium"
+        />
 
     <Button
         android:id="@+id/btTurnStart"
         android:text="@string/go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvTurnPlayerName"/>
+        app:layout_constraintTop_toBottomOf="@id/tvTurnPlayerName"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
