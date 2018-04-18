@@ -45,7 +45,7 @@ class DataProvider(val context: Context) {
     }
 
     fun insertState(state : GameState) {
-        val represent = StateRepresent(0, System.currentTimeMillis(), gson.toJson(state))
+        val represent = StateRepresent(0, state.gameId, System.currentTimeMillis(), gson.toJson(state))
         db.stateDao().insertState(represent)
     }
 }

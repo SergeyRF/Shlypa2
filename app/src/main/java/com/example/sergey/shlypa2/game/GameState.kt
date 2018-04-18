@@ -8,6 +8,11 @@ import com.example.sergey.shlypa2.beans.Word
  * Created by alex on 4/10/18.
  */
 class GameState {
+
+    var gameId = 0
+
+    var settings : Settings = Settings()
+
     var rounds = listOf(RoundDescriptor("First round", "Simple rules"),
             RoundDescriptor("Second round", "Simple rules"),
             RoundDescriptor("Third round", "Guess word or fuck yourself"))

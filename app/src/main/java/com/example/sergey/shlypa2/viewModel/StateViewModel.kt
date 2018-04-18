@@ -81,7 +81,7 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onFinish() {
-        Game.settings = settings
+        Game.setSettings(settings)
         settingsProvider.writeSettings(settings)
     }
 }

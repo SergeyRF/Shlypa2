@@ -13,7 +13,6 @@ import java.util.*
 object Game {
 
     var state: GameState = GameState()
-    var settings: Settings = Settings()
 
     fun maxTeamsCount(): Int = state.players.size / 2
 
@@ -25,6 +24,12 @@ object Game {
             state.players[player.name] = player
             true
         }
+    }
+
+    fun getSettings() : Settings = state.settings
+
+    fun setSettings(settings: Settings) {
+        state.settings = settings
     }
 
     fun removePlayer(player: Player) {

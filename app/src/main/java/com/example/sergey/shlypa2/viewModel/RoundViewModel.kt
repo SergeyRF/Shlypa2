@@ -23,7 +23,7 @@ class RoundViewModel : ViewModel() {
     val finishTurnCall = MutableLiveData<Boolean>()
 
     val timerLiveData = MutableLiveData<Int>()
-    var timeLeft = Game.settings.time
+    var timeLeft = Game.getSettings().time
     var timerStarted = true
 
     val handler = Handler()
@@ -56,7 +56,7 @@ class RoundViewModel : ViewModel() {
         round.nextPlayer()
         timerStarted = false
         handler.removeCallbacksAndMessages(null)
-        timeLeft = Game.settings.time
+        timeLeft = Game.getSettings().time
         timerLiveData.value = timeLeft
         finishTurnCall.value = false
     }

@@ -27,7 +27,7 @@ class RoundActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //TODO Remove this debug shit
-        Game.settings.time = 10
+        Game.getSettings().time = 10
 
         viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)
         dataProvider = DataProvider(applicationContext)
