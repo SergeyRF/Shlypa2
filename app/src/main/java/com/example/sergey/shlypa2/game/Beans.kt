@@ -35,7 +35,9 @@ class TeamWithScores(val team : Team) {
 
 class RoundDescriptor(var description : String, var rules : String)
 
-class Settings(var time : Int = 30, var word:Int = 5, var dificult:Dificult = Dificult.EASY, var autoAddWords:Boolean = false)
+class Settings(var time : Int = 30, var word:Int = 5, var dificult:Dificult = Dificult.EASY,
+               var autoAddWords:Boolean = false, var minusBal:Boolean = false,
+               var numberMinusBal:Int = 1 )
 
 enum class Dificult{ EASY, MEDIUM, HARD, VERY_HARD }
 

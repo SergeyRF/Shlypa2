@@ -22,6 +22,8 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
     private val teemNeed = MutableLiveData<Int>()
     private val dificult =MutableLiveData<Dificult>()
     private val autoAddWord =MutableLiveData<Boolean>()
+    private val minusBal = MutableLiveData<Boolean>()
+    private val numberMinusBal = MutableLiveData<Int>()
 
     val settingsProvider = SettingsProviderImpl(application)
 
@@ -70,6 +72,18 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
         updateStateData()
     }
 
+    fun getMinusBal():LiveData<Boolean> = minusBal
+    fun setMinusBal(b:Boolean){
+        settings.minusBal = b
+        updateStateData()
+    }
+
+    fun getnumberMinusBal():LiveData<Int> = numberMinusBal
+    fun setnumberMInusBal(i:Int){
+        settings.numberMinusBal = i
+        updateStateData()
+    }
+
     fun updateStateData() {
         timeLiveData.value = settings.time
         wordsLiveData.value =settings.word
@@ -77,6 +91,8 @@ class StateViewModel(application: Application) : AndroidViewModel(application) {
         maxCount.value = Game.maxTeamsCount()
         autoAddWord.value = settings.autoAddWords
         dificult.value = settings.dificult
+        minusBal.value = settings.minusBal
+        numberMinusBal.value = settings.numberMinusBal
     }
 
 

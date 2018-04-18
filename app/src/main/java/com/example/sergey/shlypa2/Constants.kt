@@ -9,4 +9,6 @@ object Constants {
     const val MIN_WORDS_COUNT = 3
     const val MAX_ROUMD_TIME = 300
     const val MAX_WORDS_COUNT = 10
+    const val MIN_MINUS_BAL = 1
+    const val MAX_MINUS_BAL = 10
 }
