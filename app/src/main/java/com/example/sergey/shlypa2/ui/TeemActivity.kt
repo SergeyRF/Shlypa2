@@ -17,8 +17,11 @@ import android.widget.Toast
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.game.Dificult
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.viewModel.StateViewModel
+
 class TeemActivity : AppCompatActivity() {
 
     lateinit var teamVM: PlayersViewModel
@@ -29,6 +32,7 @@ class TeemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teem)
         val teemRv = findViewById<RecyclerView>(R.id.rvTeem)
+
         adapterTeam = RvAdapter()
         teemRv.layoutManager=LinearLayoutManager(this)
         teemRv.adapter = adapterTeam
@@ -38,22 +42,23 @@ class TeemActivity : AppCompatActivity() {
         Toast.makeText(this, Game.getTeams().size.toString(), Toast.LENGTH_LONG).show()
         val button = findViewById<Button>(R.id.cancel_teem)
         button.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(this, WordsInActivity::class.java))
+
+           startActivity (Intent(this, WordsInActivity::class.java))
         })
 
 
         adapterTeam.listener = {team:Any->
             dialog(team as Team)
-
         }
     }
+
     fun dialog(team:Team){
         val dialog= Dialog(this)
         dialog.setContentView(R.layout.dialog_edit_text)
         val etTeemD = dialog.findViewById<EditText>(R.id.etDialog)
         val btYesD = dialog.findViewById<Button>(R.id.btYesDialog)
         val btNoD = dialog.findViewById<Button>(R.id.btNoDialog)
-        etTeemD.setText(team.name)
+        etTeemD.hint = team.name
         btYesD.setOnClickListener{
             if (etTeemD.text.isNotEmpty()){
                 team.name = etTeemD.text.toString()
@@ -67,4 +72,5 @@ class TeemActivity : AppCompatActivity() {
     fun setTeemRv(teem: List<Team>?) {
         adapterTeam.setData(teem)
     }
+
 }

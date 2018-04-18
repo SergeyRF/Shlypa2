@@ -36,6 +36,10 @@ object Game {
         state.players.remove(player.name)
     }
 
+    fun reNamePlayer(player: Player){
+        state.players[player.name]?.name=player.name
+    }
+
     fun getPlayers(): List<Player> {
         return state.players.values.toList()
     }

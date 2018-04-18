@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
         android:textColor="@color/primary_text"
-        android:id="@+id/commands"
+        android:id="@+id/teemSize"
         android:layout_marginRight="10dp"
         app:layout_constraintRight_toRightOf="parent"
 
@@ -162,6 +162,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view3"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/dificult"
+        android:gravity="right"
         android:layout_marginRight="10dp"
         >
     </Spinner>
@@ -205,6 +206,82 @@
         app:layout_constraintTop_toBottomOf="@+id/allWords"
         >
     </View>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvMinusBal"
+        android:textColor="@color/primary_text"
+        android:text="@string/minus_bal"
+        android:textSize="@dimen/text_medium"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cbMinusBal"
+        app:layout_constraintTop_toBottomOf="@+id/view5"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/view6"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/Grey"
+        android:id="@+id/view6"
+        app:layout_constraintTop_toBottomOf="@+id/tvMinusBal"
+        >
+    </View>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvHowBal"
+        android:textColor="@color/primary_text"
+        android:text="@string/how_minus_bal"
+        android:textSize="@dimen/text_medium"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view6"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvNumberMinusBal"
+        app:layout_constraintTop_toBottomOf="@+id/view6"
+        android:textColor="@color/primary_text"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="@dimen/text_medium"
+        android:layout_marginRight="@dimen/big_margin"/>
+
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tvHowBal"
+        android:id="@+id/seekMinusBal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_margin="10dp"
+        >
+    </android.support.v7.widget.AppCompatSeekBar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/Grey"
+        android:id="@+id/view7"
+        app:layout_constraintTop_toBottomOf="@+id/seekMinusBal"
+        >
+    </View>
+
+
 
     <Button
         style="@style/Button_next"

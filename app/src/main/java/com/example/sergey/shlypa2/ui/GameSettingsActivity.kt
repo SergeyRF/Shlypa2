@@ -10,7 +10,6 @@ import android.widget.*
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.game.Dificult
-import com.example.sergey.shlypa2.utils.gone
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.viewModel.StateViewModel
 import kotlinx.android.synthetic.main.activity_game_settings.*
@@ -53,20 +52,30 @@ class GameSettingsActivity : AppCompatActivity() {
         seekWord.onChange{ _, _, _ ->
             stateVM.setWordsLD(seekWord.progress+Constants.MIN_WORDS_COUNT)
         }
+        seekMinusBal.max = Constants.MAX_MINUS_BAL - Constants.MIN_MINUS_BAL
+        seekMinusBal.progress = stateVM.getnumberMinusBal().value!!.toInt() - Constants.MIN_MINUS_BAL
+        seekMinusBal.onChange { _, _, _ ->
+            stateVM.setnumberMInusBal(seekMinusBal.progress + Constants.MIN_MINUS_BAL)
+        }
+
 
         stateVM.getTeemNeed().observe(this, Observer { Int->onCommands(Int) })
         stateVM.getWordsLD().observe(this, Observer { Int -> onWord(Int) })
         stateVM.getTimeLD().observe(this, Observer { Int -> onTime(Int) })
+        stateVM.getnumberMinusBal().observe(this, Observer { Int -> onNumberMinusBal(Int) })
 
         onSwitch(stateVM.getAutoAddWord().value!!)
+        onBalSwitch(stateVM.getMinusBal().value!!)
 
 
         val button = findViewById<Button>(R.id.cancel_command)
         button.setOnClickListener(View.OnClickListener {
 
-            stateVM.createTeams(commands.text.toString().toInt())
+            stateVM.createTeams(teemSize.text.toString().toInt())
             stateVM.setAutoAddWord(cbAddAutoWord.isChecked)
             stateVM.setDificultLD(spinnerDificult.selectedItem as Dificult)
+            stateVM.setnumberMInusBal(tvNumberMinusBal.text.toString().toInt())
+            stateVM.setMinusBal(cbMinusBal.isChecked)
             stateVM.onFinish()
             startActivity(Intent(this, TeemActivity::class.java))
         })
@@ -77,11 +86,13 @@ class GameSettingsActivity : AppCompatActivity() {
 
         onDificult(stateVM.getDificultLD().value)
 
+
+
     }
 
 
     private fun onCommands(i: Int?) {
-        commands.text = i.toString()
+        teemSize.text = i.toString()
         Timber.d("inject ${i.toString()} ")
     }
 
@@ -99,5 +110,11 @@ class GameSettingsActivity : AppCompatActivity() {
     private fun onSwitch(b:Boolean){
         Timber.d("$b")
         cbAddAutoWord.isChecked = b
+    }
+    private fun onBalSwitch(b:Boolean?){
+        cbMinusBal.isChecked = b!!
+    }
+    private fun onNumberMinusBal(i:Int?){
+        tvNumberMinusBal.text = i.toString()
     }
 }

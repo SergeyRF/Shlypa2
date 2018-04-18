@@ -36,13 +36,21 @@ class PlayersActivity : AppCompatActivity() {
         rvPlayers.layoutManager = linLayout
         adapter = RvAdapter()
         rvPlayers.adapter = adapter
-        adapter.listener= {player:Any ->
-            etName.setText( (player as Player).name)
 
-        }
 
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         viewModel.getPlayersLiveData().observe(this, Observer { list -> onPlayersChanged(list) })
+
+        adapter.listener= {player:Any ->
+            //todo player saves incorrect
+            viewModel.reNamePlayer(player as Player)
+            adapter.notifyDataSetChanged()
+        }
+     /*  *//* adapter.listenerTwo={player:Any->
+            viewModel.addPlayer(player as Player)*//*
+//            adapter.notifyDataSetChanged()
+        }*/
+
 
         imageButton.setOnClickListener {
             if (etName.text.isNotEmpty()) {
@@ -64,11 +72,14 @@ class PlayersActivity : AppCompatActivity() {
             viewModel.addRandomPlayer()
         }
 
+
+
         //enter
         etName.setOnEditorActionListener { v, actionId, event ->
             if (actionId== EditorInfo.IME_ACTION_NEXT&&etName.text.isNotEmpty()) {
                 // обработка нажатия Enter
                 viewModel.addPlayer(Player(etName.text.toString().trim()))
+                etName.text.clear()
                 true
             } else true
         }

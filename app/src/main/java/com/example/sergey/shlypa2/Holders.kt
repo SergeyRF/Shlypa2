@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2
 
+import android.app.Dialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.sergey.shlypa2.utils.show
 import timber.log.Timber
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.utils.Functions
@@ -22,6 +24,8 @@ import com.example.sergey.shlypa2.utils.Functions
 
 abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view) {
     var listener : ((Any) -> Unit)? = null
+    var listenerTwo:((Any)->Unit)? = null
+    var listenerThree:((Any)->Unit)? = null
 }
 
 class TeamHolder(val view: View) : BaseHolder(view) {
@@ -40,6 +44,11 @@ class TeamHolder(val view: View) : BaseHolder(view) {
 
         ivRename.setOnClickListener {
             listener?.invoke(team)
+        }
+
+        teamName.setOnLongClickListener {
+            listener?.invoke(team)
+            true
         }
     }
 }
@@ -68,11 +77,12 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
     }
 }
 
-class PlayerHolder(view: View) : BaseHolder(view) {
+class PlayerHolder(val view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.wordInject)
     val etName: EditText = view.findViewById(R.id.etRename)
     val btOnRename: Button = view.findViewById(R.id.btOnRename)
     fun bind(player: Player) {
+        tvName.show()
         etName.hide()
         btOnRename.hide()
         tvName.text = player.name
@@ -81,29 +91,38 @@ class PlayerHolder(view: View) : BaseHolder(view) {
             etName.show()
             btOnRename.show()
             etName.setText(player.name)
+            etName.requestFocus()
+        }
+        etName.setOnFocusChangeListener { view, hasFocus ->
+            Timber.d(" focus changed$hasFocus")
+            if (!hasFocus) {
+                tvName.show()
+                etName.hide()
+                btOnRename.hide()
+            }
         }
         btOnRename.setOnClickListener{
            if (etName.text.isNotEmpty()) {
                player.name = etName.text.toString()
            }
             tvName.show()
-            tvName.text = player.name
             etName.hide()
             btOnRename.hide()
             listener?.invoke(player)
         }
-        etName.setOnEditorActionListener { v, actionId, event ->
+        //если здесь обрабатывать некст то потом не открывает клавиатуру на ввод нового имени
+
+        /*etName.setOnEditorActionListener { v, actionId, event ->
             if (actionId== EditorInfo.IME_ACTION_NEXT&&etName.text.isNotEmpty()) {
                 // обработка нажатия Enter
                 player.name = etName.text.toString()
                 tvName.show()
-                tvName.text = player.name
                 etName.hide()
                 btOnRename.hide()
                 listener?.invoke(player)
                 true
             } else true
-        }
+        }*/
     }
 }
 
@@ -117,37 +136,46 @@ class PlayerWithScoreHolder(view: View) : BaseHolder(view) {
     }
 }
 
-class WordsHolder(view: View) : BaseHolder(view) {
+class WordsHolder(val view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.wordInject)
+    val ibRenameWodr:ImageButton = view.findViewById(R.id.ibRenameWord)
+    val ibDeletWord:ImageButton = view.findViewById(R.id.ibDelWord)
+    val ibNextWord: ImageButton = view.findViewById(R.id.ibNextWord)
 
     fun bind(word: Word) {
+
         tvName.text = word.word
         Timber.d("${word.word}")
-    }
-    /*val tvName: TextView = view.findViewById(R.id.wordInject)
-    val etName: EditText = view.findViewById(R.id.etRename)
-    val btOnRename: Button = view.findViewById(R.id.btOnRename)
-    fun bind(word:Word) {
-        etName.hide()
-        btOnRename.hide()
-        tvName.text = word.word
-        itemView.setOnClickListener{
-            tvName.hide()
-            etName.show()
-            btOnRename.show()
-            etName.setText(word.word)
-        }
-        btOnRename.setOnClickListener{
-            if (etName.text.isNotEmpty()) {
-                word.word = etName.text.toString()
-            }
-            tvName.show()
-            tvName.text = word.word
-            etName.hide()
-            btOnRename.hide()
+
+        buttonLook(word)
+
+        ibRenameWodr.setOnClickListener{
             listener?.invoke(word)
         }
-        }*/
+
+        ibDeletWord.setOnClickListener {
+            listenerTwo?.invoke(word)
+
+        }
+        ibNextWord.setOnClickListener{
+            listenerThree?.invoke(word)
+            Timber.d("NextWord")
+        }
+
+
+    }
+
+    fun buttonLook(word:Word){
+        if (word.type == Contract.WordType.USER){
+            ibNextWord.hide()
+            ibRenameWodr.show()
+        }
+        else {
+            ibRenameWodr.hide()
+            ibNextWord.show()
+        }
+
+    }
 }
 
 class WordResultHolder(view: View):BaseHolder(view) {
