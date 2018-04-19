@@ -171,7 +171,8 @@
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4" />
+        app:layout_constraintTop_toBottomOf="@+id/view4"
+        app:layout_constraintBottom_toTopOf="@+id/view5"/>
 
     <Switch
         android:id="@+id/cbAllowRandom"
@@ -188,9 +189,9 @@
         android:id="@+id/view5"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="3dp"
         android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/tvAllowRandom"/>
+        android:layout_marginTop="@dimen/settings_margin"
+        app:layout_constraintTop_toBottomOf="@+id/view4"/>
 
     <TextView
         android:id="@+id/tvMinusBal"

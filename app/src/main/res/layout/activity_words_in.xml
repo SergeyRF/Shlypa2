@@ -37,8 +37,11 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:id="@+id/ibAddWord"
+        android:background="@color/Transparent"
         app:layout_constraintTop_toBottomOf="@+id/wordInject"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
