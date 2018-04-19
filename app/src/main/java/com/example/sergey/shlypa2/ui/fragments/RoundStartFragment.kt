@@ -35,7 +35,7 @@ class RoundStartFragment : Fragment() {
         tvRules.text = viewModel.roundRules
 
         btGo.setOnClickListener{viewModel.beginRound()}
-
+        
         return root
     }
 

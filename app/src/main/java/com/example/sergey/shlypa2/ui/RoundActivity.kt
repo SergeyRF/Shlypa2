@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.ui
 
+import android.app.ActionBar
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -45,6 +46,7 @@ class RoundActivity : AppCompatActivity() {
         if(supportFragmentManager.findFragmentById(android.R.id.content) == null) {
             startStartFragment()
         }
+        setTitle(viewModel.roundDescription)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

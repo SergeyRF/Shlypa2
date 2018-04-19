@@ -7,13 +7,13 @@
     <string name="words">Колличество слов игрока</string>
     <string name="comadN">Колличество команд     </string>
     <string name="Teem">Комманды</string>
-    <string name="WordsIn">Вводит слова игрок</string>
+    <string name="WordsIn">Игрок</string>
 
     <string name="player_actyvity">Игроки</string>
     <string name="start_actyvity">ШЛЯПА</string>
     <string name="teem_actyvity">Комманды</string>
     <string name="state_actyvity">Параметры игры</string>
-    <string name="word_actyvity">Слова</string>
+    <string name="word_actyvity">Ввод слов</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="setNeedWord">Добавить недостающих слов</string>
