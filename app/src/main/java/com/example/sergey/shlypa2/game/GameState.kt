@@ -45,7 +45,10 @@ class GameState {
     }
 
     fun createRound() : Boolean {
-        if(currentRoundPosition >= rounds.size) return false
+        if(currentRoundPosition >= rounds.size) {
+            currentRound = null
+            return false
+        }
 
         currentRound = Round(allWords)
         currentRound!!.description = rounds[currentRoundPosition].description

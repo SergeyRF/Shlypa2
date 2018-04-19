@@ -21,6 +21,11 @@ import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.PlayerWordsModel
 import kotlinx.android.synthetic.main.activity_words_in.*
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
+
 
 class WordsInActivity : AppCompatActivity() {
 
@@ -80,6 +85,7 @@ class WordsInActivity : AppCompatActivity() {
         }
 
     }
+
 
     fun setWordRv(words :List<Word>?){
         wordsAdapter.setData(words)

@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.ui
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -19,5 +20,8 @@ class GameResultActivity : AppCompatActivity() {
 
         rvGameResults.layoutManager = LinearLayoutManager(this)
         rvGameResults.adapter = resultsAdapter
+        btCreateNewGame.setOnClickListener {
+            startActivity(Intent(this,FirstActivity::class.java))
+        }
     }
 }

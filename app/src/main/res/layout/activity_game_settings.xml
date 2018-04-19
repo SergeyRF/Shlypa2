@@ -13,7 +13,7 @@
         android:layout_marginLeft="20dp"
         android:text="@string/comadN"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintRight_toRightOf="parent"
 
         />
@@ -53,7 +53,7 @@
         android:gravity="left"
         android:text="@string/timeN"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view1" />
 
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintBaseline_toBaselineOf="@+id/stateTime"
         app:layout_constraintRight_toRightOf="parent"
 
@@ -96,7 +96,7 @@
         android:gravity="left"
         android:text="@string/wordN"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view2" />
 
@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintBaseline_toBaselineOf="@+id/stateWord"
         app:layout_constraintRight_toRightOf="parent"
 
@@ -137,7 +137,7 @@
         android:layout_marginLeft="20dp"
         android:text="@string/dificult"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3"
 
@@ -169,7 +169,7 @@
         android:layout_marginLeft="20dp"
         android:text="@string/allow_random"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -199,7 +199,7 @@
         android:layout_marginLeft="20dp"
         android:text="@string/minus_bal"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
 
@@ -227,7 +227,7 @@
         android:layout_marginLeft="20dp"
         android:text="@string/how_minus_bal"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view6" />
 
@@ -237,7 +237,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/big_margin"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_settings"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view6" />
 
