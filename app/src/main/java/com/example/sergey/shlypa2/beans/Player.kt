@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.beans
 
 import android.arch.persistence.room.*
+import com.example.sergey.shlypa2.db.PlayerTypeConverter
 
 /**
  * Created by alex on 4/10/18.

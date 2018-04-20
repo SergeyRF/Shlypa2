@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/player_holder_height"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="4dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:elevation="4dp">
-  <android.support.constraint.ConstraintLayout
 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      >
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civPlayerAvatar"
+            android:layout_width="@dimen/player_avatar"
+            android:layout_height="@dimen/player_avatar"
+            android:layout_marginLeft="@dimen/player_avatar_margin"
+            android:layout_marginRight="@dimen/player_avatar_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/wordInject"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:textSize="@dimen/text_medium"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="@dimen/player_avatar_margin"
             android:textColor="@color/primary_text"
-            android:id="@+id/wordInject"/>
-      <EditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="8dp"
-          android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/civPlayerAvatar"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Player" />
 
-          android:singleLine="true"
-          android:textColor="@color/primary_text"
-          android:id="@+id/etRename"
-          app:layout_constraintRight_toLeftOf="@+id/btOnRename"
-          />
+        <EditText
+            android:id="@+id/etRename"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/player_avatar_margin"
+            android:layout_marginRight="@dimen/big_margin"
+            android:singleLine="true"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintLeft_toRightOf="@id/civPlayerAvatar"
+            app:layout_constraintRight_toRightOf="parent" />
 
-      <Button
-          android:layout_width="40dp"
-          android:layout_height="40dp"
-          android:id="@+id/btOnRename"
-          app:layout_constraintRight_toRightOf="parent"/>
 
- </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
 

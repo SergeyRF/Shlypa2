@@ -18,10 +18,10 @@ object Game {
 
 
     fun addPlayer(player: Player): Boolean {
-        return if (state.players.containsKey(player.name)) {
+        return if (state.players.containsKey(player.id)) {
             false
         } else {
-            state.players[player.name] = player
+            state.players[player.id] = player
             true
         }
     }
@@ -33,11 +33,11 @@ object Game {
     }
 
     fun removePlayer(player: Player) {
-        state.players.remove(player.name)
+        state.players.remove(player.id)
     }
 
     fun reNamePlayer(player: Player){
-        state.players[player.name]?.name=player.name
+        state.players[player.id]?.name = player.name
     }
 
     fun getPlayers(): List<Player> {

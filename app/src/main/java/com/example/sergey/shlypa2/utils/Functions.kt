@@ -33,4 +33,13 @@ object Functions {
         imm.hideSoftInputFromInputMethod(focusableView.windowToken, 0)
     }
 
+    fun showKeyboard(context: Context, focusableView: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(focusableView, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    fun imageNameToUrl(name : String) : String {
+        return "file:///android_asset/player_avatars/$name.png"
+    }
+
 }

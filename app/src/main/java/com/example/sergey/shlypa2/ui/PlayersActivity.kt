@@ -44,7 +44,6 @@ class PlayersActivity : AppCompatActivity() {
         adapter.listener= {player:Any ->
             //todo player saves incorrect
             viewModel.reNamePlayer(player as Player)
-            adapter.notifyDataSetChanged()
         }
      /*  *//* adapter.listenerTwo={player:Any->
             viewModel.addPlayer(player as Player)*//*
