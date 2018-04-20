@@ -78,7 +78,7 @@ class GameSettingsActivity : AppCompatActivity() {
             settingsVM.setnumberMInusBal(tvNumberMinusBal.text.toString().toInt())
             settingsVM.setMinusBal(cbMinusBal.isChecked)
             settingsVM.onFinish()
-            startActivity(Intent(this, TeemActivity::class.java))
+            startActivity(Intent(this, TeamActivity::class.java))
         }
 
 

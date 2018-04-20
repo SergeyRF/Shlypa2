@@ -1,74 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_marginLeft="@dimen/small_margin"
+    android:layout_marginRight="@dimen/small_margin"
     android:layout_marginTop="@dimen/small_margin"
     android:elevation="4dp">
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvTeamName"
-        android:layout_marginTop="@dimen/small_margin"
-        android:layout_marginLeft="@dimen/medium_margin"
-        android:layout_marginStart="@dimen/medium_margin"
-        android:layout_marginRight="@dimen/big_margin"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
-        tools:text="Name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-    <android.support.v7.widget.AppCompatImageButton
-        android:layout_width="@dimen/text_medium"
-        android:layout_height="@dimen/text_medium"
-        android:id="@+id/ibTeemRename"
-        android:background="@color/Transparent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tvTeamName"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="@dimen/very_big_margin"
-        android:layout_marginTop="@dimen/medium_margin"
-        app:srcCompat="@drawable/ic_create_black_24dp"
-        />
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/nameDivider"
-        android:background="@color/LightGray"
-        android:layout_marginLeft="@dimen/big_margin"
-        android:layout_marginRight="@dimen/big_margin"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/small_margin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTeamName"/>
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvPlayers"
-        android:textColor="@color/secondary_text"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        tools:text="Gamers"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:textSize="@dimen/text_smoll"
-        app:layout_constraintTop_toBottomOf="@+id/nameDivider"
-        android:layout_marginBottom="10dp"/>
+        <TextView
+            android:id="@+id/tvTeamName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/medium_margin"
+            android:layout_marginRight="@dimen/big_margin"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Name" />
 
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/ibTeemRename"
+            android:layout_width="@dimen/text_medium"
+            android:layout_height="@dimen/text_medium"
+            android:layout_marginRight="@dimen/very_big_margin"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:background="@color/Transparent"
+            app:layout_constraintLeft_toRightOf="@+id/tvTeamName"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_create_black_24dp" />
+
+        <View
+            android:id="@+id/nameDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/big_margin"
+            android:layout_marginRight="@dimen/big_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:background="@color/LightGray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTeamName" />
+
+        <LinearLayout
+            android:id="@+id/llPlayers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameDivider" />
+
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

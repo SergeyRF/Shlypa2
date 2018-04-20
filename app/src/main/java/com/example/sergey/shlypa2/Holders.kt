@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import com.example.sergey.shlypa2.R.id.tvScores
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
@@ -29,18 +30,25 @@ abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view) {
 }
 
 class TeamHolder(val view: View) : BaseHolder(view) {
-    val teamName = view.findViewById<TextView>(R.id.tvTeamName)
-    val listPlayers = view.findViewById<TextView>(R.id.tvPlayers)
+    val teamName : TextView = view.findViewById(R.id.tvTeamName)
+    val playersList : LinearLayout = view.findViewById(R.id.llPlayers)
     val ivRename = view.findViewById<ImageButton>(R.id.ibTeemRename)
-    lateinit var inflater: LayoutInflater
+
     fun bind(team: Team) {
         teamName.text = team.name
 
-        var player = StringBuffer("")
-        for (i in 0 until team.players.size) {
-            player.append(team.players[i].name + "\n")
+        playersList.removeAllViews()
+        for (player in team.players) {
+            Timber.d("add player into listview")
+            val playerView = LayoutInflater.from(view.context)
+                    .inflate(R.layout.holder_player_inteam, playersList, false)
+
+            val holder = PlayerInTeamHolder(playerView)
+            holder.bind(player)
+
+            playersList.addView(playerView)
         }
-        listPlayers.text = player
+
 
         ivRename.setOnClickListener {
             listener?.invoke(team)
@@ -123,6 +131,18 @@ class PlayerWithScoreHolder(view: View) : BaseHolder(view) {
     fun bind(player: Player, scores: Int) {
         tvName.text = player.name
         tvScores.text = scores.toString()
+    }
+}
+
+class PlayerInTeamHolder(view : View) : BaseHolder(view) {
+    val tvName: TextView = view.findViewById(R.id.tvName)
+    val avatarImage : CircleImageView = view.findViewById(R.id.civPlayerAvatar)
+
+    fun bind(player: Player) {
+        tvName.text = player.name
+        Picasso.get()
+                .load(Functions.imageNameToUrl("ninja"))
+                .into(avatarImage)
     }
 }
 

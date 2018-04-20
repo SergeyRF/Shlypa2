@@ -69,6 +69,12 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         updateData()
     }
 
+    fun initTeams() {
+        if(Game.state.teams.isEmpty()) {
+            Game.createTeams(2)
+            updateData()
+        }
+    }
 
     private fun updateData() {
         playersLiveData.value = Game.getPlayers()

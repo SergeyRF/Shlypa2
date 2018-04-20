@@ -12,6 +12,9 @@
 
     <dimen name="player_avatar_margin">12dp</dimen>
 
+    <dimen name="player_in_team_holder_height">40dp</dimen>
+    <dimen name="player_in_team_avatar">30dp</dimen>
+
     <dimen name="settings_margin">50dp</dimen>
     <dimen name="very_big_margin">32dp</dimen>
     <dimen name="big_margin">16dp</dimen>

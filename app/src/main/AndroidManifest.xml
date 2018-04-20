@@ -22,7 +22,7 @@
 
         <activity android:name=".ui.GameSettingsActivity"
             android:label="@string/state_actyvity"/>
-        <activity android:name=".ui.TeemActivity"
+        <activity android:name=".ui.TeamActivity"
             android:label="@string/teem_actyvity"/>
         <activity android:name=".ui.WordsInActivity"
             android:label="@string/word_actyvity" />

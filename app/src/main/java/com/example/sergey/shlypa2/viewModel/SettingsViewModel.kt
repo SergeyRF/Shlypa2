@@ -19,8 +19,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val minCount = MutableLiveData<Int>()
     private val maxCount = MutableLiveData<Int>()
     private val teemNeed = MutableLiveData<Int>()
-    private val dificult =MutableLiveData<Dificult>()
-    private val allowRandom =MutableLiveData<Boolean>()
+    private val dificult = MutableLiveData<Dificult>()
+    private val allowRandom = MutableLiveData<Boolean>()
     private val minusBal = MutableLiveData<Boolean>()
     private val numberMinusBal = MutableLiveData<Int>()
 
@@ -31,61 +31,62 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     init {
         Timber.d("Dificulty ${settings.dificult}")
         updateStateData()
-        if (teemNeed.value == null) teemNeed.value=Constants.MIN_TEAM_COUNT
+        if (teemNeed.value == null) teemNeed.value = Constants.MIN_TEAM_COUNT
     }
 
     fun getTimeLD(): LiveData<Int> = timeLiveData
-    fun setTimeLD(i:Int){
+    fun setTimeLD(i: Int) {
         settings.time = i
         updateStateData()
     }
 
     fun getCommandMaxLD(): LiveData<Int> = maxCount
-    fun getTeemNeed():LiveData<Int> = teemNeed
-    fun setTeemNeed(i:Int){
-        teemNeed.value=i
+    fun getTeemNeed(): LiveData<Int> = teemNeed
+    fun setTeemNeed(i: Int) {
+        teemNeed.value = i
     }
-    fun createTeams(count : Int) : Boolean{
-        return if(Game.getPlayers().size >= count) {
+
+    fun createTeams(count: Int): Boolean {
+        return if (Game.getPlayers().size >= count) {
             Game.createTeams(count)
             true
         } else false
     }
 
     fun getWordsLD(): LiveData<Int> = wordsLiveData
-   fun setWordsLD(i:Int){
-       settings.word=i
-       updateStateData()
-   }
+    fun setWordsLD(i: Int) {
+        settings.word = i
+        updateStateData()
+    }
 
-    fun getDificultLD():LiveData<Dificult> = dificult
-    fun setDificultLD(d:Dificult){
+    fun getDificultLD(): LiveData<Dificult> = dificult
+    fun setDificultLD(d: Dificult) {
         Timber.d("$d")
         settings.dificult = d
         updateStateData()
     }
 
-    fun getAllowRandom():LiveData<Boolean> = allowRandom
-    fun setAllowRandom(b:Boolean){
+    fun getAllowRandom(): LiveData<Boolean> = allowRandom
+    fun setAllowRandom(b: Boolean) {
         settings.allowRandomWords = b
         updateStateData()
     }
 
-    fun getMinusBal():LiveData<Boolean> = minusBal
-    fun setMinusBal(b:Boolean){
+    fun getMinusBal(): LiveData<Boolean> = minusBal
+    fun setMinusBal(b: Boolean) {
         settings.minusBal = b
         updateStateData()
     }
 
-    fun getnumberMinusBal():LiveData<Int> = numberMinusBal
-    fun setnumberMInusBal(i:Int){
+    fun getnumberMinusBal(): LiveData<Int> = numberMinusBal
+    fun setnumberMInusBal(i: Int) {
         settings.numberMinusBal = i
         updateStateData()
     }
 
     fun updateStateData() {
         timeLiveData.value = settings.time
-        wordsLiveData.value =settings.word
+        wordsLiveData.value = settings.word
         minCount.value = Constants.MIN_TEAM_COUNT
         maxCount.value = Game.maxTeamsCount()
         allowRandom.value = settings.allowRandomWords

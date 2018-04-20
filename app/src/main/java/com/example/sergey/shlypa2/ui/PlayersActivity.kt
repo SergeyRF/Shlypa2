@@ -15,7 +15,6 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import kotlinx.android.synthetic.main.activity_players.*
-import timber.log.Timber
 
 class PlayersActivity : AppCompatActivity() {
 
@@ -64,7 +63,7 @@ class PlayersActivity : AppCompatActivity() {
         btGoNext.setOnClickListener {
             if (Game.getPlayers().size < 4) {
                 Toast.makeText(this, R.string.not_enough_players, Toast.LENGTH_LONG).show()
-            } else startActivity(Intent(this, GameSettingsActivity::class.java))
+            } else startActivity(Intent(this, TeamActivity::class.java))
         }
 
         btAddRandomPlayer.setOnClickListener{
