@@ -9,6 +9,7 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import timber.log.Timber
 
 /**
@@ -19,6 +20,9 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     private val playersLiveData = MutableLiveData<List<Player>>()
     private val teamsLiveData = MutableLiveData<List<Team>>()
     private val dataProvider = DataProvider(application)
+
+    val commandLiveData = SingleLiveEvent<Command>()
+    val titleLiveData = MutableLiveData<Int>()
 
     init {
         updateData()
@@ -70,14 +74,29 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun initTeams() {
-        if(Game.state.teams.isEmpty()) {
-            Game.createTeams(2)
-            updateData()
-        }
+        Game.createTeams(2)
+        updateData()
     }
 
     private fun updateData() {
         playersLiveData.value = Game.getPlayers()
         teamsLiveData.value = Game.getTeams()
+    }
+
+    fun setTitleId(resourceId: Int) {
+        titleLiveData.value = resourceId
+    }
+
+    fun startTeams() {
+        commandLiveData.value = Command.START_TEAMS
+    }
+
+    fun startSettings() {
+        commandLiveData.value = Command.START_SETTINGS
+    }
+
+    enum class Command {
+        START_TEAMS,
+        START_SETTINGS
     }
 }

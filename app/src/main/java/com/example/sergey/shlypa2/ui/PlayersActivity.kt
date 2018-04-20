@@ -1,20 +1,16 @@
 package com.example.sergey.shlypa2.ui
 
+import android.app.FragmentTransaction
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.view.WindowManager
-import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
-import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.ui.fragments.PlayersFragment
+import com.example.sergey.shlypa2.ui.fragments.TeamsFragment
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
-import kotlinx.android.synthetic.main.activity_players.*
 
 class PlayersActivity : AppCompatActivity() {
 
@@ -24,68 +20,45 @@ class PlayersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_players)
-
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-
-        val linLayout = LinearLayoutManager(this)
-        linLayout.stackFromEnd = true
-        linLayout.reverseLayout = true
-
-        rvPlayers.layoutManager = linLayout
-        adapter = RvAdapter()
-        rvPlayers.adapter = adapter
-
 
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
-        viewModel.getPlayersLiveData().observe(this, Observer { list -> onPlayersChanged(list) })
+        viewModel.commandLiveData.observe(this, Observer { command ->
+            if (command != null) onCommand(command)
+        })
 
-        adapter.listener= {player:Any ->
-            //todo player saves incorrect
-            viewModel.reNamePlayer(player as Player)
-        }
-     /*  *//* adapter.listenerTwo={player:Any->
-            viewModel.addPlayer(player as Player)*//*
-//            adapter.notifyDataSetChanged()
-        }*/
+        viewModel.titleLiveData.observe(this, Observer { titleId ->
+            if(titleId != null) setTitle(titleId)
+        })
 
-
-        imageButton.setOnClickListener {
-            if (etName.text.isNotEmpty()) {
-                if (viewModel.addPlayer(Player(etName.text.toString().trim()))) {
-                } else {
-                    Toast.makeText(this, R.string.name_not_unic, Toast.LENGTH_LONG).show()
-                }
-                etName.setText("")
-            } else Toast.makeText(this, R.string.player_name_empty, Toast.LENGTH_LONG).show()
-        }
-
-        btGoNext.setOnClickListener {
-            if (Game.getPlayers().size < 4) {
-                Toast.makeText(this, R.string.not_enough_players, Toast.LENGTH_LONG).show()
-            } else startActivity(Intent(this, TeamActivity::class.java))
-        }
-
-        btAddRandomPlayer.setOnClickListener{
-            viewModel.addRandomPlayer()
-        }
-
-
-
-        //enter
-        etName.setOnEditorActionListener { v, actionId, event ->
-            if (actionId== EditorInfo.IME_ACTION_NEXT&&etName.text.isNotEmpty()) {
-                // обработка нажатия Enter
-                viewModel.addPlayer(Player(etName.text.toString().trim()))
-                etName.text.clear()
-                true
-            } else true
+        if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
+            startPlayersFragment()
         }
     }
 
-    private fun onPlayersChanged(players: List<Player>?) {
-        adapter.setData(players)
-        val position = players?.size ?: 0
-        rvPlayers.scrollToPosition(position - 1)
+    private fun onCommand(command: PlayersViewModel.Command) {
+        when (command) {
+            PlayersViewModel.Command.START_SETTINGS -> startSettings()
+            PlayersViewModel.Command.START_TEAMS -> startTeamsFragment()
+        }
+    }
+
+    private fun startPlayersFragment() {
+        val fragment = PlayersFragment()
+        supportFragmentManager.beginTransaction()
+                .replace(android.R.id.content, fragment)
+                .commit()
+    }
+
+    private fun startTeamsFragment() {
+        val fragment = TeamsFragment()
+        supportFragmentManager.beginTransaction()
+                .replace(android.R.id.content, fragment)
+                .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit()
+    }
+
+    private fun startSettings() {
+        startActivity(Intent(this, GameSettingsActivity::class.java))
     }
 }
