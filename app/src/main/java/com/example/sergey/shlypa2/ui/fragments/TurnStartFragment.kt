@@ -21,13 +21,13 @@ import com.example.sergey.shlypa2.viewModel.RoundViewModel
 class TurnStartFragment : Fragment() {
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val viewModel = ViewModelProviders.of(activity).get(RoundViewModel::class.java)
+        val viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
 
         // Inflate the layout for this fragment
-        val root = inflater!!.inflate(R.layout.fragment_turn_start, container, false)
+        val root = inflater.inflate(R.layout.fragment_turn_start, container, false)
 
         val playerTv : TextView  = root.findViewById(R.id.tvTurnPlayerName)
         val startButton : Button = root.findViewById(R.id.btTurnStart)

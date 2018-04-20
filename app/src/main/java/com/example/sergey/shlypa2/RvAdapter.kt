@@ -21,6 +21,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
 
     var altMode = false
 
+
     override fun onBindViewHolder(holder: BaseHolder, position: Int) {
         val item = data!![position]
         when (holder) {
@@ -33,8 +34,8 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BaseHolder {
-        val view: View = LayoutInflater.from(parent?.context).inflate(viewType, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder {
+        val view: View = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         val holder = when (viewType) {
             VIEW_TYPE_PLAYER -> PlayerHolder(view)
             VIEW_TYPE_WORD -> WordsHolder(view)

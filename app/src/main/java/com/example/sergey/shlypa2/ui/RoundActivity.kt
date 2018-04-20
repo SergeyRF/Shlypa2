@@ -6,7 +6,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.transition.Transition
 import android.view.Menu
 import android.view.MenuItem
 import com.example.sergey.shlypa2.R
@@ -26,8 +28,7 @@ class RoundActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //TODO Remove this debug shit
-        Game.getSettings().time = 10
+        supportActionBar?.elevation = 0F
 
         viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)
         dataProvider = DataProvider(applicationContext)
@@ -104,6 +105,7 @@ class RoundActivity : AppCompatActivity() {
 
     private fun startFragment(fragment: Fragment, addToBackStack: Boolean = false) {
         val transaction = supportFragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(android.R.id.content, fragment)
 
         if (addToBackStack) transaction.addToBackStack(null)

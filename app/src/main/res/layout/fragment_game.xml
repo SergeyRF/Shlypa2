@@ -5,6 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.sergey.shlypa2.ui.fragments.GameFragment">
 
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        app:srcCompat="@drawable/ic_drawing"
+        android:scaleType="fitXY"
+        android:tint="@color/primary_color"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"

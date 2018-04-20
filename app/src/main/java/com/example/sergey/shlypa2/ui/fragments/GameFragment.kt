@@ -32,9 +32,9 @@ class GameFragment : Fragment() {
     lateinit var tvTime: TextView
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(activity).get(RoundViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
 
         // Inflate the layout for this fragment
         val root = inflater!!.inflate(R.layout.fragment_game, container, false)
@@ -52,7 +52,7 @@ class GameFragment : Fragment() {
         return root
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.wordLiveData.observe(this, Observer { word: Word? ->

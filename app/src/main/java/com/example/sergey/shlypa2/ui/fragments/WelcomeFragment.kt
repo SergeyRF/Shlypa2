@@ -19,11 +19,11 @@ class WelcomeFragment : Fragment() {
 
     lateinit var viewModel: WelcomeViewModel
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        viewModel = ViewModelProviders.of(activity).get(WelcomeViewModel::class.java)
-        return inflater!!.inflate(R.layout.fragment_welcome, container, false)
+        viewModel = ViewModelProviders.of(activity!!).get(WelcomeViewModel::class.java)
+        return inflater.inflate(R.layout.fragment_welcome, container, false)
     }
 
     override fun onStart() {

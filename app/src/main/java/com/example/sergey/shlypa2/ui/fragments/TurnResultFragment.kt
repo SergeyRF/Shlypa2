@@ -29,11 +29,11 @@ class TurnResultFragment : Fragment() {
     lateinit var viewModel: RoundViewModel
     lateinit var recyclerView: RecyclerView
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(activity).get(RoundViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
         // Inflate the layout for this fragment
-        val root = inflater!!.inflate(R.layout.fragment_turn_result, container, false)
+        val root = inflater.inflate(R.layout.fragment_turn_result, container, false)
 
         recyclerView = root.findViewById(R.id.rvWordsTurnResult)
 

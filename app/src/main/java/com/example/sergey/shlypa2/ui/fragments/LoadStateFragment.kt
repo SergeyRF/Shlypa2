@@ -27,9 +27,9 @@ class LoadStateFragment : Fragment() {
     lateinit var viewModel : WelcomeViewModel
     lateinit var adapter: RvAdapter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(activity).get(WelcomeViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!).get(WelcomeViewModel::class.java)
 
         adapter = RvAdapter()
         adapter.listener = {state : Any ->

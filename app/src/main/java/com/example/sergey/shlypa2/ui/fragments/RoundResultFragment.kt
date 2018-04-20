@@ -26,12 +26,12 @@ import timber.log.Timber
 class RoundResultFragment : Fragment() {
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val root = inflater!!.inflate(R.layout.fragment_round_result, container, false)
 
-        val viewModel = ViewModelProviders.of(activity).get(RoundViewModel::class.java)
+        val viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
 
         val btNextRound : Button = root.findViewById(R.id.btNextRound)
         btNextRound.setOnClickListener{ viewModel.finishRound()}
@@ -49,5 +49,6 @@ class RoundResultFragment : Fragment() {
 
         return root
     }
+
 
 }
