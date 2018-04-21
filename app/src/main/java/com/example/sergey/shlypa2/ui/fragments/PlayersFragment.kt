@@ -91,9 +91,9 @@ class PlayersFragment : Fragment() {
             } else true
         }
 
-        Picasso.get()
+        /*Picasso.get()
                 .load(viewModel.getRandomAvatar())
-                .into(civPlayerAvatar)
+                .into(civPlayerAvatar)*/
 
     }
 
