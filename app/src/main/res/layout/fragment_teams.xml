@@ -53,6 +53,7 @@
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintBottom_toTopOf="@id/btNext"
             app:layout_constraintRight_toRightOf="parent"
+            app:fab_colorNormal="@color/Red"
             android:src="@drawable/ic_delete"
             app:fab_label="@string/remove_team"
             app:fab_size="mini"/>
