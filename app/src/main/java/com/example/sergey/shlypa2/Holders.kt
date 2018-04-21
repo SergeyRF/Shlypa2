@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2
 
+import android.support.v4.view.AsyncLayoutInflater
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View

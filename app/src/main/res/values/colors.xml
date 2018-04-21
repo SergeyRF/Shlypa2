@@ -25,4 +25,5 @@
     <color name="GreenDark">#2E7D32</color>
     <color name="Yellow">#FFEB3B</color>
     <color name="YellowDark">#fbc02d</color>
+    <color name="Red">#e53935</color>
 </resources>
