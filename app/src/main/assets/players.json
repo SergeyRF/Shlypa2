@@ -1,79 +1,79 @@
 [
   {
     "avatar": "astronaut.png",
-    "name": "Player 0"
+    "name": "Космонавт"
   },
   {
     "avatar": "athlete.png",
-    "name": "Player 1"
+    "name": "Бегун"
   },
   {
     "avatar": "athlete1.png",
-    "name": "Player 2"
+    "name": "Шаолинь"
   },
   {
     "avatar": "bald.png",
-    "name": "Player 3"
+    "name": "Валентин Петрович"
   },
   {
     "avatar": "bear.png",
-    "name": "Player 4"
+    "name": "Аниматор"
   },
   {
     "avatar": "birthday.png",
-    "name": "Player 5"
+    "name": "Мороженка"
   },
   {
     "avatar": "boy.png",
-    "name": "Player 6"
+    "name": "Малыш"
   },
   {
     "avatar": "boy1.png",
-    "name": "Player 7"
+    "name": "Парашутист"
   },
   {
     "avatar": "boy10.png",
-    "name": "Player 8"
+    "name": "Мим"
   },
   {
     "avatar": "boy11.png",
-    "name": "Player 9"
+    "name": "НиХао"
   },
   {
     "avatar": "boy12.png",
-    "name": "Player 10"
+    "name": "Борода"
   },
   {
     "avatar": "boy13.png",
-    "name": "Player 11"
+    "name": "Сноубордист"
   },
   {
     "avatar": "boy14.png",
-    "name": "Player 12"
+    "name": "Булочник"
   },
   {
     "avatar": "boy15.png",
-    "name": "Player 13"
+    "name": "Бухгалтер"
   },
   {
     "avatar": "boy16.png",
-    "name": "Player 14"
+    "name": "Майкл"
   },
   {
     "avatar": "boy17.png",
-    "name": "Player 15"
+    "name": "Скейтбордист"
   },
   {
     "avatar": "boy18.png",
-    "name": "Player 16"
+    "name": "Тореодор"
   },
   {
     "avatar": "boy19.png",
-    "name": "Player 17"
+    "name": "Модник"
   },
   {
     "avatar": "boy2.png",
-    "name": "Player 18"
+    "name": "Интроверт"
   },
   {
     "avatar": "boy20.png",
@@ -85,43 +85,43 @@
   },
   {
     "avatar": "boy4.png",
-    "name": "Player 21"
+    "name": "Морфеус"
   },
   {
     "avatar": "boy5.png",
-    "name": "Player 22"
+    "name": "Клерк"
   },
   {
     "avatar": "boy6.png",
-    "name": "Player 23"
+    "name": "Роман"
   },
   {
     "avatar": "boy7.png",
-    "name": "Player 24"
+    "name": "Дизайнер"
   },
   {
     "avatar": "boy8.png",
-    "name": "Player 25"
+    "name": "Маршрутчик"
   },
   {
     "avatar": "boy9.png",
-    "name": "Player 26"
+    "name": "Байкер"
   },
   {
     "avatar": "futuristic.png",
-    "name": "Player 27"
+    "name": "Циклоп"
   },
   {
     "avatar": "girl.png",
-    "name": "Player 28"
+    "name": "Хиппи"
   },
   {
     "avatar": "girl0.png",
-    "name": "Player 29"
+    "name": "Мечтатель"
   },
   {
     "avatar": "girl1.png",
-    "name": "Player 30"
+    "name": "Флорист"
   },
   {
     "avatar": "girl10.png",
@@ -157,46 +157,46 @@
   },
   {
     "avatar": "king.png",
-    "name": "Player 39"
+    "name": "Король"
   },
   {
     "avatar": "ninja.png",
-    "name": "Player 40"
+    "name": "Ниндзя"
   },
   {
     "avatar": "pirate.png",
-    "name": "Player 41"
+    "name": "Кассир"
   },
   {
     "avatar": "punk.png",
-    "name": "Player 42"
+    "name": "Панк"
   },
   {
     "avatar": "rich.png",
-    "name": "Player 43"
+    "name": "Инсайдер"
   },
   {
     "avatar": "sheriff.png",
-    "name": "Player 44"
+    "name": "Шериф"
   },
   {
     "avatar": "thief.png",
-    "name": "Player 45"
+    "name": "Гудини"
   },
   {
     "avatar": "troglodyte.png",
-    "name": "Player 46"
+    "name": "Мотадор"
   },
   {
     "avatar": "vampire.png",
-    "name": "Player 47"
+    "name": "Вампир"
   },
   {
     "avatar": "viking.png",
-    "name": "Player 48"
+    "name": "Викинг"
   },
   {
     "avatar": "wrestler.png",
-    "name": "Player 49"
+    "name": "Реслер"
   }
 ]

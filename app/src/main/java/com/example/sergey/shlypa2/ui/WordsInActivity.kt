@@ -7,7 +7,6 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.example.sergey.shlypa2.R
@@ -15,16 +14,14 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.gone
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.PlayerWordsModel
 import kotlinx.android.synthetic.main.activity_words_in.*
-import android.content.Context.INPUT_METHOD_SERVICE
-import android.app.Activity
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.Toast
 
 
 class WordsInActivity : AppCompatActivity() {
@@ -59,6 +56,14 @@ class WordsInActivity : AppCompatActivity() {
                     etWord.text.clear()
                 }
         }
+        etWord.setOnEditorActionListener { v, actionId, event ->
+            if (actionId== EditorInfo.IME_ACTION_NEXT&&etWord.text.isNotEmpty()) {
+                // обработка нажатия Enter
+                viewStateModel.addWord(etWord.text.toString())
+                etWord.text.clear()
+                true
+            } else true
+        }
 
 
         btNext.setOnClickListener{
@@ -71,7 +76,8 @@ class WordsInActivity : AppCompatActivity() {
         }
 
         wordsAdapter.listener = {word:Any->
-             dialog(word as Word)
+            // dialog(word as Word)
+            viewStateModel.reNameWord(word as Word)
         }
 
         wordsAdapter.listenerTwo = {word:Any->
@@ -80,9 +86,10 @@ class WordsInActivity : AppCompatActivity() {
         }
 
         wordsAdapter.listenerThree = {word:Any->
-            viewStateModel.renameWord(word as Word)
+            viewStateModel.newRandomWord(word as Word)
             wordsAdapter.notifyDataSetChanged()
         }
+
 
     }
 
@@ -92,10 +99,18 @@ class WordsInActivity : AppCompatActivity() {
     }
     fun setPlayer(p: Player?){
         wordInject.text = p!!.name
+        setTitle(p!!.name)
     }
 
     fun onNeedWordsChanged(needWords : Boolean){
         if (needWords){
+            if (viewStateModel.needWordSize()!=0){
+                etWord.hint = "Слов осталось ввести ${viewStateModel.needWordSize()}"
+            }
+            else{
+                etWord.setHint(R.string.vvodi)
+            }
+
             if (viewStateModel.randomAllowed()){
                 btNext.text = getString(R.string.add_random)
             } else{
@@ -123,13 +138,22 @@ class WordsInActivity : AppCompatActivity() {
         val etTeemD = dialog.findViewById<EditText>(R.id.etDialog)
         val btYesD = dialog.findViewById<Button>(R.id.btYesDialog)
         val btNoD = dialog.findViewById<Button>(R.id.btNoDialog)
-        etTeemD.hint=word.word
+        val tvRename = dialog.findViewById<TextView>(R.id.tvReNameIt)
+        etTeemD.setText(word.word)
         btYesD.setOnClickListener{
             if (etTeemD.text.isNotEmpty()){
                 word.word = etTeemD.text.toString()
                 wordsAdapter.notifyDataSetChanged()
                 dialog.cancel()
             }
+        }
+        etTeemD.setOnEditorActionListener { v, actionId, event ->
+            if (actionId== EditorInfo.IME_ACTION_NEXT&&etTeemD.text.isNotEmpty()){
+                word.word = etTeemD.text.toString()
+                wordsAdapter.notifyDataSetChanged()
+                dialog.cancel()
+            }
+            true
         }
         btNoD.setOnClickListener { dialog.cancel() }
         dialog.show()

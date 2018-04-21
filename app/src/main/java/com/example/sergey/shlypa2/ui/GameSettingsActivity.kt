@@ -9,7 +9,6 @@ import android.widget.*
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.game.Dificult
-import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.viewModel.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import com.example.sergey.shlypa2.utils.onChange
@@ -27,19 +26,6 @@ class GameSettingsActivity : AppCompatActivity() {
 
 
         settingsVM = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
-        if (settingsVM.getCommandMaxLD().value!!.toInt()==Constants.MIN_TEAM_COUNT){
-            seekCommand.hide()
-            stateTeems.setOnClickListener {
-                Toast.makeText(this,"При таком колличестве игроков " +
-                        "\nкомманд может быть только две",
-                        Toast.LENGTH_LONG).show()
-            }
-        }
-        seekCommand.max = (settingsVM.getCommandMaxLD().value!!.toInt() - Constants.MIN_TEAM_COUNT)
-        seekCommand.progress = settingsVM.getTeemNeed().value!!.toInt() - Constants.MIN_TEAM_COUNT
-        seekCommand?.onChange{_, _, _ ->
-            settingsVM.setTeemNeed(seekCommand.progress+Constants.MIN_TEAM_COUNT)
-        }
 
         seekTime.max = Constants.MAX_ROUMD_TIME-Constants.MIN_ROUND_TIME
         seekTime.progress = settingsVM.getTimeLD().value!!.toInt()-Constants.MIN_ROUND_TIME
@@ -60,7 +46,6 @@ class GameSettingsActivity : AppCompatActivity() {
         }
 
 
-        settingsVM.getTeemNeed().observe(this, Observer { Int->onCommands(Int) })
         settingsVM.getWordsLD().observe(this, Observer { Int -> onWord(Int) })
         settingsVM.getTimeLD().observe(this, Observer { Int -> onTime(Int) })
         settingsVM.getnumberMinusBal().observe(this, Observer { Int -> onNumberMinusBal(Int) })
@@ -69,10 +54,9 @@ class GameSettingsActivity : AppCompatActivity() {
         onBalSwitch(settingsVM.getMinusBal().value!!)
 
 
-        val button = findViewById<Button>(R.id.cancel_command)
+        val button = findViewById<Button>(R.id.bt_cancel_command)
         button.setOnClickListener{
 
-            settingsVM.createTeams(teemSize.text.toString().toInt())
             settingsVM.setAllowRandom(cbAllowRandom.isChecked)
             settingsVM.setDificultLD(spinnerDificult.selectedItem as Dificult)
             settingsVM.setnumberMInusBal(tvNumberMinusBal.text.toString().toInt())
@@ -88,11 +72,6 @@ class GameSettingsActivity : AppCompatActivity() {
         onDificult(settingsVM.getDificultLD().value)
     }
 
-
-    private fun onCommands(i: Int?) {
-        teemSize.text = i.toString()
-        Timber.d("inject ${i.toString()} ")
-    }
 
     private fun onTime(i: Int?) {
         time.text = i.toString()

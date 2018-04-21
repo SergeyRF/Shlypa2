@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/player_holder_height"
-    android:layout_marginBottom="4dp"
+    android:layout_marginBottom="@dimen/small_margin"
     android:layout_marginLeft="@dimen/small_margin"
     android:layout_marginRight="@dimen/small_margin"
     android:elevation="4dp">

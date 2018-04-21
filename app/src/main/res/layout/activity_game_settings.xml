@@ -1,49 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<LinearLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sergey.shlypa2.ui.GameSettingsActivity">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.sergey.shlypa2.ui.GameSettingsActivity"
+    >
 
-    <TextView
-        android:id="@+id/stateTeems"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="@string/comadN"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<ScrollView
+     android:layout_width="match_parent"
+    android:layout_weight="1"
+    android:layout_height="0dp"
+    >
 
-    <TextView
-        android:id="@+id/teemSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintRight_toRightOf="parent"
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
-        />
-
-    <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/seekCommand"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stateTeems"/>
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="3dp"
-        android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/seekCommand"/>
 
     <TextView
         android:id="@+id/stateTime"
@@ -52,10 +30,11 @@
         android:layout_marginLeft="20dp"
         android:gravity="left"
         android:text="@string/timeN"
+        android:layout_marginTop="@dimen/small_margin"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view1" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -77,15 +56,16 @@
         android:layout_margin="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stateTime"/>
+        app:layout_constraintTop_toBottomOf="@+id/stateTime"
+        app:layout_constraintBottom_toTopOf="@+id/view"/>
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="@dimen/settings_margin"
         android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/seekTime"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
     <TextView
@@ -95,10 +75,11 @@
         android:layout_marginLeft="20dp"
         android:gravity="left"
         android:text="@string/wordN"
+        android:layout_marginTop="@dimen/small_margin"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view2" />
+        app:layout_constraintTop_toBottomOf="@id/view" />
 
     <TextView
         android:id="@+id/word"
@@ -122,12 +103,12 @@
         app:layout_constraintTop_toBottomOf="@+id/stateWord"/>
 
     <View
-        android:id="@+id/view3"
+        android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="@dimen/settings_margin"
         android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/seekWord"/>
+        app:layout_constraintTop_toBottomOf="@+id/view"/>
 
 
     <TextView
@@ -139,8 +120,8 @@
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
-
+        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintBottom_toTopOf="@+id/view3"
 
         />
 
@@ -152,15 +133,15 @@
         android:gravity="right"
         app:layout_constraintBottom_toBottomOf="@+id/dificult"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view3"/>
+        app:layout_constraintTop_toTopOf="@+id/dificult"/>
 
     <View
-        android:id="@+id/view4"
+        android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="@dimen/settings_margin"
         android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/dificult"/>
+        app:layout_constraintTop_toBottomOf="@+id/view2"/>
 
     <TextView
         android:id="@+id/tvAllowRandom"
@@ -171,27 +152,27 @@
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintBottom_toTopOf="@+id/view5"/>
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintBottom_toTopOf="@+id/view4"/>
 
     <Switch
         android:id="@+id/cbAllowRandom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/view5"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
 
         />
 
     <View
-        android:id="@+id/view5"
+        android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/Grey"
         android:layout_marginTop="@dimen/settings_margin"
-        app:layout_constraintTop_toBottomOf="@+id/view4"/>
+        app:layout_constraintTop_toBottomOf="@+id/view3"/>
 
     <TextView
         android:id="@+id/tvMinusBal"
@@ -202,35 +183,37 @@
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view5" />
+        app:layout_constraintTop_toBottomOf="@+id/view4"
+        app:layout_constraintBottom_toTopOf="@+id/view5"/>
 
     <Switch
         android:id="@+id/cbMinusBal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/view6"
+        app:layout_constraintBottom_toTopOf="@+id/view5"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view5" />
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
 
     <View
-        android:id="@+id/view6"
+        android:id="@+id/view5"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="@dimen/settings_margin"
         android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/tvMinusBal"/>
+        app:layout_constraintTop_toBottomOf="@+id/view4"/>
 
     <TextView
         android:id="@+id/tvHowBal"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="@dimen/small_margin"
         android:text="@string/how_minus_bal"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view6" />
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
 
     <TextView
         android:id="@+id/tvNumberMinusBal"
@@ -240,7 +223,8 @@
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view6" />
+       app:layout_constraintBaseline_toBaselineOf="@id/tvHowBal"
+         />
 
 
     <android.support.v7.widget.AppCompatSeekBar
@@ -250,20 +234,26 @@
         android:layout_margin="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHowBal"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvHowBal"
+        app:layout_constraintBottom_toTopOf="@+id/view6"
+        />
 
     <View
-        android:id="@+id/view7"
+        android:id="@+id/view6"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="@dimen/settings_margin"
         android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/seekMinusBal"/>
+        app:layout_constraintTop_toBottomOf="@+id/view5"/>
 
 
-    <Button
-        android:id="@+id/cancel_command"
-        style="@style/Button_next"
-        android:text="@string/play"
-        app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+<Button
+    android:id="@+id/bt_cancel_command"
+    style="@style/Button_next"
+    android:text="@string/play"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_gravity="bottom"/>
+</LinearLayout>
