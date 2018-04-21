@@ -58,6 +58,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
             player.id = dataProvider.insertPlayer(player)
             Game.addPlayer(player)
         }
+        Timber.d("Players rename name ${player.name} id ${player.id} players size ${Game.getPlayers().size}")
 //        updateData()
     }
 

@@ -14,8 +14,8 @@ class App  : Application(){
         super.onCreate()
         Timber.plant(Timber.DebugTree())
 
-        DbCreator.createPlayers(DataBase.getInstance(this))
+        DbCreator.createPlayers(DataBase.getInstance(this), this)
         DbCreator.createWords(DataBase.getInstance(this), this)
-        DbCreator.loadFileList(this)
+//        DbCreator.loadFileList(this)
     }
 }

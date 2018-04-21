@@ -27,6 +27,6 @@ interface PlayersDao {
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} WHERE ${Contract.PLAYER_NAME} = :name")
     fun getPlayerByName(name : String) : Player?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlayer(player: Player) : Long
 }

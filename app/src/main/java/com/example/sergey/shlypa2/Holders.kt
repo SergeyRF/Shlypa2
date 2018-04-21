@@ -107,19 +107,21 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
         etName.setOnFocusChangeListener { view, hasFocus ->
             Timber.d(" focus changed$hasFocus")
             if (!hasFocus) {
-                if (etName.text.isNotEmpty()) {
+                if (etName.text.isNotEmpty() && etName.text.toString() != player.name) {
                     player.name = etName.text.toString()
                     tvName.text = player.name
+
+                    listener?.invoke(player)
                 }
 
                 tvName.show()
                 etName.hide()
-                listener?.invoke(player)
+
             }
         }
 
         Picasso.get()
-                .load(Functions.imageNameToUrl("ninja.png"))
+                .load(Functions.imageNameToUrl(player.avatar))
                 .into(avatarImage)
     }
 }
@@ -141,7 +143,7 @@ class PlayerInTeamHolder(view : View) : BaseHolder(view) {
     fun bind(player: Player) {
         tvName.text = player.name
         Picasso.get()
-                .load(Functions.imageNameToUrl("ninja.png"))
+                .load(Functions.imageNameToUrl(player.avatar))
                 .into(avatarImage)
     }
 }
