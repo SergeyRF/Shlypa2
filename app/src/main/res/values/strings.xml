@@ -24,6 +24,10 @@
     <string name="game_results">Шляпа пуста</string>
     <string name="new_game">Новая игра</string>
 
+    <string name="add_team">Add a team</string>
+    <string name="remove_team">Remove a team</string>
+    <string name="two_team_min">2 team is minimum</string>
+
 
     <string name="go">Go</string>
     <string name="name_not_unic">Player already exists</string>
@@ -33,6 +37,8 @@
     <string name="no_answers">No one words were answered</string>
 
     <string name="add_random">Add random</string>
+
+    <string name="cant_create_teams">There should be at least 2 players in a team</string>
 
     <!-- Settings -->
     <string name="timeN">Время хода</string>
@@ -45,4 +51,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shuffle_teams">Shuffle teams</string>
 </resources>

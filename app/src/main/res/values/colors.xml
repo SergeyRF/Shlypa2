@@ -9,6 +9,7 @@
     <color name="darkGrey">#666666</color>
     <color name="Transparent">#00000000</color>
 
+    <color name="white">#ffffff</color>
 
     <color name="dark_primary_color">#00796b</color>
     <color name="light_primary_color">#b2dfdb</color>
@@ -21,4 +22,7 @@
 
     <color name="LightGray">#e0e0e0</color>
     <color name="Green">#43a047</color>
+    <color name="GreenDark">#2E7D32</color>
+    <color name="Yellow">#FFEB3B</color>
+    <color name="YellowDark">#fbc02d</color>
 </resources>

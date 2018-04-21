@@ -18,4 +18,60 @@
         android:text="@string/play"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/floatingMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/btNext"
+        app:layout_constraintRight_toRightOf="parent"
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        app:menu_labels_ellipsize="end"
+        app:menu_labels_maxLines="2"
+        app:menu_labels_singleLine="true"
+        app:menu_labels_colorNormal="@color/darkGrey"
+        app:menu_colorNormal="@color/primary_color"
+        app:menu_colorPressed="@color/dark_primary_color">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabAddTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintBottom_toTopOf="@id/btNext"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/ic_add"
+            app:fab_label="@string/add_team"
+            app:fab_colorNormal="@color/Green"
+            app:fab_colorPressed="@color/GreenDark"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabRemoveTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintBottom_toTopOf="@id/btNext"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/ic_delete"
+            app:fab_label="@string/remove_team"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabShuffleTeams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintBottom_toTopOf="@id/btNext"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/ic_dice"
+            app:fab_label="@string/shuffle_teams"
+            app:fab_colorNormal="@color/Yellow"
+            app:fab_colorPressed="@color/YellowDark"
+            app:fab_size="mini"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+
+
 </android.support.constraint.ConstraintLayout>

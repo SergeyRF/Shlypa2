@@ -51,6 +51,18 @@ class TeamsFragment : Fragment() {
         adapterTeam.listener = { team: Any ->
             dialog(team as Team)
         }
+
+        fabAddTeam.setOnClickListener {
+            viewModel.addTeam()
+        }
+
+        fabRemoveTeam.setOnClickListener {
+            viewModel.reduceTeam()
+        }
+
+        fabShuffleTeams.setOnClickListener {
+            viewModel.shuffleTeams()
+        }
     }
 
     override fun onStart() {

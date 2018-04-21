@@ -1,7 +1,8 @@
 package com.example.sergey.shlypa2
 
 import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.game.Team
+import com.example.sergey.shlypa2.beans.Team
+
 
 /**
  * Created by alex on 4/15/18.

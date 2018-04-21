@@ -4,6 +4,8 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.widget.Toast
+import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
@@ -87,6 +89,31 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
 
     fun initTeams() {
         Game.createTeams(2)
+        updateData()
+    }
+
+    fun addTeam() {
+        val teamsCount = Game.getTeams().size + 1
+        if(teamsCount <= Game.maxTeamsCount()) {
+            Game.createTeams(teamsCount)
+            updateData()
+        } else {
+            Toast.makeText(getApplication(), R.string.cant_create_teams, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun reduceTeam() {
+        if(Game.getTeams().size > 2) {
+            val teamsCount = Game.getTeams().size - 1
+            Game.createTeams(teamsCount)
+            updateData()
+        } else {
+            Toast.makeText(getApplication(), R.string.two_team_min, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun shuffleTeams() {
+        Game.createTeams(Game.getTeams().size)
         updateData()
     }
 

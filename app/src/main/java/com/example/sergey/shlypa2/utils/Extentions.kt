@@ -1,7 +1,9 @@
 package com.example.sergey.shlypa2.utils
 
+import android.content.Context
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
 import java.util.*
 
 /**
@@ -35,6 +37,7 @@ fun View.show() {
 fun View.gone() {
     this.visibility = View.GONE
 }
+
 
 /**
  * Returns a random element.

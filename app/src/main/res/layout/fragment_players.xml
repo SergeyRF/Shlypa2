@@ -86,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/medium_margin"
-        android:src="@drawable/dice"
+        android:src="@drawable/ic_dice"
         android:text="random"
         app:layout_constraintBottom_toTopOf="@id/btGoNext"
         app:layout_constraintRight_toRightOf="parent" />
