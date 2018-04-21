@@ -4,10 +4,12 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.os.Handler
+import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
+import com.example.sergey.shlypa2.utils.SoundManager
 import timber.log.Timber
 
 
@@ -33,8 +35,11 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     val handler = Handler()
 
+    val soundManager = SoundManager(getApplication())
+
     init {
         wordLiveData.value = round.getWord()
+        soundManager.preload(SoundManager.Sound.CORRECT, SoundManager.Sound.WRONG)
     }
 
 
@@ -42,6 +47,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     fun answerWord(answer: Boolean) {
         round.answer(answer)
+
+        //play sound
+        soundManager.play(if(answer)SoundManager.Sound.CORRECT else SoundManager.Sound.WRONG)
+
         val word = round.getWord()
         if (word != null) {
             wordLiveData.value = word
@@ -105,6 +114,11 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     fun pauseTimer() {
         timerStarted = false
         handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        soundManager.release()
     }
 
     private val timerRunnable = object : Runnable {
