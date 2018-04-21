@@ -43,6 +43,7 @@
             android:src="@drawable/ic_add"
             app:fab_label="@string/add_team"
             app:fab_colorNormal="@color/Green"
+            app:fab_colorPressed="@color/GreenDark"
             app:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
@@ -54,6 +55,19 @@
             app:layout_constraintRight_toRightOf="parent"
             android:src="@drawable/ic_delete"
             app:fab_label="@string/remove_team"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabShuffleTeams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintBottom_toTopOf="@id/btNext"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/ic_dice"
+            app:fab_label="@string/shuffle_teams"
+            app:fab_colorNormal="@color/Yellow"
+            app:fab_colorPressed="@color/YellowDark"
             app:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>

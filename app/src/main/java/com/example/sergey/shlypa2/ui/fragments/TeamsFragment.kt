@@ -59,6 +59,10 @@ class TeamsFragment : Fragment() {
         fabRemoveTeam.setOnClickListener {
             viewModel.reduceTeam()
         }
+
+        fabShuffleTeams.setOnClickListener {
+            viewModel.shuffleTeams()
+        }
     }
 
     override fun onStart() {

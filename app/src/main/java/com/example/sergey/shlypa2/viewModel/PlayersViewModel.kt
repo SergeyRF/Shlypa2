@@ -112,6 +112,11 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    fun shuffleTeams() {
+        Game.createTeams(Game.getTeams().size)
+        updateData()
+    }
+
     private fun updateData() {
         playersLiveData.value = Game.getPlayers()
         teamsLiveData.value = Game.getTeams()
