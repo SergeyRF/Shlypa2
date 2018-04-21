@@ -14,7 +14,7 @@
     <string name="teem_actyvity">Комманды</string>
     <string name="state_actyvity">Параметры игры</string>
     <string name="word_actyvity">Ввод слов</string>
-    <string name="word_rename">Корректировать слово</string>
+    <string name="team_rename">Название комманды</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="setNeedWord">Добавить недостающих слов</string>

@@ -104,6 +104,12 @@ class WordsInActivity : AppCompatActivity() {
 
     fun onNeedWordsChanged(needWords : Boolean){
         if (needWords){
+            if (viewStateModel.needWordSize()!=0){
+                etWord.hint = "Слов осталось ввести ${viewStateModel.needWordSize()}"
+            }
+            else{
+                etWord.setHint(R.string.vvodi)
+            }
             Toast.makeText(this, "Слов осталось ввести ${viewStateModel.needWordSize()}",
                     Toast.LENGTH_LONG).show()
             if (viewStateModel.randomAllowed()){
@@ -134,7 +140,6 @@ class WordsInActivity : AppCompatActivity() {
         val btYesD = dialog.findViewById<Button>(R.id.btYesDialog)
         val btNoD = dialog.findViewById<Button>(R.id.btNoDialog)
         val tvRename = dialog.findViewById<TextView>(R.id.tvReNameIt)
-        tvRename.setText(R.string.word_rename)
         etTeemD.setText(word.word)
         btYesD.setOnClickListener{
             if (etTeemD.text.isNotEmpty()){

@@ -54,7 +54,8 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
         Timber.d("words size ${words.size} game settings words ${Game.getSettings().word}")
         return words.size < Game.getSettings().word
     }
-    fun needWordSize():Int = Game.getSettings().word - words.size
+    fun needWordSize():Int = if (words.isEmpty()) {0} else { Game.getSettings().word - words.size}
+
 
     fun randomAllowed():Boolean = Game.getSettings().allowRandomWords
 
@@ -95,13 +96,15 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
 
         randomWords.addAll(unicWords)
     }
+
     fun deleteWord(word:Word){
         words.remove(word)
         updateData()
     }
     fun newRandomWord(word:Word){
-        val randomez:List<Word> = randomWords.filter { !words.contains(it) }
-        words[words.indexOf(word)].word = randomez[0].word
+        if(randomWords.isEmpty()) loadRandomWords()
+
+        words[words.indexOf(word)] = randomWords.poll()
         updateData()
     }
 
