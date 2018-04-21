@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.utils
 
 import android.view.View
 import android.widget.SeekBar
+import java.util.*
 
 /**
  * Created by alex on 4/10/18.
@@ -34,3 +35,8 @@ fun View.show() {
 fun View.gone() {
     this.visibility = View.GONE
 }
+
+/**
+ * Returns a random element.
+ */
+fun <E> List<E>.random(): E? = if (size > 0) get(Random().nextInt(size)) else null

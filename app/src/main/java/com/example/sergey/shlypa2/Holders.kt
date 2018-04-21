@@ -119,7 +119,7 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
         }
 
         Picasso.get()
-                .load(Functions.imageNameToUrl("ninja"))
+                .load(Functions.imageNameToUrl("ninja.png"))
                 .into(avatarImage)
     }
 }
@@ -141,7 +141,7 @@ class PlayerInTeamHolder(view : View) : BaseHolder(view) {
     fun bind(player: Player) {
         tvName.text = player.name
         Picasso.get()
-                .load(Functions.imageNameToUrl("ninja"))
+                .load(Functions.imageNameToUrl("ninja.png"))
                 .into(avatarImage)
     }
 }

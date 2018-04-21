@@ -9,7 +9,9 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
+import com.example.sergey.shlypa2.utils.random
 import timber.log.Timber
 
 /**
@@ -71,6 +73,15 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         if (player != null) Game.addPlayer(player)
 
         updateData()
+    }
+
+    fun getRandomAvatar() : String{
+
+        val filesList = dataProvider.getListOfAvatars()
+        val randomFile = filesList.random()
+        if(randomFile != null) {
+            return Functions.imageNameToUrl(randomFile)
+        } else return ""
     }
 
     fun initTeams() {

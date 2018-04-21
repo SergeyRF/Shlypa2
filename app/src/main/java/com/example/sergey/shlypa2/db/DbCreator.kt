@@ -1,14 +1,14 @@
 package com.example.sergey.shlypa2.db
 
 import android.content.Context
+import android.content.res.AssetManager
+import android.os.Environment
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
+import com.google.gson.GsonBuilder
 import timber.log.Timber
-import java.io.BufferedInputStream
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
+import java.io.*
 
 /**
  * Created by alex on 4/10/18.
@@ -46,5 +46,22 @@ object DbCreator {
             dataBase.wordDao().insertWord(Word("$line very hard", type = Contract.WordType.VERY_HARD))
             line = wordsBufferedReader.readLine()
         }
+    }
+
+    fun loadFileList(context: Context) {
+        val asset = context.assets.list("player_avatars")
+        Timber.d("list if files")
+        for(file in asset) {
+            Timber.d(file)
+        }
+
+        val gson = GsonBuilder().setPrettyPrinting().create()
+        val jsonList = gson.toJson(asset)
+
+        Timber.d(jsonList)
+
+        val fileWriter = FileWriter("${Environment.getExternalStorageDirectory()}/files.json")
+        fileWriter.write(jsonList)
+        fileWriter.close()
     }
 }

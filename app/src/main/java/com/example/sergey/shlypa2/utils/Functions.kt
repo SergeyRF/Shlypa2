@@ -7,7 +7,9 @@ import java.text.DateFormat
 import java.util.*
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
+import org.json.JSONArray
 import timber.log.Timber
+import java.io.IOException
 
 /**
  * Created by alex on 4/17/18.
@@ -39,7 +41,25 @@ object Functions {
     }
 
     fun imageNameToUrl(name : String) : String {
-        return "file:///android_asset/player_avatars/$name.png"
+        return "file:///android_asset/player_avatars/$name"
+    }
+
+    fun readJsonFromAssets(context: Context, filePath: String) : String {
+        var result = "[]"
+
+        try {
+            val inputStream = context.assets.open(filePath)
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+
+            inputStream.read(buffer)
+            inputStream.close()
+            result = String(buffer)
+        } catch (ex : IOException) {
+            Timber.e(ex)
+        }
+
+        return result
     }
 
 }

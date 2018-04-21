@@ -19,6 +19,7 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_players.*
 
 
@@ -89,6 +90,10 @@ class PlayersFragment : Fragment() {
                 true
             } else true
         }
+
+        Picasso.get()
+                .load(viewModel.getRandomAvatar())
+                .into(civPlayerAvatar)
 
     }
 
