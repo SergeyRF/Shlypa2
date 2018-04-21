@@ -12,7 +12,10 @@ import android.widget.TextView
 
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ui.RoundActivity
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 /**
@@ -31,9 +34,14 @@ class TurnStartFragment : Fragment() {
 
         val playerTv : TextView  = root.findViewById(R.id.tvTurnPlayerName)
         val startButton : Button = root.findViewById(R.id.btTurnStart)
+        val playerAvatar : CircleImageView = root.findViewById(R.id.civPlayerAvatar)
 
         playerTv.text = viewModel.getPlayer().name
         startButton.setOnClickListener{viewModel.startTurn()}
+
+        Picasso.get()
+                .load(Functions.imageNameToUrl(viewModel.getPlayer().avatar))
+                .into(playerAvatar)
 
         return root
     }

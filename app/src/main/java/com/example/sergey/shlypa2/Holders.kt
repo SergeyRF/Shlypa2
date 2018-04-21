@@ -68,16 +68,16 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
 
     fun bind(scoredTeam: TeamWithScores) {
         teamName.text = scoredTeam.team.name
-        teemScores.text = scoredTeam.scoresMap.values.sum().toString()
+        teemScores.text = scoredTeam.scores.toString()
 
         listPlayers.removeAllViews()
 
         for (player in scoredTeam.team.players) {
 
             val playerView = LayoutInflater.from(view.context)
-                    .inflate(R.layout.holder_player_score, listPlayers, false)
+                    .inflate(R.layout.holder_player_inteam, listPlayers, false)
 
-            val playerHolder = PlayerWithScoreHolder(playerView)
+            val playerHolder = PlayerInTeamHolder(playerView)
             playerHolder.bind(player, scoredTeam.scoresMap[player.id] ?: 0)
 
             listPlayers.addView(playerView)
@@ -126,22 +126,20 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
     }
 }
 
-class PlayerWithScoreHolder(view: View) : BaseHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.tvName)
-    val tvScores: TextView = view.findViewById(R.id.tvScores)
-
-    fun bind(player: Player, scores: Int) {
-        tvName.text = player.name
-        tvScores.text = scores.toString()
-    }
-}
-
 class PlayerInTeamHolder(view : View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.tvName)
+    val tvScores : TextView = view.findViewById(R.id.tvScores)
     val avatarImage : CircleImageView = view.findViewById(R.id.civPlayerAvatar)
 
-    fun bind(player: Player) {
+    fun bind(player: Player, scores: Int = Int.MIN_VALUE) {
         tvName.text = player.name
+        if(scores != Int.MIN_VALUE) {
+            tvScores.show()
+            tvScores.text = scores.toString()
+        } else {
+            tvScores.hide()
+        }
+
         Picasso.get()
                 .load(Functions.imageNameToUrl(player.avatar))
                 .into(avatarImage)

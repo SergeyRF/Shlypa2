@@ -78,10 +78,15 @@ object Game {
         //Split scores for teams
         teamWithScores.forEach {
             val map = it.scoresMap
+            val team = it
             it.team.players.forEach {
-                map[it.id] = scoresMap[it.id] ?: 0
+                val scores = scoresMap[it.id] ?: 0
+                map[it.id] = scores
+                team.scores +=  scores
             }
         }
+
+        teamWithScores.sortedByDescending { it.scores }
 
         return teamWithScores
     }
@@ -110,10 +115,15 @@ object Game {
 
         teamWithScores.forEach {
             val map = it.scoresMap
+            val team = it
             it.team.players.forEach {
-                map[it.id] = mapOfPlayers[it.id] ?: 0
+                val scores = mapOfPlayers[it.id] ?: 0
+                map[it.id] = scores
+                team.scores += scores
             }
         }
+
+        teamWithScores.sortedByDescending { it.scores }
 
         return teamWithScores
     }
