@@ -6,7 +6,9 @@ import android.os.Environment
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.utils.Functions
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import timber.log.Timber
 import java.io.*
 
@@ -15,18 +17,19 @@ import java.io.*
  */
 object DbCreator {
 
-    fun createPlayers(dataBase: DataBase) {
+    fun createPlayers(dataBase: DataBase, context: Context) {
         val players = dataBase.playersDao().getAllPlayers()
         if(players.isEmpty()) {
-            val names = arrayOf("Ashot", "Vazgen", "Zurab", "Gjamshoot", "Gogi",
-                    "Givi", "Samir", "Magamet", "Azamat", "Ahmad")
+            val somePlayersJson = Functions.readJsonFromAssets(context, "players.json")
+            val gson = GsonBuilder().create()
+            val somePlayersList : List<SomePlayer> = gson.fromJson(somePlayersJson,
+                    object : TypeToken<List<SomePlayer>>(){}.type)
 
-            for(name in names) {
-                dataBase.playersDao().insertPlayer(Player(name = name, type = Contract.PlayerType.STANDARD))
+            for(somePlayer in somePlayersList) {
+                dataBase.playersDao().insertPlayer(
+                        Player(name = somePlayer.name, avatar = somePlayer.avatar, type = Contract.PlayerType.STANDARD))
             }
         }
-
-
     }
 
     fun createWords(dataBase: DataBase, context: Context) {
@@ -63,5 +66,18 @@ object DbCreator {
         val fileWriter = FileWriter("${Environment.getExternalStorageDirectory()}/files.json")
         fileWriter.write(jsonList)
         fileWriter.close()
+
+        /*val somePlayersList : MutableList<SomePlayer> = mutableListOf()
+
+        for(i in 0 until asset.size) {
+            somePlayersList.add(SomePlayer("Player $i", asset[i]))
+        }
+
+        val playersJson = gson.toJson(somePlayersList)
+        val write = FileWriter("${Environment.getExternalStorageDirectory()}/players.json")
+        write.write(playersJson)
+        write.close()*/
     }
 }
+
+data class SomePlayer(val name : String, val avatar : String)
