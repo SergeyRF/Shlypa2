@@ -9,7 +9,6 @@ import android.widget.*
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.game.Dificult
-import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.viewModel.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import com.example.sergey.shlypa2.utils.onChange
@@ -55,7 +54,7 @@ class GameSettingsActivity : AppCompatActivity() {
         onBalSwitch(settingsVM.getMinusBal().value!!)
 
 
-        val button = findViewById<Button>(R.id.cancel_command)
+        val button = findViewById<Button>(R.id.bt_cancel_command)
         button.setOnClickListener{
 
             settingsVM.setAllowRandom(cbAllowRandom.isChecked)
