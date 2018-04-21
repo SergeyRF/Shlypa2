@@ -150,20 +150,19 @@ class PlayerInTeamHolder(view : View) : BaseHolder(view) {
 
 class WordsHolder(val view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.wordInject)
-    val ibRenameWodr: ImageButton = view.findViewById(R.id.ibRenameWord)
     val ibDeletWord: ImageButton = view.findViewById(R.id.ibDelWord)
     val ibNextWord: ImageButton = view.findViewById(R.id.ibNextWord)
+    val etReNameW: TextView = view.findViewById(R.id.etWordRename)
 
     fun bind(word: Word) {
+        etReNameW.text = word.word
+        etReNameW.hide()
+        tvName.show()
 
         tvName.text = word.word
         Timber.d("${word.word}")
 
-        buttonLook(word)
 
-        ibRenameWodr.setOnClickListener {
-            listener?.invoke(word)
-        }
 
         ibDeletWord.setOnClickListener {
             listenerTwo?.invoke(word)
@@ -174,19 +173,32 @@ class WordsHolder(val view: View) : BaseHolder(view) {
             Timber.d("NextWord")
         }
 
-
-    }
-
-    fun buttonLook(word: Word) {
-        if (word.type == Contract.WordType.USER) {
-            ibNextWord.hide()
-            ibRenameWodr.show()
-        } else {
-            ibRenameWodr.hide()
-            ibNextWord.show()
+        tvName.setOnClickListener {
+            tvName.hide()
+            etReNameW.show()
+            etReNameW.setText("")
+            etReNameW.append(word.word)
+            etReNameW.requestFocus()
+            Functions.showKeyboard(view.context, etReNameW)
         }
 
+        etReNameW.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                if (etReNameW.text.isNotEmpty() && etReNameW.text.toString() != word.word) {
+                    word.word = etReNameW.text.toString()
+                    tvName.text = word.word
+
+                    listener?.invoke(word)
+                }
+
+                tvName.show()
+                etReNameW.hide()
+            }
+        }
+
+
     }
+
 }
 
 class WordResultHolder(view: View) : BaseHolder(view) {

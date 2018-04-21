@@ -1,32 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/tvReNameIt"
+    android:textSize="@dimen/text_medium"
+    android:text="Rename this shit"
+    android:layout_marginTop="@dimen/big_margin"
+    android:layout_marginLeft="@dimen/big_margin"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    />
     <EditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/etDialog"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_marginLeft="@dimen/big_margin"
+        android:layout_marginRight="@dimen/small_margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-
+        app:layout_constraintTop_toBottomOf="@+id/tvReNameIt"
+        app:layout_constraintBottom_toTopOf="@+id/btYesDialog"
         />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/etDialog"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/btNoDialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/Transparent"
         android:text="@string/ok"
+        android:textColor="@color/primary_color"
         android:id="@+id/btYesDialog"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btNoDialog"
         android:text="@string/cancel"
-        app:layout_constraintTop_toBottomOf="@+id/etDialog"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/btYesDialog"/>
+        android:textColor="@color/primary_color"
+        android:background="@color/Transparent"
+        android:layout_marginRight="@dimen/small_margin"
+       app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btYesDialog"
+        />
 
 </android.support.constraint.ConstraintLayout>

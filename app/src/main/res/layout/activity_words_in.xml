@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sergey.shlypa2.ui.WordsInActivity">
+    tools:context="com.example.sergey.shlypa2.ui.WordsInActivity"
+    >
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -30,6 +31,9 @@
         android:id="@+id/etWord"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_medium"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintTop_toBottomOf="@+id/wordInject"
         android:hint="@string/vvodi"
         />

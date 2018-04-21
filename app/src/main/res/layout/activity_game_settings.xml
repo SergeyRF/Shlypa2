@@ -223,7 +223,8 @@
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_settings"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view5" />
+       app:layout_constraintBaseline_toBaselineOf="@id/tvHowBal"
+         />
 
 
     <android.support.v7.widget.AppCompatSeekBar
