@@ -156,6 +156,9 @@ class WordsHolder(val view: View) : BaseHolder(view) {
         etReNameW.text = word.word
         etReNameW.hide()
         tvName.show()
+        if(word.type==Contract.WordType.USER){
+            ibNextWord.hide()
+        }
 
         tvName.text = word.word
         Timber.d("${word.word}")
@@ -185,7 +188,7 @@ class WordsHolder(val view: View) : BaseHolder(view) {
                 if (etReNameW.text.isNotEmpty() && etReNameW.text.toString() != word.word) {
                     word.word = etReNameW.text.toString()
                     tvName.text = word.word
-
+                    ibNextWord.hide()
                     listener?.invoke(word)
                 }
 

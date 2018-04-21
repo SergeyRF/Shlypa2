@@ -110,8 +110,7 @@ class WordsInActivity : AppCompatActivity() {
             else{
                 etWord.setHint(R.string.vvodi)
             }
-            Toast.makeText(this, "Слов осталось ввести ${viewStateModel.needWordSize()}",
-                    Toast.LENGTH_LONG).show()
+
             if (viewStateModel.randomAllowed()){
                 btNext.text = getString(R.string.add_random)
             } else{

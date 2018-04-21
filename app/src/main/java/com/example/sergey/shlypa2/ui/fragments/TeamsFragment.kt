@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import com.example.sergey.shlypa2.R
@@ -81,10 +82,21 @@ class TeamsFragment : Fragment() {
             if (etTeemD.text.isNotEmpty()) {
                 team.name = etTeemD.text.toString()
                 adapterTeam.notifyDataSetChanged()
-                dialog.cancel()
             }
+                dialog.cancel()
+
         }
         btNoD.setOnClickListener { dialog.cancel() }
+
+        etTeemD.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT&& etTeemD.text.isNotEmpty()){
+                team.name = etTeemD.text.toString()
+                adapterTeam.notifyDataSetChanged()
+                dialog.cancel()
+            }
+            true
+
+        }
         dialog.show()
     }
 
