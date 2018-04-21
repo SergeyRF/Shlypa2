@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.os.AsyncTask
 import android.widget.Toast
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Contract
@@ -23,23 +24,42 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
 
     private val playersLiveData = MutableLiveData<List<Player>>()
     private val teamsLiveData = MutableLiveData<List<Team>>()
+    private val avatarLiveData = MutableLiveData<String>()
+
     private val dataProvider = DataProvider(application)
 
     val commandLiveData = SingleLiveEvent<Command>()
     val titleLiveData = MutableLiveData<Int>()
+
+    val listOfAvatars : MutableList<String> = mutableListOf()
 
     init {
         updateData()
     }
 
     fun getPlayersLiveData(): LiveData<List<Player>> = playersLiveData
+
     fun getTeamsLiveData(): LiveData<List<Team>> = teamsLiveData
 
+    fun getAvatarLiveData(): LiveData<String> {
+        if(listOfAvatars.isEmpty()) {
+            AsyncTask.execute {
+                synchronized(this, { loadAvatars() })
+            }
+        }
 
+        return avatarLiveData
+    }
+
+    //todo do not add players with the same name
     fun addPlayer(player: Player): Boolean {
         player.id = dataProvider.insertPlayer(player)
         val success = Game.addPlayer(player)
-        updateData()
+
+        if(success) {
+            avatarLiveData.value = listOfAvatars.random()
+            updateData()
+        }
 
         return success
     }
@@ -78,13 +98,9 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         updateData()
     }
 
-    fun getRandomAvatar() : String{
-
-        val filesList = dataProvider.getListOfAvatars()
-        val randomFile = filesList.random()
-        if(randomFile != null) {
-            return Functions.imageNameToUrl(randomFile)
-        } else return ""
+    private fun loadAvatars() {
+        listOfAvatars.addAll(dataProvider.getListOfAvatars())
+        avatarLiveData.postValue(listOfAvatars.random())
     }
 
     fun initTeams() {

@@ -1,6 +1,8 @@
 package com.example.sergey.shlypa2.utils
 
 import android.content.Context
+import android.graphics.Point
+import android.view.Display
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import java.text.DateFormat
@@ -60,6 +62,11 @@ object Functions {
         }
 
         return result
+    }
+
+    fun getScreenWidth(context: Context) : Int {
+        val display = context.resources.displayMetrics
+        return display.widthPixels
     }
 
 }
