@@ -39,7 +39,6 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         wordLiveData.value = round.getWord()
-        soundManager.preload(SoundManager.Sound.CORRECT, SoundManager.Sound.WRONG)
     }
 
 
@@ -49,7 +48,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         round.answer(answer)
 
         //play sound
-        soundManager.play(if(answer)SoundManager.Sound.CORRECT else SoundManager.Sound.WRONG)
+        soundManager.play(if(answer)R.raw.correct else R.raw.wrong)
 
         val word = round.getWord()
         if (word != null) {

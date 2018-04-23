@@ -20,34 +20,22 @@ class SoundManager(val context: Context,
         }
     }
 
-    enum class Sound(var id : Int) {
-        CORRECT(R.raw.correct),
-        WRONG(R.raw.wrong);
+    private val soundsMap: MutableMap<Int, Int> = mutableMapOf()
 
-        var soundId = -1
-    }
+    fun play(resource : Int) {
+        val soundId = soundsMap[resource]
 
-    fun preload(vararg sounds : Sound) {
-        for(sound in sounds) {
-            sound.soundId = soundPool.load(context, sound.id, 1)
-        }
-    }
-
-    fun play(sound : Sound) {
-        if(sound.soundId == -1) {
-            preload(sound)
+        if(soundId == null) {
+            soundsMap[resource] = soundPool.load(context, resource, 1)
             soundPool.setOnLoadCompleteListener{pool, sampleId, status ->
                 if(status == 0) pool.play(sampleId, leftVolume, rightVolume, 1, 0, 1F)
             }
         } else {
-            soundPool.play(sound.soundId, leftVolume, rightVolume, 1, 0, 1f )
+            soundPool.play(soundId, leftVolume, rightVolume, 1, 0, 1f )
         }
     }
 
     fun release() {
         soundPool.release()
-        for(s in Sound.values()) {
-            s.soundId = -1
-        }
     }
 }
