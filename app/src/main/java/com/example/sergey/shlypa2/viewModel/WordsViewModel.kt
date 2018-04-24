@@ -9,6 +9,7 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.WordType
 import timber.log.Timber
 import java.util.*
 
@@ -72,7 +73,7 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
         updateData()
     }
     fun reNameWord(word:Word){
-        words[words.indexOf(word)].type = Contract.WordType.USER
+        words[words.indexOf(word)].type = WordType.USER
         words[words.indexOf(word)].word=word.word
     }
 
@@ -90,7 +91,7 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private fun loadRandomWords() {
-        var dbWords = db.getRandomWords(100, Game.getSettings().dificult)
+        var dbWords = db.getRandomWords(100, Game.getSettings().type)
         for (w in dbWords) Timber.d("$w")
 
         var unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !words.contains(it) }

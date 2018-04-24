@@ -1,7 +1,9 @@
 package com.example.sergey.shlypa2.db
 
 import android.arch.persistence.room.TypeConverter
-import com.example.sergey.shlypa2.beans.Contract
+import com.example.sergey.shlypa2.game.PlayerType
+import com.example.sergey.shlypa2.game.WordType
+
 
 /**
  * Created by alex on 4/15/18.
@@ -10,18 +12,18 @@ import com.example.sergey.shlypa2.beans.Contract
 class WordTypeConverter {
 
     @TypeConverter
-    fun typeToString(type: Contract.WordType): String {
+    fun typeToString(type: WordType): String {
         return type.toString()
     }
 
     @TypeConverter
-    fun toType(type: String): Contract.WordType {
+    fun toType(type: String): WordType {
         return when (type) {
-            Contract.WordType.EASY.toString() -> Contract.WordType.EASY
-            Contract.WordType.MEDIUM.toString() -> Contract.WordType.MEDIUM
-            Contract.WordType.HARD.toString() -> Contract.WordType.HARD
-            Contract.WordType.VERY_HARD.toString() -> Contract.WordType.VERY_HARD
-            Contract.WordType.USER.toString() -> Contract.WordType.USER
+            WordType.EASY.toString() -> WordType.EASY
+            WordType.MEDIUM.toString() -> WordType.MEDIUM
+            WordType.HARD.toString() -> WordType.HARD
+            WordType.VERY_HARD.toString() -> WordType.VERY_HARD
+            WordType.USER.toString() -> WordType.USER
             else -> throw RuntimeException("Unsupported type")
         }
     }
@@ -31,15 +33,15 @@ class WordTypeConverter {
 class PlayerTypeConverter {
 
     @TypeConverter
-    fun typeToString(type: Contract.PlayerType) : String {
+    fun typeToString(type: PlayerType): String {
         return type.toString()
     }
 
     @TypeConverter
-    fun stringToType(type : String) : Contract.PlayerType {
+    fun stringToType(type: String): PlayerType {
         return when (type) {
-            Contract.PlayerType.USER.toString() -> Contract.PlayerType.USER
-            Contract.PlayerType.STANDARD.toString() -> Contract.PlayerType.STANDARD
+            PlayerType.USER.toString() -> PlayerType.USER
+            PlayerType.STANDARD.toString() -> PlayerType.STANDARD
             else -> throw RuntimeException("Unsupported type")
         }
     }

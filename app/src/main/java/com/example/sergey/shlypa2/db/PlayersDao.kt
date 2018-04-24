@@ -6,6 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.game.PlayerType
 
 /**
  * Created by alex on 4/10/18.
@@ -19,7 +20,7 @@ interface PlayersDao {
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} " +
             "WHERE ${Contract.PLAYER_TYPE}= :type " +
             "ORDER BY RANDOM()")
-    fun getPlayersByType(type : Contract.PlayerType) : List<Player>
+    fun getPlayersByType(type : PlayerType) : List<Player>
 
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} WHERE ${Contract.PLAYER_ID} = :id")
     fun getPlayerById(id : Long) : Player?

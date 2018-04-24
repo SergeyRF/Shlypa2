@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.*
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.game.Dificult
+import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.viewModel.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import com.example.sergey.shlypa2.utils.onChange
@@ -58,7 +58,7 @@ class GameSettingsActivity : AppCompatActivity() {
         button.setOnClickListener{
 
             settingsVM.setAllowRandom(cbAllowRandom.isChecked)
-            settingsVM.setDificultLD(spinnerDificult.selectedItem as Dificult)
+            settingsVM.setDificultLD(spinnerDificult.selectedItem as WordType)
             settingsVM.setnumberMInusBal(tvNumberMinusBal.text.toString().toInt())
             settingsVM.setMinusBal(cbMinusBal.isChecked)
             settingsVM.onFinish()
@@ -66,7 +66,8 @@ class GameSettingsActivity : AppCompatActivity() {
         }
 
 
-        val adapter = ArrayAdapter<Dificult>(this, android.R.layout.simple_list_item_1, Dificult.values())
+        val typesList = arrayOf(WordType.EASY, WordType.MEDIUM, WordType.HARD, WordType.VERY_HARD)
+        val adapter = ArrayAdapter<WordType>(this, android.R.layout.simple_list_item_1, typesList)
         spinnerDificult.adapter = adapter
 
         onDificult(settingsVM.getDificultLD().value)
@@ -81,9 +82,9 @@ class GameSettingsActivity : AppCompatActivity() {
         word.text = i.toString()
     }
 
-    private fun onDificult(d:Dificult?){
-        Timber.d("Difficulty $d position ${Dificult.values().indexOf(d)}")
-        spinnerDificult.setSelection(Dificult.values().indexOf(d))
+    private fun onDificult(d:WordType?){
+        Timber.d("Difficulty $d position ${WordType.values().indexOf(d)}")
+        spinnerDificult.setSelection(WordType.values().indexOf(d))
     }
 
     private fun onSwitch(b:Boolean){

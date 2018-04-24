@@ -4,7 +4,7 @@ package com.example.sergey.shlypa2.beans
  * Created by alex on 4/10/18.
  */
 object Contract {
-    const val DB_VERSION = 13
+    const val DB_VERSION = 14
     const val DB_NAME = "shlyapa_db"
 
     //Players table columns
@@ -28,11 +28,4 @@ object Contract {
     const val STATE_STRING = "state_string"
     const val STATE_TIME = "state_time"
 
-    enum class WordType{
-        EASY, MEDIUM, HARD, VERY_HARD, USER
-    }
-
-    enum class PlayerType {
-        STANDARD, USER
-    }
 }

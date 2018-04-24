@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.Constants
-import com.example.sergey.shlypa2.game.Dificult
+import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.SettingsProviderImpl
 import timber.log.Timber
@@ -19,7 +19,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val minCount = MutableLiveData<Int>()
     private val maxCount = MutableLiveData<Int>()
     private val teemNeed = MutableLiveData<Int>()
-    private val dificult = MutableLiveData<Dificult>()
+    private val dificult = MutableLiveData<WordType>()
     private val allowRandom = MutableLiveData<Boolean>()
     private val minusBal = MutableLiveData<Boolean>()
     private val numberMinusBal = MutableLiveData<Int>()
@@ -29,7 +29,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     var settings = settingsProvider.getSettings()
 
     init {
-        Timber.d("Dificulty ${settings.dificult}")
+        Timber.d("Dificulty ${settings.type}")
         updateStateData()
         if (teemNeed.value == null) teemNeed.value = Constants.MIN_TEAM_COUNT
     }
@@ -59,10 +59,10 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         updateStateData()
     }
 
-    fun getDificultLD(): LiveData<Dificult> = dificult
-    fun setDificultLD(d: Dificult) {
+    fun getDificultLD(): LiveData<WordType> = dificult
+    fun setDificultLD(d: WordType) {
         Timber.d("$d")
-        settings.dificult = d
+        settings.type = d
         updateStateData()
     }
 
@@ -90,7 +90,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         minCount.value = Constants.MIN_TEAM_COUNT
         maxCount.value = Game.maxTeamsCount()
         allowRandom.value = settings.allowRandomWords
-        dificult.value = settings.dificult
+        dificult.value = settings.type
         minusBal.value = settings.minusBal
         numberMinusBal.value = settings.numberMinusBal
     }

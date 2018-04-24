@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.beans
 
 import android.arch.persistence.room.*
 import com.example.sergey.shlypa2.db.WordTypeConverter
+import com.example.sergey.shlypa2.game.WordType
 
 /**
  * Created by alex on 4/10/18.
@@ -11,7 +12,7 @@ import com.example.sergey.shlypa2.db.WordTypeConverter
 class Word(@ColumnInfo(name = Contract.WORD_COLUMN) var word: String = "",
            @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Contract.WORD_ID) var id: Long = 0,
            @ColumnInfo(name = Contract.WORD_LANG) var lang: String = "RU",
-           @ColumnInfo(name = Contract.WORD_TYPE) var type: Contract.WordType = Contract.WordType.USER,
+           @ColumnInfo(name = Contract.WORD_TYPE) var type: WordType = WordType.USER,
            @Ignore var addedBy: Long = 0) {
 
     @Ignore
