@@ -67,14 +67,30 @@ class Round(val words: List<Word>) {
     }
 
     fun answer(correct: Boolean) {
-        if (currentWord != null) {
-            currentWord!!.right = correct
-            currentWord!!.answeredBy = currentPlayer.id
-            wordsAnsweredByPlayer.add(currentWord!!)
+        currentWord?.let {
+            it.right = correct
+            it.answeredBy = currentPlayer.id
+            wordsAnsweredByPlayer.add(it)
         }
 
         currentWord = null
         getWord()
+    }
+
+    /**
+     * Returns count of words answered by current player
+     * first value - correct, second  - skipped
+     */
+    fun getTurnAnswersCount() : Pair<Int, Int> {
+        var correct = 0
+        var skipped = 0
+
+        wordsAnsweredByPlayer.forEach {
+            if(it.right) correct++
+            else skipped++
+        }
+
+        return Pair(correct, skipped)
     }
 
     /**

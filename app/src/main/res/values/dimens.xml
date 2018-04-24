@@ -4,6 +4,7 @@
     <dimen name="text_Big">40sp</dimen>
     <dimen name="text_medium">20sp</dimen>
     <dimen name="text_settings">16sp</dimen>
+    <dimen name="text_timer">18sp</dimen>
 
     <dimen name="word_holder_height">40dp</dimen>
 

@@ -28,6 +28,8 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     var roundRules = round.rules
 
     val wordLiveData = MutableLiveData<Word>()
+    //First value - answered, second - skipped
+    val answeredCountLiveData = MutableLiveData<Pair<Int, Int>>()
 
     val timerLiveData = MutableLiveData<Int>()
     var timeLeft = Game.getSettings().time
@@ -46,6 +48,8 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     fun answerWord(answer: Boolean) {
         round.answer(answer)
+
+        answeredCountLiveData.value = round.getTurnAnswersCount()
 
         //play sound
         soundManager.play(if(answer)R.raw.correct else R.raw.wrong)

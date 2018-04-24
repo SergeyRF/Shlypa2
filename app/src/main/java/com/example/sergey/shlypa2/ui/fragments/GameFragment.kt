@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.ui.fragments
 
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -47,8 +48,6 @@ class GameFragment : Fragment() {
         btOk.setOnClickListener { viewModel.answerWord(true) }
         btReturn.setOnClickListener { viewModel.answerWord(false) }
 
-        viewModel.timerLiveData.observe(this, Observer { time -> tvTime.text = "$time" })
-
         return root
     }
 
@@ -65,10 +64,24 @@ class GameFragment : Fragment() {
             cv_word.translationY = cv_word.translationY - y
         }
 
+        viewModel.timerLiveData.observe(this, Observer { time -> time?.let { onTimer(it) }})
+
+        viewModel.answeredCountLiveData.observe(this, Observer { answered ->
+            answered?.let { onAnsweredCount(it) }
+        })
+
         containerGame.setOnClickListener { }
         containerGame.setOnTouchListener(onSwipeTouchListener)
 
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun onTimer(time : Int){
+        val minutes = time / 60
+        val seconds = time % 60
+
+        tvTime.text = "%02d:%02d".format(minutes, seconds)
     }
 
     fun onNextWord(word: Word) {
@@ -80,6 +93,10 @@ class GameFragment : Fragment() {
         }, 100)
 
         runWordAppearAnimation()
+    }
+
+    fun onAnsweredCount(answered : Pair<Int, Int>) {
+        tvAnsweredCount.text = answered.first.toString()
     }
 
     val onSwipeTouchListener = object : OnSwipeTouchListener() {
