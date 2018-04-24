@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2.game
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -16,7 +17,7 @@ class Round(val words: List<Word>) {
     var wordsQueue: ArrayDeque<Word>
     var wordsAnsweredByPlayer = mutableListOf<Word>()
 
-    var results: MutableMap<Long, MutableList<Long>> = mutableMapOf()
+    var results: MutableMap<Long, Int> = mutableMapOf()
 
     var currentTeam: Team = Game.getCurrentTeam()
     var currentPlayer: Player = currentTeam.getPlayer()
@@ -37,18 +38,27 @@ class Round(val words: List<Word>) {
     }
 
     fun nextPlayer(): Player {
-        val playerList: MutableList<Long>
+        var playerScores = 0
 
         if (results.containsKey(currentPlayer.id)) {
-            playerList = results[currentPlayer.id]!!
-        } else {
-            playerList = mutableListOf()
-            results[currentPlayer.id] = playerList
+            playerScores = results[currentPlayer.id]!!
         }
 
         wordsAnsweredByPlayer.forEach {
-            if (it.right) playerList.add(it.id)
+            if (it.right) {
+                playerScores++
+            } else {
+                if(Game.getSettings().minusBal) {
+                    playerScores -= Game.getSettings().numberMinusBal
+                }
+
+                if(Game.getSettings().returnSkipedToHat) {
+                    wordsQueue.add(it)
+                }
+            }
         }
+
+        results[currentPlayer.id] = playerScores
 
         wordsAnsweredByPlayer.clear()
 
@@ -93,17 +103,15 @@ class Round(val words: List<Word>) {
         return Pair(correct, skipped)
     }
 
-    /**
-     * Return word into hat
-     */
-    fun returnWord(word: Word) {
-        wordsQueue.add(word)
-        wordsAnsweredByPlayer.remove(word)
-    }
-
     fun getResults(): RoundResults {
         return RoundResults(results)
     }
 
+    fun printHatContaining() {
+        val hatList = wordsQueue.toList()
+        hatList.forEach {
+            Timber.d("Word in hat ${it.word}")
+        }
+    }
 }
 

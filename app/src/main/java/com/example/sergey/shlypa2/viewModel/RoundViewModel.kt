@@ -91,6 +91,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         handler.removeCallbacksAndMessages(null)
         timeLeft = Game.getSettings().time
         timerLiveData.value = timeLeft
+
     }
 
     fun getTurnResults(): List<Word> {
@@ -102,10 +103,14 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
         round.nextPlayer()
         if (round.getWord() != null) {
+            answeredCountLiveData.value = Pair(0, 0)
             commandCallback.value = Command.GET_READY
         } else {
             commandCallback.value = Command.SHOW_ROUND_RESULTS
         }
+
+        //Just for debug
+        round.printHatContaining()
     }
 
     fun startTimer() {
