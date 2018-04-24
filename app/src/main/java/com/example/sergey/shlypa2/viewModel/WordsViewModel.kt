@@ -15,7 +15,7 @@ import java.util.*
 /**
  * Created by sergey on 4/3/18.
  */
-class PlayerWordsModel(application: Application) : AndroidViewModel(application) {
+class WordsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val wordsLiveData = MutableLiveData<List<Word>>()
     private val playerLivaData = MutableLiveData<Player>()
@@ -54,7 +54,9 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
         Timber.d("words size ${words.size} game settings words ${Game.getSettings().word}")
         return words.size < Game.getSettings().word
     }
-    fun needWordSize():Int = if (words.isEmpty()) {0} else { Game.getSettings().word - words.size}
+
+
+    fun needWordSize():Int =  Game.getSettings().word - words.size
 
 
     fun randomAllowed():Boolean = Game.getSettings().allowRandomWords
@@ -101,6 +103,7 @@ class PlayerWordsModel(application: Application) : AndroidViewModel(application)
         words.remove(word)
         updateData()
     }
+
     fun newRandomWord(word:Word){
         if(randomWords.isEmpty()) loadRandomWords()
 

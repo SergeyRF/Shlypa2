@@ -7,17 +7,28 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+    </style>
 
+    <style name="AppThemeBlue"  parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/Green</item>
+        <item name="colorPrimaryDark">@color/GreenDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <!--Hyase -->
     <style name="Button_next" >
         <item name="android:textSize">@dimen/text_smoll</item>
         <item name="android:textColor">@color/text_or_icon</item>
-        <item name="android:background">@color/primary_color</item>
+        <item name="android:background">?attr/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
 
+    <style name="Button_welcome">
+        <item name="android:textSize">@dimen/text_smoll</item>
+        <item name="android:textColor">@color/text_or_icon</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:layout_marginBottom">@dimen/medium_margin</item>
     </style>
 
 </resources>

@@ -40,6 +40,9 @@
 
     <string name="cant_create_teams">There should be at least 2 players in a team</string>
 
+    <string name="words_input_left">Words left %1d</string>
+    <string name="who_inputs">%1s inputs words</string>
+
     <!-- Settings -->
     <string name="timeN">Время хода</string>
     <string name="wordN">Сколько слов</string>
@@ -49,7 +52,6 @@
     <string name="allow_random">Allow random words</string>
     <string name="name">Name</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="shuffle_teams">Shuffle teams</string>
 </resources>

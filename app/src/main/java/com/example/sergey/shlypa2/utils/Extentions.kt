@@ -38,6 +38,10 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
+fun View.hideSmooth() {
+    this.animate().alpha(0f).start()
+}
+
 
 /**
  * Returns a random element.

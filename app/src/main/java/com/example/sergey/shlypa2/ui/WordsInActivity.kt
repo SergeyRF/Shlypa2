@@ -14,21 +14,19 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.gone
-import com.example.sergey.shlypa2.utils.hide
-import com.example.sergey.shlypa2.utils.show
-import com.example.sergey.shlypa2.viewModel.PlayerWordsModel
+import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import kotlinx.android.synthetic.main.activity_words_in.*
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import android.widget.Toast
+import com.example.sergey.shlypa2.utils.*
+import com.squareup.picasso.Picasso
 
 
 class WordsInActivity : AppCompatActivity() {
 
 
     private lateinit var wordsAdapter: RvAdapter
-    lateinit var viewStateModel: PlayerWordsModel
+    lateinit var viewModel: WordsViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,27 +37,27 @@ class WordsInActivity : AppCompatActivity() {
         rvWords.layoutManager=LinearLayoutManager(this)
         rvWords.adapter = wordsAdapter
 
-        viewStateModel = ViewModelProviders.of(this).get(PlayerWordsModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(WordsViewModel::class.java)
 
-        viewStateModel.getWordsLiveData().observe(this, Observer { list->setWordRv(list) })
+        viewModel.getWordsLiveData().observe(this, Observer { list->setWordRv(list) })
 
-        viewStateModel.getPlayerLiveData().observe(this, Observer { setPlayer(it) })
+        viewModel.getPlayerLiveData().observe(this, Observer { setPlayer(it) })
 
-        viewStateModel.needWord.observe(this, Observer { needWords -> if(needWords != null) onNeedWordsChanged(needWords) })
+        viewModel.needWord.observe(this, Observer { needWords -> if(needWords != null) onNeedWordsChanged(needWords) })
 
-        viewStateModel.inputFinishCallBack.observe(this, Observer { bool ->
+        viewModel.inputFinishCallBack.observe(this, Observer { bool ->
             if(bool != null && bool) onStartGame() })
 
         ibAddWord.setOnClickListener{
                 if (etWord.text.toString().isNotEmpty()) {
-                    viewStateModel.addWord(etWord.text.toString())
+                    viewModel.addWord(etWord.text.toString())
                     etWord.text.clear()
                 }
         }
         etWord.setOnEditorActionListener { v, actionId, event ->
             if (actionId== EditorInfo.IME_ACTION_NEXT&&etWord.text.isNotEmpty()) {
                 // обработка нажатия Enter
-                viewStateModel.addWord(etWord.text.toString())
+                viewModel.addWord(etWord.text.toString())
                 etWord.text.clear()
                 true
             } else true
@@ -67,51 +65,58 @@ class WordsInActivity : AppCompatActivity() {
 
 
         btNext.setOnClickListener{
-            if (viewStateModel.needWord() && viewStateModel.randomAllowed()){
-                viewStateModel.fillWithRandomWords()
+            if (viewModel.needWord() && viewModel.randomAllowed()){
+                viewModel.fillWithRandomWords()
             } else{
-                viewStateModel.nextPlayer()
+                viewModel.nextPlayer()
                 etWord.text.clear()
             }
         }
 
         wordsAdapter.listener = {word:Any->
             // dialog(word as Word)
-            viewStateModel.reNameWord(word as Word)
+            viewModel.reNameWord(word as Word)
         }
 
         wordsAdapter.listenerTwo = {word:Any->
-            viewStateModel.deleteWord(word as Word)
+            viewModel.deleteWord(word as Word)
             wordsAdapter.notifyDataSetChanged()
         }
 
         wordsAdapter.listenerThree = {word:Any->
-            viewStateModel.newRandomWord(word as Word)
+            viewModel.newRandomWord(word as Word)
             wordsAdapter.notifyDataSetChanged()
         }
 
 
+        onChangeEt()
     }
 
 
     fun setWordRv(words :List<Word>?){
+        if(words == null || words.isEmpty()) {
+            playerGroup.show()
+        } else {
+            playerGroup.hide()
+        }
         wordsAdapter.setData(words)
     }
     fun setPlayer(p: Player?){
-        wordInject.text = p!!.name
-        setTitle(p!!.name)
+        p?.let {
+//            title = p.name
+            Picasso.get()
+                    .load(Functions.imageNameToUrl(p.avatar))
+                    .into(civPlayerAvatar)
+
+            tvWhoWrites.text = getString(R.string.who_inputs, p.name)
+        }
     }
 
     fun onNeedWordsChanged(needWords : Boolean){
         if (needWords){
-            if (viewStateModel.needWordSize()!=0){
-                etWord.hint = "Слов осталось ввести ${viewStateModel.needWordSize()}"
-            }
-            else{
-                etWord.setHint(R.string.vvodi)
-            }
+            onChangeEt()
 
-            if (viewStateModel.randomAllowed()){
+            if (viewModel.randomAllowed()){
                 btNext.text = getString(R.string.add_random)
             } else{
                 btNext.hide()
@@ -124,6 +129,10 @@ class WordsInActivity : AppCompatActivity() {
             etWord.gone()
             btNext.text = getString(R.string.play)
         }
+    }
+
+    fun onChangeEt() {
+        etWord.hint = getString(R.string.words_input_left, viewModel.needWordSize())
     }
 
 
