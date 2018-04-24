@@ -60,7 +60,6 @@ class GameFragment : Fragment() {
 
 
         onSwipeTouchListener.scrollListener = { x, y ->
-            Timber.d("x dist $x y dist $y")
             cv_word.translationY = cv_word.translationY - y
         }
 
@@ -120,11 +119,12 @@ class GameFragment : Fragment() {
 
     fun runWordAppearAnimation() {
         val animator = ValueAnimator.ofFloat(0F, 1F)
+        val yPath = 300
         animator.addUpdateListener { animation ->
             val animated = animation.animatedValue as Float
             cv_word?.scaleX = animated
             cv_word?.scaleY = animated
-            Timber.d("animated fraction $animated")
+            cv_word?.translationY = yPath * ( 1F - animated)
         }
 
         animator.duration = 300
