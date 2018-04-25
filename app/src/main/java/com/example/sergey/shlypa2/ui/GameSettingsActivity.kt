@@ -10,6 +10,7 @@ import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.TypesArrayAdapter
 import com.example.sergey.shlypa2.game.WordType
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import timber.log.Timber
@@ -21,6 +22,7 @@ class GameSettingsActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Functions.setTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_settings)
 

@@ -54,7 +54,7 @@
 
 
     <string name="shuffle_teams">Shuffle teams</string>
-    <string name="words_answered">Words answered:</string>
+    <string name="words_answered">Answered: </string>
 
     <!-- RoundRules -->
 

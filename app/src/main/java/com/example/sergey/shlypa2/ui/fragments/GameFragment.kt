@@ -42,12 +42,6 @@ class GameFragment : Fragment() {
 
         tvTime = root.findViewById(R.id.tvTime)
 
-        val btOk: Button = root.findViewById(R.id.btOk)
-        val btReturn: Button = root.findViewById(R.id.btReturn)
-
-        btOk.setOnClickListener { viewModel.answerWord(true) }
-        btReturn.setOnClickListener { viewModel.answerWord(false) }
-
         return root
     }
 
@@ -71,8 +65,6 @@ class GameFragment : Fragment() {
 
         containerGame.setOnClickListener { }
         containerGame.setOnTouchListener(onSwipeTouchListener)
-
-
     }
 
     @SuppressLint("SetTextI18n")
