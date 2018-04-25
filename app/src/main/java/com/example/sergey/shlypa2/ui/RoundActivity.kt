@@ -15,6 +15,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.ui.fragments.*
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import timber.log.Timber
 
@@ -26,6 +27,7 @@ class RoundActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Functions.setTheme(this)
         super.onCreate(savedInstanceState)
 
         supportActionBar?.elevation = 0F

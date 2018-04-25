@@ -1,10 +1,12 @@
 package com.example.sergey.shlypa2.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Point
 import android.view.Display
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.example.sergey.shlypa2.R
 import java.text.DateFormat
 import java.util.*
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
@@ -62,6 +64,19 @@ object Functions {
         }
 
         return result
+    }
+
+    fun setTheme(activity : Activity) {
+        val preferences = PreferenceHelper.defaultPrefs(activity)
+        val themeRes : Int = preferences["theme_pref"] ?: R.style.AppTheme
+
+        activity.setTheme(themeRes)
+    }
+
+    fun selectTheme(theme : Int, activity: Activity) {
+        val preferences = PreferenceHelper.defaultPrefs(activity)
+        preferences["theme_pref"] = theme
+        activity.recreate()
     }
 
     fun getScreenWidth(context: Context) : Int {

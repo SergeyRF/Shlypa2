@@ -30,8 +30,8 @@
         app:menu_labels_maxLines="2"
         app:menu_labels_singleLine="true"
         app:menu_labels_colorNormal="@color/darkGrey"
-        app:menu_colorNormal="@color/primary_color"
-        app:menu_colorPressed="@color/dark_primary_color">
+        app:menu_colorNormal="?attr/colorPrimary"
+        app:menu_colorPressed="?attr/colorPrimaryDark">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fabAddTeam"

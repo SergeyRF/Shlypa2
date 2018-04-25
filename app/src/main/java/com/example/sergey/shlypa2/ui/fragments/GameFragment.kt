@@ -42,12 +42,6 @@ class GameFragment : Fragment() {
 
         tvTime = root.findViewById(R.id.tvTime)
 
-        val btOk: Button = root.findViewById(R.id.btOk)
-        val btReturn: Button = root.findViewById(R.id.btReturn)
-
-        btOk.setOnClickListener { viewModel.answerWord(true) }
-        btReturn.setOnClickListener { viewModel.answerWord(false) }
-
         return root
     }
 
@@ -63,7 +57,7 @@ class GameFragment : Fragment() {
             cv_word.translationY = cv_word.translationY - y
         }
 
-        viewModel.timerLiveData.observe(this, Observer { time -> time?.let { onTimer(it) } })
+        viewModel.timerLiveData.observe(this, Observer { time -> time?.let { onTimer(it) }})
 
         viewModel.answeredCountLiveData.observe(this, Observer { answered ->
             answered?.let { onAnsweredCount(it) }
@@ -111,7 +105,7 @@ class GameFragment : Fragment() {
         runWordAppearAnimation()
     }
 
-    fun onAnsweredCount(answered: Pair<Int, Int>) {
+    fun onAnsweredCount(answered : Pair<Int, Int>) {
         tvAnsweredCount.text = answered.first.toString()
     }
 

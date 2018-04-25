@@ -30,6 +30,7 @@ class WordsInActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Functions.setTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_words_in)
 

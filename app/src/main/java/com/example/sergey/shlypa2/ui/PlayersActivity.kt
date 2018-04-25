@@ -10,6 +10,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.ui.fragments.PlayersFragment
 import com.example.sergey.shlypa2.ui.fragments.TeamsFragment
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 
 class PlayersActivity : AppCompatActivity() {
@@ -19,6 +20,7 @@ class PlayersActivity : AppCompatActivity() {
     lateinit var viewModel: PlayersViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Functions.setTheme(this)
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
