@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
+import com.example.sergey.shlypa2.game.PlayerType
 
 /**
  * Created by alex on 4/10/18.
@@ -13,7 +14,7 @@ import android.arch.persistence.room.PrimaryKey
 class Player(@ColumnInfo(name = Contract.PLAYER_NAME) var name: String = "Nameless",
              @PrimaryKey(autoGenerate = true) @ColumnInfo(name = Contract.PLAYER_ID) var id: Long = 0,
              @ColumnInfo(name = Contract.PLAYER_AVATAR) var avatar: String = "",
-             @ColumnInfo(name = Contract.PLAYER_TYPE) var type: Contract.PlayerType = Contract.PlayerType.USER
+             @ColumnInfo(name = Contract.PLAYER_TYPE) var type: PlayerType = PlayerType.USER
 ) {
 
     override fun toString(): String {

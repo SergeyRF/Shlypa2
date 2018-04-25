@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.game.WordType
 
 /**
  * Created by alex on 4/10/18.
@@ -18,7 +19,7 @@ interface WordsDao {
 
     @Query("SELECT * FROM ${Contract.WORD_TABLE} WHERE ${Contract.WORD_TYPE} = :type" +
             " ORDER BY RANDOM() LIMIT :wordsLimit")
-    fun getRandomWords(wordsLimit : Int, type : Contract.WordType = Contract.WordType.EASY) : List<Word>
+    fun getRandomWords(wordsLimit : Int, type : WordType = WordType.EASY) : List<Word>
 
     @Query("SELECT * FROM ${Contract.WORD_TABLE} WHERE ${Contract.WORD_ID} = :id")
     fun getWordById(id : Long) : Word

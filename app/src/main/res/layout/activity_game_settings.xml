@@ -2,258 +2,161 @@
 
 <LinearLayout
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.sergey.shlypa2.ui.GameSettingsActivity"
-    >
-
-<ScrollView
-     android:layout_width="match_parent"
-    android:layout_weight="1"
-    android:layout_height="0dp"
-    >
-
-<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.sergey.shlypa2.ui.GameSettingsActivity">
 
-
-    <TextView
-        android:id="@+id/stateTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:gravity="left"
-        android:text="@string/timeN"
-        android:layout_marginTop="@dimen/small_margin"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintBaseline_toBaselineOf="@+id/stateTime"
-        app:layout_constraintRight_toRightOf="parent"
-
-        />
-
-    <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/seekTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stateTime"
-        app:layout_constraintBottom_toTopOf="@+id/view"/>
-
-    <View
-        android:id="@+id/view"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/settings_margin"
-        android:background="@color/Grey"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.example.sergey.shlypa2.views.SeekbarSetting
+                android:id="@+id/ssbTurnTime"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                app:layout_constraintBottom_toTopOf="@id/view"
+                app:layout_constraintTop_toTopOf="parent"
+                app:seek_setting_title="@string/time" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/settings_margin"
+                android:background="@color/Grey"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.example.sergey.shlypa2.views.SeekbarSetting
+                android:id="@+id/ssbWordsCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                app:layout_constraintBottom_toTopOf="@id/view2"
+                app:layout_constraintTop_toBottomOf="@id/view"
+                app:seek_setting_title="@string/wordN" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/settings_margin"
+                android:background="@color/Grey"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
 
 
-    <TextView
-        android:id="@+id/stateWord"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:gravity="left"
-        android:text="@string/wordN"
-        android:layout_marginTop="@dimen/small_margin"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view" />
+            <TextView
+                android:id="@+id/dificult"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="@string/dificult"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/text_settings"
+                app:layout_constraintBottom_toTopOf="@+id/view3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2"
 
-    <TextView
-        android:id="@+id/word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintBaseline_toBaselineOf="@+id/stateWord"
-        app:layout_constraintRight_toRightOf="parent"
+                />
 
-        />
+            <Spinner
+                android:id="@+id/spinnerDificult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                app:layout_constraintBottom_toBottomOf="@+id/dificult"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/dificult" />
 
-    <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/seekWord"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stateWord"/>
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/settings_margin"
+                android:background="@color/Grey"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/settings_margin"
-        android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/view"/>
+            <com.example.sergey.shlypa2.views.SwitchSetting
+                android:id="@+id/switchSettingAllowRandom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                app:layout_constraintBottom_toTopOf="@id/view4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view3"
+                app:switch_setting_title="@string/allow_random" />
 
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/settings_margin"
+                android:background="@color/Grey"
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-    <TextView
-        android:id="@+id/dificult"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="@string/dificult"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
+            <com.example.sergey.shlypa2.views.SwitchSetting
+                android:id="@+id/ssPenalty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                app:layout_constraintBottom_toTopOf="@id/view5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view4"
+                app:switch_setting_title="@string/minus_bal" />
 
-        />
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/settings_margin"
+                android:background="@color/Grey"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
 
-    <Spinner
-        android:id="@+id/spinnerDificult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:gravity="right"
-        app:layout_constraintBottom_toBottomOf="@+id/dificult"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dificult"/>
+            <com.example.sergey.shlypa2.views.SeekbarSetting
+                android:id="@+id/ssbPenalty"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                app:layout_constraintBottom_toTopOf="@id/view6"
+                app:layout_constraintTop_toBottomOf="@id/view5"
+                app:seek_setting_title="@string/how_minus_bal" />
 
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/settings_margin"
-        android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/view2"/>
-
-    <TextView
-        android:id="@+id/tvAllowRandom"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="@string/allow_random"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
-        app:layout_constraintBottom_toTopOf="@+id/view4"/>
-
-    <Switch
-        android:id="@+id/cbAllowRandom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/view4"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
-
-        />
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/Grey"
-        android:layout_marginTop="@dimen/settings_margin"
-        app:layout_constraintTop_toBottomOf="@+id/view3"/>
-
-    <TextView
-        android:id="@+id/tvMinusBal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:text="@string/minus_bal"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4"
-        app:layout_constraintBottom_toTopOf="@+id/view5"/>
-
-    <Switch
-        android:id="@+id/cbMinusBal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/view5"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4" />
-
-    <View
-        android:id="@+id/view5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/settings_margin"
-        android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/view4"/>
-
-    <TextView
-        android:id="@+id/tvHowBal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="@dimen/small_margin"
-        android:text="@string/how_minus_bal"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view5" />
-
-    <TextView
-        android:id="@+id/tvNumberMinusBal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/big_margin"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings"
-        app:layout_constraintRight_toRightOf="parent"
-       app:layout_constraintBaseline_toBaselineOf="@id/tvHowBal"
-         />
+            <View
+                android:id="@+id/view6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/settings_margin"
+                android:background="@color/Grey"
+                app:layout_constraintTop_toBottomOf="@+id/view5" />
 
 
-    <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/seekMinusBal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHowBal"
-        app:layout_constraintBottom_toTopOf="@+id/view6"
-        />
-
-    <View
-        android:id="@+id/view6"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/settings_margin"
-        android:background="@color/Grey"
-        app:layout_constraintTop_toBottomOf="@+id/view5"/>
-
-
-</android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
-<Button
-    android:id="@+id/bt_cancel_command"
-    style="@style/Button_next"
-    android:text="@string/play"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_gravity="bottom"/>
+    <!-- Только ебанутый дегенерат мог назвать так кнопку,
+     на которой написано дальше!!!-->
+    <!-- Обоссать и на мороз! -->
+    <Button
+        android:id="@+id/bt_cancel_command"
+        style="@style/Button_next"
+        android:layout_gravity="bottom"
+        android:text="@string/play"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </LinearLayout>

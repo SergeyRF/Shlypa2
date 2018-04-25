@@ -6,6 +6,8 @@ import android.os.Environment
 import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.game.PlayerType
+import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -27,7 +29,7 @@ object DbCreator {
 
             for(somePlayer in somePlayersList) {
                 dataBase.playersDao().insertPlayer(
-                        Player(name = somePlayer.name, avatar = somePlayer.avatar, type = Contract.PlayerType.STANDARD))
+                        Player(name = somePlayer.name, avatar = somePlayer.avatar, type = PlayerType.STANDARD))
             }
         }
     }
@@ -43,10 +45,10 @@ object DbCreator {
 
         while(line != null) {
             Timber.d("load words from asset $line")
-            dataBase.wordDao().insertWord(Word("$line easy", type = Contract.WordType.EASY))
-            dataBase.wordDao().insertWord(Word("$line hard", type = Contract.WordType.HARD))
-            dataBase.wordDao().insertWord(Word("$line med", type = Contract.WordType.MEDIUM))
-            dataBase.wordDao().insertWord(Word("$line very hard", type = Contract.WordType.VERY_HARD))
+            dataBase.wordDao().insertWord(Word("$line easy", type = WordType.EASY))
+            dataBase.wordDao().insertWord(Word("$line hard", type = WordType.HARD))
+            dataBase.wordDao().insertWord(Word("$line med", type = WordType.MEDIUM))
+            dataBase.wordDao().insertWord(Word("$line very hard", type = WordType.VERY_HARD))
             line = wordsBufferedReader.readLine()
         }
     }

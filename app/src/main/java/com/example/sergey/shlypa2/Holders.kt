@@ -1,17 +1,15 @@
 package com.example.sergey.shlypa2
 
-import android.support.v4.view.AsyncLayoutInflater
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
-import com.example.sergey.shlypa2.R.id.tvScores
-import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.TeamWithScores
+import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
@@ -31,8 +29,8 @@ abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view) {
 }
 
 class TeamHolder(val view: View) : BaseHolder(view) {
-    val teamName : TextView = view.findViewById(R.id.tvTeamName)
-    val playersList : LinearLayout = view.findViewById(R.id.llPlayers)
+    val teamName: TextView = view.findViewById(R.id.tvTeamName)
+    val playersList: LinearLayout = view.findViewById(R.id.llPlayers)
     val ivRename = view.findViewById<ImageButton>(R.id.ibTeemRename)
 
     fun bind(team: Team) {
@@ -127,14 +125,14 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
     }
 }
 
-class PlayerInTeamHolder(view : View) : BaseHolder(view) {
+class PlayerInTeamHolder(view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.tvName)
-    val tvScores : TextView = view.findViewById(R.id.tvScores)
-    val avatarImage : CircleImageView = view.findViewById(R.id.civPlayerAvatar)
+    val tvScores: TextView = view.findViewById(R.id.tvScores)
+    val avatarImage: CircleImageView = view.findViewById(R.id.civPlayerAvatar)
 
     fun bind(player: Player, scores: Int = Int.MIN_VALUE) {
         tvName.text = player.name
-        if(scores != Int.MIN_VALUE) {
+        if (scores != Int.MIN_VALUE) {
             tvScores.show()
             tvScores.text = scores.toString()
         } else {
@@ -157,7 +155,7 @@ class WordsHolder(val view: View) : BaseHolder(view) {
         etReNameW.text = word.word
         etReNameW.hide()
         tvName.show()
-        if(word.type==Contract.WordType.USER){
+        if (word.type == WordType.USER) {
             ibNextWord.hide()
         }
 

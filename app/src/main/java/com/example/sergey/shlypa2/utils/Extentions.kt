@@ -10,10 +10,10 @@ import java.util.*
  * Created by alex on 4/10/18.
  */
 
-fun SeekBar.onChange( listener : (seekBar: SeekBar?, progress: Int, fromUser: Boolean) -> Unit) {
+fun SeekBar.onChange( listener : ((seekBar: SeekBar?, progress: Int, fromUser: Boolean) -> Unit)?) {
     this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            listener.invoke(seekBar, progress, fromUser)
+            listener?.invoke(seekBar, progress, fromUser)
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {

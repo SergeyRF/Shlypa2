@@ -12,6 +12,7 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.random
@@ -70,12 +71,12 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun reNamePlayer(player: Player) {
-        if (player.type == Contract.PlayerType.USER) {
+        if (player.type == PlayerType.USER) {
             Game.reNamePlayer(player)
         } else {
             Game.removePlayer(player)
             //set id to zero before inserting
-            player.type = Contract.PlayerType.USER
+            player.type = PlayerType.USER
             player.id = 0
             player.id = dataProvider.insertPlayer(player)
             Game.addPlayer(player)

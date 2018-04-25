@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SwitchSetting">
+        <attr name="switch_setting_title" format="reference|string"/>
+    </declare-styleable>
+
+    <declare-styleable name="SeekbarSetting">
+        <attr name="seek_setting_title" format="reference|string"/>
+    </declare-styleable>
+</resources>
