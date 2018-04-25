@@ -8,10 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.*
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.R.id.*
 import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.viewModel.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_game_settings.*
-import com.example.sergey.shlypa2.utils.onChange
 import timber.log.Timber
 
 
@@ -24,44 +24,32 @@ class GameSettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_settings)
 
-
         settingsVM = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
 
-        seekTime.max = Constants.MAX_ROUMD_TIME-Constants.MIN_ROUND_TIME
-        seekTime.progress = settingsVM.getTimeLD().value!!.toInt()-Constants.MIN_ROUND_TIME
-        seekTime.onChange { _, _, _ ->
-            settingsVM.setTimeLD(seekTime.progress+Constants.MIN_ROUND_TIME)
+        ssbTurnTime.setValues(Constants.MIN_ROUND_TIME, Constants.MAX_ROUMD_TIME)
+        ssbTurnTime.setProgress(settingsVM.getTime())
+        ssbTurnTime.seekbarListener = { _, progress, _ ->
+            settingsVM.setTime(progress)
         }
 
-        seekWord.max = Constants.MAX_WORDS_COUNT-Constants.MIN_WORDS_COUNT
-        seekWord.progress = settingsVM.getWordsLD().value!!.toInt()-Constants.MIN_WORDS_COUNT
-        seekWord.onChange{ _, _, _ ->
-            settingsVM.setWordsLD(seekWord.progress+Constants.MIN_WORDS_COUNT)
+        ssbWordsCount.setValues(Constants.MIN_WORDS_COUNT, Constants.MAX_WORDS_COUNT)
+        ssbWordsCount.setProgress(settingsVM.getWordsCount())
+        ssbWordsCount.seekbarListener = { _, progress, _ ->
+            settingsVM.setWordsLD(progress)
         }
 
-        seekMinusBal.max = Constants.MAX_MINUS_BAL - Constants.MIN_MINUS_BAL
-        seekMinusBal.progress = settingsVM.getnumberMinusBal().value!!.toInt() - Constants.MIN_MINUS_BAL
-        seekMinusBal.onChange { _, _, _ ->
-            settingsVM.setnumberMInusBal(seekMinusBal.progress + Constants.MIN_MINUS_BAL)
+        ssbPenalty.setValues(Constants.MIN_MINUS_BAL, Constants.MAX_MINUS_BAL)
+        ssbPenalty.setProgress(settingsVM.getnumberMinusBal())
+        ssbPenalty.seekbarListener = { _, progress, _ ->
+            settingsVM.setnumberMInusBal(progress)
         }
 
-
-        settingsVM.getWordsLD().observe(this, Observer { Int -> onWord(Int) })
-        settingsVM.getTimeLD().observe(this, Observer { Int -> onTime(Int) })
-        settingsVM.getnumberMinusBal().observe(this, Observer { Int -> onNumberMinusBal(Int) })
-
-        onSwitch(settingsVM.getAllowRandom().value!!)
-        onBalSwitch(settingsVM.getMinusBal().value!!)
+        onSwitch(settingsVM.getAllowRandom())
+        onBalSwitch(settingsVM.getMinusBal())
 
 
         val button = findViewById<Button>(R.id.bt_cancel_command)
         button.setOnClickListener{
-
-            settingsVM.setAllowRandom(cbAllowRandom.isChecked)
-            settingsVM.setDificultLD(spinnerDificult.selectedItem as WordType)
-            settingsVM.setnumberMInusBal(tvNumberMinusBal.text.toString().toInt())
-            settingsVM.setMinusBal(cbMinusBal.isChecked)
-            settingsVM.onFinish()
             startActivity(Intent(this, WordsInActivity::class.java))
         }
 
@@ -70,16 +58,15 @@ class GameSettingsActivity : AppCompatActivity() {
         val adapter = ArrayAdapter<WordType>(this, android.R.layout.simple_list_item_1, typesList)
         spinnerDificult.adapter = adapter
 
-        onDificult(settingsVM.getDificultLD().value)
+        onDificult(settingsVM.getDifficulty())
     }
 
-
-    private fun onTime(i: Int?) {
-        time.text = i.toString()
-    }
-
-    private fun onWord(i: Int?) {
-        word.text = i.toString()
+    override fun onStop() {
+        super.onStop()
+        settingsVM.setAllowRandom(switchSettingAllowRandom.isChecked())
+        settingsVM.setDifficulty(spinnerDificult.selectedItem as WordType)
+        settingsVM.setMinusBal(ssPenalty.isChecked())
+        settingsVM.onFinish()
     }
 
     private fun onDificult(d:WordType?){
@@ -89,14 +76,10 @@ class GameSettingsActivity : AppCompatActivity() {
 
     private fun onSwitch(b:Boolean){
         Timber.d("$b")
-        cbAllowRandom.isChecked = b
+        switchSettingAllowRandom.setChecked(b)
     }
 
-    private fun onBalSwitch(b:Boolean?){
-        cbMinusBal.isChecked = b!!
-    }
-
-    private fun onNumberMinusBal(i:Int?){
-        tvNumberMinusBal.text = i.toString()
+    private fun onBalSwitch(b:Boolean){
+        ssPenalty.setChecked(b)
     }
 }
