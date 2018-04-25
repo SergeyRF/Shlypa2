@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.game
 
+import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
@@ -8,17 +9,9 @@ import com.example.sergey.shlypa2.beans.Word
  * Created by alex on 4/10/18.
  */
 class GameState {
-    var rounds = listOf(RoundDescriptor("First round", "Слово - Словами\n" +
-            "Необходимо объяснить" +
-            " своей команде как можно больше слов за отведенное время. Нельзя иcпользовать " +
-            "однокоренные, похожие по звучанию слова, использовать иностранные слова, перевод которых " +
-            "означает загаданное слово. Игра продолжается пока в шляпе не останется слов."),
-            RoundDescriptor("Second round", "Слово - Жестами\n" +
-                    "Слова объясняются жестами как в игре Крокодил. Нельзя ничего произносить вслух," +
-                    " использовать предметы, использовать других игроков, показывать на что-либо."),
-            RoundDescriptor("Third round", "Слово - Словом\n" +
-                    "Необходимо придумать к слову ассоциацию и произнести одно слово обозначающее" +
-                    " её. Запрещаются любые жесты и звуки."))
+    var rounds = listOf(RoundDescriptor(R.string.round_first_number, R.string.round_first,R.string.round_first_name),
+            RoundDescriptor(R.string.round_two_number, R.string.round_two,R.string.round_two_name),
+            RoundDescriptor(R.string.round_three_number, R.string.round_three, R.string.round_three_name))
 
     var gameId = 0
 
@@ -53,6 +46,7 @@ class GameState {
         currentRound = Round(allWords)
         currentRound!!.description = rounds[currentRoundPosition].description
         currentRound!!.rules = rounds[currentRoundPosition].rules
+        currentRound!!.name = rounds[currentRoundPosition].name
 
         return true
     }

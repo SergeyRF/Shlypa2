@@ -11,8 +11,9 @@ import java.util.*
  */
 class Round(val words: List<Word>) {
 
-    var description = "Description"
-    var rules = "Guess word or fuck yourself"
+    var description = 1
+    var rules = 2
+    var name = 3
 
     var wordsQueue: ArrayDeque<Word>
     var wordsAnsweredByPlayer = mutableListOf<Word>()

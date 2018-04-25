@@ -37,7 +37,9 @@ class RoundResultFragment : Fragment() {
         btNextRound.setOnClickListener{ viewModel.finishRound()}
 
         val tvRound: TextView = root.findViewById(R.id.tvRoundNumber)
-        tvRound.text = viewModel.roundDescription
+        //todo fink about it
+        //tvRound.setText(viewModel.roundDescription)
+        tvRound.setText(R.string.round_end)
 
         val adapter = RvAdapter()
         adapter.setData(Game.getRoundResults())

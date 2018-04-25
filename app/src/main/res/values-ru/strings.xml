@@ -20,4 +20,5 @@
     <string name="round_first_number">Раунд первый</string>
     <string name="round_two_number">Раунд второй</string>
     <string name="round_three_number">Раунд третий</string>
+    <string name="round_end">Итоги раунда</string>
 </resources>

@@ -31,8 +31,8 @@ class RoundStartFragment : Fragment() {
         val btGo : Button = root.findViewById(R.id.btBeginRound)
 
         val viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
-        tvDescription.text = viewModel.roundDescription
-        tvRules.text = viewModel.roundRules
+        tvDescription.setText( viewModel.roundName)
+        tvRules.setText(viewModel.roundRules)
 
         btGo.setOnClickListener{viewModel.beginRound()}
         
