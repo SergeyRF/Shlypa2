@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- RoundRules -->
+
+    <string name="round_first">
+        Необходимо объяснить своей команде как можно больше слов за отведенное время.
+        Нельзя иcпользовать однокоренные, похожие по звучанию слова, использовать иностранные слова,
+        перевод которых означает загаданное слово.
+        Игра продолжается пока в шляпе не останется слов.</string>
+    <string name="round_first_name">Слово - Словами </string>
+    <string name="round_two">Слова объясняются жестами как в игре Крокодил.
+        Нельзя ничего произносить вслух, использовать предметы, использовать других игроков,
+        показывать на что-либо.</string>
+    <string name="round_two_name">Слово - Жестами</string>
+    <string name="round_three">Необходимо придумать к слову ассоциацию и
+        произнести одно слово обозначающее её. Запрещаются любые жесты и звуки.</string>
+    <string name="round_three_name">Слово - Словом</string>
+    <string name="round_first_number">Раунд первый</string>
+    <string name="round_two_number">Раунд второй</string>
+    <string name="round_three_number">Раунд третий</string>
+</resources>
