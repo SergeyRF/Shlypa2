@@ -63,7 +63,7 @@ class GameFragment : Fragment() {
             cv_word.translationY = cv_word.translationY - y
         }
 
-        viewModel.timerLiveData.observe(this, Observer { time -> time?.let { onTimer(it) }})
+        viewModel.timerLiveData.observe(this, Observer { time -> time?.let { onTimer(it) } })
 
         viewModel.answeredCountLiveData.observe(this, Observer { answered ->
             answered?.let { onAnsweredCount(it) }
@@ -73,10 +73,27 @@ class GameFragment : Fragment() {
         containerGame.setOnTouchListener(onSwipeTouchListener)
 
 
+
+        tv_PlayGame.hide()
+        timerLinear.setOnClickListener {
+            //ibImagePlay.show()
+            tv_PlayGame.show()
+            containerGame.setOnTouchListener(null)
+            viewModel.pauseTimer()
+            tv_word.hide()
+        }
+
+        tv_PlayGame.setOnClickListener {
+            viewModel.startTimer()
+            tv_PlayGame.hide()
+            tv_word.show()
+            containerGame.setOnTouchListener(onSwipeTouchListener)
+        }
+
     }
 
     @SuppressLint("SetTextI18n")
-    private fun onTimer(time : Int){
+    private fun onTimer(time: Int) {
         val minutes = time / 60
         val seconds = time % 60
 
@@ -94,7 +111,7 @@ class GameFragment : Fragment() {
         runWordAppearAnimation()
     }
 
-    fun onAnsweredCount(answered : Pair<Int, Int>) {
+    fun onAnsweredCount(answered: Pair<Int, Int>) {
         tvAnsweredCount.text = answered.first.toString()
     }
 
@@ -124,7 +141,7 @@ class GameFragment : Fragment() {
             val animated = animation.animatedValue as Float
             cv_word?.scaleX = animated
             cv_word?.scaleY = animated
-            cv_word?.translationY = yPath * ( 1F - animated)
+            cv_word?.translationY = yPath * (1F - animated)
         }
 
         animator.duration = 300
