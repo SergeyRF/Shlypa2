@@ -10,6 +10,7 @@ import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import java.util.*
 
 
 /**
@@ -19,7 +20,16 @@ class DataProvider(val context: Context) {
     val db = DataBase.getInstance(context)
     val gson = GsonBuilder().setPrettyPrinting().create()
 
-    fun getPlayers(type: PlayerType = PlayerType.STANDARD): List<Player> = db.playersDao().getPlayersByType(type)
+    val locale : String = Locale.getDefault().language.toLowerCase()
+
+    fun getPlayers(type: PlayerType = PlayerType.STANDARD): List<Player> {
+        //we only need to use locales for which we have a translate
+        val usefullLocale = when(locale) {
+            "ru" -> locale
+            else -> "en"
+        }
+        return db.playersDao().getPlayersByType(type, locale = usefullLocale)
+    }
 
 
     fun getPlayer(id: Long) = db.playersDao().getPlayerById(id)

@@ -55,6 +55,7 @@ dependencies {
     //Images
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.florent37:shapeofview:1.0.7'
 
     //Architecture components
     implementation "android.arch.lifecycle:extensions:1.1.1"

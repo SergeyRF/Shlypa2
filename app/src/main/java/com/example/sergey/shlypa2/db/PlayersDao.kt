@@ -14,13 +14,16 @@ import com.example.sergey.shlypa2.game.PlayerType
 @Dao
 interface PlayersDao {
 
-    @Query("SELECT * FROM ${Contract.PLAYER_TABLE} ORDER BY RANDOM()")
-    fun getAllPlayers() : List<Player>
+    @Query("SELECT * FROM ${Contract.PLAYER_TABLE} " +
+            "WHERE ${Contract.PLAYER_LOCALE} =:locale " +
+            "ORDER BY RANDOM()")
+    fun getAllPlayers(locale : String = "en") : List<Player>
 
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} " +
             "WHERE ${Contract.PLAYER_TYPE}= :type " +
+            "AND ${Contract.PLAYER_LOCALE}= :locale " +
             "ORDER BY RANDOM()")
-    fun getPlayersByType(type : PlayerType) : List<Player>
+    fun getPlayersByType(type : PlayerType, locale: String = "en") : List<Player>
 
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} WHERE ${Contract.PLAYER_ID} = :id")
     fun getPlayerById(id : Long) : Player?
