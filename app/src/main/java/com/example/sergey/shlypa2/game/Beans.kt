@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.game
 
+import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Team
 
 /**
@@ -24,8 +25,12 @@ class Settings(var time: Int = 30,
                var numberMinusBal: Int = 1)
 
 
-enum class WordType{
-    EASY, MEDIUM, HARD, VERY_HARD, USER
+enum class WordType(val title : Int){
+    EASY(R.string.easy),
+    MEDIUM(R.string.medium),
+    HARD(R.string.hard),
+    VERY_HARD(R.string.very_hard),
+    USER(R.string.user)
 }
 
 enum class PlayerType {

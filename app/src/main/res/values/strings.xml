@@ -55,4 +55,10 @@
 
     <string name="shuffle_teams">Shuffle teams</string>
     <string name="words_answered">Words answered:</string>
+
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="very_hard">Very hard</string>
+    <string name="user">User</string>
 </resources>
