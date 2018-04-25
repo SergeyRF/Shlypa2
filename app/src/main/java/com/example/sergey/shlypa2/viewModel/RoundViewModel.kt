@@ -26,6 +26,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     var roundDescription = round.description
     var roundRules = round.rules
+    var roundName = round.name
 
     val wordLiveData = MutableLiveData<Word>()
     //First value - answered, second - skipped
