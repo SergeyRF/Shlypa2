@@ -2,18 +2,15 @@ package com.example.sergey.shlypa2.utils
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Point
-import android.view.Display
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.sergey.shlypa2.R
-import java.text.DateFormat
-import java.util.*
-import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
-import org.json.JSONArray
+import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import timber.log.Timber
 import java.io.IOException
+import java.text.DateFormat
+import java.util.*
 
 /**
  * Created by alex on 4/17/18.
@@ -26,15 +23,15 @@ object Functions {
         return dateFormat.format(date)
     }
 
-    fun getGameId(context: Context) : Int {
+    fun getGameId(context: Context): Int {
         var id = PreferenceHelper.defaultPrefs(context)["Game id", 0] ?: 0
         PreferenceHelper.defaultPrefs(context)["Game id"] = ++id
 
         Timber.d("Game id is $id")
-        return  id
+        return id
     }
 
-    fun hideKeyboard(context: Context, focusableView : View) {
+    fun hideKeyboard(context: Context, focusableView: View) {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromInputMethod(focusableView.windowToken, 0)
     }
@@ -44,11 +41,12 @@ object Functions {
         imm.showSoftInput(focusableView, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    fun imageNameToUrl(name : String) : String {
-        return "file:///android_asset/player_avatars/$name"
+    fun imageNameToUrl(name: String): String {
+
+        return "file:///android_asset/$name"
     }
 
-    fun readJsonFromAssets(context: Context, filePath: String) : String {
+    fun readJsonFromAssets(context: Context, filePath: String): String {
         var result = "[]"
 
         try {
@@ -59,27 +57,27 @@ object Functions {
             inputStream.read(buffer)
             inputStream.close()
             result = String(buffer)
-        } catch (ex : IOException) {
+        } catch (ex: IOException) {
             Timber.e(ex)
         }
 
         return result
     }
 
-    fun setTheme(activity : Activity) {
+    fun setTheme(activity: Activity) {
         val preferences = PreferenceHelper.defaultPrefs(activity)
-        val themeRes : Int = preferences["theme_pref"] ?: R.style.AppTheme
+        val themeRes: Int = preferences["theme_pref"] ?: R.style.AppTheme
 
         activity.setTheme(themeRes)
     }
 
-    fun selectTheme(theme : Int, activity: Activity) {
+    fun selectTheme(theme: Int, activity: Activity) {
         val preferences = PreferenceHelper.defaultPrefs(activity)
         preferences["theme_pref"] = theme
         activity.recreate()
     }
 
-    fun getScreenWidth(context: Context) : Int {
+    fun getScreenWidth(context: Context): Int {
         val display = context.resources.displayMetrics
         return display.widthPixels
     }

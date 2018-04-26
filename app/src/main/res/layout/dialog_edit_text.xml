@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/etDialog"
-        android:imeOptions="actionNext"
+        android:imeOptions="actionNext|flagNoExtractUi"
         android:maxLines="1"
         android:singleLine="true"
         android:layout_marginLeft="@dimen/big_margin"
@@ -31,6 +31,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvReNameIt"
         app:layout_constraintBottom_toTopOf="@+id/btYesDialog"
+
         />
 
     <Button

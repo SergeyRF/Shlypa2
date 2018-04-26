@@ -14,6 +14,7 @@ class Round(val words: List<Word>) {
     var description = 1
     var rules = 2
     var name = 3
+    var image = ""
 
     var wordsQueue: ArrayDeque<Word>
     var wordsAnsweredByPlayer = mutableListOf<Word>()
