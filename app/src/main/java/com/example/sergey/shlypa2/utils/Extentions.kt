@@ -38,6 +38,10 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
+fun View.isVisible() : Boolean{
+    return this.visibility == View.VISIBLE
+}
+
 fun View.hideSmooth() {
     this.animate().alpha(0f).start()
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="paper_width">300dp</dimen>
+    <dimen name="paper_height">200dp</dimen>
+    <dimen name="paper_text_size">20sp</dimen>
+</resources>

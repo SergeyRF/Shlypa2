@@ -25,5 +25,8 @@
     <dimen name="medium_margin">8dp</dimen>
     <dimen name="small_margin">4dp</dimen>
     <dimen name="corners_radius">15dp</dimen>
+    <dimen name="paper_width">200dp</dimen>
+    <dimen name="paper_height">150dp</dimen>
+    <dimen name="paper_text_size">18sp</dimen>
 
 </resources>
