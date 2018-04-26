@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
+
+
 
 android {
     compileSdkVersion 27
@@ -31,6 +31,7 @@ android {
 
 ext {
     support_version = "27.1.0"
+    firebase_version = "12.0.1"
 }
 
 
@@ -51,6 +52,10 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.github.clans:fab:1.6.4'
+
+    //firebase
+    implementation "com.google.firebase:firebase-core:$firebase_version"
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.1'
 
     //Images
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -81,3 +86,5 @@ dependencies {
     testImplementation "com.nhaarman:mockito-kotlin:1.1.0"
     testImplementation "org.robolectric:robolectric:3.3.2"
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import com.crashlytics.android.Crashlytics
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
 import com.example.sergey.shlypa2.ui.fragments.WelcomeFragment
