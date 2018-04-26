@@ -12,7 +12,12 @@ import android.widget.TextView
 
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ui.RoundActivity
+import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.hide
+import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 /**
@@ -29,13 +34,21 @@ class RoundStartFragment : Fragment() {
         val tvDescription : TextView = root.findViewById(R.id.tvRoundDescription)
         val tvRules : TextView = root.findViewById(R.id.tvRoundRules)
         val btGo : Button = root.findViewById(R.id.btBeginRound)
+        val rulesAvatar:CircleImageView = root.findViewById(R.id.civRulesAvatar)
+        tvRules.hide()
 
         val viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
         tvDescription.setText( viewModel.roundName)
         tvRules.setText(viewModel.roundRules)
 
         btGo.setOnClickListener{viewModel.beginRound()}
-        
+
+        Picasso.get()
+                .load("file:///android_asset/round_avatars/megaphone.png")
+                .into(rulesAvatar)
+        rulesAvatar.setOnClickListener {
+            tvRules.show()
+        }
         return root
     }
 
