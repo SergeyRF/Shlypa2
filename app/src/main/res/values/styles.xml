@@ -61,4 +61,11 @@
         <item name="android:layout_marginBottom">@dimen/medium_margin</item>
     </style>
 
+    <!--start-->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
 </resources>

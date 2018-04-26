@@ -23,7 +23,23 @@
         android:textColor="@color/primary_text"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRoundDescription"/>
+        app:layout_constraintTop_toBottomOf="@id/civRulesAvatar"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civRulesAvatar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:civ_border_color="@color/LightGray"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toTopOf="@id/tvRoundRules"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRoundDescription"
+        app:layout_constraintVertical_bias="0.38"
+        app:layout_constraintWidth_percent="0.50"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <Button
         android:id="@+id/btBeginRound"
