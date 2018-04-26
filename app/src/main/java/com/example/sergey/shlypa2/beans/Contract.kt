@@ -4,7 +4,7 @@ package com.example.sergey.shlypa2.beans
  * Created by alex on 4/10/18.
  */
 object Contract {
-    const val DB_VERSION = 14
+    const val DB_VERSION = 16
     const val DB_NAME = "shlyapa_db"
 
     //Players table columns
@@ -12,6 +12,7 @@ object Contract {
     const val PLAYER_ID = "player_id"
     const val PLAYER_AVATAR = "player_avatar"
     const val PLAYER_NAME = "player_name"
+    const val PLAYER_LOCALE = "player_locale"
     const val PLAYER_TYPE = "player_type"
 
     //Word table columns

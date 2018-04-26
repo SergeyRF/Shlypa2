@@ -1,202 +1,502 @@
 [
   {
     "avatar": "astronaut.png",
-    "name": "Космонавт"
+    "locale": "en",
+    "name": "Astronaut"
   },
   {
     "avatar": "athlete.png",
-    "name": "Бегун"
+    "locale": "en",
+    "name": "Runner"
   },
   {
     "avatar": "athlete1.png",
-    "name": "Шаолинь"
+    "locale": "en",
+    "name": "Athlete"
   },
   {
     "avatar": "bald.png",
-    "name": "Валентин Петрович"
+    "locale": "en",
+    "name": "Grandpa"
   },
   {
     "avatar": "bear.png",
-    "name": "Аниматор"
+    "locale": "en",
+    "name": "Player 4 en"
   },
   {
     "avatar": "birthday.png",
-    "name": "Мороженка"
+    "locale": "en",
+    "name": "player 5 en"
   },
   {
     "avatar": "boy.png",
+    "locale": "en",
+    "name": "Kid"
+  },
+  {
+    "avatar": "boy1.png",
+    "locale": "en",
+    "name": "Player 7 en"
+  },
+  {
+    "avatar": "boy10.png",
+    "locale": "en",
+    "name": "Player 8 en"
+  },
+  {
+    "avatar": "boy11.png",
+    "locale": "en",
+    "name": "Player 9 en"
+  },
+  {
+    "avatar": "boy12.png",
+    "locale": "en",
+    "name": "Player 10 en"
+  },
+  {
+    "avatar": "boy13.png",
+    "locale": "en",
+    "name": "Player 11 en"
+  },
+  {
+    "avatar": "boy14.png",
+    "locale": "en",
+    "name": "Player 12 en"
+  },
+  {
+    "avatar": "boy15.png",
+    "locale": "en",
+    "name": "Player 13 en"
+  },
+  {
+    "avatar": "boy16.png",
+    "locale": "en",
+    "name": "Player 14 en"
+  },
+  {
+    "avatar": "boy17.png",
+    "locale": "en",
+    "name": "Player 15 en"
+  },
+  {
+    "avatar": "boy18.png",
+    "locale": "en",
+    "name": "Player 16 en"
+  },
+  {
+    "avatar": "boy19.png",
+    "locale": "en",
+    "name": "Player 17 en"
+  },
+  {
+    "avatar": "boy2.png",
+    "locale": "en",
+    "name": "Player 18 en"
+  },
+  {
+    "avatar": "boy20.png",
+    "locale": "en",
+    "name": "Player 19 en"
+  },
+  {
+    "avatar": "boy3.png",
+    "locale": "en",
+    "name": "Player 20 en"
+  },
+  {
+    "avatar": "boy4.png",
+    "locale": "en",
+    "name": "Player 21 en"
+  },
+  {
+    "avatar": "boy5.png",
+    "locale": "en",
+    "name": "Player 22 en"
+  },
+  {
+    "avatar": "boy6.png",
+    "locale": "en",
+    "name": "Player 23 en"
+  },
+  {
+    "avatar": "boy7.png",
+    "locale": "en",
+    "name": "Player 24 en"
+  },
+  {
+    "avatar": "boy8.png",
+    "locale": "en",
+    "name": "Player 25 en"
+  },
+  {
+    "avatar": "boy9.png",
+    "locale": "en",
+    "name": "Player 26 en"
+  },
+  {
+    "avatar": "futuristic.png",
+    "locale": "en",
+    "name": "Player 27 en"
+  },
+  {
+    "avatar": "girl.png",
+    "locale": "en",
+    "name": "Player 28 en"
+  },
+  {
+    "avatar": "girl0.png",
+    "locale": "en",
+    "name": "Player 29 en"
+  },
+  {
+    "avatar": "girl1.png",
+    "locale": "en",
+    "name": "Player 30 en"
+  },
+  {
+    "avatar": "girl10.png",
+    "locale": "en",
+    "name": "Player 31 en"
+  },
+  {
+    "avatar": "girl2.png",
+    "locale": "en",
+    "name": "Player 32 en"
+  },
+  {
+    "avatar": "girl3.png",
+    "locale": "en",
+    "name": "Player 33 en"
+  },
+  {
+    "avatar": "girl4.png",
+    "locale": "en",
+    "name": "Player 34 en"
+  },
+  {
+    "avatar": "girl5.png",
+    "locale": "en",
+    "name": "Player 35 en"
+  },
+  {
+    "avatar": "girl6.png",
+    "locale": "en",
+    "name": "Player 36 en"
+  },
+  {
+    "avatar": "girl8.png",
+    "locale": "en",
+    "name": "Player 37 en"
+  },
+  {
+    "avatar": "girl9.png",
+    "locale": "en",
+    "name": "Player 38 en"
+  },
+  {
+    "avatar": "king.png",
+    "locale": "en",
+    "name": "King"
+  },
+  {
+    "avatar": "ninja.png",
+    "locale": "en",
+    "name": "Ninja"
+  },
+  {
+    "avatar": "pirate.png",
+    "locale": "en",
+    "name": "Pirate"
+  },
+  {
+    "avatar": "punk.png",
+    "locale": "en",
+    "name": "Punk"
+  },
+  {
+    "avatar": "rich.png",
+    "locale": "en",
+    "name": "Rich"
+  },
+  {
+    "avatar": "sheriff.png",
+    "locale": "en",
+    "name": "Sheriff"
+  },
+  {
+    "avatar": "thief.png",
+    "locale": "en",
+    "name": "Little thief"
+  },
+  {
+    "avatar": "troglodyte.png",
+    "locale": "en",
+    "name": "Troglodyte"
+  },
+  {
+    "avatar": "vampire.png",
+    "locale": "en",
+    "name": "Vampire"
+  },
+  {
+    "avatar": "viking.png",
+    "locale": "en",
+    "name": "Viking"
+  },
+  {
+    "avatar": "wrestler.png",
+    "locale": "en",
+    "name": "Wrestler"
+  },
+  {
+    "avatar": "astronaut.png",
+    "locale": "ru",
+    "name": "Астронавт"
+  },
+  {
+    "avatar": "athlete.png",
+    "locale": "ru",
+    "name": "Бегунок"
+  },
+  {
+    "avatar": "athlete1.png",
+    "locale": "ru",
+    "name": "Спортсмен"
+  },
+  {
+    "avatar": "bald.png",
+    "locale": "ru",
+    "name": "Профессор"
+  },
+  {
+    "avatar": "bear.png",
+    "locale": "ru",
+    "name": "Мишка"
+  },
+  {
+    "avatar": "birthday.png",
+    "locale": "ru",
+    "name": "Именинник"
+  },
+  {
+    "avatar": "boy.png",
+    "locale": "ru",
     "name": "Малыш"
   },
   {
     "avatar": "boy1.png",
-    "name": "Парашутист"
+    "locale": "ru",
+    "name": "Парашютист"
   },
   {
     "avatar": "boy10.png",
-    "name": "Мим"
+    "locale": "ru",
+    "name": "Металист"
   },
   {
     "avatar": "boy11.png",
-    "name": "НиХао"
+    "locale": "ru",
+    "name": "Киса"
   },
   {
     "avatar": "boy12.png",
-    "name": "Борода"
+    "locale": "ru",
+    "name": "Бородач"
   },
   {
     "avatar": "boy13.png",
-    "name": "Сноубордист"
+    "locale": "ru",
+    "name": "Работяга"
   },
   {
     "avatar": "boy14.png",
+    "locale": "ru",
     "name": "Булочник"
   },
   {
     "avatar": "boy15.png",
-    "name": "Бухгалтер"
+    "locale": "ru",
+    "name": "Милашка"
   },
   {
     "avatar": "boy16.png",
-    "name": "Майкл"
+    "locale": "ru",
+    "name": "Саймон"
   },
   {
     "avatar": "boy17.png",
-    "name": "Скейтбордист"
+    "locale": "ru",
+    "name": "Скейтер"
   },
   {
     "avatar": "boy18.png",
-    "name": "Тореодор"
+    "locale": "ru",
+    "name": "Тореро"
   },
   {
     "avatar": "boy19.png",
-    "name": "Модник"
+    "locale": "ru",
+    "name": "Чупчик"
   },
   {
     "avatar": "boy2.png",
-    "name": "Интроверт"
+    "locale": "ru",
+    "name": "Лохматый"
   },
   {
     "avatar": "boy20.png",
-    "name": "Player 19"
+    "locale": "ru",
+    "name": "Шаолинь"
   },
   {
     "avatar": "boy3.png",
-    "name": "Player 20"
+    "locale": "ru",
+    "name": "Зеленый"
   },
   {
     "avatar": "boy4.png",
-    "name": "Морфеус"
+    "locale": "ru",
+    "name": "Морфиус"
   },
   {
     "avatar": "boy5.png",
-    "name": "Клерк"
+    "locale": "ru",
+    "name": "Недотепа"
   },
   {
     "avatar": "boy6.png",
-    "name": "Роман"
+    "locale": "ru",
+    "name": "Ботан"
   },
   {
     "avatar": "boy7.png",
-    "name": "Дизайнер"
+    "locale": "ru",
+    "name": "Лысик"
   },
   {
     "avatar": "boy8.png",
-    "name": "Маршрутчик"
+    "locale": "ru",
+    "name": "Колхозник"
   },
   {
     "avatar": "boy9.png",
+    "locale": "ru",
     "name": "Байкер"
   },
   {
     "avatar": "futuristic.png",
+    "locale": "ru",
     "name": "Циклоп"
   },
   {
     "avatar": "girl.png",
+    "locale": "ru",
     "name": "Хиппи"
   },
   {
     "avatar": "girl0.png",
-    "name": "Мечтатель"
+    "locale": "ru",
+    "name": "Мелкая"
   },
   {
     "avatar": "girl1.png",
-    "name": "Флорист"
+    "locale": "ru",
+    "name": "Цветочек"
   },
   {
     "avatar": "girl10.png",
-    "name": "Player 31"
+    "locale": "ru",
+    "name": "Гейша"
   },
   {
     "avatar": "girl2.png",
-    "name": "Player 32"
+    "locale": "ru",
+    "name": "Кудряшка"
   },
   {
     "avatar": "girl3.png",
-    "name": "Player 33"
+    "locale": "ru",
+    "name": "Лисичка"
   },
   {
     "avatar": "girl4.png",
-    "name": "Player 34"
+    "locale": "ru",
+    "name": "Соня"
   },
   {
     "avatar": "girl5.png",
-    "name": "Player 35"
+    "locale": "ru",
+    "name": "Хохотушка"
   },
   {
     "avatar": "girl6.png",
-    "name": "Player 36"
+    "locale": "ru",
+    "name": "Звездочка"
   },
   {
     "avatar": "girl8.png",
-    "name": "Player 37"
+    "locale": "ru",
+    "name": "Мальвина"
   },
   {
     "avatar": "girl9.png",
-    "name": "Player 38"
+    "locale": "ru",
+    "name": "Несмеяна"
   },
   {
     "avatar": "king.png",
-    "name": "Король"
+    "locale": "ru",
+    "name": "Властелин"
   },
   {
     "avatar": "ninja.png",
-    "name": "Ниндзя"
+    "locale": "ru",
+    "name": "Нидзя"
   },
   {
     "avatar": "pirate.png",
-    "name": "Кассир"
+    "locale": "ru",
+    "name": "Капитан"
   },
   {
     "avatar": "punk.png",
+    "locale": "ru",
     "name": "Панк"
   },
   {
     "avatar": "rich.png",
-    "name": "Инсайдер"
+    "locale": "ru",
+    "name": "Богач"
   },
   {
     "avatar": "sheriff.png",
+    "locale": "ru",
     "name": "Шериф"
   },
   {
     "avatar": "thief.png",
-    "name": "Гудини"
+    "locale": "ru",
+    "name": "Воришка"
   },
   {
     "avatar": "troglodyte.png",
-    "name": "Мотадор"
+    "locale": "ru",
+    "name": "Троглодит"
   },
   {
     "avatar": "vampire.png",
-    "name": "Вампир"
+    "locale": "ru",
+    "name": "Дракула"
   },
   {
     "avatar": "viking.png",
+    "locale": "ru",
     "name": "Викинг"
   },
   {
     "avatar": "wrestler.png",
-    "name": "Реслер"
+    "locale": "ru",
+    "name": "Рестлер"
   }
 ]

@@ -25,6 +25,8 @@ class FirstActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
 
+        supportActionBar?.elevation = 0f
+
         viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
 
         viewModel.commandsCallBack.observe(this, Observer { command ->

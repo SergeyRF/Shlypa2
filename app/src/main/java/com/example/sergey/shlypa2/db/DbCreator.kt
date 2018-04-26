@@ -29,7 +29,10 @@ object DbCreator {
 
             for(somePlayer in somePlayersList) {
                 dataBase.playersDao().insertPlayer(
-                        Player(name = somePlayer.name, avatar = somePlayer.avatar, type = PlayerType.STANDARD))
+                        Player(name = somePlayer.name,
+                                locale = somePlayer.locale,
+                                avatar = somePlayer.avatar,
+                                type = PlayerType.STANDARD))
             }
         }
     }
@@ -69,17 +72,21 @@ object DbCreator {
         fileWriter.write(jsonList)
         fileWriter.close()
 
-        /*val somePlayersList : MutableList<SomePlayer> = mutableListOf()
+        val somePlayersList : MutableList<SomePlayer> = mutableListOf()
 
         for(i in 0 until asset.size) {
-            somePlayersList.add(SomePlayer("Player $i", asset[i]))
+            somePlayersList.add(SomePlayer("Player $i en", "en", asset[i]))
+        }
+
+        for(i in 0 until asset.size) {
+            somePlayersList.add(SomePlayer("Player $i ru", "ru", asset[i]))
         }
 
         val playersJson = gson.toJson(somePlayersList)
         val write = FileWriter("${Environment.getExternalStorageDirectory()}/players.json")
         write.write(playersJson)
-        write.close()*/
+        write.close()
     }
 }
 
-data class SomePlayer(val name : String, val avatar : String)
+data class SomePlayer(val name : String, val locale : String, val avatar : String)
