@@ -106,7 +106,7 @@ class WordsInActivity : AppCompatActivity() {
         p?.let {
 //            title = p.name
             Picasso.get()
-                    .load(Functions.imageNameToUrl(p.avatar))
+                    .load(Functions.imageNameToUrl("player_avatars/${p.avatar}"))
                     .into(civPlayerAvatar)
 
             tvWhoWrites.text = getString(R.string.who_inputs, p.name)

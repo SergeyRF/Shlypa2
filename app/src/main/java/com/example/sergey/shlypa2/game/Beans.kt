@@ -14,7 +14,7 @@ class TeamWithScores(val team: Team) {
     var scoresMap: MutableMap<Long, Int> = mutableMapOf()
 }
 
-class RoundDescriptor(var description: Int, var rules: Int, var name:Int)
+class RoundDescriptor(var description: Int, var rules: Int, var name:Int, var image:String)
 
 class Settings(var time: Int = 30,
                var word: Int = 5,

@@ -45,7 +45,7 @@ class ImageHolder(val view : View) : RecyclerView.ViewHolder(view) {
     var listener: ((String) -> Unit)? = null
 
     fun bind(imageName : String) {
-        val link = Functions.imageNameToUrl(imageName)
+        val link = Functions.imageNameToUrl("player_avatars/$imageName")
         Picasso.get()
                 .load(link)
                 .into(iv)

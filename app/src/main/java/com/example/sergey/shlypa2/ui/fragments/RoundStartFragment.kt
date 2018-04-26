@@ -44,7 +44,7 @@ class RoundStartFragment : Fragment() {
         btGo.setOnClickListener{viewModel.beginRound()}
 
         Picasso.get()
-                .load("file:///android_asset/round_avatars/megaphone.png")
+                .load(Functions.imageNameToUrl("round_avatars/${viewModel.roundImage}"))
                 .into(rulesAvatar)
         rulesAvatar.setOnClickListener {
             tvRules.show()
