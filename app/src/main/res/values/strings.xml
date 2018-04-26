@@ -27,7 +27,7 @@
 
     <string name="add_team">Add a team</string>
     <string name="remove_team">Remove a team</string>
-    <string name="two_team_min">2 team is minimum</string>
+    <string name="two_team_min">2 teams is a minimum</string>
 
 
     <string name="go">Go</string>
@@ -39,10 +39,13 @@
 
     <string name="add_random">Add random</string>
 
-    <string name="cant_create_teams">There should be at least 2 players in a team</string>
+    <string name="cant_create_teams">Minimum two player per team</string>
 
     <string name="words_input_left">Words left %1d</string>
     <string name="who_inputs">%1s inputs words</string>
+
+    <!-- Toasts -->
+    <string name="press_more_to_finish_game">Press again to finish a game</string>
 
     <!-- Settings -->
     <string name="timeN">Время хода</string>
@@ -77,7 +80,7 @@
     <string name="round_three_number">Раунд третий</string>
     <string name="round_end">Итоги раунда</string>
 
-
+    <!-- Words difficulty -->
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>

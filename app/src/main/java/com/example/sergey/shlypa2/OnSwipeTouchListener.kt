@@ -68,7 +68,6 @@ open class OnSwipeTouchListener : View.OnTouchListener {
         }
 
         override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
-            Timber.d("on scroll x dist $distanceX y dist $distanceY")
             scrollListener?.invoke(distanceX, distanceY)
             return super.onScroll(e1, e2, distanceX, distanceY)
         }

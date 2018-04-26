@@ -11,7 +11,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/tvRoundNumber"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_Big"
+        android:textSize="@dimen/text_huge"
         android:gravity="center"
 
         />

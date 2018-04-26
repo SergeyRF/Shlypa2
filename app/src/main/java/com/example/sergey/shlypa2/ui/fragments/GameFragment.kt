@@ -16,6 +16,7 @@ import android.widget.TextView
 import com.example.sergey.shlypa2.OnSwipeTouchListener
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
@@ -30,19 +31,33 @@ class GameFragment : Fragment() {
 
 
     lateinit var viewModel: RoundViewModel
-    lateinit var tvTime: TextView
 
+    private var cardYPath : Int? = null
+
+    val onSwipeTouchListener = object : OnSwipeTouchListener() {
+        override fun onActionUp() {
+            cv_word.translationY = 0F
+            cv_word.translationX = 0F
+        }
+
+        override fun onSwipeTop(): Boolean {
+            viewModel.answerWord(true)
+            cv_word.hide()
+            return true
+        }
+
+        override fun onSwipeBottom(): Boolean {
+            viewModel.answerWord(false)
+            cv_word.hide()
+            return true
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
 
-        // Inflate the layout for this fragment
-        val root = inflater!!.inflate(R.layout.fragment_game, container, false)
-
-        tvTime = root.findViewById(R.id.tvTime)
-
-        return root
+        return inflater.inflate(R.layout.fragment_game, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +66,6 @@ class GameFragment : Fragment() {
         viewModel.wordLiveData.observe(this, Observer { word: Word? ->
             if (word != null) onNextWord(word)
         })
-
 
         onSwipeTouchListener.scrollListener = { x, y ->
             cv_word.translationY = cv_word.translationY - y
@@ -65,8 +79,6 @@ class GameFragment : Fragment() {
 
         containerGame.setOnClickListener { }
         containerGame.setOnTouchListener(onSwipeTouchListener)
-
-
 
         tv_PlayGame.hide()
         timerLinear.setOnClickListener {
@@ -83,7 +95,6 @@ class GameFragment : Fragment() {
             tv_word.show()
             containerGame.setOnTouchListener(onSwipeTouchListener)
         }
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -109,28 +120,15 @@ class GameFragment : Fragment() {
         tvAnsweredCount.text = answered.first.toString()
     }
 
-    val onSwipeTouchListener = object : OnSwipeTouchListener() {
-        override fun onActionUp() {
-            cv_word.translationY = 0F
-            cv_word.translationX = 0F
-        }
-
-        override fun onSwipeTop(): Boolean {
-            viewModel.answerWord(true)
-            cv_word.hide()
-            return true
-        }
-
-        override fun onSwipeBottom(): Boolean {
-            viewModel.answerWord(false)
-            cv_word.hide()
-            return true
-        }
-    }
-
     fun runWordAppearAnimation() {
         val animator = ValueAnimator.ofFloat(0F, 1F)
-        val yPath = 300
+
+        if(cardYPath == null) {
+            cardYPath = calculatePath()
+        }
+
+        val yPath = cardYPath ?: 300
+
         animator.addUpdateListener { animation ->
             val animated = animation.animatedValue as Float
             cv_word?.scaleX = animated
@@ -141,6 +139,18 @@ class GameFragment : Fragment() {
         animator.duration = 300
 
         animator.start()
+    }
+
+    //Calculate path for a word card from top of a hat to center of the screen
+    private fun calculatePath() : Int? {
+        val hatTop = ivHat.top
+        val cardTop = cv_word.top
+
+        if(hatTop == 0 || cardTop ==0) return null
+
+        val additionalMargin : Float = context?.let { Functions.dpToPx(it, 32F) } ?: 0F
+
+        return Math.abs(hatTop - cardTop) + additionalMargin.toInt()
     }
 
     override fun onResume() {

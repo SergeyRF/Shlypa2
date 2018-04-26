@@ -31,6 +31,21 @@ class WordsInActivity : AppCompatActivity() {
     private lateinit var wordsAdapter: RvAdapter
     lateinit var viewModel: WordsViewModel
 
+    private var animated = false
+
+    private val avatarHideAnimation by lazy { please(300, interpolator = AccelerateInterpolator()) {
+        animate(civPlayerAvatar) toBe {
+            outOfScreen(Gravity.LEFT)
+        }
+        animate(tvWhoWrites) toBe {
+            outOfScreen(Gravity.LEFT)
+        }
+
+        animate(rvWords) toBe {
+            originalPosition()
+        }
+    } }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setTheme(this)
@@ -58,6 +73,7 @@ class WordsInActivity : AppCompatActivity() {
                     etWord.text.clear()
                 }
         }
+
         etWord.setOnEditorActionListener { v, actionId, event ->
             if (actionId== EditorInfo.IME_ACTION_NEXT&&etWord.text.isNotEmpty()) {
                 // обработка нажатия Enter
@@ -66,7 +82,6 @@ class WordsInActivity : AppCompatActivity() {
                 true
             } else true
         }
-
 
         btNext.setOnClickListener{
             if (viewModel.needWord() && viewModel.randomAllowed()){
@@ -92,21 +107,21 @@ class WordsInActivity : AppCompatActivity() {
             wordsAdapter.notifyDataSetChanged()
         }
 
-
         onChangeEt()
     }
 
     override fun onStart() {
         super.onStart()
-        please(40) {
-            animate(rvWords){
+        please {
+            animate(rvWords) {
                 outOfScreen(Gravity.RIGHT)
             }
-        }.start()
+        }.now()
     }
 
 
     fun setWordRv(words :List<Word>?){
+
         if(words == null || words.isEmpty()) {
             if(animated) {
                 avatarHideAnimation.reset()
@@ -121,21 +136,6 @@ class WordsInActivity : AppCompatActivity() {
 
         wordsAdapter.setData(words)
     }
-
-    var animated = false
-
-    val avatarHideAnimation by lazy { please(300, interpolator = AccelerateInterpolator()) {
-        animate(civPlayerAvatar) toBe {
-            outOfScreen(Gravity.LEFT)
-        }
-        animate(tvWhoWrites) toBe {
-            outOfScreen(Gravity.LEFT)
-        }
-
-        animate(rvWords) toBe {
-            originalPosition()
-        }
-    } }
 
     fun setPlayer(p: Player?){
         p?.let {
