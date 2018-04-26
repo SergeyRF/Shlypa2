@@ -7,6 +7,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
+import android.view.animation.AccelerateInterpolator
 import android.widget.Button
 import android.widget.EditText
 import com.example.sergey.shlypa2.R
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_words_in.*
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.example.sergey.shlypa2.utils.*
+import com.github.florent37.kotlin.pleaseanimate.please
 import com.squareup.picasso.Picasso
 
 
@@ -93,15 +96,47 @@ class WordsInActivity : AppCompatActivity() {
         onChangeEt()
     }
 
+    override fun onStart() {
+        super.onStart()
+        please(40) {
+            animate(rvWords){
+                outOfScreen(Gravity.RIGHT)
+            }
+        }.start()
+    }
+
 
     fun setWordRv(words :List<Word>?){
         if(words == null || words.isEmpty()) {
-            playerGroup.show()
+            if(animated) {
+                avatarHideAnimation.reset()
+                animated = false
+            }
         } else {
-            playerGroup.hide()
+            if(!animated) {
+                avatarHideAnimation.start()
+                animated = true
+            }
         }
+
         wordsAdapter.setData(words)
     }
+
+    var animated = false
+
+    val avatarHideAnimation by lazy { please(300, interpolator = AccelerateInterpolator()) {
+        animate(civPlayerAvatar) toBe {
+            outOfScreen(Gravity.LEFT)
+        }
+        animate(tvWhoWrites) toBe {
+            outOfScreen(Gravity.LEFT)
+        }
+
+        animate(rvWords) toBe {
+            originalPosition()
+        }
+    } }
+
     fun setPlayer(p: Player?){
         p?.let {
 //            title = p.name
