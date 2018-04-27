@@ -20,10 +20,15 @@ import com.example.sergey.shlypa2.Constants
  */
 object Functions {
 
-    fun timeToLocalDate(time: Long, context: Context): String {
+    fun timeToLocalDateWithTime(time: Long, context: Context): String {
         val date = Date(time)
         val dateFormat: DateFormat = android.text.format.DateFormat.getDateFormat(context)
-        return dateFormat.format(date)
+        val dateString =  dateFormat.format(date)
+
+        val timeFormat = android.text.format.DateFormat.getTimeFormat(context)
+        val timeString = timeFormat.format(time)
+
+        return "$dateString $timeString"
     }
 
     fun getGameId(context: Context): Int {

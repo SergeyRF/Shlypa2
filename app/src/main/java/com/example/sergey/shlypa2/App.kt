@@ -17,6 +17,7 @@ class App  : Application(){
 
         DbCreator.createPlayers(DataBase.getInstance(this), this)
         DbCreator.createWords(DataBase.getInstance(this), this)
+//        DbCreator.sortAndWriteWords(this)
 //        DbCreator.loadFileList(this)
     }
 }

@@ -39,8 +39,6 @@ class DataProvider(val context: Context) {
     }
 
     fun getRandomWords(wordsLimit: Int, dificulty: WordType): List<Word> {
-
-
         return db.wordDao().getRandomWords(wordsLimit, dificulty)
     }
 
