@@ -18,6 +18,8 @@ class GameResultActivity : AppCompatActivity() {
         val resultsAdapter = RvAdapter()
         resultsAdapter.setData(Game.getGameResults())
 
+        tv_winner.text = Game.getGameResults()[0].team.name
+
         rvGameResults.layoutManager = LinearLayoutManager(this)
         rvGameResults.adapter = resultsAdapter
         btCreateNewGame.setOnClickListener {
@@ -25,3 +27,4 @@ class GameResultActivity : AppCompatActivity() {
         }
     }
 }
+

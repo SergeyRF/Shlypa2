@@ -52,7 +52,6 @@ class GameFragment : Fragment() {
             return true
         }
     }
-    lateinit var tvTime: TextView
     var timerStop:Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

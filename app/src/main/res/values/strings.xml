@@ -21,7 +21,8 @@
     <string name="minus_bal">Вычитать балы за пропуск слов</string>
     <string name="how_minus_bal">Сколько балов вычитать</string>
     <string name="player_game">Объясняет игрок:</string>
-    <string name="game_results">Шляпа пуста</string>
+    <string name="game_winner">Победила комманда</string>
+    <string name="game_resalt">Результаты игры</string>
     <string name="new_game">Новая игра</string>
     <string name="resum">ПРОДОЛЖИТЬ</string>
 
