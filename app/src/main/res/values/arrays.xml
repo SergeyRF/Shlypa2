@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theme_titles">
+        <item>Teal</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Cyan</item>
+    </string-array>
+
+    <string-array name="content_license_title">
+        <item>Sounds</item>
+        <item>Sounds</item>
+        <item>Avatars</item>
+        <item>Icons</item>
+    </string-array>
+
+    <string-array name="content_license_summary">
+        <item>NoiseForFun.com - Original Designed Sound Effects for Free Download</item>
+        <item>ZapSplat.com - Cool sound library with lot of cool stuff</item>
+        <item>Avatar icons designed by Freepic from Flaticon</item>
+        <item>Icons designed by Flat-icons from Flaticon</item>
+    </string-array>
+
+    <string-array name="content_license_link">
+        <item>http://www.noiseforfun.com/</item>
+        <item>https://www.zapsplat.com/</item>
+        <item>https://www.flaticon.com/authors/freepik</item>
+        <item>https://www.flaticon.com/authors/flat-icons</item>
+    </string-array>
+</resources>

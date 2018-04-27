@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.Switch
 import android.widget.TextView
@@ -35,5 +36,8 @@ class SwitchSetting : LinearLayout {
     fun isChecked(): Boolean = switch.isChecked
 
     fun setChecked(checked: Boolean) = switch.setChecked(checked)
+
+    fun setOnCheckedListener(listner : CompoundButton.OnCheckedChangeListener?)
+            = switch.setOnCheckedChangeListener(listner)
 
 }

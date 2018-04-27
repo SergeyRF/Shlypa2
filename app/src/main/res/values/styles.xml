@@ -6,40 +6,40 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
-    <style name="AppThemeBlue"  parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeBlue"  parent="AppTheme">
         <item name="colorPrimary">@color/Blue</item>
         <item name="colorPrimaryDark">@color/DarkBlue</item>
         <item name="colorAccent">@color/Blue</item>
     </style>
 
-    <style name="AppThemeYellow"  parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeYellow"  parent="AppTheme">
         <item name="colorPrimary">@color/Yellow</item>
         <item name="colorPrimaryDark">@color/YellowDark</item>
         <item name="colorAccent">@color/Yellow</item>
     </style>
 
-    <style name="AppThemeGreen"  parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeGreen"  parent="AppTheme">
         <item name="colorPrimary">@color/Green</item>
         <item name="colorPrimaryDark">@color/GreenDark</item>
         <item name="colorAccent">@color/Green</item>
     </style>
 
-    <style name="AppThemeCyan"  parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeCyan"  parent="AppTheme">
         <item name="colorPrimary">@color/Cyan</item>
         <item name="colorPrimaryDark">@color/CyanDark</item>
         <item name="colorAccent">@color/Cyan</item>
     </style>
 
-    <style name="AppThemeIndigo"  parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeIndigo"  parent="AppTheme">
         <item name="colorPrimary">@color/Indigo</item>
         <item name="colorPrimaryDark">@color/IndigoDark</item>
         <item name="colorAccent">@color/Indigo</item>
     </style>
 
-    <style name="AppThemePurple"  parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemePurple"  parent="AppTheme">
         <item name="colorPrimary">@color/Purple</item>
         <item name="colorPrimaryDark">@color/PurpleDark</item>
         <item name="colorAccent">@color/PurpleAccent</item>

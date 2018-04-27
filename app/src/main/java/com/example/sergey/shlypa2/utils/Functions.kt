@@ -12,7 +12,7 @@ import java.io.IOException
 import java.text.DateFormat
 import java.util.*
 import android.util.TypedValue
-
+import com.example.sergey.shlypa2.Constants
 
 
 /**
@@ -69,15 +69,24 @@ object Functions {
 
     fun setTheme(activity: Activity) {
         val preferences = PreferenceHelper.defaultPrefs(activity)
-        val themeRes: Int = preferences["theme_pref"] ?: R.style.AppTheme
+        val themeRes: Int = preferences[Constants.THEME_PREF] ?: R.style.AppTheme
 
         activity.setTheme(themeRes)
     }
 
     fun selectTheme(theme: Int, activity: Activity) {
         val preferences = PreferenceHelper.defaultPrefs(activity)
-        preferences["theme_pref"] = theme
-        activity.recreate()
+        val oldTheme = preferences[Constants.THEME_PREF] ?: R.style.AppTheme
+
+        if(theme != oldTheme) {
+            preferences[Constants.THEME_PREF] = theme
+            activity.recreate()
+        }
+    }
+
+    fun getSelectedThemeId(context: Context) : Int {
+        val preferences = PreferenceHelper.defaultPrefs(context)
+        return preferences[Constants.THEME_PREF] ?: R.style.AppTheme
     }
 
     fun getScreenWidth(context: Context): Int {

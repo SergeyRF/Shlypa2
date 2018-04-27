@@ -18,7 +18,7 @@
     <color name="accent_color">#009688</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
-    <color name="divider_color">#BDBDBD</color>
+    <color name="divider_color">#cccccc</color>
 
     <color name="LightGray">#e0e0e0</color>
     <color name="Green">#43a047</color>
