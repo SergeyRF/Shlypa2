@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.ui
 
+import android.app.ActionBar
 import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.widget.Button
 import android.widget.EditText
@@ -20,6 +22,7 @@ import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import kotlinx.android.synthetic.main.activity_words_in.*
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toolbar
 import com.example.sergey.shlypa2.utils.*
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.squareup.picasso.Picasso
@@ -51,6 +54,9 @@ class WordsInActivity : AppCompatActivity() {
         Functions.setTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_words_in)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         wordsAdapter = RvAdapter()
         rvWords.layoutManager=LinearLayoutManager(this)
@@ -108,6 +114,16 @@ class WordsInActivity : AppCompatActivity() {
         }
 
         onChangeEt()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let{
+            when(item.itemId) {
+                android.R.id.home ->super.onBackPressed()
+            }
+        }
+
+        return true
     }
 
     override fun onStart() {
