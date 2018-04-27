@@ -133,7 +133,6 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     private val timerRunnable = object : Runnable {
         override fun run() {
-            Timber.d("Thread in handler ${Thread.currentThread().name}")
             timeLeft--
             if (timeLeft >= 0) {
                 timerLiveData.value = timeLeft

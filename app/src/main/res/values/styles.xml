@@ -45,11 +45,19 @@
         <item name="colorAccent">@color/PurpleAccent</item>
     </style>
 
+    <!--start-->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
     <!--Hyase -->
     <style name="Button_next" >
         <item name="android:textSize">@dimen/text_smoll</item>
         <item name="android:textColor">@color/text_or_icon</item>
         <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
@@ -57,15 +65,10 @@
     <style name="Button_welcome">
         <item name="android:textSize">@dimen/text_smoll</item>
         <item name="android:textColor">@color/text_or_icon</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:background">@drawable/button_background</item>
         <item name="android:layout_marginBottom">@dimen/medium_margin</item>
     </style>
 
-    <!--start-->
-    <style name="SplashTheme" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@drawable/background_splash</item>
-    </style>
 
 </resources>

@@ -1,16 +1,16 @@
 package com.example.sergey.shlypa2.ui
 
-import android.app.ActionBar
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-import android.transition.Transition
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
@@ -23,8 +23,9 @@ class RoundActivity : AppCompatActivity() {
 
     lateinit var viewModel: RoundViewModel
 
-    lateinit var dataProvider : DataProvider
+    lateinit var dataProvider: DataProvider
 
+    private var backPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setTheme(this)
@@ -36,7 +37,7 @@ class RoundActivity : AppCompatActivity() {
         dataProvider = DataProvider(applicationContext)
 
         viewModel.commandCallback.observe(this, Observer { command ->
-            when(command) {
+            when (command) {
                 RoundViewModel.Command.GET_READY -> startGetReadyFragment()
                 RoundViewModel.Command.START_TURN -> startGameFragment()
                 RoundViewModel.Command.FINISH_TURN -> startTurnResultFragment()
@@ -46,10 +47,20 @@ class RoundActivity : AppCompatActivity() {
             }
         })
 
-        if(supportFragmentManager.findFragmentById(android.R.id.content) == null) {
+        if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
             startStartFragment()
         }
         setTitle(viewModel.roundDescription)
+    }
+
+    override fun onBackPressed() {
+        if(backPressedOnce) {
+            finish()
+        } else {
+            backPressedOnce = true
+            Toast.makeText(this, R.string.press_more_to_finish_game, Toast.LENGTH_LONG).show()
+            Handler().postDelayed({backPressedOnce = false}, 2000)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -59,7 +70,7 @@ class RoundActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
+        when (item?.itemId) {
             R.id.item_save_state_debug -> {
                 dataProvider.insertState(Game.state)
                 return true
