@@ -31,7 +31,7 @@ class GameFragment : Fragment() {
 
     lateinit var viewModel: RoundViewModel
     lateinit var tvTime: TextView
-
+    var timerStop:Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -70,11 +70,21 @@ class GameFragment : Fragment() {
 
         tv_PlayGame.hide()
         timerLinear.setOnClickListener {
-            //ibImagePlay.show()
-            tv_PlayGame.show()
-            containerGame.setOnTouchListener(null)
-            viewModel.pauseTimer()
-            tv_word.hide()
+            timerStop = if (!timerStop) {
+                tv_PlayGame.show()
+                containerGame.setOnTouchListener(null)
+                viewModel.pauseTimer()
+                tv_word.hide()
+                ibStopTime.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
+                true
+            } else{
+                viewModel.startTimer()
+                tv_PlayGame.hide()
+                tv_word.show()
+                containerGame.setOnTouchListener(onSwipeTouchListener)
+                ibStopTime.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
+                false
+            }
         }
 
         tv_PlayGame.setOnClickListener {
@@ -82,6 +92,8 @@ class GameFragment : Fragment() {
             tv_PlayGame.hide()
             tv_word.show()
             containerGame.setOnTouchListener(onSwipeTouchListener)
+            ibStopTime.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
+            timerStop = false
         }
 
     }
@@ -145,7 +157,9 @@ class GameFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.startTimer()
+        if(!timerStop) {
+            viewModel.startTimer()
+        }
     }
 
     override fun onPause() {
