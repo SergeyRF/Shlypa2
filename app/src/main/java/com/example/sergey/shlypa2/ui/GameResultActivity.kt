@@ -15,10 +15,12 @@ class GameResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_result)
 
-        val resultsAdapter = RvAdapter()
-        resultsAdapter.setData(Game.getGameResults())
 
-        tv_winner.text = Game.getGameResults()[0].team.name
+        val gameResults = Game.getGameResults().sortedByDescending { it.getScores() }
+        tv_winner.text = gameResults[0].team.name
+
+        val resultsAdapter = RvAdapter()
+        resultsAdapter.setData(gameResults)
 
         rvGameResults.layoutManager = LinearLayoutManager(this)
         rvGameResults.adapter = resultsAdapter

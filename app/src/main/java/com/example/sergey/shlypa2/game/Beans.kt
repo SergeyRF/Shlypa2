@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.game
 
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Team
+import timber.log.Timber
 
 /**
  * Created by sergey on 3/29/18.
@@ -9,9 +10,10 @@ import com.example.sergey.shlypa2.beans.Team
 
 
 class TeamWithScores(val team: Team) {
-    var scores = 0
     //keeps scores for players: key - player id, value - scores
     var scoresMap: MutableMap<Long, Int> = mutableMapOf()
+
+    fun getScores() : Int = scoresMap.values.sum()
 }
 
 class RoundDescriptor(var description: Int, var rules: Int, var name:Int, var image:String)

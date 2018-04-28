@@ -192,31 +192,4 @@ class WordsInActivity : AppCompatActivity() {
         Game.beginNextRound()
         startActivity(Intent(this, RoundActivity::class.java))
     }
-
-    fun dialog(word: Word){
-        val dialog= Dialog(this)
-        dialog.setContentView(R.layout.dialog_edit_text)
-        val etTeemD = dialog.findViewById<EditText>(R.id.etDialog)
-        val btYesD = dialog.findViewById<Button>(R.id.btYesDialog)
-        val btNoD = dialog.findViewById<Button>(R.id.btNoDialog)
-        val tvRename = dialog.findViewById<TextView>(R.id.tvReNameIt)
-        etTeemD.setText(word.word)
-        btYesD.setOnClickListener{
-            if (etTeemD.text.isNotEmpty()){
-                word.word = etTeemD.text.toString()
-                wordsAdapter.notifyDataSetChanged()
-                dialog.cancel()
-            }
-        }
-        etTeemD.setOnEditorActionListener { v, actionId, event ->
-            if (actionId== EditorInfo.IME_ACTION_NEXT&&etTeemD.text.isNotEmpty()){
-                word.word = etTeemD.text.toString()
-                wordsAdapter.notifyDataSetChanged()
-                dialog.cancel()
-            }
-            true
-        }
-        btNoD.setOnClickListener { dialog.cancel() }
-        dialog.show()
-    }
 }

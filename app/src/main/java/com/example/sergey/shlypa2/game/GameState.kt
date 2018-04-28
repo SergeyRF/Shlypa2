@@ -34,7 +34,6 @@ class GameState {
 
     val savedTime = System.currentTimeMillis()
 
-    //todo keep players by id instead of name
     val players = mutableMapOf<Long, Player>()
 
     fun saveRoundResults(results: RoundResults) {

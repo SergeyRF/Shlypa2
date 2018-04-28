@@ -18,11 +18,14 @@ import timber.log.Timber
  */
 class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
-    val dataProvider = DataProvider(application)
+    private val dataProvider = DataProvider(application)
+    private val soundManager = SoundManager(getApplication())
 
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()
 
-    val round = Game.getRound()
+
+    private val round = Game.getRound()
+    private var roundFinished = false
 
     var roundDescription = round.description
     var roundRules = round.rules
@@ -39,7 +42,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     val handler = Handler()
 
-    val soundManager = SoundManager(getApplication())
+
 
     init {
         wordLiveData.value = round.getWord()
@@ -69,10 +72,13 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun finishRound() {
-        Game.beginNextRound()
+        if(!roundFinished) {
+            Game.beginNextRound()
+            roundFinished = true
+        }
 
         if (Game.hasRound()) {
-            dataProvider.insertState(Game.state)
+            saveGameState()
             commandCallback.value = Command.START_NEXT_ROUND
         } else {
             dataProvider.deleteState(Game.state.gameId)
@@ -81,19 +87,20 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun startTurn() {
+        timeLeft = Game.getSettings().time
+        timerLiveData.value = timeLeft
+
         commandCallback.value = Command.START_TURN
     }
 
     private fun finishTurn() {
         //TODO save state of game here or in the finish round function
         timerStarted = false
+        round.turnFinished = true
 
         commandCallback.value = Command.FINISH_TURN
 
         handler.removeCallbacksAndMessages(null)
-        timeLeft = Game.getSettings().time
-        timerLiveData.value = timeLeft
-
     }
 
     fun getTurnResults(): List<Word> {
@@ -101,8 +108,9 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun nextTurn() {
-        dataProvider.insertState(Game.state)
+        saveGameState()
 
+        round.turnFinished = false
         round.nextPlayer()
         if (round.getWord() != null) {
             answeredCountLiveData.value = Pair(0, 0)
@@ -124,6 +132,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     fun pauseTimer() {
         timerStarted = false
         handler.removeCallbacksAndMessages(null)
+    }
+
+    fun saveGameState() {
+        dataProvider.insertState(Game.state)
     }
 
     override fun onCleared() {

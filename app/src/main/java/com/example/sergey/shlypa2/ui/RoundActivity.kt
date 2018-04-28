@@ -41,7 +41,7 @@ class RoundActivity : AppCompatActivity() {
                 RoundViewModel.Command.GET_READY -> startGetReadyFragment()
                 RoundViewModel.Command.START_TURN -> startGameFragment()
                 RoundViewModel.Command.FINISH_TURN -> startTurnResultFragment()
-                RoundViewModel.Command.SHOW_ROUND_RESULTS -> startRoundResutsFragment()
+                RoundViewModel.Command.SHOW_ROUND_RESULTS -> startRoundResultsFragment()
                 RoundViewModel.Command.START_NEXT_ROUND -> startNextRound()
                 RoundViewModel.Command.SHOW_GAME_RESULTS -> startGameResults()
             }
@@ -50,6 +50,7 @@ class RoundActivity : AppCompatActivity() {
         if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
             startStartFragment()
         }
+
         setTitle(viewModel.roundDescription)
     }
 
@@ -99,7 +100,7 @@ class RoundActivity : AppCompatActivity() {
         startFragment(fragment)
     }
 
-    private fun startRoundResutsFragment() {
+    private fun startRoundResultsFragment() {
         val fragment = RoundResultFragment()
         startFragment(fragment)
     }

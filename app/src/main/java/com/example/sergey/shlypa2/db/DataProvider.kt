@@ -10,6 +10,7 @@ import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import timber.log.Timber
 import java.util.*
 
 
@@ -45,12 +46,19 @@ class DataProvider(val context: Context) {
     fun getSavedStates(): List<GameState> {
         val savedList = db.stateDao().getAllStates()
 
-        val gson = GsonBuilder().create()
         return savedList.map { gson.fromJson(it.state, GameState::class.java) }
+    }
+
+    fun getLastSavedState() : GameState? {
+        val savedList = db.stateDao().getAllStates()
+        val lastSaved = savedList.maxBy { it.time }
+
+        return lastSaved?.let { gson.fromJson(lastSaved.state, GameState::class.java) }
     }
 
     fun insertState(state: GameState) {
         val represent = StateRepresent(0, state.gameId, System.currentTimeMillis(), gson.toJson(state))
+        Timber.d(represent.state)
         db.stateDao().insertState(represent)
     }
 

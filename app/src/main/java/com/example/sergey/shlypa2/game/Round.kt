@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Created by alex on 4/3/18.
  */
-class Round(val words: List<Word>) {
+class Round(words: List<Word>) {
 
     var description = 1
     var rules = 2
@@ -26,6 +26,7 @@ class Round(val words: List<Word>) {
 
     private var currentWord: Word? = null
 
+    var turnFinished = false
 
     init {
         val listCopy = words.toMutableList()
@@ -104,6 +105,7 @@ class Round(val words: List<Word>) {
 
         return Pair(correct, skipped)
     }
+
 
     fun getResults(): RoundResults {
         return RoundResults(results)

@@ -52,6 +52,8 @@ class GameFragment : Fragment() {
             return true
         }
     }
+
+    //todo can cause problems better to keep it in a viewmodel
     var timerStop:Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -83,31 +85,46 @@ class GameFragment : Fragment() {
 
         tv_PlayGame.hide()
         timerLinear.setOnClickListener {
-            timerStop = if (!timerStop) {
-                tv_PlayGame.show()
-                containerGame.setOnTouchListener(null)
-                viewModel.pauseTimer()
-                tv_word.hide()
-                ibStopTime.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
-                true
+            if(timerStop) {
+                resumeTimer()
             } else{
-                viewModel.startTimer()
-                tv_PlayGame.hide()
-                tv_word.show()
-                containerGame.setOnTouchListener(onSwipeTouchListener)
-                ibStopTime.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
-                false
+               pauseTimer()
             }
         }
 
         tv_PlayGame.setOnClickListener {
-            viewModel.startTimer()
-            tv_PlayGame.hide()
-            tv_word.show()
-            containerGame.setOnTouchListener(onSwipeTouchListener)
-            ibStopTime.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
-            timerStop = false
+            resumeTimer()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(!timerStop) {
+            viewModel.startTimer()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.pauseTimer()
+    }
+
+    private fun pauseTimer() {
+        tv_PlayGame.show()
+        containerGame.setOnTouchListener(null)
+        viewModel.pauseTimer()
+        tv_word.hide()
+        ibStopTime.setImageResource(R.drawable.ic_play_circle_outline_black_24dp)
+        timerStop = true
+    }
+
+    private fun resumeTimer() {
+        viewModel.startTimer()
+        tv_PlayGame.hide()
+        tv_word.show()
+        containerGame.setOnTouchListener(onSwipeTouchListener)
+        ibStopTime.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp)
+        timerStop = false
     }
 
     @SuppressLint("SetTextI18n")
@@ -164,17 +181,5 @@ class GameFragment : Fragment() {
         val additionalMargin : Float = context?.let { Functions.dpToPx(it, 32F) } ?: 0F
 
         return Math.abs(hatTop - cardTop) + additionalMargin.toInt()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if(!timerStop) {
-            viewModel.startTimer()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.pauseTimer()
     }
 }

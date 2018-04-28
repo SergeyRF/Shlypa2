@@ -67,7 +67,7 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
 
     fun bind(scoredTeam: TeamWithScores) {
         teamName.text = scoredTeam.team.name
-        teemScores.text = scoredTeam.scores.toString()
+        teemScores.text = scoredTeam.getScores().toString()
 
         listPlayers.removeAllViews()
 
@@ -220,7 +220,8 @@ class SavedStateHolder(val view: View) : BaseHolder(view) {
     val tvPlayers: TextView = view.findViewById(R.id.tvPlayersState)
 
     fun bind(state: GameState) {
-        tvDate.text = Functions.timeToLocalDateWithTime(state.savedTime, view.context)
+        val dateText = Functions.timeToLocalDateWithTime(state.savedTime, view.context)
+        tvDate.text = "$dateText id ${state.gameId}"
         val builder = StringBuilder()
         state.players.forEach {
             builder.append("${it.value.name} \n")
