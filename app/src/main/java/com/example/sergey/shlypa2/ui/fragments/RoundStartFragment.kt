@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -57,14 +58,20 @@ class RoundStartFragment : Fragment() {
 
 
         val viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
-        tvDescription.setText(viewModel.roundName)
-        tvRules.setText(viewModel.roundRules)
+
+        viewModel.roundLiveData.observe(this, Observer {
+            it?.let {
+                tvDescription.setText(it.name)
+                tvRules.setText(it.rules)
+
+                Picasso.get()
+                        .load(Functions.imageNameToUrl("round_avatars/${it.image}"))
+                        .into(rulesAvatar)
+            }
+        })
+
 
         btGo.setOnClickListener { viewModel.beginRound() }
-
-        Picasso.get()
-                .load(Functions.imageNameToUrl("round_avatars/${viewModel.roundImage}"))
-                .into(rulesAvatar)
 
         rulesAvatar.setOnClickListener {
             animated = if (animated) {

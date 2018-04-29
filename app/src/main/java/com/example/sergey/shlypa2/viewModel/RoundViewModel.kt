@@ -8,6 +8,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.Round
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.SoundManager
 import timber.log.Timber
@@ -24,13 +25,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()
 
 
-    private val round = Game.getRound()
+    private lateinit var round : Round
+    val roundLiveData = MutableLiveData<Round>()
     private var roundFinished = false
 
-    var roundDescription = round.description
-    var roundRules = round.rules
-    var roundName = round.name
-    var roundImage = round.image
 
     val wordLiveData = MutableLiveData<Word>()
     //First value - answered, second - skipped
@@ -45,9 +43,29 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
 
     init {
-        wordLiveData.value = round.getWord()
+        val gameRound = Game.getRound()
+        if(gameRound != null) {
+            round = gameRound
+            roundLiveData.value = round
+            wordLiveData.value = round.getWord()
+        } else {
+            loadGameState()
+        }
     }
 
+    private fun loadGameState() {
+        val state = dataProvider.getLastSavedState()
+        if(state != null && state.currentRound != null) {
+            Game.state = state
+            round = state.currentRound!!
+            wordLiveData.value = round.getWord()
+        } else {
+            Timber.e(RuntimeException("Can't load game state"))
+            //Just for avoiding possible errors
+            round = Round(mutableListOf())
+            commandCallback.value = Command.EXIT
+        }
+    }
 
     fun getPlayer() = round.getPlayer()
 
@@ -162,6 +180,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         FINISH_TURN,
         SHOW_ROUND_RESULTS,
         START_NEXT_ROUND,
-        SHOW_GAME_RESULTS
+        SHOW_GAME_RESULTS,
+        EXIT
     }
 }

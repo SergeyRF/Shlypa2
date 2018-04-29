@@ -13,6 +13,7 @@ import com.example.sergey.shlypa2.ui.fragments.WelcomeFragment
 import com.example.sergey.shlypa2.ui.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
+import timber.log.Timber
 
 class FirstActivity : AppCompatActivity() {
 
@@ -40,6 +41,8 @@ class FirstActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
+
 
         if(Functions.getSelectedThemeId(this) != themeId) {
             recreate()

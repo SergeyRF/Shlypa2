@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
@@ -44,6 +45,7 @@ class RoundActivity : AppCompatActivity() {
                 RoundViewModel.Command.SHOW_ROUND_RESULTS -> startRoundResultsFragment()
                 RoundViewModel.Command.START_NEXT_ROUND -> startNextRound()
                 RoundViewModel.Command.SHOW_GAME_RESULTS -> startGameResults()
+                RoundViewModel.Command.EXIT -> finish()
             }
         })
 
@@ -51,7 +53,9 @@ class RoundActivity : AppCompatActivity() {
             startStartFragment()
         }
 
-        setTitle(viewModel.roundDescription)
+        viewModel.roundLiveData.observe(this, Observer {
+            it?.let { setTitle(it.name) }
+        })
     }
 
     override fun onBackPressed() {
@@ -62,6 +66,11 @@ class RoundActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.press_more_to_finish_game, Toast.LENGTH_LONG).show()
             Handler().postDelayed({backPressedOnce = false}, 2000)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        viewModel.saveGameState()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

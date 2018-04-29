@@ -111,7 +111,6 @@ object Game {
 
         teamWithScores.forEach {
             val map = it.scoresMap
-            val team = it
             it.team.players.forEach {
                 val scores = mapOfPlayers[it.id] ?: 0
                 map[it.id] = scores
@@ -133,7 +132,7 @@ object Game {
 
     fun getWords(): List<Word> = state.allWords
 
-    fun getRound(): Round = state.currentRound!!
+    fun getRound(): Round? = state.currentRound
 
     fun hasRound() = state.currentRound != null
 
