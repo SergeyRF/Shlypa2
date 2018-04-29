@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/in_card_horizontal_margin"
         android:layout_marginRight="@dimen/in_card_horizontal_margin"
-        android:hint="@string/vvodi"
         android:imeOptions="actionNext|flagNoExtractUi"
         android:maxLines="1"
         android:singleLine="true"

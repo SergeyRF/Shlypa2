@@ -35,6 +35,9 @@ class TurnStartFragment : Fragment() {
         val playerTv : TextView  = root.findViewById(R.id.tvTurnPlayerName)
         val startButton : Button = root.findViewById(R.id.btTurnStart)
         val playerAvatar : CircleImageView = root.findViewById(R.id.civPlayerAvatar)
+        val teamName: TextView = root.findViewById(R.id.tv_TurnTeamName)
+
+        teamName.text = viewModel.getTeam()
 
         playerTv.text = viewModel.getPlayer().name
         startButton.setOnClickListener{viewModel.startTurn()}

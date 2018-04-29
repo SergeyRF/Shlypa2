@@ -2,6 +2,10 @@
 <resources>
 
 
+    <string name="name" >Имя игрока</string>
+    <string name="add_player">добавить</string>
+
+
     <!-- RoundRules -->
 
     <string name="round_first">

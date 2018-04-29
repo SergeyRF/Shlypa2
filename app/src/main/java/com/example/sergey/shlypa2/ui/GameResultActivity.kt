@@ -34,7 +34,10 @@ class GameResultActivity : AppCompatActivity() {
                 visible()
             }
             animate(rvGameResults){
-                belowOf(tv_game_resalt)
+               /* belowOf(tv_game_resalt)
+                aboveOf(btCreateNewGame)*/
+                centerBetweenViews(tv_game_resalt,btCreateNewGame,false,true)
+
                 visible()
             }
 
@@ -43,12 +46,13 @@ class GameResultActivity : AppCompatActivity() {
     }
 
     var animations = false
+    val resultsAdapter = RvAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_result)
 
-        val resultsAdapter = RvAdapter()
+
         resultsAdapter.setData(Game.getGameResults())
 
         soundManager.play(R.raw.fanfair)
@@ -74,6 +78,8 @@ class GameResultActivity : AppCompatActivity() {
                 animation.start()
                 true
             }
+            resultsAdapter.notifyDataSetChanged()
+
         }
         please(3) {
             animate(tv_game_resalt) {
