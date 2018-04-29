@@ -61,12 +61,12 @@
         android:id="@+id/rvWords"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btNext"
+        app:layout_constraintBottom_toTopOf="@+id/btNextWords"
         app:layout_constraintTop_toBottomOf="@+id/etWord" />
 
     <Button
-        android:id="@+id/btNext"
-        style="@style/Button_next"
+        android:id="@+id/btNextWords"
+        style="@style/btNextStyle"
         android:text="@string/play"
         android:textSize="@dimen/text_smoll"
         app:layout_constraintBottom_toBottomOf="parent" />

@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.squareup.picasso.Picasso
@@ -27,7 +26,7 @@ class RoundStartFragment : Fragment() {
 
     val animation by lazy {
         please {
-            animate(tvRoundDescription) {
+            animate(tvRoundName) {
                 topOfHisParent(16f)
                 leftOfHisParent(16f)
             }
@@ -51,7 +50,7 @@ class RoundStartFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_round_start, container, false)
-        val tvDescription: TextView = root.findViewById(R.id.tvRoundDescription)
+        val tvRoundName: TextView = root.findViewById(R.id.tvRoundName)
         val tvRules: TextView = root.findViewById(R.id.tvRoundRules)
         val btGo: Button = root.findViewById(R.id.btBeginRound)
         val rulesAvatar: CircleImageView = root.findViewById(R.id.civRulesAvatar)
@@ -61,7 +60,7 @@ class RoundStartFragment : Fragment() {
 
         viewModel.roundLiveData.observe(this, Observer {
             it?.let {
-                tvDescription.setText(it.name)
+                tvRoundName.setText(it.name)
                 tvRules.setText(it.rules)
 
                 Picasso.get()

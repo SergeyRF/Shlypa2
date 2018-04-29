@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -42,7 +43,10 @@ class RoundResultFragment : Fragment() {
         tvRound.setText(R.string.round_end)
 
         val adapter = RvAdapter()
-        adapter.setData(Game.getRoundResults())
+
+        viewModel.rounResultLiveData.observe(this, Observer {
+            adapter.setData(it)
+        })
 
         val rvTeams : RecyclerView = root.findViewById(R.id.rvRoundResult)
         rvTeams.layoutManager = LinearLayoutManager(context)

@@ -16,6 +16,7 @@ import android.widget.EditText
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Team
+import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import kotlinx.android.synthetic.main.fragment_teams.*
 
@@ -41,12 +42,14 @@ class TeamsFragment : Fragment() {
         viewModel.getTeamsLiveData().observe(this, Observer { list -> setTeemRv(list) })
         viewModel.initTeams()
 
-        btNext.setOnClickListener {
+        btNextWords.setOnClickListener {
             viewModel.startSettings()
         }
 
         adapterTeam = RvAdapter()
-        rvTeams.layoutManager = LinearLayoutManager(context)
+        val layoutManager = PrecaheLayoutManager(context)
+        rvTeams.layoutManager = layoutManager
+
         rvTeams.adapter = adapterTeam
 
         adapterTeam.listener = { team: Any ->

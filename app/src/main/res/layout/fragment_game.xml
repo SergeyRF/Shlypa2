@@ -102,6 +102,14 @@
 
     </FrameLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/btTrue"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
     <LinearLayout
         android:id="@+id/timerLinear"
         android:layout_width="90dp"

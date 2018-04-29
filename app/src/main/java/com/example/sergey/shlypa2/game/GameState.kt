@@ -48,11 +48,13 @@ class GameState {
             return false
         }
 
-        currentRound = Round(allWords)
-        currentRound!!.description = rounds[currentRoundPosition].description
-        currentRound!!.rules = rounds[currentRoundPosition].rules
-        currentRound!!.name = rounds[currentRoundPosition].name
-        currentRound!!.image = rounds[currentRoundPosition].image
+        currentRound = Round(allWords).apply {
+            val descriptor = rounds[currentRoundPosition]
+            description = descriptor.description
+            rules = descriptor.rules
+            name = descriptor.name
+            image = descriptor.image
+        }
 
         return true
     }

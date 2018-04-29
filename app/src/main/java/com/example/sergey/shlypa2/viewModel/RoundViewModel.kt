@@ -9,9 +9,9 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Game.state
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.Round
+import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
@@ -29,9 +29,9 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()
 
-
     private lateinit var round: Round
     val roundLiveData = MutableLiveData<Round>()
+    val rounResultLiveData = MutableLiveData<List<TeamWithScores>>()
 
     val wordLiveData = MutableLiveData<Word>()
     //First value - answered, second - skipped
@@ -92,7 +92,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         if (word != null) {
             wordLiveData.value = word
         } else {
+            //todo move to background thread
+            rounResultLiveData.value = Game.getRoundResults()
             commandCallback.value = Command.SHOW_ROUND_RESULTS
+            return
         }
 
         if (round.turnFinished) {
@@ -170,6 +173,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
             answeredCountLiveData.value = Pair(0, 0)
             commandCallback.value = Command.GET_READY
         } else {
+            rounResultLiveData.value = Game.getRoundResults()
             commandCallback.value = Command.SHOW_ROUND_RESULTS
         }
 

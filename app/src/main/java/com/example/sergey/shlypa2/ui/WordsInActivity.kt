@@ -1,7 +1,5 @@
 package com.example.sergey.shlypa2.ui
 
-import android.app.ActionBar
-import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -11,8 +9,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
-import android.widget.Button
-import android.widget.EditText
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
@@ -21,8 +17,6 @@ import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import kotlinx.android.synthetic.main.activity_words_in.*
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import android.widget.Toolbar
 import com.example.sergey.shlypa2.utils.*
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.squareup.picasso.Picasso
@@ -89,7 +83,7 @@ class WordsInActivity : AppCompatActivity() {
             } else true
         }
 
-        btNext.setOnClickListener{
+        btNextWords.setOnClickListener{
             if (viewModel.needWord() && viewModel.randomAllowed()){
                 viewModel.fillWithRandomWords()
             } else{
@@ -169,17 +163,17 @@ class WordsInActivity : AppCompatActivity() {
             onChangeEt()
 
             if (viewModel.randomAllowed()){
-                btNext.text = getString(R.string.add_random)
+                btNextWords.text = getString(R.string.add_random)
             } else{
-                btNext.hide()
+                btNextWords.hide()
             }
             ibAddWord.show()
             etWord.show()
         } else{
-            btNext.show()
+            btNextWords.show()
             ibAddWord.gone()
             etWord.gone()
-            btNext.text = getString(R.string.play)
+            btNextWords.text = getString(R.string.play)
         }
     }
 

@@ -117,8 +117,6 @@ object Game {
             }
         }
 
-
-
         return teamWithScores
     }
 

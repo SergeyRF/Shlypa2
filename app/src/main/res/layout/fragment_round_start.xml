@@ -6,7 +6,7 @@
     tools:context="com.example.sergey.shlypa2.ui.fragments.RoundStartFragment">
 
     <TextView
-        android:id="@+id/tvRoundDescription"
+        android:id="@+id/tvRoundName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRoundDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvRoundName"
         app:layout_constraintVertical_bias="0.38"
         app:layout_constraintWidth_percent="0.50"
         />
@@ -51,7 +51,7 @@
 
     <Button
         android:id="@+id/btBeginRound"
-        style="@style/Button_next"
+        style="@style/btNextStyle"
         android:text="@string/play"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

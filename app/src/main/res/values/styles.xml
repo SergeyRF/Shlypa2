@@ -53,7 +53,7 @@
     </style>
 
     <!--Hyase -->
-    <style name="Button_next" >
+    <style name="btNextStyle" >
         <item name="android:textSize">@dimen/text_smoll</item>
         <item name="android:textColor">@color/text_or_icon</item>
         <item name="android:background">?attr/colorPrimary</item>

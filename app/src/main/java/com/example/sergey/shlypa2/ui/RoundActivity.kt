@@ -54,7 +54,7 @@ class RoundActivity : AppCompatActivity() {
         }
 
         viewModel.roundLiveData.observe(this, Observer {
-            it?.let { setTitle(it.name) }
+            it?.let { setTitle(it.description) }
         })
     }
 

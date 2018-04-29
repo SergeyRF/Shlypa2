@@ -95,6 +95,10 @@ class GameFragment : Fragment() {
         tv_PlayGame.setOnClickListener {
             resumeTimer()
         }
+
+        btTrue.setOnClickListener {
+            viewModel.answerWord(true)
+        }
     }
 
     override fun onResume() {

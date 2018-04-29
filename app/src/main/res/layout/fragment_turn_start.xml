@@ -52,7 +52,7 @@
     <Button
         android:id="@+id/btTurnStart"
         android:text="@string/go"
-        style="@style/Button_next"
+        style="@style/btNextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

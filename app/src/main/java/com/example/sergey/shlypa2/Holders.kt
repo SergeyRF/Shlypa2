@@ -140,7 +140,7 @@ class PlayerInTeamHolder(view: View) : BaseHolder(view) {
         }
 
         Picasso.get()
-                .load(Functions.imageNameToUrl("player_avatars/${player.avatar}"))
+                .load(Functions.imageNameToUrl("minava/${player.avatar}"))
                 .into(avatarImage)
     }
 }

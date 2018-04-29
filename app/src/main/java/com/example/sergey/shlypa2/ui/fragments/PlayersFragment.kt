@@ -68,7 +68,7 @@ class PlayersFragment : Fragment() {
             addPlayer()
         }
 
-        btGoNext.setOnClickListener {
+        btGoNextPlayers.setOnClickListener {
             if (Game.getPlayers().size < 4) {
                 Toast.makeText(context, R.string.not_enough_players, Toast.LENGTH_LONG).show()
             } else viewModel.startTeams()

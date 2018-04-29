@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_game_resalt" />
 
     <Button
-        style="@style/Button_next"
+        style="@style/btNextStyle"
         android:text="@string/new_game"
         android:id="@+id/btCreateNewGame"
         app:layout_constraintBottom_toBottomOf="parent"

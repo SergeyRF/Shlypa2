@@ -27,7 +27,7 @@
 
     <Button
         android:id="@+id/btNextRound"
-        style="@style/Button_next"
+        style="@style/btNextStyle"
         android:text="@string/play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

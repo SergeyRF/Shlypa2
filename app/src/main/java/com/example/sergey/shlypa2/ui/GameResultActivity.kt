@@ -53,12 +53,13 @@ class GameResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_result)
 
 
-        resultsAdapter.setData(Game.getGameResults())
 
         soundManager.play(R.raw.fanfair)
 
-        val t:List <TeamWithScores>  = Game.getGameResults().sortedBy { it.scores.and(it.scores) }
-       val tm= t.maxBy { it.scores }!!
+        val resultsList: List<TeamWithScores> = Game.getGameResults().sortedByDescending { it.getScores() }
+        resultsAdapter.setData(resultsList)
+
+        val tm = resultsList.maxBy { it.getScores() }!!
         tv_winner.text = tm.team.name
 
 
@@ -66,15 +67,15 @@ class GameResultActivity : AppCompatActivity() {
         rvGameResults.layoutManager = LinearLayoutManager(this)
         rvGameResults.adapter = resultsAdapter
         btCreateNewGame.setOnClickListener {
-            startActivity(Intent(this,FirstActivity::class.java))
+            startActivity(Intent(this, FirstActivity::class.java))
+            finish()
         }
 
         civWinnerAvatar.setOnClickListener {
-            animations = if (animations){
+            animations = if (animations) {
                 animation.reset()
                 false
-            }
-            else{
+            } else {
                 animation.start()
                 true
             }
@@ -85,7 +86,7 @@ class GameResultActivity : AppCompatActivity() {
             animate(tv_game_resalt) {
                 invisible()
             }
-            animate(rvGameResults){
+            animate(rvGameResults) {
                 invisible()
             }
         }.start()

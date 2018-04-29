@@ -113,8 +113,8 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun updateData() {
         wordsLiveData.value = words
-        //todo index of bound exception here
-        playerLivaData.value = Game.getPlayers()[pos]
+
+        playerLivaData.value = Game.getPlayers().getOrNull(pos)
         needWord.value = needWord()
     }
 }

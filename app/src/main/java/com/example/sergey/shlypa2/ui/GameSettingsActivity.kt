@@ -49,7 +49,7 @@ class GameSettingsActivity : AppCompatActivity() {
         onBalSwitch(settingsVM.getMinusBal())
 
 
-        val button = findViewById<Button>(R.id.bt_go_next)
+        val button = findViewById<Button>(R.id.btNextSettings)
         button.setOnClickListener {
             startActivity(Intent(this, WordsInActivity::class.java))
         }
