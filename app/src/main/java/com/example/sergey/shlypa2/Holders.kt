@@ -120,7 +120,7 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
         }
 
         Picasso.get()
-                .load(Functions.imageNameToUrl("player_avatars/${player.avatar}"))
+                .load(Functions.imageNameToUrl("player_avatars/small/${player.avatar}"))
                 .into(avatarImage)
     }
 }
@@ -140,7 +140,7 @@ class PlayerInTeamHolder(view: View) : BaseHolder(view) {
         }
 
         Picasso.get()
-                .load(Functions.imageNameToUrl("minava/${player.avatar}"))
+                .load(Functions.imageNameToUrl("player_avatars/small/${player.avatar}"))
                 .into(avatarImage)
     }
 }
@@ -207,9 +207,13 @@ class WordResultHolder(view: View) : BaseHolder(view) {
 
     fun bind(word: Word) {
         wordRv.text = word.word
+        //avoid bug
+        radioGroup.setOnCheckedChangeListener(null)
+
         radioGroup.check(if (word.right) R.id.radioCorrect else R.id.radioWrong)
 
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            Timber.d("radio button checked")
             word.right = checkedId == R.id.right
         }
     }

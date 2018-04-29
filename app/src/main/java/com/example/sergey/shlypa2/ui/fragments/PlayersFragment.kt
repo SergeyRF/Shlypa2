@@ -137,7 +137,7 @@ class PlayersFragment : Fragment() {
 
     private fun showAvatar(fileName: String) {
         avatar = fileName
-        val fileLink = Functions.imageNameToUrl("player_avatars/$fileName")
+        val fileLink = Functions.imageNameToUrl("player_avatars/small/$fileName")
         Picasso.get()
                 .load(fileLink)
                 .into(civPlayerAvatar)

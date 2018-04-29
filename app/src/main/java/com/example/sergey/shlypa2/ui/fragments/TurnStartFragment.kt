@@ -43,7 +43,7 @@ class TurnStartFragment : Fragment() {
         startButton.setOnClickListener{viewModel.startTurn()}
 
         Picasso.get()
-                .load(Functions.imageNameToUrl("player_avatars/${viewModel.getPlayer().avatar}"))
+                .load(Functions.imageNameToUrl("player_avatars/large/${viewModel.getPlayer().avatar}"))
                 .into(playerAvatar)
 
         return root
