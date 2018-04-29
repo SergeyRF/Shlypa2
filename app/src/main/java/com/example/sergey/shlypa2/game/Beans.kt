@@ -9,9 +9,10 @@ import com.example.sergey.shlypa2.beans.Team
 
 
 class TeamWithScores(val team: Team) {
-    var scores = 0
+
     //keeps scores for players: key - player id, value - scores
     var scoresMap: MutableMap<Long, Int> = mutableMapOf()
+    var scores = scoresMap.values.sum()
 }
 
 class RoundDescriptor(var description: Int, var rules: Int, var name:Int, var image:String)

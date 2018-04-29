@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.ArrayAdapter
 import android.widget.Button
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
@@ -50,7 +49,7 @@ class GameSettingsActivity : AppCompatActivity() {
         onBalSwitch(settingsVM.getMinusBal())
 
 
-        val button = findViewById<Button>(R.id.bt_cancel_command)
+        val button = findViewById<Button>(R.id.bt_go_next)
         button.setOnClickListener {
             startActivity(Intent(this, WordsInActivity::class.java))
         }

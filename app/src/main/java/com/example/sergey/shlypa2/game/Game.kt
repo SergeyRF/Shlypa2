@@ -125,6 +125,8 @@ object Game {
 
         teamWithScores.sortedByDescending { it.scores }
 
+
+
         return teamWithScores
     }
 

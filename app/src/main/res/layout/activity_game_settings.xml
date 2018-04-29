@@ -150,11 +150,9 @@
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
-    <!-- Только ебанутый дегенерат мог назвать так кнопку,
-     на которой написано дальше!!!-->
-    <!-- Обоссать и на мороз! -->
+
     <Button
-        android:id="@+id/bt_cancel_command"
+        android:id="@+id/bt_go_next"
         style="@style/Button_next"
         android:layout_gravity="bottom"
         android:text="@string/play"
