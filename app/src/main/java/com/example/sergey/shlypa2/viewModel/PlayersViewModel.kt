@@ -7,13 +7,11 @@ import android.arch.lifecycle.MutableLiveData
 import android.os.AsyncTask
 import android.widget.Toast
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.PlayerType
-import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.random
 import timber.log.Timber

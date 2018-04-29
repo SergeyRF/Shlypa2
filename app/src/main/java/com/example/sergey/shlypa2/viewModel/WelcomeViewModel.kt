@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.viewModel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
@@ -17,9 +18,13 @@ class WelcomeViewModel(application: Application) : AndroidViewModel(application)
     val dataProvider = DataProvider(application)
 
     val commandsCallBack : MutableLiveData<Commands> = SingleLiveEvent()
+    private val savedStates : MutableLiveData<List<GameState>> = MutableLiveData()
 
-    fun getSavedStates() : List<GameState> {
-        return dataProvider.getSavedStates()
+    fun getSavedStates() : LiveData<List<GameState>> {
+        val savedStatesList = dataProvider.getSavedStates()
+
+        savedStates.value = savedStatesList.sortedByDescending { it.savedTime }
+        return savedStates
     }
 
     fun newGame() {

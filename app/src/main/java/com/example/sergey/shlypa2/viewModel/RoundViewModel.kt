@@ -4,11 +4,16 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.os.Handler
+import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.Game.state
+import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.Round
+import com.example.sergey.shlypa2.utils.PreferenceHelper
+import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.SoundManager
 import timber.log.Timber
@@ -20,15 +25,13 @@ import timber.log.Timber
 class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dataProvider = DataProvider(application)
-    private val soundManager = SoundManager(getApplication())
+    private var soundManager : SoundManager? = null
 
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()
 
 
-    private lateinit var round : Round
+    private lateinit var round: Round
     val roundLiveData = MutableLiveData<Round>()
-    private var roundFinished = false
-
 
     val wordLiveData = MutableLiveData<Word>()
     //First value - answered, second - skipped
@@ -38,32 +41,64 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     var timeLeft = Game.getSettings().time
     var timerStarted = true
 
+    private var roundFinished = false
+    private var turnFinished = false
+
     val handler = Handler()
 
-
-
     init {
+        val preference = PreferenceHelper.defaultPrefs(application)
+        val soundsEnabledPref : Boolean = preference[Constants.SOUND_ON_PREF, true] ?: true
+        if(soundsEnabledPref) {
+            soundManager = SoundManager(application)
+        }
+
         val gameRound = Game.getRound()
-        if(gameRound != null) {
-            round = gameRound
-            roundLiveData.value = round
-            wordLiveData.value = round.getWord()
-        } else {
-            loadGameState()
+
+        when {
+            Game.state.needToRestore -> loadGameState(Game.state)
+
+            gameRound != null -> {
+                round = gameRound
+                roundLiveData.value = round
+                wordLiveData.value = round.getWord()
+            }
+
+            else -> loadLastSaved()
         }
     }
 
-    private fun loadGameState() {
+    private fun loadLastSaved() {
         val state = dataProvider.getLastSavedState()
-        if(state != null && state.currentRound != null) {
-            Game.state = state
-            round = state.currentRound!!
-            wordLiveData.value = round.getWord()
+        if (state != null && state.currentRound != null) {
+            loadGameState(state)
         } else {
             Timber.e(RuntimeException("Can't load game state"))
             //Just for avoiding possible errors
             round = Round(mutableListOf())
             commandCallback.value = Command.EXIT
+        }
+    }
+
+    //todo add exception throwing
+    private fun loadGameState(state: GameState) {
+        state.needToRestore = false
+        Game.state = state
+
+        round = state.currentRound!!
+
+        //Finish round if there's no word
+        val word = round.getWord()
+        if (word != null) {
+            wordLiveData.value = word
+        } else {
+            commandCallback.value = Command.SHOW_ROUND_RESULTS
+        }
+
+        if (round.turnFinished) {
+            commandCallback.value = Command.FINISH_TURN
+        } else {
+            commandCallback.value = Command.GET_READY
         }
     }
 
@@ -75,7 +110,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         answeredCountLiveData.value = round.getTurnAnswersCount()
 
         //play sound
-        soundManager.play(if(answer)R.raw.correct else R.raw.wrong)
+        soundManager?.play(if (answer) R.raw.correct else R.raw.wrong)
 
         val word = round.getWord()
         if (word != null) {
@@ -90,7 +125,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun finishRound() {
-        if(!roundFinished) {
+        if (!roundFinished) {
             Game.beginNextRound()
             roundFinished = true
         }
@@ -158,7 +193,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     override fun onCleared() {
         super.onCleared()
-        soundManager.release()
+        soundManager?.release()
     }
 
     private val timerRunnable = object : Runnable {

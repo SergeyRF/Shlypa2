@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
@@ -33,17 +34,24 @@ class LoadStateFragment : Fragment() {
 
         adapter = RvAdapter()
         adapter.listener = {state : Any ->
-            Game.state = state as GameState
+
+            val loadedState = state as GameState
+            loadedState.needToRestore = true
+            Game.state = loadedState
+
             startActivity(Intent(context, RoundActivity::class.java))
         }
 
-        return inflater!!.inflate(R.layout.fragment_load_state, container, false)
+        return inflater.inflate(R.layout.fragment_load_state, container, false)
     }
 
     override fun onStart() {
         super.onStart()
         rvStates.layoutManager = LinearLayoutManager(context)
         rvStates.adapter = adapter
-        adapter.setData(viewModel.getSavedStates())
+
+        viewModel.getSavedStates().observe(this, Observer {
+            adapter.setData(it)
+        })
     }
 }

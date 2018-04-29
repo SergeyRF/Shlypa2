@@ -3,7 +3,6 @@ package com.example.sergey.shlypa2.db
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.WordType
 

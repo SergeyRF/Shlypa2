@@ -60,6 +60,7 @@ class RoundActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if(backPressedOnce) {
+            viewModel.saveGameState()
             finish()
         } else {
             backPressedOnce = true

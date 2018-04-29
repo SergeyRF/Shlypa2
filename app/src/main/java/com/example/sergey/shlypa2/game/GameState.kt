@@ -30,11 +30,13 @@ class GameState {
     var currentRoundPosition = -1
     var currentRound : Round? = null
 
+    val players = mutableMapOf<Long, Player>()
+
     val allWords = mutableListOf<Word>()
 
+    //Serialization
     val savedTime = System.currentTimeMillis()
-
-    val players = mutableMapOf<Long, Player>()
+    var needToRestore = false
 
     fun saveRoundResults(results: RoundResults) {
         resultsList.add(results)

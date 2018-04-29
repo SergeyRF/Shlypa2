@@ -1,7 +1,6 @@
 package com.example.sergey.shlypa2.db
 
 import android.arch.persistence.room.*
-import com.example.sergey.shlypa2.beans.Contract
 import com.example.sergey.shlypa2.beans.StateRepresent
 
 /**
