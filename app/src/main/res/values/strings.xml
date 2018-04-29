@@ -55,7 +55,8 @@
     <string name="dificult">Сложность добавляемых слов</string>
     <string name="setAll">Добавить все слова автоматически</string>
     <string name="allow_random">Allow random words</string>
-    <string name="name">Name</string>
+    <string name="name" >Name</string>
+    <string name="add_player">new player</string>
 
 
     <string name="shuffle_teams">Shuffle teams</string>

@@ -47,6 +47,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun getPlayer() = round.getPlayer()
+    fun getTeam() = round.currentTeam.name
 
     fun answerWord(answer: Boolean) {
         round.answer(answer)
