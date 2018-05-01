@@ -16,6 +16,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.ui.RoundActivity
+import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import com.example.sergey.shlypa2.utils.gone
 import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
@@ -62,7 +63,7 @@ class TurnResultFragment : Fragment() {
         adapter.altMode = true
         adapter.setData(words)
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = PrecaheLayoutManager(context)
         recyclerView.adapter = adapter
     }
 
