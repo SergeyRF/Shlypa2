@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
 import com.example.sergey.shlypa2.ui.fragments.WelcomeFragment
@@ -39,9 +40,12 @@ class FirstActivity : AppCompatActivity() {
         })
     }
 
+
     override fun onStart() {
         super.onStart()
-
+        val r = AppRater()
+        r.app_launched(this)
+        Timber.d("game start AAAAAAAAAAAAAAAAAAAAAAAAAa")
 
 
         if(Functions.getSelectedThemeId(this) != themeId) {
@@ -101,4 +105,5 @@ class FirstActivity : AppCompatActivity() {
     private fun startRulesFragment() {
 
     }
+
 }

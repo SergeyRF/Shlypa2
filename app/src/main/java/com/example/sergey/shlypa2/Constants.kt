@@ -14,4 +14,13 @@ object Constants {
     const val SOUND_ON_PREF = "enable_sound_key"
     const val THEME_PREF = "theme_pref_key"
 
+    const val DAYS_UNTIL_PROMPT = 3
+    const val DAYS_UNTIL_REMIND = 3
+    const val LAUNCHES_UNTIL_PROMPT = 5
+
+    val DONT_SHOW_RATE_DIALOG = "dont_show_rate"
+    val LAST_RATE_SHOW_TIME = "last_show_time"
+    val DATE_FIRST_LAUNCH = "date_first_launch"
+    val LAUNCH_COUNT = "launch_times_count"
+
 }
