@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
@@ -30,13 +31,14 @@ class GameResultActivity : AppCompatActivity() {
                 scale(0.3f, 0.3f)
             }
             animate(tv_game_resalt){
-                belowOf(civWinnerAvatar,10f)
+                belowOf(tv_winner,null)
                 visible()
             }
             animate(rvGameResults){
-               /* belowOf(tv_game_resalt)
-                aboveOf(btCreateNewGame)*/
-                centerBetweenViews(tv_game_resalt,btCreateNewGame,false,true)
+                belowOf(tv_game_resalt)
+                aboveOf(btCreateNewGame)
+
+              //  centerBetweenViews(tv_game_resalt,btCreateNewGame,false,true)
 
                 visible()
             }
