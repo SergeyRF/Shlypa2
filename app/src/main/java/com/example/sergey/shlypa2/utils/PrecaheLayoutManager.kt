@@ -23,4 +23,8 @@ class PrecaheLayoutManager(context : Context?) : LinearLayoutManager(context) {
             Timber.e(ex)
         }
     }
+
+    override fun supportsPredictiveItemAnimations(): Boolean {
+        return false
+    }
 }
