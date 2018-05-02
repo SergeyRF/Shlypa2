@@ -109,4 +109,8 @@
     <string name="used_content">Images and sounds used in project</string>
 
     <string name="no_saved_games">No games saved yet..</string>
+
+    <!-- fatal error activity -->
+    <string name="customactivityoncrash_error_activity_error_occurred_explanation">An unexpected error occurred.\nSorry for that.</string>
+    <string name="customactivityoncrash_error_activity_restart_app">Restart app</string>
 </resources>

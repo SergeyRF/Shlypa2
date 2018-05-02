@@ -105,4 +105,8 @@
     <string name="theme_cyan">Морская</string>
     <string name="opensource_title">Лицензии сторонних библиотек</string>
     <string name="used_content">Использованные изображения и звуки</string>
+
+    <!-- fatal error activity -->
+    <string name="customactivityoncrash_error_activity_error_occurred_explanation">Произошла неожиданная ошибка.\nВиновные будут наказаны.</string>
+    <string name="customactivityoncrash_error_activity_restart_app">Перезапустить</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.example.sergey.shlypa2
 
 import android.app.Application
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash
+import cat.ereza.customactivityoncrash.config.CaocConfig
+import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferenceHelper
@@ -36,6 +39,16 @@ class App : Application() {
         } else {
             Timber.d("Db already imported")
         }
+
+        buildCaoc()
+    }
+
+    fun buildCaoc() {
+        //Catch fatal exceptions
+        CaocConfig.Builder.create()
+                .logErrorOnRestart(true)
+                .showErrorDetails(BuildConfig.DEBUG)
+                .apply()
     }
 
     companion object {
