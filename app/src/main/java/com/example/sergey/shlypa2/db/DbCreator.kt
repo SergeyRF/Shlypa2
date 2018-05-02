@@ -2,6 +2,8 @@ package com.example.sergey.shlypa2.db
 
 import android.content.Context
 import android.os.Environment
+import android.widget.Toast
+import com.crashlytics.android.Crashlytics
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.PlayerType
@@ -10,10 +12,9 @@ import com.example.sergey.shlypa2.utils.Functions
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber
-import java.io.BufferedReader
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.InputStreamReader
+import java.io.*
+import java.nio.channels.FileChannel
+import java.util.*
 
 /**
  * Created by alex on 4/10/18.
@@ -44,10 +45,14 @@ object DbCreator {
 
 
         addWordsFromStream(context, dataBase, "words/easyRu", WordType.EASY, "ru")
-        addWordsFromStream(context, dataBase,"words/normalRu", WordType.MEDIUM, "ru")
+        addWordsFromStream(context, dataBase, "words/normalRu", WordType.MEDIUM, "ru")
         addWordsFromStream(context, dataBase, "words/hardRu", WordType.HARD, "ru")
         addWordsFromStream(context, dataBase, "words/veryhardRu", WordType.VERY_HARD, "ru")
 
+        addWordsFromStream(context, dataBase, "words/easyEn", WordType.EASY, "en")
+        addWordsFromStream(context, dataBase, "words/mediumEn", WordType.MEDIUM, "en")
+        addWordsFromStream(context, dataBase, "words/hardEn", WordType.HARD, "en")
+        addWordsFromStream(context, dataBase, "words/veryhardEn", WordType.VERY_HARD, "en")
     }
 
     private fun addWordsFromStream(context: Context, dataBase: DataBase, fileName: String,
@@ -57,11 +62,35 @@ object DbCreator {
 
         var line: String? = reader.readLine()
 
+        val wordsList : MutableList<String> = mutableListOf()
+
         while (line != null) {
             Timber.d("load words from asset $line")
-            dataBase.wordDao().insertWord(Word(line, type = type, lang = lang))
+            wordsList.add(line)
             line = reader.readLine()
         }
+
+        wordsList.filter { it.isNotEmpty() }
+                .forEach {
+                    it.trim()
+                    dataBase.wordDao().insertWord(Word(it, type = type, lang = lang))
+                }
+
+
+    }
+
+    fun writeArray(context: Context, name: String, arrayId: Int) {
+        val array = context.resources.getStringArray(arrayId)
+        val list = array.toList().filterNotNull()
+        Collections.shuffle(list)
+
+        val shortList = list.subList(0, 500).sorted()
+        val fileWriter = FileWriter("${Environment.getExternalStorageDirectory()}/$name")
+        shortList.forEach {
+            fileWriter.write("$it \n")
+        }
+
+        fileWriter.close()
     }
 
     fun sortAndWriteWords(context: Context) {
@@ -80,6 +109,22 @@ object DbCreator {
         wordStream = context.assets.open("words/veryhardRu")
         reader = BufferedReader(InputStreamReader(wordStream))
         sort(reader, "veryhardRu")
+
+        wordStream = context.assets.open("words/easyEn")
+        reader = BufferedReader(InputStreamReader(wordStream))
+        sort(reader, "easyEn")
+
+        wordStream = context.assets.open("words/mediumEn")
+        reader = BufferedReader(InputStreamReader(wordStream))
+        sort(reader, "mediumEn")
+
+        wordStream = context.assets.open("words/hardEn")
+        reader = BufferedReader(InputStreamReader(wordStream))
+        sort(reader, "hardEn")
+
+        wordStream = context.assets.open("words/veryhardEn")
+        reader = BufferedReader(InputStreamReader(wordStream))
+        sort(reader, "veryhardEn")
     }
 
     private fun sort(reader: BufferedReader, name: String) {
@@ -97,38 +142,6 @@ object DbCreator {
         list.forEach { fileWriter.write(it) }
 
         fileWriter.close()
-    }
-
-    fun loadFileList(context: Context) {
-        val asset = context.assets.list("player_avatars")
-        Timber.d("list if files")
-        for (file in asset) {
-            Timber.d(file)
-        }
-
-        val gson = GsonBuilder().setPrettyPrinting().create()
-        val jsonList = gson.toJson(asset)
-
-        Timber.d(jsonList)
-
-        val fileWriter = FileWriter("${Environment.getExternalStorageDirectory()}/files.json")
-        fileWriter.write(jsonList)
-        fileWriter.close()
-
-        val somePlayersList: MutableList<SomePlayer> = mutableListOf()
-
-        for (i in 0 until asset.size) {
-            somePlayersList.add(SomePlayer("Player $i en", "en", asset[i]))
-        }
-
-        for (i in 0 until asset.size) {
-            somePlayersList.add(SomePlayer("Player $i ru", "ru", asset[i]))
-        }
-
-        val playersJson = gson.toJson(somePlayersList)
-        val write = FileWriter("${Environment.getExternalStorageDirectory()}/players.json")
-        write.write(playersJson)
-        write.close()
     }
 }
 

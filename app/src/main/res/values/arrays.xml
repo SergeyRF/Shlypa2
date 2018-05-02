@@ -27,4 +27,26 @@
         <item>https://www.flaticon.com/authors/freepik</item>
         <item>https://www.flaticon.com/authors/flat-icons</item>
     </string-array>
+
+    <string-array name="teams">
+        <item>Vikings</item>
+        <item>Pirates</item>
+        <item>Babies</item>
+        <item>Huge bananas</item>
+        <item>Vampires</item>
+        <item>Dwarfs</item>
+        <item>Hobbits</item>
+        <item>Mighty losers</item>
+        <item>Rulers</item>
+        <item>Pegasus</item>
+        <item>Nerds</item>
+        <item>Geeks</item>
+        <item>Working class</item>
+        <item>Angry cats</item>
+        <item>Evil roosters</item>
+        <item>Desperados</item>
+        <item>Old thugs</item>
+        <item>Dreadful salmons</item>
+    </string-array>
+
 </resources>

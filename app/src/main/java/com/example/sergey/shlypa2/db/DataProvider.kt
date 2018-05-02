@@ -23,12 +23,13 @@ class DataProvider(val context: Context) {
 
     val locale : String = Locale.getDefault().language.toLowerCase()
 
+    //we only need to use locales for which we have a translate
+    val usefullLocale = when(locale) {
+        "ru" -> locale
+        else -> "en"
+    }
+
     fun getPlayers(type: PlayerType = PlayerType.STANDARD): List<Player> {
-        //we only need to use locales for which we have a translate
-        val usefullLocale = when(locale) {
-            "ru" -> locale
-            else -> "en"
-        }
         return db.playersDao().getPlayersByType(type, locale = usefullLocale)
     }
 
@@ -40,7 +41,7 @@ class DataProvider(val context: Context) {
     }
 
     fun getRandomWords(wordsLimit: Int, dificulty: WordType): List<Word> {
-        return db.wordDao().getRandomWords(wordsLimit, dificulty)
+        return db.wordDao().getRandomWords(wordsLimit, dificulty, usefullLocale)
     }
 
     fun getSavedStates(): List<GameState> {

@@ -7,7 +7,6 @@
 
 
     <!-- RoundRules -->
-
     <string name="round_first">
         Необходимо объяснить своей команде как можно больше слов за отведенное время.
         Нельзя иcпользовать однокоренные, похожие по звучанию слова, использовать иностранные слова,
@@ -25,4 +24,85 @@
     <string name="round_two_number">Раунд второй</string>
     <string name="round_three_number">Раунд третий</string>
     <string name="round_end">Итоги раунда</string>
+
+    <string name="app_name">Шляпа</string>
+    <string name="play">Дальше</string>
+    <string name="rules">Правила</string>
+    <string name="qwest">Вопрос?</string>
+
+
+    <string name="Teem">Комманды</string>
+    <string name="WordsIn">Игрок</string>
+
+    <string name="player_actyvity">Игроки</string>
+    <string name="start_actyvity">ШЛЯПА</string>
+    <string name="teem_actyvity">Комманды</string>
+    <string name="state_actyvity">Параметры игры</string>
+    <string name="word_actyvity">Ввод слов</string>
+
+    <string name="team_rename">Название комманды</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Отмена</string>
+
+    <string name="minus_bal">Штрафовать за пропуск</string>
+    <string name="how_minus_bal">Штрафные балы</string>
+    <string name="player_game">Объясняет игрок:</string>
+    <string name="game_winner">Победила комманда</string>
+    <string name="game_resalt">Результаты игры</string>
+    <string name="new_game">Новая игра</string>
+    <string name="resum">ПРОДОЛЖИТЬ</string>
+
+    <string name="add_team">Добавить комманду</string>
+    <string name="remove_team">Удалить комманду</string>
+    <string name="two_team_min">Минимум 2 комманды</string>
+
+
+    <string name="go">Поехали!</string>
+    <string name="name_not_unic">Такой игрок уже есть</string>
+    <string name="player_name_empty">Имя не должно быть пустым</string>
+    <string name="not_enough_players">Нужно больше игроков</string>
+    <string name="loadGame">Загрузить игру</string>
+    <string name="no_answers">Ни одного ответа</string>
+
+    <string name="add_random">Заполнить случайными</string>
+
+    <string name="cant_create_teams">Минимум 2 игрока в комманде</string>
+
+    <string name="words_input_left">Слов осталось %1d</string>
+    <string name="who_inputs">%1s вводит слова</string>
+
+    <!-- Toasts -->
+    <string name="press_more_to_finish_game">Нажмите еще раз чтобы выйти</string>
+
+    <!-- Settings -->
+    <string name="timeN">Время хода</string>
+    <string name="wordN">Сколько слов</string>
+    <string name="vvodi">Пиши слово</string>
+    <string name="dificult">Сложность добавляемых слов</string>
+    <string name="setAll">Добавить все слова автоматически</string>
+    <string name="allow_random">Разрешить случайные слова</string>
+
+
+    <string name="shuffle_teams">Перемешать</string>
+    <string name="words_answered">Отвечено: </string>
+
+
+    <!-- Words difficulty -->
+    <string name="easy">Легко</string>
+    <string name="medium">Средне</string>
+    <string name="hard">Сложно</string>
+    <string name="very_hard">Очень сложно</string>
+    <string name="user">Пользователь</string>
+    <string name="settings">Настройки</string>
+
+    <!-- Preferences -->
+    <string name="enable_sound_title">Включить звуки</string>
+    <string name="theme_title">Тема оформления</string>
+
+    <string name="theme_teal">Бирюзовая</string>
+    <string name="theme_green">Зеленая</string>
+    <string name="theme_blue">Голубая</string>
+    <string name="theme_cyan">Морская</string>
+    <string name="opensource_title">Лицензии сторонних библиотек</string>
+    <string name="used_content">Использованные изображения и звуки</string>
 </resources>
