@@ -49,14 +49,17 @@
         />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:id="@+id/tv_game_resalt"
         android:gravity="center"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_huge"
+        android:textSize="@dimen/text_big"
         android:text="@string/game_resalt"
-        app:layout_constraintTop_toBottomOf="@+id/civWinnerAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/tv_winner"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/rvGameResults"
 
         />
 
@@ -67,7 +70,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btCreateNewGame"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_game_resalt" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_winner"
+        android:layout_marginTop="@dimen/text_huge"/>
 
     <Button
         style="@style/btNextStyle"

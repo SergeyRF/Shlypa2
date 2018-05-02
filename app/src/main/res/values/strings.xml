@@ -43,6 +43,14 @@
     <string name="words_input_left">Words left %1d</string>
     <string name="who_inputs">%1s inputs words</string>
 
+    <!-- Rate -->
+    <string name="rate">Оценить</string>
+    <string name="rate_massage">Оцените приложение Шляпа</string>
+    <string name="rate_never">Никогда</string>
+    <string name="rate_last">Позже</string>
+    <string name="rate_ok">Оценить</string>
+
+
     <!-- Toasts -->
     <string name="press_more_to_finish_game">Press again to finish a game</string>
 

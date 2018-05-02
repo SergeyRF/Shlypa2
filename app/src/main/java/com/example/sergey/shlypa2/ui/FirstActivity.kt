@@ -3,23 +3,23 @@ package com.example.sergey.shlypa2.ui
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
 import com.example.sergey.shlypa2.ui.fragments.WelcomeFragment
 import com.example.sergey.shlypa2.ui.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
-import timber.log.Timber
 
 class FirstActivity : AppCompatActivity() {
 
-    lateinit var viewModel : WelcomeViewModel
+    lateinit var viewModel: WelcomeViewModel
 
-    var themeId : Int = 0
+    var themeId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setTheme(this)
@@ -31,7 +31,7 @@ class FirstActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
 
         viewModel.commandsCallBack.observe(this, Observer { command ->
-            when(command) {
+            when (command) {
                 WelcomeViewModel.Commands.NEW_GAME -> startNewGame()
                 WelcomeViewModel.Commands.RULES -> startRulesFragment()
                 WelcomeViewModel.Commands.SAVED_GAMES -> startGameLoadFragment()
@@ -39,17 +39,20 @@ class FirstActivity : AppCompatActivity() {
         })
     }
 
+
     override fun onStart() {
         super.onStart()
+        val r = AppRater()
+        r.app_launched(this)
 
 
 
-        if(Functions.getSelectedThemeId(this) != themeId) {
+        if (Functions.getSelectedThemeId(this) != themeId) {
             recreate()
             return
         }
 
-        if(supportFragmentManager.findFragmentById(R.id.containerFirst) == null) {
+        if (supportFragmentManager.findFragmentById(R.id.containerFirst) == null) {
             val fragment = WelcomeFragment()
             supportFragmentManager.beginTransaction()
                     .replace(R.id.containerFirst, fragment)
@@ -69,7 +72,7 @@ class FirstActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         item?.let {
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.item_blue -> Functions.selectTheme(R.style.AppThemeBlue, this)
                 R.id.item_cyan -> Functions.selectTheme(R.style.AppThemeCyan, this)
                 R.id.item_teal -> Functions.selectTheme(R.style.AppTheme, this)
@@ -101,4 +104,5 @@ class FirstActivity : AppCompatActivity() {
     private fun startRulesFragment() {
 
     }
+
 }
