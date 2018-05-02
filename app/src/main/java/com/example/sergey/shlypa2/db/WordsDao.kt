@@ -13,12 +13,15 @@ import com.example.sergey.shlypa2.game.WordType
 @Dao
 interface WordsDao {
 
-    @Query("SELECT * FROM ${Contract.WORD_TABLE}")
-    fun getAllWords() : List<Word>
+    @Query("SELECT * FROM ${Contract.WORD_TABLE} " +
+            "WHERE ${Contract.WORD_LANG} = :lang")
+    fun getAllWords(lang : String = "en") : List<Word>
 
-    @Query("SELECT * FROM ${Contract.WORD_TABLE} WHERE ${Contract.WORD_TYPE} = :type" +
+    @Query("SELECT * FROM ${Contract.WORD_TABLE} " +
+            "WHERE ${Contract.WORD_TYPE} = :type " +
+            "AND ${Contract.WORD_LANG} = :lang " +
             " ORDER BY RANDOM() LIMIT :wordsLimit")
-    fun getRandomWords(wordsLimit : Int, type : WordType = WordType.EASY) : List<Word>
+    fun getRandomWords(wordsLimit : Int, type : WordType = WordType.EASY, lang : String = "en") : List<Word>
 
     @Query("SELECT * FROM ${Contract.WORD_TABLE} WHERE ${Contract.WORD_ID} = :id")
     fun getWordById(id : Long) : Word

@@ -14,6 +14,8 @@ object Game {
 
     var state: GameState = GameState()
 
+    var teamNames : MutableList<String> = mutableListOf()
+
     fun maxTeamsCount(): Int = state.players.size / 2
 
 
@@ -54,8 +56,11 @@ object Game {
         // why not?
         state.teams.clear()
 
+        Collections.shuffle(teamNames)
+
         for (i in 0 until count) {
-            state.teams.add(Team("Team $i"))
+            val teamName = teamNames.getOrElse(i, {_ -> "Team $i"})
+            state.teams.add(Team(teamName))
         }
 
         var currentTeam = 0

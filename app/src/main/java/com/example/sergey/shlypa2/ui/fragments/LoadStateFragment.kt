@@ -16,6 +16,7 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.ui.RoundActivity
+import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
 import kotlinx.android.synthetic.main.fragment_load_state.*
 
@@ -51,7 +52,11 @@ class LoadStateFragment : Fragment() {
         rvStates.adapter = adapter
 
         viewModel.getSavedStates().observe(this, Observer {
-            adapter.setData(it)
+            if(it == null || it.isEmpty()) {
+                tvNoSavedGames.show()
+            }else {
+                adapter.setData(it)
+            }
         })
     }
 }

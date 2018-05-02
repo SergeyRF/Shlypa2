@@ -10,4 +10,13 @@
         android:layout_height="match_parent"
         />
 
+    <TextView
+        android:id="@+id/tvNoSavedGames"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_saved_games"
+        android:textSize="@dimen/text_medium"
+        android:gravity="center"
+        android:visibility="invisible"/>
+
 </FrameLayout>

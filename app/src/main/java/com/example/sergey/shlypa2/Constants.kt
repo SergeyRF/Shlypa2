@@ -13,5 +13,4 @@ object Constants {
 
     const val SOUND_ON_PREF = "enable_sound_key"
     const val THEME_PREF = "theme_pref_key"
-
 }

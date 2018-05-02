@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="teams">
+        <item>Викинги</item>
+        <item>Пираты</item>
+        <item>Малыши</item>
+        <item>Троглодиты</item>
+        <item>Упыри</item>
+        <item>Гномы</item>
+        <item>Хоббиты</item>
+        <item>Недовольные</item>
+        <item>Аристократы</item>
+        <item>Пегасики</item>
+        <item>Ботаны</item>
+        <item>Умники</item>
+        <item>Работяги</item>
+        <item>Котики убийцы</item>
+        <item>Озорные петушки</item>
+        <item>Борщехлёбы</item>
+        <item>Старики разбойники</item>
+        <item>Отчаяные караси</item>
+    </string-array>
+</resources>
