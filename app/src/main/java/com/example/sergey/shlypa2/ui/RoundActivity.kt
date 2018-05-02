@@ -61,6 +61,7 @@ class RoundActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if(backPressedOnce) {
             viewModel.saveGameState()
+            viewModel.portionClear()
             finish()
         } else {
             backPressedOnce = true

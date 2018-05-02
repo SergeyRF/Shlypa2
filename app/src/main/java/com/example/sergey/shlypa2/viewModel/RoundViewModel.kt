@@ -196,6 +196,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         dataProvider.insertState(Game.state)
     }
 
+    fun portionClear(){
+        Game.portionClear()
+    }
+
     override fun onCleared() {
         super.onCleared()
         soundManager?.release()

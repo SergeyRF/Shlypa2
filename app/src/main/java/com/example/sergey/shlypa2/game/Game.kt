@@ -144,6 +144,13 @@ object Game {
         state.createRound()
     }
 
+    fun portionClear(){
+        var newState:GameState = GameState()
+        newState.players.putAll(state.players)
+        newState.teams.addAll(state.teams)
+        state = newState
+    }
+
     fun clear() {
         state = GameState()
     }

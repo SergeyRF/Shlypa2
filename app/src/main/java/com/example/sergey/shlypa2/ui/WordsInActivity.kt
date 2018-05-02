@@ -185,5 +185,6 @@ class WordsInActivity : AppCompatActivity() {
     fun onStartGame() {
         Game.beginNextRound()
         startActivity(Intent(this, RoundActivity::class.java))
+        finish()
     }
 }
