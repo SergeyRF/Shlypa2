@@ -51,6 +51,7 @@ class GameSettingsActivity : AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.btNextSettings)
         button.setOnClickListener {
+            acceptSettings()
             startActivity(Intent(this, WordsInActivity::class.java))
         }
 
@@ -63,8 +64,12 @@ class GameSettingsActivity : AppCompatActivity() {
         onDificult(settingsVM.getDifficulty())
     }
 
-    override fun onStop() {
+    /*override fun onStop() {
         super.onStop()
+
+    }*/
+
+    private fun acceptSettings() {
         settingsVM.setAllowRandom(switchSettingAllowRandom.isChecked())
         settingsVM.setDifficulty(spinnerDificult.selectedItem as WordType)
         settingsVM.setMinusBal(ssPenalty.isChecked())

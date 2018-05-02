@@ -209,6 +209,12 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         override fun run() {
             timeLeft--
             if (timeLeft >= 0) {
+                if(timeLeft == 10) {
+                    soundManager?.play(R.raw.time_warn, 0.5f, 0.5f)
+                }
+                if(timeLeft == 1) {
+                    soundManager?.play(R.raw.time_over, 0.5f, 0.5f)
+                }
                 timerLiveData.value = timeLeft
             } else {
                 finishTurn()

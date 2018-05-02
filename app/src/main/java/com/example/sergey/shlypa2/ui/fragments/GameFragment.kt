@@ -11,8 +11,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import android.view.ViewTreeObserver
 import com.example.sergey.shlypa2.OnSwipeTouchListener
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
@@ -20,6 +19,7 @@ import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.fragment_game.*
 import timber.log.Timber
 
@@ -32,7 +32,7 @@ class GameFragment : Fragment() {
 
     lateinit var viewModel: RoundViewModel
 
-    private var cardYPath : Int? = null
+    private var cardYPath: Int? = null
 
     val onSwipeTouchListener = object : OnSwipeTouchListener() {
         override fun onActionUp() {
@@ -53,8 +53,16 @@ class GameFragment : Fragment() {
         }
     }
 
+    private val guideOnGlobal = object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            view?.viewTreeObserver?.removeOnGlobalLayoutListener(this)
+            animateGuide()
+        }
+    }
+
     //todo can cause problems better to keep it in a viewmodel
-    var timerStop:Boolean = false
+    var timerStop: Boolean = false
+    private var guideAnimated = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -74,7 +82,7 @@ class GameFragment : Fragment() {
             cv_word.translationY = cv_word.translationY - y
         }
 
-        viewModel.timerLiveData.observe(this, Observer { time -> time?.let { onTimer(it) }})
+        viewModel.timerLiveData.observe(this, Observer { time -> time?.let { onTimer(it) } })
 
         viewModel.answeredCountLiveData.observe(this, Observer { answered ->
             answered?.let { onAnsweredCount(it) }
@@ -85,10 +93,10 @@ class GameFragment : Fragment() {
 
         tv_PlayGame.hide()
         timerLinear.setOnClickListener {
-            if(timerStop) {
+            if (timerStop) {
                 resumeTimer()
-            } else{
-               pauseTimer()
+            } else {
+                pauseTimer()
             }
         }
 
@@ -99,11 +107,15 @@ class GameFragment : Fragment() {
         btTrue.setOnClickListener {
             viewModel.answerWord(true)
         }
+
+        if(!guideAnimated) {
+            view.viewTreeObserver.addOnGlobalLayoutListener (guideOnGlobal)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        if(!timerStop) {
+        if (!timerStop) {
             viewModel.startTimer()
         }
     }
@@ -150,14 +162,82 @@ class GameFragment : Fragment() {
         runWordAppearAnimation()
     }
 
-    fun onAnsweredCount(answered : Pair<Int, Int>) {
+    fun onAnsweredCount(answered: Pair<Int, Int>) {
         tvAnsweredCount.text = answered.first.toString()
+    }
+
+    private fun uselessHideAnimation() {
+        please(10) {
+            animate(tvGuideLabel) {
+                invisible()
+            }
+
+            animate(ivHand) {
+                invisible()
+            }
+        }.start()
+    }
+
+    private fun animateGuide() {
+        guideAnimated = true
+        please {
+            animate(ivHand) {
+                visible()
+            }
+
+            animate(tvGuideLabel) {
+                visible()
+            }
+        }.thenCouldYou(1500) {
+            animate(ivHand) {
+                topOfHisParent(marginDp = 32f)
+                invisible()
+            }
+
+            animate(tvGuideLabel) {
+                topOfHisParent()
+                invisible()
+            }
+        }.withEndAction {
+            tvGuideLabel.setText(R.string.skip)
+        }.thenCouldYou(10) {
+            animate(ivHand) {
+                visible()
+                originalPosition()
+            }
+
+            animate(tvGuideLabel) {
+                visible()
+                originalPosition()
+            }
+        }.thenCouldYou(1000) {
+            Timber.d("animate to invisible")
+            animate(ivHand) {
+                invisible()
+                bottomOfHisParent()
+            }
+
+            animate(tvGuideLabel) {
+                invisible()
+                bottomOfHisParent()
+            }
+        }.thenCouldYou {
+            animate(ivHand) {
+                originalPosition()
+            }
+
+            animate(tvGuideLabel) {
+                originalPosition()
+            }
+        }.withEndAction {
+            tvGuideLabel.setText(R.string.skip)
+        }.start()
     }
 
     fun runWordAppearAnimation() {
         val animator = ValueAnimator.ofFloat(0F, 1F)
 
-        if(cardYPath == null) {
+        if (cardYPath == null) {
             cardYPath = calculatePath()
         }
 
@@ -176,13 +256,13 @@ class GameFragment : Fragment() {
     }
 
     //Calculate path for a word card from top of a hat to center of the screen
-    private fun calculatePath() : Int? {
+    private fun calculatePath(): Int? {
         val hatTop = ivHat.top
         val cardTop = cv_word.top
 
-        if(hatTop == 0 || cardTop ==0) return null
+        if (hatTop == 0 || cardTop == 0) return null
 
-        val additionalMargin : Float = context?.let { Functions.dpToPx(it, 32F) } ?: 0F
+        val additionalMargin: Float = context?.let { Functions.dpToPx(it, 32F) } ?: 0F
 
         return Math.abs(hatTop - cardTop) + additionalMargin.toInt()
     }

@@ -3,23 +3,27 @@ package com.example.sergey.shlypa2.ui
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
+import android.view.inputmethod.EditorInfo
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.gone
+import com.example.sergey.shlypa2.utils.hide
+import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
-import kotlinx.android.synthetic.main.activity_words_in.*
-import android.view.inputmethod.EditorInfo
-import com.example.sergey.shlypa2.utils.*
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_words_in.*
+import timber.log.Timber
 
 
 class WordsInActivity : AppCompatActivity() {
@@ -30,18 +34,20 @@ class WordsInActivity : AppCompatActivity() {
 
     private var animated = false
 
-    private val avatarHideAnimation by lazy { please(300, interpolator = AccelerateInterpolator()) {
-        animate(civPlayerAvatar) toBe {
-            outOfScreen(Gravity.LEFT)
-        }
-        animate(tvWhoWrites) toBe {
-            outOfScreen(Gravity.LEFT)
-        }
+    private val avatarHideAnimation by lazy {
+        please(300, interpolator = AccelerateInterpolator()) {
+            animate(civPlayerAvatar) toBe {
+                outOfScreen(Gravity.LEFT)
+            }
+            animate(tvWhoWrites) toBe {
+                outOfScreen(Gravity.LEFT)
+            }
 
-        animate(rvWords) toBe {
-            originalPosition()
+            animate(rvWords) toBe {
+                originalPosition()
+            }
         }
-    } }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,29 +59,35 @@ class WordsInActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         wordsAdapter = RvAdapter()
-        rvWords.layoutManager=LinearLayoutManager(this)
+        rvWords.layoutManager = LinearLayoutManager(this)
         rvWords.adapter = wordsAdapter
 
         viewModel = ViewModelProviders.of(this).get(WordsViewModel::class.java)
 
-        viewModel.getWordsLiveData().observe(this, Observer { list->setWordRv(list) })
+        Timber.d("random allowed ${viewModel.randomAllowed()}")
+
+        viewModel.getWordsLiveData().observe(this, Observer { list -> setWordRv(list) })
 
         viewModel.getPlayerLiveData().observe(this, Observer { setPlayer(it) })
 
-        viewModel.needWord.observe(this, Observer { needWords -> if(needWords != null) onNeedWordsChanged(needWords) })
+        viewModel.getNeedWordsLive()
+                .observe(this, Observer { needWords ->
+                    needWords?.let { onNeedWordsChanged(it) }
+                })
 
         viewModel.inputFinishCallBack.observe(this, Observer { bool ->
-            if(bool != null && bool) onStartGame() })
+            if (bool != null && bool) onStartGame()
+        })
 
-        ibAddWord.setOnClickListener{
-                if (etWord.text.toString().isNotEmpty()) {
-                    viewModel.addWord(etWord.text.toString())
-                    etWord.text.clear()
-                }
+        ibAddWord.setOnClickListener {
+            if (etWord.text.toString().isNotEmpty()) {
+                viewModel.addWord(etWord.text.toString())
+                etWord.text.clear()
+            }
         }
 
         etWord.setOnEditorActionListener { v, actionId, event ->
-            if (actionId== EditorInfo.IME_ACTION_NEXT&&etWord.text.isNotEmpty()) {
+            if (actionId == EditorInfo.IME_ACTION_NEXT && etWord.text.isNotEmpty()) {
                 // обработка нажатия Enter
                 viewModel.addWord(etWord.text.toString())
                 etWord.text.clear()
@@ -83,26 +95,26 @@ class WordsInActivity : AppCompatActivity() {
             } else true
         }
 
-        btNextWords.setOnClickListener{
-            if (viewModel.needWord() && viewModel.randomAllowed()){
+        btNextWords.setOnClickListener {
+            if (viewModel.needWord() && viewModel.randomAllowed()) {
                 viewModel.fillWithRandomWords()
-            } else{
+            } else {
                 viewModel.nextPlayer()
                 etWord.text.clear()
             }
         }
 
-        wordsAdapter.listener = {word:Any->
+        wordsAdapter.listener = { word: Any ->
             // dialog(word as Word)
             viewModel.reNameWord(word as Word)
         }
 
-        wordsAdapter.listenerTwo = {word:Any->
+        wordsAdapter.listenerTwo = { word: Any ->
             viewModel.deleteWord(word as Word)
             wordsAdapter.notifyDataSetChanged()
         }
 
-        wordsAdapter.listenerThree = {word:Any->
+        wordsAdapter.listenerThree = { word: Any ->
             viewModel.newRandomWord(word as Word)
             wordsAdapter.notifyDataSetChanged()
         }
@@ -111,9 +123,9 @@ class WordsInActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        item?.let{
-            when(item.itemId) {
-                android.R.id.home ->super.onBackPressed()
+        item?.let {
+            when (item.itemId) {
+                android.R.id.home -> super.onBackPressed()
             }
         }
 
@@ -122,23 +134,25 @@ class WordsInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        please {
-            animate(rvWords) {
-                outOfScreen(Gravity.RIGHT)
-            }
-        }.now()
+        if(!animated) {
+            please(10) {
+                animate(rvWords) {
+                    outOfScreen(Gravity.RIGHT)
+                }
+            }.now()
+        }
     }
 
 
-    fun setWordRv(words :List<Word>?){
+    fun setWordRv(words: List<Word>?) {
 
-        if(words == null || words.isEmpty()) {
-            if(animated) {
+        if (words == null || words.isEmpty()) {
+            if (animated) {
                 avatarHideAnimation.reset()
                 animated = false
             }
         } else {
-            if(!animated) {
+            if (!animated) {
                 avatarHideAnimation.start()
                 animated = true
             }
@@ -147,9 +161,9 @@ class WordsInActivity : AppCompatActivity() {
         wordsAdapter.setData(words)
     }
 
-    fun setPlayer(p: Player?){
+    fun setPlayer(p: Player?) {
         p?.let {
-//            title = p.name
+            //            title = p.name
             Picasso.get()
                     .load(Functions.imageNameToUrl("player_avatars/large/${p.avatar}"))
                     .into(civPlayerAvatar)
@@ -158,18 +172,18 @@ class WordsInActivity : AppCompatActivity() {
         }
     }
 
-    fun onNeedWordsChanged(needWords : Boolean){
-        if (needWords){
+    fun onNeedWordsChanged(needWords: Boolean) {
+        if (needWords) {
             onChangeEt()
 
-            if (viewModel.randomAllowed()){
+            if (viewModel.randomAllowed()) {
                 btNextWords.text = getString(R.string.add_random)
-            } else{
+            } else {
                 btNextWords.hide()
             }
             ibAddWord.show()
             etWord.show()
-        } else{
+        } else {
             btNextWords.show()
             ibAddWord.gone()
             etWord.gone()
