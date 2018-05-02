@@ -88,19 +88,26 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
     val tvName: TextView = view.findViewById(R.id.wordInject)
     val etName: EditText = view.findViewById(R.id.etRename)
     val avatarImage: CircleImageView = view.findViewById(R.id.civPlayerAvatar)
+    val delPlayer: ImageButton = view.findViewById(R.id.ib_delPlayer)
 
     fun bind(player: Player) {
         tvName.show()
         etName.hide()
+        delPlayer.hide()
         tvName.text = player.name
 
         itemView.setOnClickListener {
             tvName.hide()
             etName.show()
+            delPlayer.show()
             etName.setText("")
             etName.append(player.name)
             etName.requestFocus()
             Functions.showKeyboard(view.context, etName)
+        }
+
+        delPlayer.setOnClickListener {
+            listenerTwo?.invoke(player)
         }
 
         etName.setOnFocusChangeListener { view, hasFocus ->
@@ -115,7 +122,7 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
 
                 tvName.show()
                 etName.hide()
-
+                delPlayer.hide()
             }
         }
 

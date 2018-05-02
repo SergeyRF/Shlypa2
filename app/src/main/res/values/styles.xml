@@ -46,10 +46,16 @@
     </style>
 
     <!--start-->
-    <style name="SplashTheme" parent="AppTheme">
+    <style name="AppTheme.SplashTheme" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
+
+        <!--цвет заставки-->
+        <item name="colorPrimary">@color/Blue</item>
+        <item name="colorPrimaryDark">@color/DarkBlue</item>
+        <item name="colorAccent">@color/Blue</item>
+
     </style>
 
     <!--Hyase -->

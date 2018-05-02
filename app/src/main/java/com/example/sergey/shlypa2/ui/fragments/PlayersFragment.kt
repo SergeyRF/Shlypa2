@@ -64,6 +64,12 @@ class PlayersFragment : Fragment() {
             viewModel.reNamePlayer(player as Player)
         }
 
+        adapter.listenerTwo = { player:Any->
+
+            viewModel.removePlayer(player as Player)
+
+        }
+
         imageButton.setOnClickListener {
             addPlayer()
         }
