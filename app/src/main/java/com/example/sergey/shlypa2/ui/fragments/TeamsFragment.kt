@@ -6,7 +6,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,6 +75,7 @@ class TeamsFragment : Fragment() {
 
     private fun dialog(team: Team) {
         val dialog = Dialog(context)
+
         dialog.setContentView(R.layout.dialog_edit_text)
         val etTeemD = dialog.findViewById<EditText>(R.id.etDialog)
         val btYesD = dialog.findViewById<Button>(R.id.btYesDialog)
@@ -86,13 +86,13 @@ class TeamsFragment : Fragment() {
                 team.name = etTeemD.text.toString()
                 adapterTeam.notifyDataSetChanged()
             }
-                dialog.cancel()
+            dialog.cancel()
 
         }
         btNoD.setOnClickListener { dialog.cancel() }
 
         etTeemD.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT&& etTeemD.text.isNotEmpty()){
+            if (actionId == EditorInfo.IME_ACTION_NEXT && etTeemD.text.isNotEmpty()) {
                 team.name = etTeemD.text.toString()
                 adapterTeam.notifyDataSetChanged()
                 dialog.cancel()

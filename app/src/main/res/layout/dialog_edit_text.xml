@@ -2,58 +2,55 @@
 
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/tvReNameIt"
-    android:textSize="@dimen/text_medium"
-    android:text="@string/team_rename"
-    android:layout_marginTop="@dimen/big_margin"
-    android:layout_marginLeft="@dimen/big_margin"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    />
+    <TextView
+        android:id="@+id/tvReNameIt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/big_margin"
+        android:layout_marginTop="@dimen/big_margin"
+        android:text="@string/team_rename"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:id="@+id/etDialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/etDialog"
+        android:layout_marginLeft="@dimen/big_margin"
+        android:layout_marginRight="@dimen/small_margin"
         android:imeOptions="actionNext|flagNoExtractUi"
         android:maxLines="1"
         android:singleLine="true"
-        android:layout_marginLeft="@dimen/big_margin"
-        android:layout_marginRight="@dimen/small_margin"
+        app:layout_constraintBottom_toTopOf="@+id/btYesDialog"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvReNameIt"
-        app:layout_constraintBottom_toTopOf="@+id/btYesDialog"
-
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tvReNameIt" />
 
     <Button
+        android:id="@+id/btYesDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:background="@color/Transparent"
         android:text="@string/ok"
-        android:textColor="@color/primary_color"
-        android:id="@+id/btYesDialog"/>
+        android:textColor="@color/Green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
+        android:id="@+id/btNoDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btNoDialog"
-        android:text="@string/cancel"
-        android:textColor="@color/primary_color"
-        android:background="@color/Transparent"
         android:layout_marginRight="@dimen/small_margin"
-       app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/btYesDialog"
-        />
+        android:background="@color/Transparent"
+        android:text="@string/cancel"
+        android:textColor="@color/Red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btYesDialog" />
 
 </android.support.constraint.ConstraintLayout>
