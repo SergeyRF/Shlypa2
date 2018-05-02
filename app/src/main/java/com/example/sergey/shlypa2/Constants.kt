@@ -18,9 +18,9 @@ object Constants {
     const val DAYS_UNTIL_REMIND = 3
     const val LAUNCHES_UNTIL_PROMPT = 5
 
-    val DONT_SHOW_RATE_DIALOG = "dont_show_rate"
-    val LAST_RATE_SHOW_TIME = "last_show_time"
-    val DATE_FIRST_LAUNCH = "date_first_launch"
-    val LAUNCH_COUNT = "launch_times_count"
+    const val DONT_SHOW_RATE_DIALOG = "dont_show_rate"
+    const val LAST_RATE_SHOW_TIME = "last_show_time"
+    const val DATE_FIRST_LAUNCH = "date_first_launch"
+    const val LAUNCH_COUNT = "launch_times_count"
 
 }
