@@ -2,7 +2,6 @@ package com.example.sergey.shlypa2.ui.fragments
 
 
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -22,9 +21,11 @@ class WelcomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         viewModel = ViewModelProviders.of(activity!!).get(WelcomeViewModel::class.java)
         return inflater.inflate(R.layout.fragment_welcome, container, false)
+
     }
 
     override fun onStart() {
@@ -40,5 +41,7 @@ class WelcomeFragment : Fragment() {
         btRules.setOnClickListener {
             viewModel.rules()
         }
+
     }
+
 }

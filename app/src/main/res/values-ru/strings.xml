@@ -2,7 +2,7 @@
 <resources>
 
 
-    <string name="name" >Имя игрока</string>
+    <string name="name">Имя игрока</string>
     <string name="add_player">добавить</string>
 
 
@@ -109,4 +109,14 @@
     <!-- fatal error activity -->
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">Произошла неожиданная ошибка.\nВиновные будут наказаны.</string>
     <string name="customactivityoncrash_error_activity_restart_app">Перезапустить</string>
+
+    <!-- hint-->
+    <string name="hint_inject_name">Напиши имя игрока</string>
+    <string name="hint_inject_name_button">Нажми на эту кнопку чтобы добавить его в игру</string>
+    <string name="hint_random_player">Случайно</string>
+    <string name="hint_inject_random_player">При нажатии на кнопку в игру добавится случайный игрок</string>
+    <string name="hint_team_shaffle">Генератор комманд</string>
+    <string name="hint_team_shaffle_button">Ты можешь добавить комманду, удалить комманду, перемешать игроков вкоммандах.
+        (карандаш чтобы переименовать команду) </string>
+
 </resources>

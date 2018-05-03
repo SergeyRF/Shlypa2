@@ -15,6 +15,7 @@ import com.example.sergey.shlypa2.ui.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
 
+
 class FirstActivity : AppCompatActivity() {
 
     lateinit var viewModel: WelcomeViewModel
@@ -37,6 +38,8 @@ class FirstActivity : AppCompatActivity() {
                 WelcomeViewModel.Commands.SAVED_GAMES -> startGameLoadFragment()
             }
         })
+
+
     }
 
 
@@ -58,6 +61,7 @@ class FirstActivity : AppCompatActivity() {
                     .replace(R.id.containerFirst, fragment)
                     .commit()
         }
+
     }
 
     override fun setTheme(resid: Int) {

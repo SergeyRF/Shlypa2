@@ -5,11 +5,11 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
+import android.support.v7.preference.PreferenceManager
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.example.sergey.shlypa2.R
@@ -20,6 +20,9 @@ import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.squareup.picasso.Picasso
+import com.takusemba.spotlight.OnTargetStateChangedListener
+import com.takusemba.spotlight.SimpleTarget
+import com.takusemba.spotlight.Spotlight
 import kotlinx.android.synthetic.main.fragment_players.*
 import timber.log.Timber
 
@@ -32,10 +35,15 @@ class PlayersFragment : Fragment() {
     lateinit var adapter: RvAdapter
     lateinit var viewModel: PlayersViewModel
 
+    companion object {
+        const val SHOW_SPOTLIGHT = "spotlight_show"
+    }
+
     private var avatar: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
@@ -64,7 +72,7 @@ class PlayersFragment : Fragment() {
             viewModel.reNamePlayer(player as Player)
         }
 
-        adapter.listenerTwo = { player:Any->
+        adapter.listenerTwo = { player: Any ->
 
             viewModel.removePlayer(player as Player)
 
@@ -104,9 +112,10 @@ class PlayersFragment : Fragment() {
             dialog.onSelect = dialogOnSelect
             dialog.show()
         }
+
     }
 
-    val dialogOnSelect : (String) -> Unit = {fileName ->
+    val dialogOnSelect: (String) -> Unit = { fileName ->
         Timber.d("avatar select $fileName")
         showAvatar(fileName)
     }
@@ -130,10 +139,29 @@ class PlayersFragment : Fragment() {
         }
     }
 
+
     override fun onStart() {
         super.onStart()
         viewModel.setTitleId(R.string.player_actyvity)
+        globalListentrForSpotl()
     }
+
+    private fun globalListentrForSpotl() {
+        val preference = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+        if (preference.getBoolean(SHOW_SPOTLIGHT, true)) {
+
+            view!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    Timber.d("On global changed")
+                    view!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    spotl()
+                    editor.putBoolean(SHOW_SPOTLIGHT, false).apply()
+                }
+            })
+        }
+    }
+
 
     private fun onPlayersChanged(players: List<Player>?) {
         adapter.setData(players)
@@ -148,4 +176,50 @@ class PlayersFragment : Fragment() {
                 .load(fileLink)
                 .into(civPlayerAvatar)
     }
+
+    fun spotl() {
+
+        val custom = SimpleTarget.Builder(activity!!)
+                .setPoint(btAddRandomPlayer)
+                .setRadius(80f)
+                .setTitle(getString(R.string.hint_random_player))
+                .setDescription(getString(R.string.hint_inject_random_player))
+                .setOnSpotlightStartedListener(object : OnTargetStateChangedListener<SimpleTarget> {
+
+                    override fun onStarted(target: SimpleTarget?) {
+                    }
+
+                    override fun onEnded(target: SimpleTarget?) {
+                    }
+                })
+                .build()
+        val injectName = SimpleTarget.Builder(activity!!)
+                .setRadius(80f)
+                .setPoint(imageButton)
+                .setTitle(getString(R.string.hint_inject_name))
+                .setDescription(getString(R.string.hint_inject_name_button))
+                .build()
+
+        Spotlight.with(activity!!)
+                .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
+                .setDuration(100L)
+                .setTargets(injectName, custom)
+                .setClosedOnTouchedOutside(true)
+                .setAnimation(DecelerateInterpolator(2f))
+
+                .start()
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.hint_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        spotl()
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }

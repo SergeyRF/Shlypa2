@@ -113,4 +113,13 @@
     <!-- fatal error activity -->
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">An unexpected error occurred.\nSorry for that.</string>
     <string name="customactivityoncrash_error_activity_restart_app">Restart app</string>
+
+    <!-- hint-->
+    <string name="hint_inject_name">Write Name player</string>
+    <string name="hint_inject_name_button">Click on this button</string>
+    <string name="hint_random_player">Random</string>
+    <string name="hint_inject_random_player">Click on this button and add random player</string>
+    <string name="hint_team_shaffle">Generation Team</string>
+    <string name="hint_team_shaffle_button">You can create team, delete team, shuffle player in team. (pencil for rename team) </string>
+
 </resources>

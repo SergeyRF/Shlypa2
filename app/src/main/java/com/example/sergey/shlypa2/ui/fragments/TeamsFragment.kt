@@ -6,9 +6,10 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v4.content.ContextCompat
+import android.support.v7.preference.PreferenceManager
+import android.view.*
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
@@ -17,6 +18,8 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
+import com.takusemba.spotlight.SimpleTarget
+import com.takusemba.spotlight.Spotlight
 import kotlinx.android.synthetic.main.fragment_teams.*
 
 
@@ -28,8 +31,13 @@ class TeamsFragment : Fragment() {
     lateinit var viewModel: PlayersViewModel
     lateinit var adapterTeam: RvAdapter
 
+    companion object {
+        const val PLAYING_HINT = "playing_hint"
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         viewModel = ViewModelProviders.of(activity!!).get(PlayersViewModel::class.java)
 
@@ -71,6 +79,8 @@ class TeamsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         viewModel.setTitleId(R.string.teem_actyvity)
+        //show hint if first game
+        globalListentrForSpotl()
     }
 
     private fun dialog(team: Team) {
@@ -105,6 +115,53 @@ class TeamsFragment : Fragment() {
 
     private fun setTeemRv(teem: List<Team>?) {
         adapterTeam.setData(teem)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.hint_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        spotl()
+        return super.onOptionsItemSelected(item)
+    }
+
+    fun spotl() {
+
+        val shaffleTeam = SimpleTarget.Builder(activity!!)
+                .setPoint(floatingMenu.menuIconView)
+                .setRadius(80f)
+                .setTitle(getString(R.string.hint_team_shaffle))
+                .setDescription(getString(R.string.hint_team_shaffle_button))
+
+                .build()
+
+
+        Spotlight.with(activity!!)
+                .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
+                .setDuration(100L)
+                .setTargets(shaffleTeam)
+                .setClosedOnTouchedOutside(true)
+                .setAnimation(DecelerateInterpolator(2f))
+
+                .start()
+
+    }
+
+    private fun globalListentrForSpotl() {
+        val preference = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+        if (preference.getBoolean(TeamsFragment.PLAYING_HINT, true)) {
+
+            view!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    view!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    spotl()
+                    editor.putBoolean(TeamsFragment.PLAYING_HINT, false).apply()
+                }
+            })
+        }
     }
 
 }
