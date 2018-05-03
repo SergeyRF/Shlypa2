@@ -11,6 +11,8 @@ import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.SoundManager
+import com.example.sergey.shlypa2.utils.gone
+import com.example.sergey.shlypa2.utils.show
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_game_result.*
 import java.util.*
@@ -34,11 +36,12 @@ class GameResultActivity : AppCompatActivity() {
             animate(tv_game_resalt){
                 belowOf(tv_winner,null)
                 visible()
+                tv_game_resalt.show()
             }
             animate(rvGameResults){
                 belowOf(tv_game_resalt)
                 aboveOf(btCreateNewGame)
-
+                rvGameResults.show()
               //  centerBetweenViews(tv_game_resalt,btCreateNewGame,false,true)
 
                 visible()
@@ -74,6 +77,8 @@ class GameResultActivity : AppCompatActivity() {
             startActivity(Intent(this, FirstActivity::class.java))
             finish()
         }
+        rvGameResults.gone()
+        tv_game_resalt.gone()
 
         civWinnerAvatar.setOnClickListener {
             animations = if (animations) {
@@ -89,9 +94,11 @@ class GameResultActivity : AppCompatActivity() {
         please(3) {
             animate(tv_game_resalt) {
                 invisible()
+
             }
             animate(rvGameResults) {
                 invisible()
+
             }
         }.start()
     }

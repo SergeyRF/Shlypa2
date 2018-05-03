@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.sergey.shlypa2.ui.fragments.TurnResultFragment">
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvWordsTurnResult"
         android:layout_width="match_parent"
