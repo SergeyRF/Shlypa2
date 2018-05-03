@@ -101,6 +101,7 @@ class WordsInActivity : AppCompatActivity() {
             } else {
                 viewModel.nextPlayer()
                 etWord.text.clear()
+                etWord.requestFocus()
             }
         }
 
