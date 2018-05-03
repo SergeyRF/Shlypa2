@@ -199,7 +199,7 @@ class GameFragment : Fragment() {
                 invisible()
             }
         }.withEndAction {
-            tvGuideLabel.setText(R.string.skip)
+            tvGuideLabel?.setText(R.string.skip)
         }.thenCouldYou(10) {
             animate(ivHand) {
                 visible()
@@ -230,7 +230,7 @@ class GameFragment : Fragment() {
                 originalPosition()
             }
         }.withEndAction {
-            tvGuideLabel.setText(R.string.skip)
+            tvGuideLabel?.setText(R.string.skip)
         }.start()
     }
 
