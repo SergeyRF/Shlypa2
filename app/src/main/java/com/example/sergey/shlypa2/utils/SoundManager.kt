@@ -22,16 +22,16 @@ class SoundManager(val context: Context,
 
     private val soundsMap: MutableMap<Int, Int> = mutableMapOf()
 
-    fun play(resource : Int) {
+    fun play(resource : Int, lVol : Float = leftVolume, rVol : Float = rightVolume) {
         val soundId = soundsMap[resource]
 
         if(soundId == null) {
             soundsMap[resource] = soundPool.load(context, resource, 1)
             soundPool.setOnLoadCompleteListener{pool, sampleId, status ->
-                if(status == 0) pool.play(sampleId, leftVolume, rightVolume, 1, 0, 1F)
+                if(status == 0) pool.play(sampleId, lVol, rVol, 1, 0, 1F)
             }
         } else {
-            soundPool.play(soundId, leftVolume, rightVolume, 1, 0, 1f )
+            soundPool.play(soundId, lVol, rVol, 1, 0, 1f )
         }
     }
 

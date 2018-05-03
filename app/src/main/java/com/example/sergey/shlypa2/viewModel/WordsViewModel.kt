@@ -22,7 +22,7 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
 
     val inputFinishCallBack = MutableLiveData<Boolean>()
 
-    val needWord = MutableLiveData<Boolean>()
+    private val needWord = MutableLiveData<Boolean>()
 
     private var pos: Int = 0
     private var words: MutableList<Word> = mutableListOf()
@@ -48,6 +48,11 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
             pos = 0
             inputFinishCallBack.value = true
         }
+    }
+
+    fun getNeedWordsLive() : LiveData<Boolean> {
+        needWord.value = needWord()
+        return needWord
     }
 
     fun needWord(): Boolean {

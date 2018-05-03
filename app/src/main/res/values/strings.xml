@@ -17,7 +17,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="minus_bal">Penalty for skipped words</string>
-    <string name="how_minus_bal">Penalty for word</string>
+    <string name="how_minus_bal">Penalty points</string>
     <string name="player_game">Explains player:</string>
     <string name="game_winner">The winner is</string>
     <string name="game_resalt">Game results</string>
@@ -113,7 +113,8 @@
     <!-- fatal error activity -->
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">An unexpected error occurred.\nSorry for that.</string>
     <string name="customactivityoncrash_error_activity_restart_app">Restart app</string>
-
+    <string name="skip">Skip</string>
+    <string name="answer">Answer</string>
     <!-- hint-->
     <string name="hint_inject_name">Write Name player</string>
     <string name="hint_inject_name_button">Click on this button</string>

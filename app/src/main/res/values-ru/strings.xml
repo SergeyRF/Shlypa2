@@ -71,7 +71,7 @@
     <string name="words_input_left">Слов осталось %1d</string>
     <string name="who_inputs">%1s вводит слова</string>
 
-    <!-- Toasts -->
+    <!-- Toasts and messages -->
     <string name="press_more_to_finish_game">Нажмите еще раз чтобы выйти</string>
 
     <!-- Settings -->
@@ -94,6 +94,10 @@
     <string name="very_hard">Очень сложно</string>
     <string name="user">Пользователь</string>
     <string name="settings">Настройки</string>
+
+    <!-- help -->
+    <string name="skip">Пропустить</string>
+    <string name="answer">Ответить</string>
 
     <!-- Preferences -->
     <string name="enable_sound_title">Включить звуки</string>

@@ -53,7 +53,7 @@ class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return if (data == null) 0 else data!!.size
+        return data?.size ?: 0
     }
 
     override fun getItemViewType(position: Int): Int {
