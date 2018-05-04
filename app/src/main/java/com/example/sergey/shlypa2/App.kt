@@ -1,14 +1,13 @@
 package com.example.sergey.shlypa2
 
 import android.app.Application
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import cat.ereza.customactivityoncrash.config.CaocConfig
-import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
-import com.example.sergey.shlypa2.utils.TimberTree
+import com.example.sergey.shlypa2.utils.TimberDebugTree
+import com.example.sergey.shlypa2.utils.TimberReleaseTree
 import timber.log.Timber
 
 /**
@@ -19,7 +18,11 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Timber.plant(TimberTree())
+        if(BuildConfig.DEBUG) {
+            Timber.plant(TimberDebugTree())
+        } else {
+            Timber.plant(TimberReleaseTree())
+        }
 
         val namesArray = resources.getStringArray(R.array.teams)
         Game.teamNames = namesArray.toMutableList()

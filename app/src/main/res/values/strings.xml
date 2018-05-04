@@ -44,11 +44,11 @@
     <string name="who_inputs">%1s inputs words</string>
 
     <!-- Rate -->
-    <string name="rate">Оценить</string>
-    <string name="rate_massage">Оцените приложение Шляпа</string>
-    <string name="rate_never">Никогда</string>
-    <string name="rate_last">Позже</string>
-    <string name="rate_ok">Оценить</string>
+    <string name="rate">Rate us</string>
+    <string name="rate_massage">Rate this game if you like it</string>
+    <string name="rate_never">Never</string>
+    <string name="rate_last">Later</string>
+    <string name="rate_ok">Rate</string>
 
 
     <!-- Toasts -->
@@ -115,12 +115,15 @@
     <string name="customactivityoncrash_error_activity_restart_app">Restart app</string>
     <string name="skip">Skip</string>
     <string name="answer">Answer</string>
+
     <!-- hint-->
-    <string name="hint_inject_name">Write Name player</string>
-    <string name="hint_inject_name_button">Click on this button</string>
+    <string name="hint_inject_name">Write player name</string>
+    <string name="hint_inject_name_button">Click a button to add her to the game. You need at least 4 players for the game</string>
     <string name="hint_random_player">Random</string>
-    <string name="hint_inject_random_player">Click on this button and add random player</string>
-    <string name="hint_team_shaffle">Generation Team</string>
-    <string name="hint_team_shaffle_button">You can create team, delete team, shuffle player in team. (pencil for rename team) </string>
+    <string name="hint_inject_random_player">Click this button and add a player with a random name</string>
+    <string name="hint_team_shaffle">Create teams</string>
+    <string name="hint_team_shaffle_button">Click a button to add, remove or shuffle teams </string>
+    <string name="click_to_rename">Click to rename a team</string>
+    <string name="rename">Rename</string>
 
 </resources>

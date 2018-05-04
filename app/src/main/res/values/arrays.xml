@@ -14,14 +14,14 @@
         <item>Icons</item>
     </string-array>
 
-    <string-array name="content_license_summary">
+    <string-array name="content_license_summary" translatable="false">
         <item>NoiseForFun.com - Original Designed Sound Effects for Free Download</item>
         <item>ZapSplat.com - Cool sound library with lot of cool stuff</item>
         <item>Avatar icons designed by Freepic from Flaticon</item>
         <item>Icons designed by Flat-icons from Flaticon</item>
     </string-array>
 
-    <string-array name="content_license_link">
+    <string-array name="content_license_link" translatable="false">
         <item>http://www.noiseforfun.com/</item>
         <item>https://www.zapsplat.com/</item>
         <item>https://www.flaticon.com/authors/freepik</item>

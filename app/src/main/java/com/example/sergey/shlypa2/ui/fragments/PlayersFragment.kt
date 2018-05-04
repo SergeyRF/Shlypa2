@@ -202,11 +202,10 @@ class PlayersFragment : Fragment() {
 
         Spotlight.with(activity!!)
                 .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
-                .setDuration(100L)
+                .setDuration(300L)
                 .setTargets(injectName, custom)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
-
                 .start()
 
     }

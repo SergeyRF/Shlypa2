@@ -1,10 +1,10 @@
 package com.example.sergey.shlypa2.ui
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.Gravity
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
@@ -15,7 +15,6 @@ import com.example.sergey.shlypa2.utils.gone
 import com.example.sergey.shlypa2.utils.show
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_game_result.*
-import java.util.*
 
 class GameResultActivity : AppCompatActivity() {
 
@@ -23,26 +22,26 @@ class GameResultActivity : AppCompatActivity() {
 
     val animation by lazy {
         please {
-            animate(tv_winner){
+            animate(tv_winner) {
                 leftOfHisParent(10f)
                 belowOf(tvGameWinner)
 
             }
-            animate(civWinnerAvatar){
-                belowOf(tvGameWinner,4f)
+            animate(civWinnerAvatar) {
+                belowOf(tvGameWinner, 4f)
                 rightOfHisParent(10f)
                 scale(0.3f, 0.3f)
             }
-            animate(tv_game_resalt){
-                belowOf(tv_winner,null)
+            animate(tv_game_resalt) {
+                belowOf(tv_winner, null)
                 visible()
                 tv_game_resalt.show()
             }
-            animate(rvGameResults){
+            animate(rvGameResults) {
                 belowOf(tv_game_resalt)
                 aboveOf(btCreateNewGame)
                 rvGameResults.show()
-              //  centerBetweenViews(tv_game_resalt,btCreateNewGame,false,true)
+                //  centerBetweenViews(tv_game_resalt,btCreateNewGame,false,true)
 
                 visible()
             }
@@ -51,7 +50,7 @@ class GameResultActivity : AppCompatActivity() {
 
     }
 
-    var animations = false
+    var animated = false
     val resultsAdapter = RvAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,11 +76,12 @@ class GameResultActivity : AppCompatActivity() {
             startActivity(Intent(this, FirstActivity::class.java))
             finish()
         }
+
         rvGameResults.gone()
         tv_game_resalt.gone()
 
         civWinnerAvatar.setOnClickListener {
-            animations = if (animations) {
+            animated = if (animated) {
                 animation.reset()
                 false
             } else {
@@ -89,8 +89,8 @@ class GameResultActivity : AppCompatActivity() {
                 true
             }
             resultsAdapter.notifyDataSetChanged()
-
         }
+
         please(3) {
             animate(tv_game_resalt) {
                 invisible()
@@ -101,6 +101,13 @@ class GameResultActivity : AppCompatActivity() {
 
             }
         }.start()
+
+        Handler().postDelayed({
+            if (!animated) {
+                animated = true
+                animation.start()
+            }
+        }, 3000)
     }
 }
 

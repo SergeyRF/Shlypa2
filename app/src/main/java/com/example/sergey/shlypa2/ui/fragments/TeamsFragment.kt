@@ -4,6 +4,7 @@ package com.example.sergey.shlypa2.ui.fragments
 import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.PointF
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -16,6 +17,7 @@ import android.widget.EditText
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Team
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.takusemba.spotlight.SimpleTarget
@@ -137,14 +139,23 @@ class TeamsFragment : Fragment() {
 
                 .build()
 
+        //Position for rename icon
+        val x = Functions.getScreenWidth(activity!!) - 40
+        val y = 40F + Functions.dpToPx(context!!, 72F)
+        val renameGuide = SimpleTarget.Builder(activity!!)
+                .setPoint(x.toFloat(), y)
+                .setRadius(40f)
+                .setTitle(getString(R.string.rename))
+                .setDescription(getString(R.string.click_to_rename))
+                .build()
+
 
         Spotlight.with(activity!!)
                 .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
                 .setDuration(100L)
-                .setTargets(shaffleTeam)
+                .setTargets(shaffleTeam, renameGuide)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
-
                 .start()
 
     }
