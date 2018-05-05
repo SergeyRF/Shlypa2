@@ -232,7 +232,7 @@ class SavedStateHolder(val view: View) : BaseHolder(view) {
 
     fun bind(state: GameState) {
         val dateText = Functions.timeToLocalDateWithTime(state.savedTime, view.context)
-        tvDate.text = "$dateText id ${state.gameId}"
+        tvDate.text = dateText
         val builder = StringBuilder()
         state.players.forEach {
             builder.append("${it.value.name} \n")

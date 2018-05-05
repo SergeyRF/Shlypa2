@@ -45,7 +45,16 @@ class DataProvider(val context: Context) {
     }
 
     fun getSavedStates(): List<GameState> {
-        val savedList = db.stateDao().getAllStates()
+        var savedList = db.stateDao().getAllStates()
+
+        //keep only 5 states
+        if(savedList.size > 5) {
+            val sortesList = savedList.sortedByDescending { it.time }
+            sortesList.subList(4, sortesList.size - 1)
+                    .forEach { db.stateDao().deleteState(it.gameId) }
+
+            savedList = db.stateDao().getAllStates()
+        }
 
         return savedList.map { gson.fromJson(it.state, GameState::class.java) }
     }

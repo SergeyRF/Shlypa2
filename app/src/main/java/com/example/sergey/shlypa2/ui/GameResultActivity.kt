@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2.ui
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.example.sergey.shlypa2.R
@@ -23,13 +24,13 @@ class GameResultActivity : AppCompatActivity() {
     val animation by lazy {
         please {
             animate(tv_winner) {
-                leftOfHisParent(null)
+                leftOfHisParent(10f)
                 belowOf(tvGameWinner)
                 //   originalPosition()
 
             }
-            animate(civWinnerAvatar) {
-                belowOf(tvGameWinner, 4f)
+            animate(civWinnerAvatar){
+                belowOf(tvGameWinner,4f)
                 rightOfHisParent(10f)
                 scale(0.3f, 0.3f)
                 //originalPosition()
@@ -52,7 +53,7 @@ class GameResultActivity : AppCompatActivity() {
 
     }
 
-    var animations = false
+    var animated = false
     val resultsAdapter = RvAdapter()
     lateinit var viewModel: RoundViewModel
 
@@ -79,11 +80,12 @@ class GameResultActivity : AppCompatActivity() {
             startActivity(Intent(this, FirstActivity::class.java))
             finish()
         }
+
         rvGameResults.gone()
         tv_game_resalt.gone()
 
         civWinnerAvatar.setOnClickListener {
-            animations = if (animations) {
+            animated = if (animated) {
                 animation.reset()
                 false
             } else {
@@ -91,8 +93,8 @@ class GameResultActivity : AppCompatActivity() {
                 true
             }
             resultsAdapter.notifyDataSetChanged()
-
         }
+
         please(3) {
 
             /*animate(tv_winner) {
@@ -116,6 +118,13 @@ class GameResultActivity : AppCompatActivity() {
 
             }
         }.start()
+
+        Handler().postDelayed({
+            if (!animated) {
+                animated = true
+                animation.start()
+            }
+        }, 3000)
     }
 }
 

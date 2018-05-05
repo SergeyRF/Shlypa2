@@ -28,7 +28,6 @@
     <string name="app_name">Шляпа</string>
     <string name="play">Дальше</string>
     <string name="rules">Правила</string>
-    <string name="qwest">Вопрос?</string>
 
 
     <string name="Teem">Комманды</string>
@@ -79,13 +78,18 @@
     <string name="wordN">Сколько слов</string>
     <string name="vvodi">Пиши слово</string>
     <string name="dificult">Сложность добавляемых слов</string>
-    <string name="setAll">Добавить все слова автоматически</string>
     <string name="allow_random">Разрешить случайные слова</string>
 
 
     <string name="shuffle_teams">Перемешать</string>
     <string name="words_answered">Отвечено: </string>
 
+    <!-- Rate -->
+    <string name="rate">Оценить</string>
+    <string name="rate_massage">Оцените приложение Шляпа</string>
+    <string name="rate_never">Никогда</string>
+    <string name="rate_last">Позже</string>
+    <string name="rate_ok">Оценить</string>
 
     <!-- Words difficulty -->
     <string name="easy">Легко</string>
@@ -116,11 +120,12 @@
 
     <!-- hint-->
     <string name="hint_inject_name">Напиши имя игрока</string>
-    <string name="hint_inject_name_button">Нажми на эту кнопку чтобы добавить его в игру</string>
-    <string name="hint_random_player">Случайно</string>
-    <string name="hint_inject_random_player">При нажатии на кнопку в игру добавится случайный игрок</string>
+    <string name="hint_inject_name_button">Нажми на кнопку чтобы добавить его в игру. Для игры нужно как минимум 4 игрока</string>
+    <string name="hint_random_player">Случайный игрок</string>
+    <string name="hint_inject_random_player">Нажми на кнопку, чтобы добавить игрока со случайным именем</string>
     <string name="hint_team_shaffle">Генератор комманд</string>
-    <string name="hint_team_shaffle_button">Ты можешь добавить комманду, удалить комманду, перемешать игроков вкоммандах.
-        (карандаш чтобы переименовать команду) </string>
+    <string name="hint_team_shaffle_button">Нажми, чтобы добавить, удалить или перемешать комманды</string>
+    <string name="click_to_rename">Нажми, чтобы сменить имя комманды</string>
+    <string name="rename">Переименовать</string>
 
 </resources>
