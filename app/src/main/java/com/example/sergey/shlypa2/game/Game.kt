@@ -3,8 +3,6 @@ package com.example.sergey.shlypa2.game
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
-import com.google.gson.GsonBuilder
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -14,7 +12,7 @@ object Game {
 
     var state: GameState = GameState()
 
-    var teamNames : MutableList<String> = mutableListOf()
+    var teamNames: MutableList<String> = mutableListOf()
 
     fun maxTeamsCount(): Int = state.players.size / 2
 
@@ -28,7 +26,7 @@ object Game {
         }
     }
 
-    fun getSettings() : Settings = state.settings
+    fun getSettings(): Settings = state.settings
 
     fun setSettings(settings: Settings) {
         state.settings = settings
@@ -38,7 +36,7 @@ object Game {
         state.players.remove(player.id)
     }
 
-    fun reNamePlayer(player: Player){
+    fun reNamePlayer(player: Player) {
         state.players[player.id]?.name = player.name
     }
 
@@ -59,7 +57,7 @@ object Game {
         Collections.shuffle(teamNames)
 
         for (i in 0 until count) {
-            val teamName = teamNames.getOrElse(i, {_ -> "Team $i"})
+            val teamName = teamNames.getOrElse(i, { _ -> "Team $i" })
             state.teams.add(Team(teamName))
         }
 
@@ -149,8 +147,9 @@ object Game {
         state.createRound()
     }
 
-    fun portionClear(){
-        var newState:GameState = GameState()
+
+    fun portionClear() {
+        var newState: GameState = GameState()
         newState.players.putAll(state.players)
         newState.teams.addAll(state.teams)
         state = newState

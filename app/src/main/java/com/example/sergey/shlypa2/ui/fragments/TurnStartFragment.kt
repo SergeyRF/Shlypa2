@@ -4,9 +4,7 @@ package com.example.sergey.shlypa2.ui.fragments
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.TextView
 
@@ -23,11 +21,11 @@ import de.hdodenhof.circleimageview.CircleImageView
  */
 class TurnStartFragment : Fragment() {
 
-
+        lateinit var viewModel:RoundViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
-        val viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
+        setHasOptionsMenu(true)
+        viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
 
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_turn_start, container, false)
@@ -47,6 +45,20 @@ class TurnStartFragment : Fragment() {
                 .into(playerAvatar)
 
         return root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.hint_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if ( item?.itemId==R.id.item_show_hint ) {
+
+            viewModel.loadHintTeam()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

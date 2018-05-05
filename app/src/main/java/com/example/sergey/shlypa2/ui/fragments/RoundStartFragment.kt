@@ -5,9 +5,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.TextView
 import com.example.sergey.shlypa2.R
@@ -45,9 +43,11 @@ class RoundStartFragment : Fragment() {
     }
 
     var animated = false
+    lateinit var viewModel: RoundViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_round_start, container, false)
         val tvRoundName: TextView = root.findViewById(R.id.tvRoundName)
@@ -55,8 +55,7 @@ class RoundStartFragment : Fragment() {
         val btGo: Button = root.findViewById(R.id.btBeginRound)
         val rulesAvatar: CircleImageView = root.findViewById(R.id.civRulesAvatar)
 
-
-        val viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
 
         viewModel.roundLiveData.observe(this, Observer {
             it?.let {
@@ -91,6 +90,19 @@ class RoundStartFragment : Fragment() {
         }.start()
 
         return root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater!!.inflate(R.menu.hint_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+       if ( item?.itemId==R.id.item_show_hint ) {
+           viewModel.loadHintTeam()
+           return true
+       }
+        return super.onOptionsItemSelected(item)
     }
 
 }// Required empty public constructor

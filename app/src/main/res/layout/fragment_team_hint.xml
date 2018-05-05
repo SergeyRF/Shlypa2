@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sergey.shlypa2.ui.fragments.TeamHintFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvHintTeam_and_Result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout_constraintLeft_toLeftOf="parent"
+        layout_constraintRight_toRightOf="parent"
+        layout_constraintBottom_toBottomOf="parent"
+        layout_constraintTop_toTopOf="parent" />
+
+</FrameLayout>

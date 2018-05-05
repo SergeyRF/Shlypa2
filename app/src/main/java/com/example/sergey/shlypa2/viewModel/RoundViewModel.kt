@@ -25,7 +25,7 @@ import timber.log.Timber
 class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dataProvider = DataProvider(application)
-    private var soundManager : SoundManager? = null
+    private var soundManager: SoundManager? = null
 
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()
 
@@ -48,8 +48,8 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         val preference = PreferenceHelper.defaultPrefs(application)
-        val soundsEnabledPref : Boolean = preference[Constants.SOUND_ON_PREF, true] ?: true
-        if(soundsEnabledPref) {
+        val soundsEnabledPref: Boolean = preference[Constants.SOUND_ON_PREF, true] ?: true
+        if (soundsEnabledPref) {
             soundManager = SoundManager(application)
         }
 
@@ -78,6 +78,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
             round = Round(mutableListOf())
             commandCallback.value = Command.EXIT
         }
+    }
+
+    fun loadHintTeam() {
+        commandCallback.value = Command.SHOW_HINT_TEAM_TABLE
     }
 
     //todo add exception throwing
@@ -196,7 +200,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         dataProvider.insertState(Game.state)
     }
 
-    fun portionClear(){
+    fun portionClear() {
         Game.portionClear()
     }
 
@@ -209,10 +213,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         override fun run() {
             timeLeft--
             if (timeLeft >= 0) {
-                if(timeLeft == 10) {
+                if (timeLeft == 10) {
                     soundManager?.play(R.raw.time_warn, 0.5f, 0.5f)
                 }
-                if(timeLeft == 1) {
+                if (timeLeft == 1) {
                     soundManager?.play(R.raw.time_over, 0.5f, 0.5f)
                 }
                 timerLiveData.value = timeLeft
@@ -231,6 +235,24 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         SHOW_ROUND_RESULTS,
         START_NEXT_ROUND,
         SHOW_GAME_RESULTS,
+        SHOW_HINT_TEAM_TABLE,
         EXIT
     }
+
+    fun loadCurrrentBal(): List<TeamWithScores> {
+        val g = Game.getGameResults()
+        val f = round.results
+
+        g.forEach {
+            val map = it.scoresMap
+            it.team.players.forEach {
+                var scores: Int = f[it.id] ?: 0
+                scores += map[it.id] ?: 0
+                map[it.id] = scores
+            }
+        }
+        return g
+    }
+
+    fun loadGameResalt() = Game.getGameResults()
 }

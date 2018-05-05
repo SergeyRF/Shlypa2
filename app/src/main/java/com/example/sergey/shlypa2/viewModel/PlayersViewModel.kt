@@ -30,7 +30,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     val commandLiveData = SingleLiveEvent<Command>()
     val titleLiveData = MutableLiveData<Int>()
 
-    val listOfAvatars : MutableList<String> = mutableListOf()
+    val listOfAvatars: MutableList<String> = mutableListOf()
 
     init {
         updateData()
@@ -41,7 +41,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     fun getTeamsLiveData(): LiveData<List<Team>> = teamsLiveData
 
     fun getAvatarLiveData(): LiveData<String> {
-        if(listOfAvatars.isEmpty()) {
+        if (listOfAvatars.isEmpty()) {
             AsyncTask.execute {
                 synchronized(this, { loadAvatars() })
             }
@@ -55,7 +55,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
         player.id = dataProvider.insertPlayer(player)
         val success = Game.addPlayer(player)
 
-        if(success) {
+        if (success) {
             avatarLiveData.value = listOfAvatars.random()
             updateData()
         }
@@ -105,7 +105,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
 
     fun addTeam() {
         val teamsCount = Game.getTeams().size + 1
-        if(teamsCount <= Game.maxTeamsCount()) {
+        if (teamsCount <= Game.maxTeamsCount()) {
             Game.createTeams(teamsCount)
             updateData()
         } else {
@@ -114,7 +114,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun reduceTeam() {
-        if(Game.getTeams().size > 2) {
+        if (Game.getTeams().size > 2) {
             val teamsCount = Game.getTeams().size - 1
             Game.createTeams(teamsCount)
             updateData()
@@ -144,6 +144,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     fun startSettings() {
         commandLiveData.value = Command.START_SETTINGS
     }
+
 
     enum class Command {
         START_TEAMS,

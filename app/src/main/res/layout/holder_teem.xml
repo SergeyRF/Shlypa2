@@ -25,7 +25,7 @@
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text_medium"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toRightOf="@id/ibTeemRename"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Name" />
 
@@ -34,10 +34,10 @@
             android:id="@+id/ibTeemRename"
             android:layout_width="@dimen/text_medium"
             android:layout_height="@dimen/text_medium"
-            android:layout_marginRight="@dimen/very_big_margin"
+            android:layout_marginRight="@dimen/medium_margin"
             android:layout_marginTop="@dimen/medium_margin"
             android:background="@color/Transparent"
-            app:layout_constraintLeft_toRightOf="@+id/tvTeamName"
+
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_create_black_24dp" />

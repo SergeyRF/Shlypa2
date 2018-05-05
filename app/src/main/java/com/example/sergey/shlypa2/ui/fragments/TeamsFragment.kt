@@ -91,12 +91,15 @@ class TeamsFragment : Fragment() {
         val btYesD = dialog.findViewById<Button>(R.id.btYesDialog)
         val btNoD = dialog.findViewById<Button>(R.id.btNoDialog)
         etTeemD.hint = team.name
+
         btYesD.setOnClickListener {
             if (etTeemD.text.isNotEmpty()) {
                 team.name = etTeemD.text.toString()
                 adapterTeam.notifyDataSetChanged()
+                etTeemD.requestFocus()
             }
             dialog.cancel()
+
 
         }
         btNoD.setOnClickListener { dialog.cancel() }

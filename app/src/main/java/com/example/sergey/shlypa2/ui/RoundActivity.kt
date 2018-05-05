@@ -9,12 +9,9 @@ import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.db.DataProvider
-import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.ui.fragments.*
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
@@ -45,6 +42,7 @@ class RoundActivity : AppCompatActivity() {
                 RoundViewModel.Command.SHOW_ROUND_RESULTS -> startRoundResultsFragment()
                 RoundViewModel.Command.START_NEXT_ROUND -> startNextRound()
                 RoundViewModel.Command.SHOW_GAME_RESULTS -> startGameResults()
+                RoundViewModel.Command.SHOW_HINT_TEAM_TABLE -> startHintTeam()
                 RoundViewModel.Command.EXIT -> finish()
             }
         })
@@ -59,15 +57,21 @@ class RoundActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(backPressedOnce) {
-            viewModel.saveGameState()
-            viewModel.portionClear()
-            finish()
-        } else {
-            backPressedOnce = true
-            Toast.makeText(this, R.string.press_more_to_finish_game, Toast.LENGTH_LONG).show()
-            Handler().postDelayed({backPressedOnce = false}, 2000)
+        val fragment = supportFragmentManager.findFragmentById(android.R.id.content)
+        if (fragment is TeamHintFragment) {
+            super.onBackPressed()
+        }else {
+            if (backPressedOnce) {
+                viewModel.saveGameState()
+                viewModel.portionClear()
+                finish()
+            } else {
+                backPressedOnce = true
+                Toast.makeText(this, R.string.press_more_to_finish_game, Toast.LENGTH_LONG).show()
+                Handler().postDelayed({ backPressedOnce = false }, 2000)
+            }
         }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
@@ -75,20 +79,10 @@ class RoundActivity : AppCompatActivity() {
         viewModel.saveGameState()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        //TODO remove debug menu
-        menuInflater.inflate(R.menu.debug_menu, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.item_save_state_debug -> {
-                dataProvider.insertState(Game.state)
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
+    private fun startHintTeam() {
+        val fragment = TeamHintFragment()
+        startFragment(fragment, true)
     }
 
     private fun startStartFragment() {

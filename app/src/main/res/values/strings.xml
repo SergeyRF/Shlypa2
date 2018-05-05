@@ -60,7 +60,7 @@
     <string name="vvodi">Write a word</string>
     <string name="dificult">Difficult of random words</string>
     <string name="allow_random">Allow random words</string>
-    <string name="name" >Name</string>
+    <string name="name">Name</string>
     <string name="add_player">new player</string>
 
 
@@ -122,5 +122,6 @@
     <string name="hint_inject_random_player">Click on this button and add random player</string>
     <string name="hint_team_shaffle">Generation Team</string>
     <string name="hint_team_shaffle_button">You can create team, delete team, shuffle player in team. (pencil for rename team) </string>
+
 
 </resources>
