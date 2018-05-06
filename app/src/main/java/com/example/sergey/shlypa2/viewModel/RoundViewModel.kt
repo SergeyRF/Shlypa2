@@ -149,6 +149,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     fun startTurn() {
         timeLeft = Game.getSettings().time
+        wordLiveData.value = round.getWord()
         timerLiveData.value = timeLeft
 
         commandCallback.value = Command.START_TURN
@@ -250,9 +251,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
                 scores += map[it.id] ?: 0
                 map[it.id] = scores
             }
+
         }
+
         return g
     }
 
-    fun loadGameResalt() = Game.getGameResults()
 }

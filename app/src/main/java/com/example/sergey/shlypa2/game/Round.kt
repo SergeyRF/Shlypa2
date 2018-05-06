@@ -57,6 +57,7 @@ class Round(words: List<Word>) {
 
                 if(Game.getSettings().returnSkipedToHat) {
                     wordsQueue.add(it)
+                    Timber.d("ADDDDDd ${it.word}")
                 }
             }
         }
@@ -72,6 +73,16 @@ class Round(words: List<Word>) {
     }
 
     fun getWord(): Word? {
+        if (currentWord!=null){
+            wordsQueue.add(currentWord)
+        }
+        if (!wordsQueue.isEmpty()) {
+            val shuffleList = wordsQueue.toMutableList()
+            shuffleList.shuffle()
+            wordsQueue.clear()
+            wordsQueue.addAll(shuffleList)
+            currentWord = null
+        }
         if (currentWord == null && !wordsQueue.isEmpty()) {
             currentWord = wordsQueue.poll()
         }
