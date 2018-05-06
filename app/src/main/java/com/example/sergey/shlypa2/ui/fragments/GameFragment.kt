@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.animation.AccelerateInterpolator
 import com.example.sergey.shlypa2.OnSwipeTouchListener
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
@@ -190,7 +191,7 @@ class GameFragment : Fragment() {
             animate(tvGuideLabel) {
                 visible()
             }
-        }.thenCouldYou(1500) {
+        }.thenCouldYou(1000, interpolator = AccelerateInterpolator()) {
             animate(ivHand) {
                 topOfHisParent(marginDp = 32f)
                 invisible()
@@ -212,7 +213,7 @@ class GameFragment : Fragment() {
                 visible()
                 originalPosition()
             }
-        }.thenCouldYou(1000) {
+        }.thenCouldYou(1000, interpolator = AccelerateInterpolator()) {
             Timber.d("animate to invisible")
             animate(ivHand) {
                 invisible()
