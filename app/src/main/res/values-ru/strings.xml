@@ -128,4 +128,8 @@
     <string name="click_to_rename">Нажми, чтобы сменить имя комманды</string>
     <string name="rename">Переименовать</string>
 
+    <!-- no winner-->
+    <string name="no_winner">Победитель неопределён</string>
+    <string name="no_winner_draw">Ничья</string>
+
 </resources>

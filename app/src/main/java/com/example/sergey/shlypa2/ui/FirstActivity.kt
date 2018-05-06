@@ -10,6 +10,7 @@ import android.view.MenuItem
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
+import com.example.sergey.shlypa2.ui.fragments.RulesFragment
 import com.example.sergey.shlypa2.ui.fragments.WelcomeFragment
 import com.example.sergey.shlypa2.ui.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
@@ -106,6 +107,11 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun startRulesFragment() {
+        val fragment = RulesFragment()
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.containerFirst, fragment)
+                .addToBackStack(null)
+                .commit()
 
     }
 

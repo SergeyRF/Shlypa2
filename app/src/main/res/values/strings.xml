@@ -126,5 +126,9 @@
     <string name="click_to_rename">Click to rename a team</string>
     <string name="rename">Rename</string>
 
+    <!-- no winner-->
+    <string name="no_winner">The winner is not defined</string>
+    <string name="no_winner_draw">Draw</string>
+
 
 </resources>
