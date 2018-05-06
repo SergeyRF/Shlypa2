@@ -75,7 +75,9 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.wordLiveData.observe(this, Observer { word: Word? ->
-            if (word != null) onNextWord(word)
+            if (word != null) {
+                onNextWord(word)
+            }
         })
 
         onSwipeTouchListener.scrollListener = { x, y ->

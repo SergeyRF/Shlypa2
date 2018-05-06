@@ -149,6 +149,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     fun startTurn() {
         timeLeft = Game.getSettings().time
+        wordLiveData.value = round.getWord()
         timerLiveData.value = timeLeft
 
         commandCallback.value = Command.START_TURN
