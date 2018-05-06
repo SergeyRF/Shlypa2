@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.sergey.shlypa2.R
 import kotlinx.android.synthetic.main.fragment_rules.*
+import java.util.*
 
 
 /**
@@ -23,7 +24,13 @@ class RulesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        web_rules.loadUrl("file:///android_res/raw/rules")
+        val locale : String = Locale.getDefault().language.toLowerCase()
+        when(locale){
+            "ru"->web_rules.loadUrl("file:///android_asset/rules.html")
+            else->web_rules.loadUrl("file:///android_asset/rulesen.html")
+        }
+
+
     }
 
 }// Required empty public constructor
