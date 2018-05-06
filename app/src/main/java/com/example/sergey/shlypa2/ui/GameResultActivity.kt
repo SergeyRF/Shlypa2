@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.utils.*
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
@@ -19,18 +20,21 @@ class GameResultActivity : AppCompatActivity() {
 
     val animation by lazy {
         please {
-            animate(tv_winner) {
-                leftOfHisParent(10f)
-                belowOf(tvGameWinner)
 
-            }
             animate(civWinnerAvatar) {
                 belowOf(tvGameWinner, 4f)
                 rightOfHisParent(10f)
                 scale(0.3f, 0.3f)
             }
+
+            animate(tv_winner) {
+                leftOfHisParent(10f)
+                scale(0.7f, 0.7f)
+                alignTop(civWinnerAvatar)
+
+            }
             animate(tv_game_resalt) {
-                belowOf(tv_winner, null)
+                belowOf(civWinnerAvatar, null)
                 visible()
                 tv_game_resalt.show()
             }
@@ -38,7 +42,6 @@ class GameResultActivity : AppCompatActivity() {
                 belowOf(tv_game_resalt)
                 aboveOf(btCreateNewGame)
                 rvGameResults.show()
-                //  centerBetweenViews(tv_game_resalt,btCreateNewGame,false,true)
 
                 visible()
             }
