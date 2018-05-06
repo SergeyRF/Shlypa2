@@ -8,11 +8,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.TeamWithScores
-import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.utils.SoundManager
-import com.example.sergey.shlypa2.utils.gone
-import com.example.sergey.shlypa2.utils.show
+import com.example.sergey.shlypa2.utils.*
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_game_result.*
@@ -55,18 +53,16 @@ class GameResultActivity : AppCompatActivity() {
 
     var animated = false
     val resultsAdapter = RvAdapter()
-    lateinit var viewModel: RoundViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_result)
 
-        viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)
 
         soundManager.play(R.raw.fanfair)
 
-        val resultsList: List<TeamWithScores> = viewModel.loadGameResalt().sortedByDescending { it.getScores() }
+        val resultsList: List<TeamWithScores> = Game.getGameResults().sortedByDescending { it.getScores() }
         resultsAdapter.setData(resultsList)
 
         val tm = resultsList.maxBy { it.getScores() }!!
@@ -81,8 +77,8 @@ class GameResultActivity : AppCompatActivity() {
             finish()
         }
 
-        rvGameResults.gone()
-        tv_game_resalt.gone()
+        rvGameResults.hide()
+        tv_game_resalt.hide()
 
         civWinnerAvatar.setOnClickListener {
             animated = if (animated) {

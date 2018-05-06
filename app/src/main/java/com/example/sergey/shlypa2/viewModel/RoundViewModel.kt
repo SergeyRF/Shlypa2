@@ -250,9 +250,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
                 scores += map[it.id] ?: 0
                 map[it.id] = scores
             }
+
         }
+
         return g
     }
 
-    fun loadGameResalt() = Game.getGameResults()
 }
