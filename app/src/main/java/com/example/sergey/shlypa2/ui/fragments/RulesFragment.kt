@@ -23,14 +23,17 @@ class RulesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_rules, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val locale : String = Locale.getDefault().language.toLowerCase()
-        when(locale){
-            "ru"->web_rules.loadUrl("file:///android_asset/rules.html")
-            else->web_rules.loadUrl("file:///android_asset/rulesen.html")
+    override fun onResume() {
+        super.onResume()
+        loadRules()
+    }
+
+    fun loadRules() {
+        val locale: String = Locale.getDefault().language.toLowerCase()
+        when (locale) {
+            "ru" -> web_rules.loadUrl("file:///android_asset/rules.html")
+            else -> web_rules.loadUrl("file:///android_asset/rulesen.html")
         }
-
-
     }
 
 }// Required empty public constructor

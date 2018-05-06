@@ -6,7 +6,7 @@
 
 
     <item>
-        <bitmap android:src="@drawable/dice"
+        <bitmap android:src="@drawable/hat_icon_start"
             android:gravity="center" />
     </item>
 
