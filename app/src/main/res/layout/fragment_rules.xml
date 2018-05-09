@@ -4,12 +4,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.sergey.shlypa2.ui.fragments.RulesFragment">
 
-
-    <WebView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/web_rules">
+        android:background="@color/white"
+        android:layout_marginLeft="@dimen/small_margin"
+        android:layout_marginRight="@dimen/small_margin">
 
-    </WebView>
+        <TextView
+            android:textColor="@color/Black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvRules"/>
+    </ScrollView>
 
 </FrameLayout>
