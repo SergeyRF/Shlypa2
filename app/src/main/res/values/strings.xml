@@ -107,6 +107,7 @@
     <string name="theme_cyan">Cyan</string>
     <string name="opensource_title">Opensourse libraries used in this project</string>
     <string name="used_content">Images and sounds used in project</string>
+    <string name="privasy_policy">Privacy policy</string>
 
     <string name="no_saved_games">No games saved yet..</string>
 

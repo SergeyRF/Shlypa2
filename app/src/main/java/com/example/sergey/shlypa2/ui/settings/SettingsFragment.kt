@@ -16,6 +16,10 @@ import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import kotlinx.android.synthetic.main.fragment_settings.*
+import android.widget.Toast
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 
 
 /**
@@ -79,5 +83,21 @@ class SettingsFragment : Fragment() {
         viewOpensourseBack.setOnClickListener {
             activity?.let { (it as SettingsActivity).showOpensourceLicenses() }
         }
+
+        viewPrivacyBack.setOnClickListener {
+            openWebPage("https://hatproject-2535f.firebaseapp.com/")
+        }
+    }
+
+    fun openWebPage(url: String) {
+        try {
+            val webpage = Uri.parse(url)
+            val myIntent = Intent(Intent.ACTION_VIEW, webpage)
+            startActivity(myIntent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, "No application can handle this request. Please install a web browser.", Toast.LENGTH_LONG).show()
+            e.printStackTrace()
+        }
+
     }
 }// Required empty public constructor

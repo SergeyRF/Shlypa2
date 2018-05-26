@@ -113,4 +113,32 @@
         android:background="@color/divider_color"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
+    <TextView
+        android:id="@+id/tvPrivacy"
+        android:text="@string/privasy_policy"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/view4"
+        app:layout_constraintBottom_toTopOf="@id/view5"
+        />
+
+    <View
+        android:id="@+id/viewPrivacyBack"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/view4"
+        app:layout_constraintBottom_toTopOf="@id/view5"/>
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/settings_margin"
+        android:background="@color/divider_color"
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
+
 </android.support.constraint.ConstraintLayout>
