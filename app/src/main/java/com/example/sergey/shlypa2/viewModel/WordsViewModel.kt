@@ -9,6 +9,8 @@ import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.WordType
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import timber.log.Timber
 import java.util.*
 
@@ -82,23 +84,26 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun fillWithRandomWords() {
-        val needWordsCount = Game.getSettings().word - words.size
 
-        if (randomWords.size < needWordsCount) loadRandomWords()
+        doAsync {
+            val needWordsCount = Game.getSettings().word - words.size
+            if (randomWords.size < needWordsCount) loadRandomWords()
 
-        Timber.d("queue size after loading = ${randomWords.size}")
-        for (i in 0 until needWordsCount)
-            words.add(randomWords.poll())
+            Timber.d("queue size after loading = ${randomWords.size}")
+            for (i in 0 until needWordsCount)
+                words.add(randomWords.poll())
 
-        updateData()
+            uiThread { updateData() }
+        }
+
     }
 
 
     private fun loadRandomWords() {
-        var dbWords = db.getRandomWords(100, Game.getSettings().type)
+        val dbWords = db.getRandomWords(100, Game.getSettings().type)
         for (w in dbWords) Timber.d("$w")
 
-        var unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !words.contains(it) }
+        val unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !words.contains(it) }
         Timber.d("unic words size ${unicWords.size}")
 
         randomWords.addAll(unicWords)

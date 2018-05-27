@@ -29,7 +29,6 @@ abstract class DataBase : RoomDatabase(){
                 synchronized(DataBase::class) {
                     INSTANCE = Room.databaseBuilder(context, DataBase::class.java, Contract.DB_NAME)
                             .fallbackToDestructiveMigration()
-                            .allowMainThreadQueries()
                             .build()
                 }
             }

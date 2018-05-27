@@ -128,11 +128,13 @@ class PlayersFragment : Fragment() {
                 newPlayer.avatar = avatar!!
             }
 
-            if (viewModel.addPlayer(newPlayer)) {
-                etName.text.clear()
-            } else {
-                Toast.makeText(context, R.string.name_not_unic, Toast.LENGTH_SHORT).show()
-            }
+            viewModel.addPlayer(newPlayer).observe(this, Observer {
+                if(it != null && it) {
+                    etName.text.clear()
+                } else {
+                    Toast.makeText(context, R.string.name_not_unic, Toast.LENGTH_SHORT).show()
+                }
+            })
 
         } else {
             Toast.makeText(context, R.string.player_name_empty, Toast.LENGTH_SHORT).show()
