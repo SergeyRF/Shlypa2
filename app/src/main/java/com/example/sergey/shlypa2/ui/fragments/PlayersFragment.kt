@@ -94,7 +94,7 @@ class PlayersFragment : Fragment() {
 
         //enter
         etName.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+            if (this.isResumed/* strange error */ && actionId == EditorInfo.IME_ACTION_NEXT) {
                 // обработка нажатия Enter
                 addPlayer()
                 true
@@ -129,7 +129,7 @@ class PlayersFragment : Fragment() {
             }
 
             viewModel.addPlayer(newPlayer).observe(this, Observer {
-                if(it != null && it) {
+                if (it != null && it) {
                     etName.text.clear()
                 } else {
                     Toast.makeText(context, R.string.name_not_unic, Toast.LENGTH_SHORT).show()

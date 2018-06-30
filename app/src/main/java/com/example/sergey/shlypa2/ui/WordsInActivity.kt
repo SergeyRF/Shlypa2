@@ -94,7 +94,6 @@ class WordsInActivity : AppCompatActivity() {
 
         btNextWords.setOnClickListener {
             if (viewModel.needWord() && viewModel.randomAllowed()) {
-                hideKeyboard()
                 viewModel.fillWithRandomWords()
             } else {
                 viewModel.nextPlayer()
@@ -183,6 +182,7 @@ class WordsInActivity : AppCompatActivity() {
             ibAddWord.show()
             etWord.show()
         } else {
+            hideKeyboard()
             btNextWords.show()
             ibAddWord.gone()
             etWord.gone()
