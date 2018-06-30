@@ -14,6 +14,8 @@ import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.random
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import timber.log.Timber
 
 /**
@@ -42,7 +44,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
 
     fun getAvatarLiveData(): LiveData<String> {
         if (listOfAvatars.isEmpty()) {
-            AsyncTask.execute {
+            doAsync {
                 synchronized(this, { loadAvatars() })
             }
         }
@@ -51,16 +53,23 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     }
 
     //todo do not add players with the same name
-    fun addPlayer(player: Player): Boolean {
-        player.id = dataProvider.insertPlayer(player)
-        val success = Game.addPlayer(player)
+    fun addPlayer(player: Player): LiveData<Boolean> {
+        val singleLiveEvent = SingleLiveEvent<Boolean>()
 
-        if (success) {
-            avatarLiveData.value = listOfAvatars.random()
-            updateData()
+        doAsync {
+            player.id = dataProvider.insertPlayer(player)
+            val success = Game.addPlayer(player)
+
+            if (success) {
+                uiThread {
+                    avatarLiveData.value = listOfAvatars.random()
+                    updateData()
+                    singleLiveEvent.value = true
+                }
+            }
         }
 
-        return success
+        return singleLiveEvent
     }
 
     fun removePlayer(player: Player) {
@@ -69,28 +78,31 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun reNamePlayer(player: Player) {
-        if (player.type == PlayerType.USER) {
-            Game.reNamePlayer(player)
-        } else {
-            Game.removePlayer(player)
-            //set id to zero before inserting
-            player.type = PlayerType.USER
-            player.id = 0
-            player.id = dataProvider.insertPlayer(player)
-            Game.addPlayer(player)
+        doAsync {
+            if (player.type == PlayerType.USER) {
+                Game.reNamePlayer(player)
+            } else {
+                Game.removePlayer(player)
+                //set id to zero before inserting
+                player.type = PlayerType.USER
+                player.id = 0
+                player.id = dataProvider.insertPlayer(player)
+                Game.addPlayer(player)
+            }
         }
-        Timber.d("Players rename name ${player.name} id ${player.id} players size ${Game.getPlayers().size}")
-//        updateData()
     }
 
     fun addRandomPlayer() {
-        //Todo replace this ugly code
-        val playersList = dataProvider.getPlayers()
+        doAsync {
+            val playersList = dataProvider.getPlayers()
 
-        val player: Player? = playersList.find { !Game.getPlayers().contains(it) }
-        if (player != null) Game.addPlayer(player)
+            val player: Player? = playersList.find { !Game.getPlayers().contains(it) }
+            if (player != null) Game.addPlayer(player)
 
-        updateData()
+            uiThread {
+                updateData()
+            }
+        }
     }
 
     private fun loadAvatars() {

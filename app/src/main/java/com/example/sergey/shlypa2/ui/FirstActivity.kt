@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.crashlytics.android.Crashlytics
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
@@ -39,8 +40,6 @@ class FirstActivity : AppCompatActivity() {
                 WelcomeViewModel.Commands.SAVED_GAMES -> startGameLoadFragment()
             }
         })
-
-
     }
 
 

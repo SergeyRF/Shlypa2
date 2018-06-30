@@ -60,7 +60,7 @@ class RoundActivity : AppCompatActivity() {
         val fragment = supportFragmentManager.findFragmentById(android.R.id.content)
         if (fragment is TeamHintFragment) {
             super.onBackPressed()
-        }else {
+        } else {
             if (backPressedOnce) {
                 viewModel.saveGameState()
                 viewModel.portionClear()
