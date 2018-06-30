@@ -162,6 +162,7 @@ class WordsHolder(val view: View) : BaseHolder(view) {
         etReNameW.text = word.word
         etReNameW.hide()
         tvName.show()
+
         if (word.type == WordType.USER) {
             ibNextWord.hide()
         }
@@ -169,12 +170,10 @@ class WordsHolder(val view: View) : BaseHolder(view) {
         tvName.text = word.word
         Timber.d("${word.word}")
 
-
-
         ibDeletWord.setOnClickListener {
             listenerTwo?.invoke(word)
-
         }
+
         ibNextWord.setOnClickListener {
             listenerThree?.invoke(word)
             Timber.d("NextWord")

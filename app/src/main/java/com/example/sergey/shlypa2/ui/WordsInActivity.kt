@@ -15,10 +15,7 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.utils.gone
-import com.example.sergey.shlypa2.utils.hide
-import com.example.sergey.shlypa2.utils.show
+import com.example.sergey.shlypa2.utils.*
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.squareup.picasso.Picasso
@@ -97,11 +94,13 @@ class WordsInActivity : AppCompatActivity() {
 
         btNextWords.setOnClickListener {
             if (viewModel.needWord() && viewModel.randomAllowed()) {
+                hideKeyboard()
                 viewModel.fillWithRandomWords()
             } else {
                 viewModel.nextPlayer()
                 etWord.text.clear()
-                etWord.requestFocus()
+//                etWord.requestFocus()
+                etWord.showKeyboard()
             }
         }
 
@@ -145,8 +144,7 @@ class WordsInActivity : AppCompatActivity() {
     }
 
 
-    fun setWordRv(words: List<Word>?) {
-
+    private fun setWordRv(words: List<Word>?) {
         if (words == null || words.isEmpty()) {
             if (animated) {
                 avatarHideAnimation.reset()
@@ -173,7 +171,7 @@ class WordsInActivity : AppCompatActivity() {
         }
     }
 
-    fun onNeedWordsChanged(needWords: Boolean) {
+    private fun onNeedWordsChanged(needWords: Boolean) {
         if (needWords) {
             onChangeEt()
 
@@ -192,12 +190,12 @@ class WordsInActivity : AppCompatActivity() {
         }
     }
 
-    fun onChangeEt() {
+    private fun onChangeEt() {
         etWord.hint = getString(R.string.words_input_left, viewModel.needWordSize())
     }
 
 
-    fun onStartGame() {
+    private fun onStartGame() {
         Game.beginNextRound()
         startActivity(Intent(this, RoundActivity::class.java))
         finish()

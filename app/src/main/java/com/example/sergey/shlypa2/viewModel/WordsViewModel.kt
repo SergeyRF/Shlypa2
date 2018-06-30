@@ -78,9 +78,9 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
         words.add(Word(s))
         updateData()
     }
+
     fun reNameWord(word:Word){
-        words[words.indexOf(word)].type = WordType.USER
-        words[words.indexOf(word)].word=word.word
+        word.type = WordType.USER
     }
 
     fun fillWithRandomWords() {
