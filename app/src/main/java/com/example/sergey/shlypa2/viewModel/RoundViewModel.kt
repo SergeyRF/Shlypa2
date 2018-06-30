@@ -9,6 +9,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.Game.state
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.Round
 import com.example.sergey.shlypa2.game.TeamWithScores
@@ -16,6 +17,8 @@ import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.SoundManager
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import timber.log.Timber
 
 
@@ -69,14 +72,19 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadLastSaved() {
-        val state = dataProvider.getLastSavedState()
-        if (state != null && state.currentRound != null) {
-            loadGameState(state)
-        } else {
-            Timber.e(RuntimeException("Can't load game state"))
-            //Just for avoiding possible errors
-            round = Round(mutableListOf())
-            commandCallback.value = Command.EXIT
+        doAsync {
+            val state = dataProvider.getLastSavedState()
+
+            uiThread {
+                if (state != null && Game.state.currentRound != null) {
+                    loadGameState(Game.state)
+                } else {
+                    Timber.e(RuntimeException("Can't load game state"))
+                    //Just for avoiding possible errors
+                    round = Round(mutableListOf())
+                    commandCallback.value = Command.EXIT
+                }
+            }
         }
     }
 
@@ -142,8 +150,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
             saveGameState()
             commandCallback.value = Command.START_NEXT_ROUND
         } else {
-            dataProvider.deleteState(Game.state.gameId)
-            commandCallback.value = Command.SHOW_GAME_RESULTS
+            val job = doAsync {
+                dataProvider.deleteState(Game.state.gameId)
+                uiThread { commandCallback.value = Command.SHOW_GAME_RESULTS }
+            }
         }
     }
 
@@ -198,7 +208,9 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun saveGameState() {
-        dataProvider.insertState(Game.state)
+        doAsync {
+            dataProvider.insertState(Game.state)
+        }
     }
 
     fun portionClear() {
