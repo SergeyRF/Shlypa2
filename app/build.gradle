@@ -89,6 +89,24 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    //Appodeal
+    compile name: 'adcolony-sdk-3.2.1', ext: 'aar'
+    compile name: 'mmedia-6.4.0', ext: 'aar'
+    compile name: 'mobvista_alphab', ext: 'aar'
+    compile name: 'mobvista_appwall', ext: 'aar'
+    compile name: 'mobvista_appwallext', ext: 'aar'
+    compile name: 'mobvista_common', ext: 'aar'
+    compile name: 'mobvista_interstitial', ext: 'aar'
+    compile name: 'mobvista_mvdownloads', ext: 'aar'
+    compile name: 'mobvista_mvjscommon', ext: 'aar'
+    compile name: 'mobvista_mvnative', ext: 'aar'
+    compile name: 'mobvista_nativeex', ext: 'aar'
+    compile name: 'mobvista_offerwall', ext: 'aar'
+    compile name: 'mobvista_playercommon', ext: 'aar'
+    compile name: 'mobvista_reward', ext: 'aar'
+    compile name: 'mobvista_videocommon', ext: 'aar'
+    compile name: 'mobvista_videofeeds', ext: 'aar'
+
     testImplementation 'junit:junit:4.12'
 
     testImplementation 'org.jetbrains.kotlin:kotlin-stdlib:1.2.40'

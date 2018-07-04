@@ -7,4 +7,9 @@
     <declare-styleable name="SeekbarSetting">
         <attr name="seek_setting_title" format="reference|string"/>
     </declare-styleable>
+
+    <declare-styleable name="ArchView">
+        <attr name="arch_color" format="color"/>
+        <attr name="arch_height" format="dimension"/>
+    </declare-styleable>
 </resources>

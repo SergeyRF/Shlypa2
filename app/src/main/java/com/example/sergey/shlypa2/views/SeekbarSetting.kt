@@ -37,8 +37,8 @@ class SeekbarSetting : ConstraintLayout {
 
         attrs?.let {
             val array = context.obtainStyledAttributes(it, R.styleable.SeekbarSetting)
-
             title.text = array.getText(R.styleable.SeekbarSetting_seek_setting_title)
+            array.recycle()
         }
 
         seekbar.setOnSeekBarChangeListener(listener)

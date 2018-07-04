@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.R.id.*
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
