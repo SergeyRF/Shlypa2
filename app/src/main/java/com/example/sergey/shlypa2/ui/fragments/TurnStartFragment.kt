@@ -85,7 +85,10 @@ class TurnStartFragment : Fragment() {
         })
 
         val nativeAds = Appodeal.getNativeAds(1)
-        nativeAd.setNativeAd(nativeAds[0])
+        nativeAds.getOrNull(0)?.let {
+            nativeAd.setNativeAd(it)
+        }
+
 
     }
 }
