@@ -66,6 +66,8 @@ fun Activity.hideKeyboard() {
     imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
 }
 
+fun View.dimen(id: Int) : Int = resources.getDimensionPixelSize(id)
+
 /**
  * Returns a random element.
  */

@@ -13,6 +13,7 @@ import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
+import com.example.sergey.shlypa2.views.PlayerInTeamView
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import timber.log.Timber
@@ -33,7 +34,16 @@ class TeamHolder(val view: View) : BaseHolder(view) {
     val playersList: LinearLayout = view.findViewById(R.id.llPlayers)
     val ivRename = view.findViewById<ImageButton>(R.id.ibTeemRename)
 
+    companion object {
+        var count = 0
+    }
+
     fun bind(team: Team) {
+        if(count++ % 2 == 0) bindSimple(team) else bindOptimized(team)
+    }
+
+    fun bindSimple(team: Team) {
+        val start = System.currentTimeMillis()
         teamName.text = team.name
 
         playersList.removeAllViews()
@@ -57,6 +67,27 @@ class TeamHolder(val view: View) : BaseHolder(view) {
             listener?.invoke(team)
             true
         }
+        Timber.d("Simple binded in ${System.currentTimeMillis() - start} players ${team.players.size}")
+    }
+
+    fun bindOptimized(team: Team) {
+        val start = System.currentTimeMillis()
+        teamName.text = team.name
+
+        playersList.removeAllViews()
+        playersList.addView(PlayerInTeamView.inflatePlayers(team.players, view.context))
+
+
+        ivRename.setOnClickListener {
+            listener?.invoke(team)
+        }
+
+        teamName.setOnLongClickListener {
+            listener?.invoke(team)
+            true
+        }
+
+        Timber.d("Optimized binded in ${System.currentTimeMillis() - start} players ${team.players.size}")
     }
 }
 
