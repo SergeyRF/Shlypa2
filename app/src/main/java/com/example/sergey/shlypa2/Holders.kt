@@ -1,7 +1,6 @@
 package com.example.sergey.shlypa2
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import com.example.sergey.shlypa2.beans.Player
@@ -13,7 +12,7 @@ import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.hide
 import com.example.sergey.shlypa2.utils.show
-import com.example.sergey.shlypa2.views.PlayerInTeamView
+import com.example.sergey.shlypa2.views.HolderInflater
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import timber.log.Timber
@@ -34,60 +33,18 @@ class TeamHolder(val view: View) : BaseHolder(view) {
     val playersList: LinearLayout = view.findViewById(R.id.llPlayers)
     val ivRename = view.findViewById<ImageButton>(R.id.ibTeemRename)
 
-    companion object {
-        var count = 0
-    }
-
     fun bind(team: Team) {
-        if(count++ % 2 == 0) bindSimple(team) else bindOptimized(team)
-    }
-
-    fun bindSimple(team: Team) {
-        val start = System.currentTimeMillis()
         teamName.text = team.name
 
         playersList.removeAllViews()
-        for (player in team.players) {
-            Timber.d("add player into listview")
-            val playerView = LayoutInflater.from(view.context)
-                    .inflate(R.layout.holder_player_inteam, playersList, false)
-
-            val holder = PlayerInTeamHolder(playerView)
-            holder.bind(player)
-
-            playersList.addView(playerView)
-        }
-
-
+        playersList.addView(HolderInflater.inflatePlayers(team.players, view.context))
         ivRename.setOnClickListener {
             listener?.invoke(team)
         }
-
         teamName.setOnLongClickListener {
             listener?.invoke(team)
             true
         }
-        Timber.d("Simple binded in ${System.currentTimeMillis() - start} players ${team.players.size}")
-    }
-
-    fun bindOptimized(team: Team) {
-        val start = System.currentTimeMillis()
-        teamName.text = team.name
-
-        playersList.removeAllViews()
-        playersList.addView(PlayerInTeamView.inflatePlayers(team.players, view.context))
-
-
-        ivRename.setOnClickListener {
-            listener?.invoke(team)
-        }
-
-        teamName.setOnLongClickListener {
-            listener?.invoke(team)
-            true
-        }
-
-        Timber.d("Optimized binded in ${System.currentTimeMillis() - start} players ${team.players.size}")
     }
 }
 
@@ -101,17 +58,9 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
         teemScores.text = scoredTeam.getScores().toString()
 
         listPlayers.removeAllViews()
-
-        for (player in scoredTeam.team.players) {
-
-            val playerView = LayoutInflater.from(view.context)
-                    .inflate(R.layout.holder_player_inteam, listPlayers, false)
-
-            val playerHolder = PlayerInTeamHolder(playerView)
-            playerHolder.bind(player, scoredTeam.scoresMap[player.id] ?: 0)
-
-            listPlayers.addView(playerView)
-        }
+        listPlayers.addView(HolderInflater.inflatePlayers(scoredTeam.team.players,
+                view.context,
+                scoredTeam.scoresMap))
     }
 }
 
@@ -155,26 +104,6 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
                 etName.hide()
                 delPlayer.hide()
             }
-        }
-
-        Picasso.get()
-                .load(Functions.imageNameToUrl("player_avatars/small/${player.avatar}"))
-                .into(avatarImage)
-    }
-}
-
-class PlayerInTeamHolder(view: View) : BaseHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.tvName)
-    val tvScores: TextView = view.findViewById(R.id.tvScores)
-    val avatarImage: CircleImageView = view.findViewById(R.id.civPlayerAvatar)
-
-    fun bind(player: Player, scores: Int = Int.MIN_VALUE) {
-        tvName.text = player.name
-        if (scores != Int.MIN_VALUE) {
-            tvScores.show()
-            tvScores.text = scores.toString()
-        } else {
-            tvScores.hide()
         }
 
         Picasso.get()
