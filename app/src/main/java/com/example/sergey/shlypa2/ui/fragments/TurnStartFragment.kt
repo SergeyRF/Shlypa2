@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -77,6 +78,7 @@ class TurnStartFragment : Fragment() {
 
             override fun onNativeShown(nativeAd: NativeAd) {
                 Timber.d("On native shown")
+                Appodeal.cache(activity as Activity, Appodeal.NATIVE, 1)
             }
 
             override fun onNativeClicked(nativeAd: NativeAd) {

@@ -16,6 +16,10 @@ import android.widget.ImageView
  */
 class AppRater {
 
+    companion object {
+        const val APP_PNAME = "com.attiladroid.shlypa"
+    }
+
     fun app_launched(mContext: Context) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(mContext)
         if (prefs.getBoolean(Constants.DONT_SHOW_RATE_DIALOG, false)) {
@@ -137,18 +141,25 @@ class AppRater {
         star_1.setOnClickListener { lightStars(1) }
         star_2.setOnClickListener { lightStars(2) }
         star_3.setOnClickListener { lightStars(3) }
-        star_4.setOnClickListener { lightStars(4) }
-        star_5.setOnClickListener { lightStars(5) }
+        star_4.setOnClickListener {
+            lightStars(4)
+            rateApp(context)
+        }
+        star_5.setOnClickListener {
+            lightStars(5)
+            rateApp(context)
+        }
 
         dialog.show()
     }
 
     fun rateApp(context: Context) {
         try {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("")))
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$APP_PNAME")))
         } catch (ex: ActivityNotFoundException) {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("")))
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=$APP_PNAME")))
         }
+
 
     }
 }

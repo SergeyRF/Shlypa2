@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.Native
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.debug
 
 
 class LaunchActivity : AppCompatActivity() {
@@ -26,11 +27,12 @@ class LaunchActivity : AppCompatActivity() {
 
     fun initAppodeal() {
         val appKey = ""
-        Appodeal.setTesting(true)
+        debug { Appodeal.setTesting(true) }
         Appodeal.disableLocationPermissionCheck()
         Appodeal.disableWriteExternalStoragePermissionCheck()
+        Appodeal.setAutoCache(Appodeal.NATIVE, false)
         Appodeal.initialize(this, appKey, Appodeal.NATIVE)
-        Appodeal.cache(this, Appodeal.NATIVE)
         Appodeal.setNativeAdType(Native.NativeAdType.Auto)
+        Appodeal.cache(this, Appodeal.NATIVE, 1)
     }
 }
