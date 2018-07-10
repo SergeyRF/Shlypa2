@@ -16,6 +16,7 @@ android {
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -99,6 +100,9 @@ dependencies {
     debugImplementation 'com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.23'
     debugImplementation 'com.willowtreeapps.hyperion:hyperion-geiger-counter:0.9.23'
     debugImplementation 'com.willowtreeapps.hyperion:hyperion-timber:0.9.23'
+
+    //multidex
+    implementation 'com.android.support:multidex:1.0.3'
 
     //Appodeal
     compile name: 'adcolony-sdk-3.2.1', ext: 'aar'

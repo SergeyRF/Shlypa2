@@ -26,21 +26,28 @@
         </activity>
         <activity
             android:name=".ui.FirstActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.PlayersActivity"
-            android:label="@string/player_actyvity" />
+            android:label="@string/player_actyvity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.GameSettingsActivity"
-            android:label="@string/state_actyvity" />
+            android:label="@string/state_actyvity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.WordsInActivity"
-            android:label="@string/word_actyvity" />
+            android:label="@string/word_actyvity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.RoundActivity"
-            android:label="@string/start_actyvity" />
-        <activity android:name=".ui.GameResultActivity" />
-        <activity android:name=".ui.settings.SettingsActivity"></activity>
+            android:label="@string/start_actyvity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.GameResultActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings.SettingsActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- APPODEAL -->
         <activity android:name="com.appodeal.ads.InterstitialActivity"

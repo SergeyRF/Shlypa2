@@ -28,6 +28,7 @@ class LaunchActivity : AppCompatActivity() {
         val appKey = ""
         Appodeal.setTesting(true)
         Appodeal.disableLocationPermissionCheck()
+        Appodeal.disableWriteExternalStoragePermissionCheck()
         Appodeal.initialize(this, appKey, Appodeal.NATIVE)
         Appodeal.cache(this, Appodeal.NATIVE)
         Appodeal.setNativeAdType(Native.NativeAdType.Auto)
