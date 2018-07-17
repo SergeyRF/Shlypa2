@@ -56,6 +56,13 @@
         android:background="@color/divider_color"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
+    <android.support.constraint.Group
+        android:id="@+id/groupThemes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="tvThemeTitle, spinnerThemes, view2"/>
+
     <TextView
         android:id="@+id/tvOpenSource"
         android:text="@string/opensource_title"

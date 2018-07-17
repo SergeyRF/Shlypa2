@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fitsSystemWindows">true</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
@@ -63,7 +62,7 @@
     <style name="btNextStyle" >
         <item name="android:textSize">@dimen/text_smoll</item>
         <item name="android:textColor">@color/text_or_icon</item>
-        <item name="android:background">@color/Blue</item>
+        <item name="android:background">?attr/colorPrimary</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

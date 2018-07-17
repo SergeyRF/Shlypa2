@@ -21,7 +21,7 @@ class GameSettingsActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setTheme(this)
+        Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_settings)
 

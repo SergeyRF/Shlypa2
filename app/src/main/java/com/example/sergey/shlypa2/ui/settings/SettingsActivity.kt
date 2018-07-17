@@ -12,7 +12,7 @@ import java.util.*
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setTheme(this)
+        Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
 
         if(supportFragmentManager.findFragmentById(android.R.id.content) == null) {

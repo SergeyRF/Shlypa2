@@ -16,7 +16,7 @@ import com.example.sergey.shlypa2.utils.debug
 class LaunchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setTheme(this)
+        Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
 
         initAppodeal()

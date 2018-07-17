@@ -10,7 +10,6 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.utils.*
-import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_game_result.*
 
@@ -54,7 +53,7 @@ class GameResultActivity : AppCompatActivity() {
     val resultsAdapter = RvAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setTheme(this)
+        Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_result)
 
