@@ -73,7 +73,7 @@ class AppRater {
 
         builder.setPositiveButton(R.string.rate_ok) { dialog, which ->
             editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true)
-            // rateApp(context)
+            rateApp(context)
             dialog.dismiss()
         }
 
@@ -122,7 +122,7 @@ class AppRater {
 
         bt_positive.setOnClickListener {
             editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true)
-            // rateApp(context)
+            rateApp(context)
             dialog.dismiss()
         }
         bt_negative.setOnClickListener {
@@ -144,10 +144,12 @@ class AppRater {
         star_4.setOnClickListener {
             lightStars(4)
             rateApp(context)
+            dialog.dismiss()
         }
         star_5.setOnClickListener {
             lightStars(5)
             rateApp(context)
+            dialog.dismiss()
         }
 
         dialog.show()
