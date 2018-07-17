@@ -1,6 +1,6 @@
 package com.example.sergey.shlypa2
 
-import android.app.Application
+import android.support.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.DbExporter
@@ -14,7 +14,7 @@ import timber.log.Timber
 /**
  * Created by alex on 4/4/18.
  */
-class App : Application() {
+class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

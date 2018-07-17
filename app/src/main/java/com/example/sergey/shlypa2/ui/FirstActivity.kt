@@ -3,11 +3,11 @@ package com.example.sergey.shlypa2.ui
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.crashlytics.android.Crashlytics
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
@@ -15,6 +15,7 @@ import com.example.sergey.shlypa2.ui.fragments.RulesFragment
 import com.example.sergey.shlypa2.ui.fragments.WelcomeFragment
 import com.example.sergey.shlypa2.ui.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.since
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
 
 
@@ -25,7 +26,7 @@ class FirstActivity : AppCompatActivity() {
     var themeId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setTheme(this)
+        Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
 
@@ -48,11 +49,10 @@ class FirstActivity : AppCompatActivity() {
         val r = AppRater()
         r.app_launched(this)
 
-
-
-        if (Functions.getSelectedThemeId(this) != themeId) {
-            recreate()
-            return
+        since(Build.VERSION_CODES.LOLLIPOP) {
+            if (Functions.getSelectedThemeId(this) != themeId) {
+                recreate()
+            }
         }
 
         if (supportFragmentManager.findFragmentById(R.id.containerFirst) == null) {

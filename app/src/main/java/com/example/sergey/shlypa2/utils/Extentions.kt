@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
+import com.example.sergey.shlypa2.BuildConfig
 import org.jetbrains.anko.contentView
 import java.util.*
 
@@ -66,7 +67,15 @@ fun Activity.hideKeyboard() {
     imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
 }
 
+fun View.dimen(id: Int) : Int = resources.getDimensionPixelSize(id)
+
 /**
  * Returns a random element.
  */
 fun <E> List<E>.random(): E? = if (size > 0) get(Random().nextInt(size)) else null
+
+inline fun Any.debug(block : () -> Unit) {
+    if(BuildConfig.DEBUG) {
+        block.invoke()
+    }
+}

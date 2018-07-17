@@ -20,6 +20,9 @@ import android.widget.Toast
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import com.example.sergey.shlypa2.utils.show
+import com.example.sergey.shlypa2.utils.since
 
 
 /**
@@ -47,30 +50,34 @@ class SettingsFragment : Fragment() {
              preferences[Constants.SOUND_ON_PREF] = isChecked
         })
 
-        //Theme setting
-        val themeIds = arrayOf(R.style.AppThemeBlue, R.style.AppThemeCyan, R.style.AppThemeGreen,
-                R.style.AppTheme)
+        since(Build.VERSION_CODES.LOLLIPOP) {
+            //Theme setting
+            val themeIds = arrayOf(R.style.AppThemeBlue, R.style.AppThemeCyan, R.style.AppThemeGreen,
+                    R.style.AppTheme)
 
-        val themeNames = arrayOf(R.string.theme_blue, R.string.theme_cyan,
-                R.string.theme_green, R.string.theme_teal)
-                .map { context!!.getString(it) }
+            val themeNames = arrayOf(R.string.theme_blue, R.string.theme_cyan,
+                    R.string.theme_green, R.string.theme_teal)
+                    .map { context!!.getString(it) }
 
-        val adapter = ArrayAdapter<String>(context!!, android.R.layout.simple_list_item_1,
-               themeNames )
+            val adapter = ArrayAdapter<String>(context!!, android.R.layout.simple_list_item_1,
+                    themeNames )
 
-        spinnerThemes.adapter = adapter
+            spinnerThemes.adapter = adapter
 
-        val currentThemeId = Functions.getSelectedThemeId(context!!)
-        spinnerThemes.setSelection(themeIds.indexOf(currentThemeId))
+            val currentThemeId = Functions.getSelectedThemeId(context!!)
+            spinnerThemes.setSelection(themeIds.indexOf(currentThemeId))
 
-        spinnerThemes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                Functions.selectTheme(themeIds[position], activity!!)
+            spinnerThemes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    Functions.selectTheme(themeIds[position], activity!!)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            groupThemes.show()
         }
 
 

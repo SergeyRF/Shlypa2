@@ -26,7 +26,7 @@ class RoundActivity : AppCompatActivity() {
     private var backPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setTheme(this)
+        Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
 
         supportActionBar?.elevation = 0F

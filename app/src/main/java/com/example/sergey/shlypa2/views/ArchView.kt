@@ -1,14 +1,12 @@
 package com.example.sergey.shlypa2.views
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.utils.Functions
 
 class ArchView @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
@@ -18,7 +16,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
     private val paint = Paint().apply {
         flags = Paint.ANTI_ALIAS_FLAG
-        setShadowLayer(16F, 0f, 0f, ContextCompat.getColor(context,
+        setShadowLayer(Functions.dpToPx(context, 4F), 0f, 0f, ContextCompat.getColor(context,
                 R.color.shadowColor))
     }
 

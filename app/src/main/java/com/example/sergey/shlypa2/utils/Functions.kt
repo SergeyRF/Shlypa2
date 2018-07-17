@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.utils
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.sergey.shlypa2.R
@@ -12,12 +13,20 @@ import java.io.IOException
 import java.text.DateFormat
 import java.util.*
 import android.util.TypedValue
+import com.example.sergey.shlypa2.BuildConfig
 import com.example.sergey.shlypa2.Constants
 
 
 /**
  * Created by alex on 4/17/18.
  */
+
+fun since(version: Int, block: () -> Unit) {
+    if(Build.VERSION.SDK_INT >= version) {
+        block.invoke()
+    }
+}
+
 object Functions {
 
     fun timeToLocalDateWithTime(time: Long, context: Context): String {
@@ -72,7 +81,9 @@ object Functions {
         return result
     }
 
-    fun setTheme(activity: Activity) {
+    fun setThemeApi21(activity: Activity) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return
+
         val preferences = PreferenceHelper.defaultPrefs(activity)
         val themeRes: Int = preferences[Constants.THEME_PREF] ?: R.style.AppTheme
 

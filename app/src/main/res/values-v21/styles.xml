@@ -1,0 +1,80 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppThemeBlue"  parent="AppTheme">
+        <item name="colorPrimary">@color/Blue</item>
+        <item name="colorPrimaryDark">@color/DarkBlue</item>
+        <item name="colorAccent">@color/Blue</item>
+    </style>
+
+    <style name="AppThemeYellow"  parent="AppTheme">
+        <item name="colorPrimary">@color/Yellow</item>
+        <item name="colorPrimaryDark">@color/YellowDark</item>
+        <item name="colorAccent">@color/Yellow</item>
+    </style>
+
+    <style name="AppThemeGreen"  parent="AppTheme">
+        <item name="colorPrimary">@color/Green</item>
+        <item name="colorPrimaryDark">@color/GreenDark</item>
+        <item name="colorAccent">@color/Green</item>
+    </style>
+
+    <style name="AppThemeCyan"  parent="AppTheme">
+        <item name="colorPrimary">@color/Cyan</item>
+        <item name="colorPrimaryDark">@color/CyanDark</item>
+        <item name="colorAccent">@color/Cyan</item>
+    </style>
+
+    <style name="AppThemeIndigo"  parent="AppTheme">
+        <item name="colorPrimary">@color/Indigo</item>
+        <item name="colorPrimaryDark">@color/IndigoDark</item>
+        <item name="colorAccent">@color/Indigo</item>
+    </style>
+
+    <style name="AppThemePurple"  parent="AppTheme">
+        <item name="colorPrimary">@color/Purple</item>
+        <item name="colorPrimaryDark">@color/PurpleDark</item>
+        <item name="colorAccent">@color/PurpleAccent</item>
+    </style>
+
+    <!--start-->
+    <style name="AppTheme.SplashTheme" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
+
+        <!--цвет заставки-->
+        <item name="colorPrimary">@color/Blue</item>
+        <item name="colorPrimaryDark">@color/DarkBlue</item>
+        <item name="colorAccent">@color/Blue</item>
+
+    </style>
+
+    <!--Hyase -->
+    <style name="btNextStyle" >
+        <item name="android:textSize">@dimen/text_smoll</item>
+        <item name="android:textColor">@color/text_or_icon</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Button_welcome">
+        <item name="android:textSize">@dimen/text_smoll</item>
+        <item name="android:textColor">@color/text_or_icon</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:layout_marginBottom">@dimen/medium_margin</item>
+    </style>
+
+
+</resources>

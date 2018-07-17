@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.R.id.*
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
@@ -49,7 +48,7 @@ class WordsInActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setTheme(this)
+        Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_words_in)
 
