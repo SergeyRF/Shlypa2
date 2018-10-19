@@ -6,61 +6,58 @@
     tools:context="com.example.sergey.shlypa2.ui.fragments.TurnStartFragment">
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_TurnTeamName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/civPlayerAvatar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/Teem"
+        android:gravity="center"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_big"
+        />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civPlayerAvatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="@dimen/medium_margin"
-        android:layout_marginLeft="@dimen/medium_margin"
-        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:civ_border_color="@color/LightGray"
         app:civ_border_width="2dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvTurn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/turn_player"
-        android:textColor="@color/primary_text"
         app:layout_constraintBottom_toTopOf="@id/tvTurnPlayerName"
-        app:layout_constraintLeft_toLeftOf="@id/tv_TurnTeamName" />
-
-    <TextView
-        android:id="@+id/tv_TurnTeamName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_marginLeft="@dimen/medium_margin"
-        android:text="@string/Teem"
-        android:textStyle="bold"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
-        app:layout_constraintLeft_toRightOf="@id/civPlayerAvatar"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/civPlayerAvatar" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38"
+        app:layout_constraintWidth_percent="0.50"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
         android:id="@+id/tvTurnPlayerName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:textColor="@color/primary_text"
+        android:layout_marginTop="@dimen/big_margin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btTurnStart"
+        app:layout_constraintTop_toBottomOf="@id/civPlayerAvatar"
+        android:gravity="center"
         android:textSize="@dimen/text_medium"
-        app:layout_constraintBottom_toBottomOf="@id/civPlayerAvatar"
-        app:layout_constraintLeft_toLeftOf="@id/tv_TurnTeamName"
-        tools:text="Name" />
-
+        tools:text="Name"/>
 
     <Button
         android:id="@+id/btTurnStart"
+        android:text="@string/go"
         style="@style/btNextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/go"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -53,7 +53,7 @@ class TurnResultFragment : Fragment() {
 
         val finishBt : Button = root.findViewById(R.id.btFinishTurn)
 
-        finishBt.setOnClickListener{ viewModel.nextTurn() }
+        finishBt.setOnClickListener { viewModel.nextTurn() }
 
         return root
     }

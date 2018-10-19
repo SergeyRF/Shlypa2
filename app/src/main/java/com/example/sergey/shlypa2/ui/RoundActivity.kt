@@ -11,11 +11,15 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.ads.AdsManager
+import com.example.sergey.shlypa2.ads.Interstitial
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.ui.fragments.*
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.google.android.gms.ads.AdListener
 import timber.log.Timber
+typealias Command = RoundViewModel.Command
 
 class RoundActivity : AppCompatActivity() {
 
@@ -23,7 +27,14 @@ class RoundActivity : AppCompatActivity() {
 
     lateinit var dataProvider: DataProvider
 
+
     private var backPressedOnce = false
+    private var interstitial: Interstitial? = null
+    private val adListener = object : AdListener() {
+        override fun onAdClosed() {
+            interstitial?.loadAd()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setThemeApi21(this)
@@ -31,19 +42,30 @@ class RoundActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0F
 
+        if (AdsManager.initialized) {
+            interstitial = AdsManager.getInterstitial(this)
+            interstitial?.loadAd()
+            interstitial?.setAdListener(object : AdListener() {
+                override fun onAdClosed() {
+                    interstitial?.loadAd()
+                }
+            })
+        }
+
         viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)
         dataProvider = DataProvider(applicationContext)
 
         viewModel.commandCallback.observe(this, Observer { command ->
             when (command) {
-                RoundViewModel.Command.GET_READY -> startGetReadyFragment()
-                RoundViewModel.Command.START_TURN -> startGameFragment()
-                RoundViewModel.Command.FINISH_TURN -> startTurnResultFragment()
-                RoundViewModel.Command.SHOW_ROUND_RESULTS -> startRoundResultsFragment()
-                RoundViewModel.Command.START_NEXT_ROUND -> startNextRound()
-                RoundViewModel.Command.SHOW_GAME_RESULTS -> startGameResults()
-                RoundViewModel.Command.SHOW_HINT_TEAM_TABLE -> startHintTeam()
-                RoundViewModel.Command.EXIT -> finish()
+                Command.GET_READY -> startGetReadyFragment()
+                Command.START_TURN -> startGameFragment()
+                Command.FINISH_TURN -> startTurnResultFragment()
+                Command.SHOW_ROUND_RESULTS -> startRoundResultsFragment()
+                Command.START_NEXT_ROUND -> startNextRound()
+                Command.SHOW_GAME_RESULTS -> startGameResults()
+                Command.SHOW_HINT_TEAM_TABLE -> startHintTeam()
+                Command.SHOW_INTERSTITIAL_ADS -> showInterstitial()
+                Command.EXIT -> finish()
             }
         })
 
@@ -130,5 +152,9 @@ class RoundActivity : AppCompatActivity() {
         if (addToBackStack) transaction.addToBackStack(null)
 
         transaction.commit()
+    }
+
+    private fun showInterstitial() {
+        interstitial?.showAd()
     }
 }

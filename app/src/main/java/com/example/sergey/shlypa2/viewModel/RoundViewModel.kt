@@ -171,6 +171,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         round.turnFinished = true
 
         commandCallback.value = Command.FINISH_TURN
+        commandCallback.value = Command.SHOW_INTERSTITIAL_ADS
 
         handler.removeCallbacksAndMessages(null)
     }
@@ -249,6 +250,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         START_NEXT_ROUND,
         SHOW_GAME_RESULTS,
         SHOW_HINT_TEAM_TABLE,
+        SHOW_INTERSTITIAL_ADS,
         EXIT
     }
 
