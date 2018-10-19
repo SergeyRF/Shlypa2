@@ -52,22 +52,6 @@
         app:layout_constraintLeft_toLeftOf="@id/tv_TurnTeamName"
         tools:text="Name" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardAd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="@dimen/medium_margin"
-        android:layout_marginRight="@dimen/medium_margin"
-        app:layout_constraintBottom_toTopOf="@id/btTurnStart">
-
-        <com.appodeal.ads.native_ad.views.NativeAdViewContentStream
-            android:id="@+id/nativeAd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.appodeal.ads.native_ad.views.NativeAdViewContentStream>
-
-    </android.support.v7.widget.CardView>
-
 
     <Button
         android:id="@+id/btTurnStart"
