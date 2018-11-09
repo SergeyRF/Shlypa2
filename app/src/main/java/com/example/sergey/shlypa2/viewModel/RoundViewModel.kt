@@ -58,7 +58,9 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         val gameRound = Game.getRound()
 
         when {
-            Game.state.needToRestore -> loadGameState(Game.state)
+            Game.state.needToRestore -> {
+                loadGameState(Game.state)
+            }
 
             gameRound != null -> {
                 round = gameRound
@@ -66,7 +68,9 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
                 wordLiveData.value = round.getWord()
             }
 
-            else -> loadLastSaved()
+            else -> {
+                loadLastSaved()
+            }
         }
     }
 
@@ -97,7 +101,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         Game.state = state
 
         round = state.currentRound!!
-
+        roundLiveData.value = round
         //Finish round if there's no word
         val word = round.getWord()
         if (word != null) {

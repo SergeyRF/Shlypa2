@@ -76,6 +76,11 @@ class RoundStartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        createAnimation()
+    }
+
+    fun createAnimation(){
+        animated = false
         animation = please {
             animate(tvRoundName) {
                 topOfHisParent(16f)
