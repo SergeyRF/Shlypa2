@@ -10,6 +10,7 @@ import java.io.InputStreamReader
 import android.os.Bundle
 import com.example.sergey.shlypa2.BuildConfig
 import com.google.ads.mediation.admob.AdMobAdapter
+import com.google.gson.JsonObject
 import timber.log.Timber
 
 
@@ -108,16 +109,15 @@ object AdsManager {
 
     private fun loadIds(context: Context): JSONObject {
         val inputStream = context.assets.open("ads.json")
-        val bufferedStream = BufferedReader(InputStreamReader(inputStream))
 
         val builder = StringBuilder()
-        var line = bufferedStream.readLine()
-
-        while (line != null) {
-            builder.append(line)
-            line = bufferedStream.readLine()
+        BufferedReader(InputStreamReader(inputStream)).use {
+            var line = it.readLine()
+            while (line != null) {
+                builder.append(line)
+                line = it.readLine()
+            }
         }
-
         return JSONObject(builder.toString())
     }
 

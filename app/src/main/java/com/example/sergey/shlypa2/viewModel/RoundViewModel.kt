@@ -137,6 +137,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun beginRound() {
+        showAds()
         commandCallback.value = Command.GET_READY
     }
 
@@ -157,6 +158,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private fun showAds() {
+        commandCallback.value = Command.SHOW_INTERSTITIAL_ADS
+    }
+
     fun startTurn() {
         timeLeft = Game.getSettings().time
         wordLiveData.value = round.getWord()
@@ -171,7 +176,6 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         round.turnFinished = true
 
         commandCallback.value = Command.FINISH_TURN
-        commandCallback.value = Command.SHOW_INTERSTITIAL_ADS
 
         handler.removeCallbacksAndMessages(null)
     }
@@ -186,10 +190,11 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         round.turnFinished = false
         round.nextPlayer()
         if (round.getWord() != null) {
-            answeredCountLiveData.value = Pair(0, 0)
+            answeredCountLiveData.value = 0 to 0
             commandCallback.value = Command.GET_READY
         } else {
             rounResultLiveData.value = Game.getRoundResults()
+            showAds()
             commandCallback.value = Command.SHOW_ROUND_RESULTS
         }
 
