@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -33,9 +34,12 @@ class TurnStartFragment : Fragment() {
         val playerAvatar: CircleImageView = root.findViewById(R.id.civPlayerAvatar)
         val teamName: TextView = root.findViewById(R.id.tv_TurnTeamName)
 
-        teamName.text = viewModel.getTeam()
-
-        playerTv.text = viewModel.getPlayer().name
+        viewModel.roundLiveData.observe(this, Observer {round ->
+             round?.let {
+                 teamName.text = it.currentTeam.name
+                 playerTv.text = it.getPlayer().name
+             }
+        })
         startButton.setOnClickListener { viewModel.startTurn() }
 
         Picasso.get()
