@@ -34,17 +34,16 @@ class TurnStartFragment : Fragment() {
         val playerAvatar: CircleImageView = root.findViewById(R.id.civPlayerAvatar)
         val teamName: TextView = root.findViewById(R.id.tv_TurnTeamName)
 
-        viewModel.roundLiveData.observe(this, Observer {round ->
-             round?.let {
-                 teamName.text = it.currentTeam.name
-                 playerTv.text = it.getPlayer().name
-             }
+        viewModel.roundLiveData.observe(this, Observer { round ->
+            round?.let {
+                teamName.text = it.currentTeam.name
+                playerTv.text = it.getPlayer().name
+                Picasso.get()
+                        .load(Functions.imageNameToUrl("player_avatars/large/${it.getPlayer().avatar}"))
+                        .into(playerAvatar)
+            }
         })
         startButton.setOnClickListener { viewModel.startTurn() }
-
-        Picasso.get()
-                .load(Functions.imageNameToUrl("player_avatars/large/${viewModel.getPlayer().avatar}"))
-                .into(playerAvatar)
 
         return root
     }
