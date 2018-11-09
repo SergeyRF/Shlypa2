@@ -9,7 +9,6 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Game.state
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.Round
 import com.example.sergey.shlypa2.game.TeamWithScores
@@ -213,13 +212,13 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         handler.removeCallbacksAndMessages(null)
     }
 
-    fun saveGameState() {
-        doAsync {
-            dataProvider.insertState(Game.state)
-        }
-    }
+    fun saveGameState() =
+            doAsync {
+                dataProvider.insertState(Game.state)
+            }
 
-    fun portionClear() {
+
+    fun portionClear(unit: Unit) {
         Game.portionClear()
     }
 

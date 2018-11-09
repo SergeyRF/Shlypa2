@@ -18,7 +18,10 @@ import com.example.sergey.shlypa2.ui.fragments.*
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import com.google.android.gms.ads.AdListener
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import timber.log.Timber
+
 typealias Command = RoundViewModel.Command
 
 class RoundActivity : AppCompatActivity() {
@@ -84,9 +87,12 @@ class RoundActivity : AppCompatActivity() {
             super.onBackPressed()
         } else {
             if (backPressedOnce) {
-                viewModel.saveGameState()
-                viewModel.portionClear()
-                finish()
+                doAsync {
+                    viewModel.portionClear(viewModel.saveGameState().get())
+                    uiThread {
+                        finish()
+                    }
+                }
             } else {
                 backPressedOnce = true
                 Toast.makeText(this, R.string.press_more_to_finish_game, Toast.LENGTH_LONG).show()
