@@ -52,7 +52,7 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun getNeedWordsLive() : LiveData<Boolean> {
+    fun getNeedWordsLive(): LiveData<Boolean> {
         needWord.value = needWord()
         return needWord
     }
@@ -63,10 +63,10 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun needWordSize():Int =  Game.getSettings().word - words.size
+    fun needWordSize(): Int = Game.getSettings().word - words.size
 
 
-    fun randomAllowed():Boolean = Game.getSettings().allowRandomWords
+    fun randomAllowed(): Boolean = Game.getSettings().allowRandomWords
 
     fun getPlayerLiveData(): LiveData<Player> {
         return playerLivaData
@@ -79,7 +79,7 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
         updateData()
     }
 
-    fun reNameWord(word:Word){
+    fun reNameWord(word: Word) {
         word.type = WordType.USER
     }
 
@@ -109,16 +109,24 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
         randomWords.addAll(unicWords)
     }
 
-    fun deleteWord(word:Word){
+    fun deleteWord(word: Word) {
         words.remove(word)
         updateData()
     }
 
-    fun newRandomWord(word:Word){
-        if(randomWords.isEmpty()) loadRandomWords()
-
-        words[words.indexOf(word)] = randomWords.poll()
-        updateData()
+    fun newRandomWord(word: Word) {
+        if (randomWords.isEmpty()) {
+            doAsync {
+                loadRandomWords()
+                words[words.indexOf(word)] = randomWords.poll()
+                uiThread {
+                    updateData()
+                }
+            }
+        } else {
+            words[words.indexOf(word)] = randomWords.poll()
+            updateData()
+        }
     }
 
     private fun updateData() {
