@@ -1,23 +1,18 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
-import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
-import com.appodeal.ads.Appodeal
-import com.appodeal.ads.NativeAd
-import com.appodeal.ads.NativeCallbacks
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.fragment_turn_start.*
-import timber.log.Timber
 
 
 /**
@@ -39,14 +34,16 @@ class TurnStartFragment : Fragment() {
         val playerAvatar: CircleImageView = root.findViewById(R.id.civPlayerAvatar)
         val teamName: TextView = root.findViewById(R.id.tv_TurnTeamName)
 
-        teamName.text = viewModel.getTeam()
-
-        playerTv.text = viewModel.getPlayer().name
+        viewModel.roundLiveData.observe(this, Observer { round ->
+            round?.let {
+                teamName.text = it.currentTeam.name
+                playerTv.text = it.getPlayer().name
+                Picasso.get()
+                        .load(Functions.imageNameToUrl("player_avatars/large/${it.getPlayer().avatar}"))
+                        .into(playerAvatar)
+            }
+        })
         startButton.setOnClickListener { viewModel.startTurn() }
-
-        Picasso.get()
-                .load(Functions.imageNameToUrl("player_avatars/large/${viewModel.getPlayer().avatar}"))
-                .into(playerAvatar)
 
         return root
     }
@@ -65,32 +62,4 @@ class TurnStartFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-        Appodeal.setNativeCallbacks(object : NativeCallbacks {
-            override fun onNativeLoaded() {
-                Timber.d("On native loaded")
-            }
-
-            override fun onNativeFailedToLoad() {
-                Timber.d("On native failed to load")
-            }
-
-            override fun onNativeShown(nativeAd: NativeAd) {
-                Timber.d("On native shown")
-                Appodeal.cache(activity as Activity, Appodeal.NATIVE, 1)
-            }
-
-            override fun onNativeClicked(nativeAd: NativeAd) {
-                Timber.d("On native clicked")
-            }
-        })
-
-        val nativeAds = Appodeal.getNativeAds(1)
-        nativeAds.getOrNull(0)?.let {
-            nativeAd.setNativeAd(it)
-        }
-
-
-    }
 }

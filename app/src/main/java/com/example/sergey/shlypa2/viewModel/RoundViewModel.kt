@@ -9,7 +9,6 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.Game.state
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.Round
 import com.example.sergey.shlypa2.game.TeamWithScores
@@ -26,6 +25,10 @@ import timber.log.Timber
  * Created by alex on 4/3/18.
  */
 class RoundViewModel(application: Application) : AndroidViewModel(application) {
+
+    companion object {
+        private const val ADS_TIME_LIMIT = 10 * 60 * 1000
+    }
 
     private val dataProvider = DataProvider(application)
     private var soundManager: SoundManager? = null
@@ -47,6 +50,8 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     private var roundFinished = false
     private var turnFinished = false
 
+    private var adsShowedTime = System.currentTimeMillis()
+
     val handler = Handler()
 
     init {
@@ -59,7 +64,9 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         val gameRound = Game.getRound()
 
         when {
-            Game.state.needToRestore -> loadGameState(Game.state)
+            Game.state.needToRestore -> {
+                loadGameState(Game.state)
+            }
 
             gameRound != null -> {
                 round = gameRound
@@ -67,7 +74,9 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
                 wordLiveData.value = round.getWord()
             }
 
-            else -> loadLastSaved()
+            else -> {
+                loadLastSaved()
+            }
         }
     }
 
@@ -98,7 +107,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         Game.state = state
 
         round = state.currentRound!!
-
+        roundLiveData.value = round
         //Finish round if there's no word
         val word = round.getWord()
         if (word != null) {
@@ -116,9 +125,6 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
             commandCallback.value = Command.GET_READY
         }
     }
-
-    fun getPlayer() = round.getPlayer()
-    fun getTeam() = round.currentTeam.name
 
     fun answerWord(answer: Boolean) {
         round.answer(answer)
@@ -157,6 +163,10 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private fun showAds() {
+        commandCallback.value = Command.SHOW_INTERSTITIAL_ADS
+    }
+
     fun startTurn() {
         timeLeft = Game.getSettings().time
         wordLiveData.value = round.getWord()
@@ -175,25 +185,30 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         handler.removeCallbacksAndMessages(null)
     }
 
-    fun getTurnResults(): List<Word> {
-        return round.wordsAnsweredByPlayer
-    }
-
     fun nextTurn() {
         saveGameState()
 
         round.turnFinished = false
         round.nextPlayer()
         if (round.getWord() != null) {
-            answeredCountLiveData.value = Pair(0, 0)
+            answeredCountLiveData.value = 0 to 0
             commandCallback.value = Command.GET_READY
+            showTimeAds()
         } else {
             rounResultLiveData.value = Game.getRoundResults()
+            showAds()
             commandCallback.value = Command.SHOW_ROUND_RESULTS
         }
 
         //Just for debug
         round.printHatContaining()
+    }
+
+    private fun showTimeAds() {
+        if(System.currentTimeMillis() > adsShowedTime + ADS_TIME_LIMIT) {
+            adsShowedTime = System.currentTimeMillis()
+            showAds()
+        }
     }
 
     fun startTimer() {
@@ -207,13 +222,13 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         handler.removeCallbacksAndMessages(null)
     }
 
-    fun saveGameState() {
-        doAsync {
-            dataProvider.insertState(Game.state)
-        }
-    }
+    fun saveGameState() =
+            doAsync {
+                dataProvider.insertState(Game.state)
+            }
 
-    fun portionClear() {
+
+    fun portionClear(unit: Unit) {
         Game.portionClear()
     }
 
@@ -249,6 +264,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         START_NEXT_ROUND,
         SHOW_GAME_RESULTS,
         SHOW_HINT_TEAM_TABLE,
+        SHOW_INTERSTITIAL_ADS,
         EXIT
     }
 

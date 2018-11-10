@@ -96,7 +96,12 @@ class PlayersFragment : Fragment() {
         etName.setOnEditorActionListener { v, actionId, event ->
             if (this.isResumed/* strange error */ && actionId == EditorInfo.IME_ACTION_NEXT) {
                 // обработка нажатия Enter
-                addPlayer()
+                try {
+                    addPlayer()
+                }catch (exeption:Exception){
+                    Timber.e(exeption)
+                }
+
                 true
             } else true
         }

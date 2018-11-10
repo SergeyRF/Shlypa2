@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.github.florent37.kotlin.pleaseanimate.PleaseAnim
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -22,25 +23,7 @@ import kotlinx.android.synthetic.main.fragment_round_start.*
  */
 class RoundStartFragment : Fragment() {
 
-    val animation by lazy {
-        please {
-            animate(tvRoundName) {
-                topOfHisParent(16f)
-                leftOfHisParent(16f)
-            }
-
-            animate(civRulesAvatar) {
-                topOfHisParent(16f)
-                rightOfHisParent(16f)
-                scale(0.3f, 0.3f)
-            }
-
-            animate(tvRoundRules) {
-                belowOf(civRulesAvatar, 16f)
-                visible()
-            }
-        }
-    }
+    lateinit var animation:PleaseAnim
 
     var animated = false
     lateinit var viewModel: RoundViewModel
@@ -68,7 +51,6 @@ class RoundStartFragment : Fragment() {
             }
         })
 
-
         btGo.setOnClickListener { viewModel.beginRound() }
 
         rulesAvatar.setOnClickListener {
@@ -90,6 +72,32 @@ class RoundStartFragment : Fragment() {
         }.start()
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        createAnimation()
+    }
+
+    fun createAnimation(){
+        animated = false
+        animation = please {
+            animate(tvRoundName) {
+                topOfHisParent(16f)
+                leftOfHisParent(16f)
+            }
+
+            animate(civRulesAvatar) {
+                topOfHisParent(16f)
+                rightOfHisParent(16f)
+                scale(0.3f, 0.3f)
+            }
+
+            animate(tvRoundRules) {
+                belowOf(civRulesAvatar, 16f)
+                visible()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

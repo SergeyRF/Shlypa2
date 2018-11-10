@@ -21,7 +21,7 @@ class Round(words: List<Word>) {
 
     var results: MutableMap<Long, Int> = mutableMapOf()
 
-    var currentTeam: Team = Game.getCurrentTeam()
+    var currentTeam: Team =  Game.getCurrentTeam()
     var currentPlayer: Player = currentTeam.getPlayer()
 
     private var currentWord: Word? = null

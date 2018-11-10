@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2
 
 import android.support.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
+import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferenceHelper
@@ -25,6 +26,7 @@ class App : MultiDexApplication() {
             Timber.plant(TimberReleaseTree())
         }
 
+        AdsManager.initAds(this)
         val namesArray = resources.getStringArray(R.array.teams)
         Game.teamNames = namesArray.toMutableList()
 
