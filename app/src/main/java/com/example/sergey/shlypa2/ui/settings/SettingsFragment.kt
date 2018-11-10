@@ -92,7 +92,7 @@ class SettingsFragment : Fragment() {
         }
 
         viewPrivacyBack.setOnClickListener {
-            openWebPage("https://hatproject-2535f.firebaseapp.com/")
+            openWebPage("https://hatproject-2535f.firebaseapp.com/hat_en.html")
         }
     }
 
