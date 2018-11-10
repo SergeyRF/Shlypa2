@@ -120,9 +120,6 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun getPlayer() = round.getPlayer()
-    fun getTeam() = round.currentTeam.name
-
     fun answerWord(answer: Boolean) {
         round.answer(answer)
 
@@ -181,10 +178,6 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         commandCallback.value = Command.FINISH_TURN
 
         handler.removeCallbacksAndMessages(null)
-    }
-
-    fun getTurnResults(): List<Word> {
-        return round.wordsAnsweredByPlayer
     }
 
     fun nextTurn() {
