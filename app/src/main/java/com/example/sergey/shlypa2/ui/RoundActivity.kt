@@ -33,11 +33,6 @@ class RoundActivity : AppCompatActivity() {
 
     private var backPressedOnce = false
     private var interstitial: Interstitial? = null
-    private val adListener = object : AdListener() {
-        override fun onAdClosed() {
-            interstitial?.loadAd()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setThemeApi21(this)

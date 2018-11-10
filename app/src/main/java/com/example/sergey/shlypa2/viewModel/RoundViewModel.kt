@@ -26,6 +26,10 @@ import timber.log.Timber
  */
 class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
+    companion object {
+        private const val ADS_TIME_LIMIT = 10 * 60 * 1000
+    }
+
     private val dataProvider = DataProvider(application)
     private var soundManager: SoundManager? = null
 
@@ -45,6 +49,8 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
     private var roundFinished = false
     private var turnFinished = false
+
+    private var adsShowedTime = System.currentTimeMillis()
 
     val handler = Handler()
 
@@ -137,7 +143,6 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun beginRound() {
-        showAds()
         commandCallback.value = Command.GET_READY
     }
 
@@ -188,6 +193,7 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
         if (round.getWord() != null) {
             answeredCountLiveData.value = 0 to 0
             commandCallback.value = Command.GET_READY
+            showTimeAds()
         } else {
             rounResultLiveData.value = Game.getRoundResults()
             showAds()
@@ -196,6 +202,13 @@ class RoundViewModel(application: Application) : AndroidViewModel(application) {
 
         //Just for debug
         round.printHatContaining()
+    }
+
+    private fun showTimeAds() {
+        if(System.currentTimeMillis() > adsShowedTime + ADS_TIME_LIMIT) {
+            adsShowedTime = System.currentTimeMillis()
+            showAds()
+        }
     }
 
     fun startTimer() {

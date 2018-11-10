@@ -104,7 +104,11 @@ object AdsManager {
             builder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
         }
 
-        return Interstitial(context, INTERSTITIAL_TEST_ID, builder.build())
+        interstitialId?.let {
+            return Interstitial(context, it, builder.build())
+        } ?: kotlin.run {
+            return null
+        }
     }
 
     private fun loadIds(context: Context): JSONObject {
