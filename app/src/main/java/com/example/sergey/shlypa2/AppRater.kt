@@ -11,9 +11,6 @@ import android.widget.Button
 import android.widget.ImageView
 
 
-/**
- * Created by sergey on 5/1/18.
- */
 class AppRater {
 
     companion object {
@@ -52,38 +49,6 @@ class AppRater {
         }
 
         editor.apply()
-    }
-
-    fun showRateDialog(context: Context) {
-        val builder = AlertDialog.Builder(context)
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
-
-        builder.setTitle(R.string.rate)
-        builder.setMessage(R.string.rate_massage)
-
-        builder.setNeutralButton(R.string.rate_last) { dialog, which ->
-            editor.putLong(Constants.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply()
-            dialog.dismiss()
-        }
-
-        builder.setNegativeButton(R.string.rate_never) { dialog, which ->
-            editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true).apply()
-            dialog.dismiss()
-        }
-
-        builder.setPositiveButton(R.string.rate_ok) { dialog, which ->
-            editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true)
-            rateApp(context)
-            dialog.dismiss()
-        }
-
-        builder.setOnCancelListener {
-            editor.putLong(Constants.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply()
-        }
-
-
-        builder.show()
-
     }
 
     fun showRateDialogMy(context: Context) {

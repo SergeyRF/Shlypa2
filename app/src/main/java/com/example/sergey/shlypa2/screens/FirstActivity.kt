@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui
+package com.example.sergey.shlypa2.screens
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.screens.players.PlayersActivity
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
 import com.example.sergey.shlypa2.ui.fragments.RulesFragment
 import com.example.sergey.shlypa2.ui.fragments.WelcomeFragment

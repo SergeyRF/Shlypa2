@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui
+package com.example.sergey.shlypa2.screens.players
 
 import android.app.FragmentTransaction
 import android.arch.lifecycle.Observer
@@ -7,8 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.sergey.shlypa2.RvAdapter
-import com.example.sergey.shlypa2.ui.fragments.PlayersFragment
-import com.example.sergey.shlypa2.ui.fragments.TeamsFragment
+import com.example.sergey.shlypa2.ui.GameSettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 

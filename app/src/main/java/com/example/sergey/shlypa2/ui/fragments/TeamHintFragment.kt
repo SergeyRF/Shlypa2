@@ -12,14 +12,7 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import kotlinx.android.synthetic.main.fragment_team_hint.*
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [TeamHintFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [TeamHintFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class TeamHintFragment : Fragment() {
 
 

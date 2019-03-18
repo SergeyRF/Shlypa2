@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui
+package com.example.sergey.shlypa2.screens.splash
 
 /**
  * Created by sergey on 4/25/18.
@@ -7,6 +7,7 @@ package com.example.sergey.shlypa2.ui
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.example.sergey.shlypa2.screens.FirstActivity
 import com.example.sergey.shlypa2.utils.Functions
 
 

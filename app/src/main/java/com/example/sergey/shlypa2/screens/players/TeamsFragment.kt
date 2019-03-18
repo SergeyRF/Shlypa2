@@ -1,10 +1,9 @@
-package com.example.sergey.shlypa2.ui.fragments
+package com.example.sergey.shlypa2.screens.players
 
 
 import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.PointF
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -166,13 +165,13 @@ class TeamsFragment : Fragment() {
     private fun globalListentrForSpotl() {
         val preference = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
-        if (preference.getBoolean(TeamsFragment.PLAYING_HINT, true)) {
+        if (preference.getBoolean(PLAYING_HINT, true)) {
 
             view!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     view!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     spotl()
-                    editor.putBoolean(TeamsFragment.PLAYING_HINT, false).apply()
+                    editor.putBoolean(PLAYING_HINT, false).apply()
                 }
             })
         }

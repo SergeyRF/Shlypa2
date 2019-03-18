@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.fragments
+package com.example.sergey.shlypa2.screens.players
 
 
 import android.arch.lifecycle.Observer
@@ -113,7 +113,7 @@ class PlayersFragment : Fragment() {
 
 
         civPlayerAvatar.setOnClickListener {
-            val dialog = AvatarSelectDialog(context!!, viewModel.listOfAvatars)
+            val dialog = AvatarSelectDialog(requireContext(), viewModel.listOfAvatars)
             dialog.onSelect = dialogOnSelect
             dialog.show()
         }

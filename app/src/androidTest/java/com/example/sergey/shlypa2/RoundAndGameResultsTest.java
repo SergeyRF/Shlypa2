@@ -14,7 +14,7 @@ import com.example.sergey.shlypa2.game.Game;
 import com.example.sergey.shlypa2.game.Round;
 import com.example.sergey.shlypa2.game.TeamWithScores;
 import com.example.sergey.shlypa2.testUtils.Utils;
-import com.example.sergey.shlypa2.ui.FirstActivity;
+import com.example.sergey.shlypa2.screens.FirstActivity;
 import com.example.sergey.shlypa2.ui.RoundActivity;
 
 import org.junit.Rule;
