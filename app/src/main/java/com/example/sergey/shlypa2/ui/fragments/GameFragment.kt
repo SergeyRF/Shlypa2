@@ -3,11 +3,11 @@ package com.example.sergey.shlypa2.ui.fragments
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +28,7 @@ import timber.log.Timber
 /**
  * A simple [Fragment] subclass.
  */
-class GameFragment : Fragment() {
+class GameFragment : androidx.fragment.app.Fragment() {
 
 
     lateinit var viewModel: RoundViewModel

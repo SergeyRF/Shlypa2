@@ -1,6 +1,6 @@
 package com.example.sergey.shlypa2
 
-import android.support.multidex.MultiDexApplication
+import androidx.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.game.Game

@@ -1,6 +1,6 @@
 package com.example.sergey.shlypa2.db
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.game.WordType
 

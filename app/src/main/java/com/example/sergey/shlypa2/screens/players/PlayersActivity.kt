@@ -1,11 +1,11 @@
 package com.example.sergey.shlypa2.screens.players
 
-import android.app.FragmentTransaction
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.ui.GameSettingsActivity
 import com.example.sergey.shlypa2.utils.Functions

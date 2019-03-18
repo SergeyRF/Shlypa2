@@ -1,6 +1,6 @@
 package com.example.sergey.shlypa2
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.*
 import com.example.sergey.shlypa2.beans.Player
@@ -22,7 +22,7 @@ import timber.log.Timber
  * Created by alex on 4/4/18.
  */
 
-abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view) {
+abstract class BaseHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
     var listener: ((Any) -> Unit)? = null
     var listenerTwo: ((Any) -> Unit)? = null
     var listenerThree: ((Any) -> Unit)? = null

@@ -2,8 +2,8 @@ package com.example.sergey.shlypa2.ui.dialogs
 
 import android.app.Dialog
 import android.content.Context
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.Window
 import android.view.WindowManager
 import com.example.sergey.shlypa2.R
@@ -24,8 +24,8 @@ class AvatarSelectDialog(val context: Context, val images: List<String>) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_avatar_select)
 
-        val rv: RecyclerView = dialog.findViewById(R.id.rvAvatarDialog)
-        val gridLayout = GridLayoutManager(context, 4)
+        val rv: androidx.recyclerview.widget.RecyclerView = dialog.findViewById(R.id.rvAvatarDialog)
+        val gridLayout = androidx.recyclerview.widget.GridLayoutManager(context, 4)
         rv.layoutManager = gridLayout
 
         val adapter = RvImageAdapter()

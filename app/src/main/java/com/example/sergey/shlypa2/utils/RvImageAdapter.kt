@@ -1,6 +1,6 @@
 package com.example.sergey.shlypa2.utils
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.holder_image.view.*
 /**
  * Created by alex on 4/21/18.
  */
-class RvImageAdapter() : RecyclerView.Adapter<ImageHolder>(){
+class RvImageAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<ImageHolder>(){
 
     private var data : List<String>? = null
 
@@ -39,7 +39,7 @@ class RvImageAdapter() : RecyclerView.Adapter<ImageHolder>(){
     }
 }
 
-class ImageHolder(val view : View) : RecyclerView.ViewHolder(view) {
+class ImageHolder(val view : View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
     val iv : ImageView = view.findViewById(R.id.ivImageDialog)
 
     var listener: ((String) -> Unit)? = null

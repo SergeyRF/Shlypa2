@@ -1,14 +1,14 @@
 package com.example.sergey.shlypa2.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.PersistableBundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.AdsManager
@@ -145,9 +145,9 @@ class RoundActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun startFragment(fragment: Fragment, addToBackStack: Boolean = false) {
+    private fun startFragment(fragment: androidx.fragment.app.Fragment, addToBackStack: Boolean = false) {
         val transaction = supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .setTransition(androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(android.R.id.content, fragment)
 
         if (addToBackStack) transaction.addToBackStack(null)

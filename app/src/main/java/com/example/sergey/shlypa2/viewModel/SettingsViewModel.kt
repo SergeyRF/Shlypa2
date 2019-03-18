@@ -1,7 +1,7 @@
 package com.example.sergey.shlypa2.viewModel
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import androidx.lifecycle.AndroidViewModel
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.SettingsProviderImpl
 import com.example.sergey.shlypa2.game.WordType

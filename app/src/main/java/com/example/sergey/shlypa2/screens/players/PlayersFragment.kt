@@ -1,13 +1,13 @@
 package com.example.sergey.shlypa2.screens.players
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.preference.PreferenceManager
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
@@ -30,7 +30,7 @@ import timber.log.Timber
 /**
  * A simple [Fragment] subclass.
  */
-class PlayersFragment : Fragment() {
+class PlayersFragment : androidx.fragment.app.Fragment() {
 
     lateinit var adapter: RvAdapter
     lateinit var viewModel: PlayersViewModel
@@ -55,7 +55,7 @@ class PlayersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val linLayout = LinearLayoutManager(context)
+        val linLayout = androidx.recyclerview.widget.LinearLayoutManager(context)
         linLayout.stackFromEnd = true
         linLayout.reverseLayout = true
 

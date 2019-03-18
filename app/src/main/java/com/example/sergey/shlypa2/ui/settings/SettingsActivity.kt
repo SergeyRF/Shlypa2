@@ -1,8 +1,8 @@
 package com.example.sergey.shlypa2.ui.settings
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.artitk.licensefragment.model.License
 import com.artitk.licensefragment.model.LicenseType
 import com.artitk.licensefragment.support.v4.RecyclerViewLicenseFragment
@@ -39,7 +39,7 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
     }
 
-    fun createLicenseFragment() : Fragment {
+    fun createLicenseFragment() : androidx.fragment.app.Fragment {
         val fragment = RecyclerViewLicenseFragment.newInstance()
         val licenses = ArrayList<License>()
         licenses.add(License(this, "Support Library", LicenseType.APACHE_LICENSE_20, "2016", "Android Open Source Project"))

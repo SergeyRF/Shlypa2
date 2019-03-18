@@ -1,12 +1,12 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +25,7 @@ import timber.log.Timber
 /**
  * A simple [Fragment] subclass.
  */
-class RoundResultFragment : Fragment() {
+class RoundResultFragment : androidx.fragment.app.Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +49,7 @@ class RoundResultFragment : Fragment() {
             adapter.setData(it)
         })
 
-        val rvTeams : RecyclerView = root.findViewById(R.id.rvRoundResult)
+        val rvTeams : androidx.recyclerview.widget.RecyclerView = root.findViewById(R.id.rvRoundResult)
         rvTeams.layoutManager = PrecaheLayoutManager(context)
         rvTeams.adapter = adapter
 

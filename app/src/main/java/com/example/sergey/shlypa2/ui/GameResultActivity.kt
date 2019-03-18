@@ -3,8 +3,8 @@ package com.example.sergey.shlypa2.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
@@ -71,7 +71,7 @@ class GameResultActivity : AppCompatActivity() {
 
         tv_winner.text = tm?.team?.name ?: "Unknown"
 
-        rvGameResults.layoutManager = LinearLayoutManager(this)
+        rvGameResults.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         rvGameResults.adapter = resultsAdapter
         btCreateNewGame.setOnClickListener {
             startActivity(Intent(this, FirstActivity::class.java))

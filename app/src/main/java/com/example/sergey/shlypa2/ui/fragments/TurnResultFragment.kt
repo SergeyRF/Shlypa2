@@ -1,11 +1,11 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,10 +23,10 @@ import com.example.sergey.shlypa2.viewModel.RoundViewModel
 /**
  * A simple [Fragment] subclass.
  */
-class TurnResultFragment : Fragment() {
+class TurnResultFragment : androidx.fragment.app.Fragment() {
 
     lateinit var viewModel: RoundViewModel
-    lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

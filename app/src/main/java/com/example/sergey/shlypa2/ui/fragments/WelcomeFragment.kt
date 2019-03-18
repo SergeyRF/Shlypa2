@@ -1,9 +1,9 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
 /**
  * A simple [Fragment] subclass.
  */
-class WelcomeFragment : Fragment() {
+class WelcomeFragment : androidx.fragment.app.Fragment() {
 
     lateinit var viewModel: WelcomeViewModel
 

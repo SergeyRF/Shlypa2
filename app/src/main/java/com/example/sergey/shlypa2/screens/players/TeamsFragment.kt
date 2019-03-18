@@ -2,12 +2,12 @@ package com.example.sergey.shlypa2.screens.players
 
 
 import android.app.Dialog
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.preference.PreferenceManager
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_teams.*
 /**
  * A simple [Fragment] subclass.
  */
-class TeamsFragment : Fragment() {
+class TeamsFragment : androidx.fragment.app.Fragment() {
 
     lateinit var viewModel: PlayersViewModel
     lateinit var adapterTeam: RvAdapter

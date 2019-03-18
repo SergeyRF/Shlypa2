@@ -1,10 +1,10 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
@@ -18,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 /**
  * A simple [Fragment] subclass.
  */
-class TurnStartFragment : Fragment() {
+class TurnStartFragment : androidx.fragment.app.Fragment() {
 
     lateinit var viewModel: RoundViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
