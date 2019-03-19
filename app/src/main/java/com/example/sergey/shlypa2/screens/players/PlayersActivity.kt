@@ -12,18 +12,18 @@ import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.ui.GameSettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayersActivity : AppCompatActivity() {
 
     lateinit var adapter: RvAdapter
 
-    lateinit var viewModel: PlayersViewModel
+    val viewModel by viewModel<PlayersViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(PlayersViewModel::class.java)
         viewModel.commandLiveData.observe(this, Observer { command ->
             if (command != null) onCommand(command)
         })

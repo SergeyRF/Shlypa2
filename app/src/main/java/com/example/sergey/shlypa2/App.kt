@@ -3,12 +3,14 @@ package com.example.sergey.shlypa2
 import androidx.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.example.sergey.shlypa2.ads.AdsManager
+import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.TimberDebugTree
 import com.example.sergey.shlypa2.utils.TimberReleaseTree
+import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
 
@@ -19,6 +21,8 @@ class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+        startKoin(this, listOf(appModule))
 
         if (BuildConfig.DEBUG) {
             Timber.plant(TimberDebugTree())

@@ -27,6 +27,7 @@ import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_players.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 
@@ -35,7 +36,7 @@ import timber.log.Timber
  */
 class PlayersFragment : androidx.fragment.app.Fragment() {
 
-    lateinit var viewModel: PlayersViewModel
+    val viewModel by sharedViewModel<PlayersViewModel>()
     private val playersAdapter = FlexibleAdapter(emptyList(), this)
 
     companion object {
@@ -50,8 +51,6 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         // Inflate the layout for this fragment
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-
-        viewModel = ViewModelProviders.of(requireActivity()).get(PlayersViewModel::class.java)
 
         return inflater.inflate(R.layout.fragment_players, container, false)
     }
@@ -79,7 +78,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         etName.setOnEditorActionListener { v, actionId, event ->
             if (this.isResumed/* strange error */ && actionId == EditorInfo.IME_ACTION_NEXT) {
                 // обработка нажатия Enter
-                kotlin.runCatching {
+                runCatching {
                     addPlayer()
                 }.onFailure {
                     Timber.e(it)

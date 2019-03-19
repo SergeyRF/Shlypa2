@@ -22,6 +22,7 @@ import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
 import kotlinx.android.synthetic.main.fragment_teams.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 /**
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_teams.*
  */
 class TeamsFragment : androidx.fragment.app.Fragment() {
 
-    lateinit var viewModel: PlayersViewModel
+    val viewModel by sharedViewModel<PlayersViewModel>()
     lateinit var adapterTeam: RvAdapter
 
     companion object {
@@ -39,9 +40,6 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        // Inflate the layout for this fragment
-        viewModel = ViewModelProviders.of(activity!!).get(PlayersViewModel::class.java)
-
         return inflater.inflate(R.layout.fragment_teams, container, false)
     }
 
