@@ -1,9 +1,8 @@
 package com.example.sergey.shlypa2
 
-import android.app.Instrumentation
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.viewModel.PlayersViewModel
+import com.example.sergey.shlypa2.screens.players.PlayersViewModel
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

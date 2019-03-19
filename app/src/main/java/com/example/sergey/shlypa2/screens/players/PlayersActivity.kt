@@ -1,7 +1,6 @@
 package com.example.sergey.shlypa2.screens.players
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -11,7 +10,6 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.ui.GameSettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayersActivity : AppCompatActivity() {

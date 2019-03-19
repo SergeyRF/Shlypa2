@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.viewModel
+package com.example.sergey.shlypa2.screens.players
 
 import android.app.Application
 import android.widget.Toast

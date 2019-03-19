@@ -2,7 +2,6 @@ package com.example.sergey.shlypa2.screens.players
 
 
 import android.app.Dialog
-import androidx.lifecycle.Observer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
@@ -19,7 +18,6 @@ import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.screens.players.adapter.ItemTeam
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
-import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
 import eu.davidea.flexibleadapter.FlexibleAdapter
