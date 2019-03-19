@@ -3,7 +3,6 @@ package com.example.sergey.shlypa2.screens.players
 
 import android.app.Dialog
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
@@ -16,11 +15,14 @@ import android.widget.EditText
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Team
+import com.example.sergey.shlypa2.extensions.observeSafe
+import com.example.sergey.shlypa2.screens.players.adapter.ItemTeam
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
+import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_teams.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -32,6 +34,7 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
 
     val viewModel by sharedViewModel<PlayersViewModel>()
     lateinit var adapterTeam: RvAdapter
+    private val teamAdapter = FlexibleAdapter(emptyList(), this)
 
     companion object {
         const val PLAYING_HINT = "playing_hint"
@@ -45,22 +48,15 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getTeamsLiveData().observe(this, Observer { list -> setTeemRv(list) })
+        viewModel.getTeamsLiveData().observeSafe(this) { teams -> onTeams(teams)}
         viewModel.initTeams()
 
         btNextWords.setOnClickListener {
             viewModel.startSettings()
         }
 
-        adapterTeam = RvAdapter()
-        val layoutManager = PrecaheLayoutManager(context)
-        rvTeams.layoutManager = layoutManager
-
-        rvTeams.adapter = adapterTeam
-
-        adapterTeam.listener = { team: Any ->
-            dialog(team as Team)
-        }
+        rvTeams.layoutManager = PrecaheLayoutManager(context)
+        rvTeams.adapter = teamAdapter
 
         fabAddTeam.setOnClickListener {
             viewModel.addTeam()
@@ -82,8 +78,8 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
         globalListentrForSpotl()
     }
 
-    private fun dialog(team: Team) {
-        val dialog = Dialog(context)
+    private fun showTeamRenameDialog(team: Team) {
+        val dialog = Dialog(requireContext())
 
         dialog.setContentView(R.layout.dialog_edit_text)
         val etTeemD = dialog.findViewById<EditText>(R.id.etDialog)
@@ -115,8 +111,12 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
         dialog.show()
     }
 
-    private fun setTeemRv(teem: List<Team>?) {
-        adapterTeam.setData(teem)
+    private fun onTeams(teams: List<Team>) {
+        teams.map {
+            ItemTeam(it) { team -> showTeamRenameDialog(team) }
+        }.apply {
+            teamAdapter.updateDataSet(this)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

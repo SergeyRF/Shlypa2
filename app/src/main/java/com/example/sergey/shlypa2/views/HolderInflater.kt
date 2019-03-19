@@ -1,7 +1,6 @@
 package com.example.sergey.shlypa2.views
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.ViewGroup
@@ -9,10 +8,11 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.extensions.dimen
+import com.example.sergey.shlypa2.utils.Functions
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -28,7 +28,7 @@ object HolderInflater {
         val avatarSize = root.dimen(R.dimen.player_in_team_avatar)
         val textSizeMed = root.dimen(R.dimen.text_smoll).toFloat()
         val textSizeBig = root.dimen(R.dimen.text_medium).toFloat()
-        val textColor = ContextCompat.getColor(context, R.color.primary_text)
+        val textColor = ContextCompat.getColor(context, R.color.darkGrey)
 
         for (player in players) {
             val child = LinearLayout(context).apply {
@@ -39,7 +39,7 @@ object HolderInflater {
             val avatarView = CircleImageView(context).apply {
                 layoutParams = LinearLayout.LayoutParams(avatarSize,
                         avatarSize).apply {
-                    leftMargin = margin
+                    leftMargin = 0
                     rightMargin = margin
                     topMargin = smallMargin
                     bottomMargin = smallMargin
@@ -58,7 +58,7 @@ object HolderInflater {
             }
             child.addView(tvName)
 
-            if(scoresMap != null) {
+            if (scoresMap != null) {
                 val tvScores = TextView(context).apply {
                     layoutParams = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
                         rightMargin = smallMargin
