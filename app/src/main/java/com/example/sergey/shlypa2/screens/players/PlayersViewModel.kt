@@ -2,7 +2,6 @@ package com.example.sergey.shlypa2.screens.players
 
 import android.app.Application
 import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.R
@@ -13,13 +12,17 @@ import com.example.sergey.shlypa2.extensions.random
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
+import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Created by alex on 3/31/18.
  */
-class PlayersViewModel(application: Application) : AndroidViewModel(application) {
+class PlayersViewModel(application: Application,
+                       private val dispatchers: DispatchersProvider)
+    : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
     private val playersLiveData = MutableLiveData<List<Player>>()
     private val teamsLiveData = MutableLiveData<List<Team>>()
@@ -43,31 +46,11 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
 
     fun getAvatarLiveData(): LiveData<String> {
         if (listOfAvatars.isEmpty()) {
-            doAsync {
+            launch(dispatchers.ioDispatcher) {
                 synchronized(this) { loadAvatars() }
             }
         }
         return avatarLiveData
-    }
-
-    //todo do not add players with the same name
-    fun addPlayer(player: Player): LiveData<Boolean> {
-        val singleLiveEvent = SingleLiveEvent<Boolean>()
-
-        doAsync {
-            player.id = dataProvider.insertPlayer(player)
-            val success = Game.addPlayer(player)
-
-            if (success) {
-                uiThread {
-                    avatarLiveData.value = listOfAvatars.random()
-                    updateData()
-                    singleLiveEvent.value = true
-                }
-            }
-        }
-
-        return singleLiveEvent
     }
 
     fun removePlayer(player: Player) {
@@ -76,7 +59,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun reNamePlayer(player: Player) {
-        doAsync {
+        launch(dispatchers.ioDispatcher) {
             if (player.type == PlayerType.USER) {
                 Game.reNamePlayer(player)
             } else {
@@ -91,15 +74,14 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun addRandomPlayer() {
-        doAsync {
-            val playersList = dataProvider.getPlayers()
-
-            val player: Player? = playersList.find { !Game.getPlayers().contains(it) }
-            if (player != null) Game.addPlayer(player)
-
-            uiThread {
-                updateData()
+        launch {
+            withContext(dispatchers.ioDispatcher) {
+                val playersList = dataProvider.getPlayers()
+                val player: Player? = playersList.find { !Game.getPlayers().contains(it) }
+                if (player != null) Game.addPlayer(player)
             }
+
+            updateData()
         }
     }
 
@@ -109,19 +91,20 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
             return
         }
 
-        doAsync {
-            val player = Player(name, avatar = avatarLiveData.value ?: "")
-            player.id = dataProvider.insertPlayer(player)
-            val success = Game.addPlayer(player)
-
-            uiThread {
-                if (success) {
-                    avatarLiveData.value = listOfAvatars.random()
-                    updateData()
-                } else {
-                    toastResLD.value = R.string.name_not_unic
-                }
+        launch {
+            val success = withContext(dispatchers.ioDispatcher) {
+                val player = Player(name, avatar = avatarLiveData.value ?: "")
+                player.id = dataProvider.insertPlayer(player)
+                Game.addPlayer(player)
             }
+
+            if (success) {
+                avatarLiveData.value = listOfAvatars.random()
+                updateData()
+            } else {
+                toastResLD.value = R.string.name_not_unic
+            }
+
         }
     }
 
@@ -156,8 +139,12 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun shuffleTeams() {
-        Game.createTeams(Game.getTeams().size)
-        updateData()
+        launch {
+            withContext(dispatchers.ioDispatcher) {
+                Game.createTeams(Game.getTeams().size)
+            }
+            updateData()
+        }
     }
 
     private fun updateData() {
@@ -176,7 +163,6 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     fun startSettings() {
         commandLiveData.value = Command.START_SETTINGS
     }
-
 
     enum class Command {
         START_TEAMS,

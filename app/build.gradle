@@ -39,6 +39,7 @@ ext {
     support_version = "28.0.0"
     anko_version='0.10.5'
     koinVersion = "1.0.1"
+    coroutinesVersion = "1.0.1"
 }
 
 dependencies {
@@ -96,6 +97,9 @@ dependencies {
     //FlexibleAdapter
     implementation "eu.davidea:flexible-adapter:5.1.0"
     implementation "eu.davidea:flexible-adapter-ui:1.0.0"
+
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
 
     //Testing libraries
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
