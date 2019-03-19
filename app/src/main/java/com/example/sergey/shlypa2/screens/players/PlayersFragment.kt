@@ -1,21 +1,23 @@
 package com.example.sergey.shlypa2.screens.players
 
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
-import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.extensions.observeSafe
+import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
 import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.PlayersViewModel
@@ -23,6 +25,7 @@ import com.squareup.picasso.Picasso
 import com.takusemba.spotlight.OnTargetStateChangedListener
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
+import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_players.*
 import timber.log.Timber
 
@@ -32,8 +35,8 @@ import timber.log.Timber
  */
 class PlayersFragment : androidx.fragment.app.Fragment() {
 
-    lateinit var adapter: RvAdapter
     lateinit var viewModel: PlayersViewModel
+    private val playersAdapter = FlexibleAdapter(emptyList(), this)
 
     companion object {
         const val SHOW_SPOTLIGHT = "spotlight_show"
@@ -45,37 +48,45 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         // Inflate the layout for this fragment
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-        viewModel = ViewModelProviders.of(activity!!).get(PlayersViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(PlayersViewModel::class.java)
 
         return inflater.inflate(R.layout.fragment_players, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
+        initSubscriptions()
+    }
 
-        val linLayout = androidx.recyclerview.widget.LinearLayoutManager(context)
-        linLayout.stackFromEnd = true
-        linLayout.reverseLayout = true
+    private fun initViews() {
+        rvPlayers.layoutManager = LinearLayoutManager(requireContext()).apply {
+            stackFromEnd = true
+            reverseLayout = true
+        }
+        rvPlayers.adapter = playersAdapter
 
-        rvPlayers.layoutManager = linLayout
-        adapter = RvAdapter()
-        rvPlayers.adapter = adapter
-
-
-
-        viewModel.getPlayersLiveData().observe(this, Observer { list -> onPlayersChanged(list) })
-
-        adapter.listener = { player: Any ->
-            //todo player saves incorrect
-            viewModel.reNamePlayer(player as Player)
+        civPlayerAvatar.setOnClickListener {
+            val dialog = AvatarSelectDialog(requireContext(), viewModel.listOfAvatars)
+            dialog.onSelect = dialogOnSelect
+            dialog.show()
         }
 
-        adapter.listenerTwo = { player: Any ->
+        //enter
+        etName.setOnEditorActionListener { v, actionId, event ->
+            if (this.isResumed/* strange error */ && actionId == EditorInfo.IME_ACTION_NEXT) {
+                // обработка нажатия Enter
+                kotlin.runCatching {
+                    addPlayer()
+                }.onFailure {
+                    Timber.e(it)
+                }
 
-            viewModel.removePlayer(player as Player)
-
+                true
+            } else true
         }
 
         imageButton.setOnClickListener {
@@ -91,33 +102,16 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         btAddRandomPlayer.setOnClickListener {
             viewModel.addRandomPlayer()
         }
+    }
 
-        //enter
-        etName.setOnEditorActionListener { v, actionId, event ->
-            if (this.isResumed/* strange error */ && actionId == EditorInfo.IME_ACTION_NEXT) {
-                // обработка нажатия Enter
-                try {
-                    addPlayer()
-                }catch (exeption:Exception){
-                    Timber.e(exeption)
-                }
-
-                true
-            } else true
+    private fun initSubscriptions() {
+        viewModel.getPlayersLiveData().observeSafe(this) { list ->
+            onPlayersChanged(list)
         }
-
 
         viewModel.getAvatarLiveData().observe(this, Observer { avatar ->
             avatar?.let { showAvatar(it) }
         })
-
-
-        civPlayerAvatar.setOnClickListener {
-            val dialog = AvatarSelectDialog(requireContext(), viewModel.listOfAvatars)
-            dialog.onSelect = dialogOnSelect
-            dialog.show()
-        }
-
     }
 
     val dialogOnSelect: (String) -> Unit = { fileName ->
@@ -126,26 +120,9 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun addPlayer() {
-        if (etName.text.isNotEmpty()) {
-            val newPlayer = Player(etName.text.toString().trim())
-
-            if (avatar != null) {
-                newPlayer.avatar = avatar!!
-            }
-
-            viewModel.addPlayer(newPlayer).observe(this, Observer {
-                if (it != null && it) {
-                    etName.text.clear()
-                } else {
-                    Toast.makeText(context, R.string.name_not_unic, Toast.LENGTH_SHORT).show()
-                }
-            })
-
-        } else {
-            Toast.makeText(context, R.string.player_name_empty, Toast.LENGTH_SHORT).show()
-        }
+        viewModel.addPlayer(etName.text.toString())
+        etName.text.clear()
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -157,23 +134,24 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         val preference = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
         if (preference.getBoolean(SHOW_SPOTLIGHT, true)) {
-
-            view!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    Timber.d("On global changed")
-                    view!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    spotl()
-                    editor.putBoolean(SHOW_SPOTLIGHT, false).apply()
-                }
-            })
+            view?.onDrawn {
+                runSpotlight()
+                editor.putBoolean(SHOW_SPOTLIGHT, false).apply()
+            }
         }
     }
 
-
-    private fun onPlayersChanged(players: List<Player>?) {
-        adapter.setData(players)
-        val position = players?.size ?: 0
-        rvPlayers.scrollToPosition(position - 1)
+    private fun onPlayersChanged(players: List<Player>) {
+        players.map {
+            ItemPlayer(it, renameListener = {
+                viewModel.reNamePlayer(it)
+            }, removeListener = {
+                viewModel.removePlayer(it)
+            })
+        }.apply {
+            playersAdapter.updateDataSet(this)
+            rvPlayers.scrollToPosition(players.size - 1)
+        }
     }
 
     private fun showAvatar(fileName: String) {
@@ -184,7 +162,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                 .into(civPlayerAvatar)
     }
 
-    fun spotl() {
+    private fun runSpotlight() {
 
         val custom = SimpleTarget.Builder(activity!!)
                 .setPoint(btAddRandomPlayer)
@@ -218,13 +196,18 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.hint_menu, menu)
+        inflater?.inflate(R.menu.hint_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        spotl()
-        return super.onOptionsItemSelected(item)
+        return when(item?.itemId) {
+            R.id.item_show_hint -> {
+                runSpotlight()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 

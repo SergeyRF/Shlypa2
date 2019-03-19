@@ -1,14 +1,14 @@
-package com.example.sergey.shlypa2.utils
+package com.example.sergey.shlypa2.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.os.Handler
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.SeekBar
-import android.widget.Toast
 import com.example.sergey.shlypa2.BuildConfig
-import org.jetbrains.anko.contentView
 import java.util.*
 
 /**
@@ -68,6 +68,29 @@ fun Activity.hideKeyboard() {
 }
 
 fun View.dimen(id: Int) : Int = resources.getDimensionPixelSize(id)
+
+fun View.onDrawn(delay: Long = 0, block: () -> Unit) {
+    val view = this
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            Handler().postDelayed({
+                block.invoke()
+            }, delay)
+        }
+    })
+}
+
+fun View.onPreDraw(block: () -> Unit) {
+    val view = this
+    view.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+        override fun onPreDraw(): Boolean {
+            view.viewTreeObserver.removeOnPreDrawListener(this)
+            block.invoke()
+            return true
+        }
+    })
+}
 
 /**
  * Returns a random element.

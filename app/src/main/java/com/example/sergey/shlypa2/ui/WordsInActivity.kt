@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
@@ -14,6 +13,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.extensions.*
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.*
 import com.example.sergey.shlypa2.viewModel.WordsViewModel

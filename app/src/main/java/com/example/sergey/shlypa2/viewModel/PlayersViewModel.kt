@@ -1,22 +1,20 @@
 package com.example.sergey.shlypa2.viewModel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import android.os.AsyncTask
-import android.widget.Toast
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.db.DataProvider
+import com.example.sergey.shlypa2.extensions.random
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
-import com.example.sergey.shlypa2.utils.random
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import timber.log.Timber
 
 /**
  * Created by alex on 3/31/18.
@@ -26,6 +24,7 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     private val playersLiveData = MutableLiveData<List<Player>>()
     private val teamsLiveData = MutableLiveData<List<Team>>()
     private val avatarLiveData = MutableLiveData<String>()
+    val toastResLD = MutableLiveData<Int>()
 
     private val dataProvider = DataProvider(application)
 
@@ -45,10 +44,9 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
     fun getAvatarLiveData(): LiveData<String> {
         if (listOfAvatars.isEmpty()) {
             doAsync {
-                synchronized(this, { loadAvatars() })
+                synchronized(this) { loadAvatars() }
             }
         }
-
         return avatarLiveData
     }
 
@@ -101,6 +99,28 @@ class PlayersViewModel(application: Application) : AndroidViewModel(application)
 
             uiThread {
                 updateData()
+            }
+        }
+    }
+
+    fun addPlayer(name: String) {
+        if (name.isBlank()) {
+            toastResLD.value = R.string.player_name_empty
+            return
+        }
+
+        doAsync {
+            val player = Player(name, avatar = avatarLiveData.value ?: "")
+            player.id = dataProvider.insertPlayer(player)
+            val success = Game.addPlayer(player)
+
+            uiThread {
+                if (success) {
+                    avatarLiveData.value = listOfAvatars.random()
+                    updateData()
+                } else {
+                    toastResLD.value = R.string.name_not_unic
+                }
             }
         }
     }

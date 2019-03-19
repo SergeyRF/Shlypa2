@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.utils.dimen
+import com.example.sergey.shlypa2.extensions.dimen
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 

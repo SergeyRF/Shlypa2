@@ -1,6 +1,5 @@
 package com.example.sergey.shlypa2
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.*
 import com.example.sergey.shlypa2.beans.Player
@@ -10,8 +9,8 @@ import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.utils.hide
-import com.example.sergey.shlypa2.utils.show
+import com.example.sergey.shlypa2.extensions.hide
+import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.views.HolderInflater
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView

@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +14,8 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
-import com.example.sergey.shlypa2.utils.gone
-import com.example.sergey.shlypa2.utils.show
+import com.example.sergey.shlypa2.extensions.gone
+import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 
 
