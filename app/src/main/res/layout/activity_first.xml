@@ -5,5 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/containerFirst"
-    tools:context="com.example.sergey.shlypa2.screens.FirstActivity"/>
+    tools:context="com.example.sergey.shlypa2.screens.main.FirstActivity"/>
 

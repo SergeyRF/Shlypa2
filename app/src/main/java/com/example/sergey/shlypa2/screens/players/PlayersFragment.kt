@@ -11,14 +11,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
 import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.squareup.picasso.Picasso
 import com.takusemba.spotlight.OnTargetStateChangedListener
 import com.takusemba.spotlight.SimpleTarget
@@ -42,6 +47,12 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     private var avatar: String? = null
+
+    private val borderColor by lazy { Functions.getThemedBgColor(requireContext()) }
+    private val avatarOptions by lazy(LazyThreadSafetyMode.NONE) {
+        RequestOptions()
+                .transforms(CircleCrop(), CircleBorderTransform(borderColor, 1.dpToPx))
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -154,8 +165,9 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     private fun showAvatar(fileName: String) {
         avatar = fileName
         val fileLink = Functions.imageNameToUrl("player_avatars/small/$fileName")
-        Picasso.get()
-                .load(fileLink)
+        Glide.with(this)
+                .load(Player.smallImagePath(fileName))
+                .apply(avatarOptions)
                 .into(civPlayerAvatar)
     }
 
@@ -206,6 +218,4 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
 }

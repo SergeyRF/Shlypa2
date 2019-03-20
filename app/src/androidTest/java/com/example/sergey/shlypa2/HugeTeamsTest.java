@@ -9,7 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.sergey.shlypa2.game.Game;
 import com.example.sergey.shlypa2.testUtils.CustomActions;
 import com.example.sergey.shlypa2.testUtils.Utils;
-import com.example.sergey.shlypa2.screens.FirstActivity;
+import com.example.sergey.shlypa2.screens.main.FirstActivity;
 import com.example.sergey.shlypa2.ui.RoundActivity;
 
 import org.junit.Rule;

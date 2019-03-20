@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.ui.GameSettingsActivity
@@ -37,6 +38,8 @@ class PlayersActivity : AppCompatActivity() {
         if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
             startPlayersFragment()
         }
+
+        //val color = Functions.getThemedBgColor(this, R.color.)
     }
 
     private fun onCommand(command: PlayersViewModel.Command) {

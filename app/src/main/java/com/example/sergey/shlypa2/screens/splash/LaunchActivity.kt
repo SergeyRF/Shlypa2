@@ -7,7 +7,7 @@ package com.example.sergey.shlypa2.screens.splash
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sergey.shlypa2.screens.FirstActivity
+import com.example.sergey.shlypa2.screens.main.FirstActivity
 import com.example.sergey.shlypa2.utils.Functions
 
 

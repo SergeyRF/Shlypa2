@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.os.Handler
 import android.view.View
 import android.view.ViewTreeObserver
@@ -102,3 +103,7 @@ inline fun Any.debug(block : () -> Unit) {
         block.invoke()
     }
 }
+
+val Int.dpToPx: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+val Int.pxToDp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()

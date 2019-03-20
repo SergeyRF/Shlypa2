@@ -1,28 +1,38 @@
 package com.example.sergey.shlypa2.screens.players.adapter
 
 
+import android.graphics.Color
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.show
+import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
+import kotlinx.android.synthetic.main.holder_player.view.*
 import timber.log.Timber
 
 
 class ItemPlayer(val player: Player,
                  val renameListener: (Player) -> Unit = {},
-                 val removeListener: (Player) -> Unit = {}) : AbstractFlexibleItem<ItemPlayer.ViewHolder>() {
+                 val removeListener: (Player) -> Unit = {} )
+    : AbstractFlexibleItem<ItemPlayer.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
                                 holder: ViewHolder,
@@ -63,8 +73,14 @@ class ItemPlayer(val player: Player,
               }
           }
 
-          Picasso.get()
+          /*Picasso.get()
                   .load(Functions.imageNameToUrl("player_avatars/small/${player.avatar}"))
+                  .into(avatarImage)*/
+
+          Glide.with(itemView)
+                  .load(player.getSmallImage())
+                  .apply(RequestOptions()
+                          .transforms(CircleCrop(), CircleBorderTransform(borderColor, 1.dpToPx)))
                   .into(avatarImage)
       }
     }
@@ -79,7 +95,9 @@ class ItemPlayer(val player: Player,
         : FlexibleViewHolder(view, adapter) {
         val tvName: TextView = itemView.findViewById(R.id.wordInject)
         val etName: EditText = itemView.findViewById(R.id.etRename)
-        val avatarImage: CircleImageView = itemView.findViewById(R.id.civPlayerAvatar)
+        val avatarImage: ImageView = itemView.findViewById(R.id.civPlayerAvatar)
         val delPlayer: ImageButton = itemView.findViewById(R.id.ib_delPlayer)
+
+        val borderColor = Functions.getThemedBgColor(itemView.context)
     }
 }

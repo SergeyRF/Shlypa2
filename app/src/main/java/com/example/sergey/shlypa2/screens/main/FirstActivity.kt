@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.screens
+package com.example.sergey.shlypa2.screens.main
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders

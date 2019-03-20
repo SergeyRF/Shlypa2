@@ -8,7 +8,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.TeamWithScores
-import com.example.sergey.shlypa2.screens.FirstActivity
+import com.example.sergey.shlypa2.screens.main.FirstActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.extensions.gone

@@ -13,6 +13,7 @@ import java.io.IOException
 import java.text.DateFormat
 import java.util.*
 import android.util.TypedValue
+import androidx.core.content.ContextCompat
 import com.example.sergey.shlypa2.BuildConfig
 import com.example.sergey.shlypa2.Constants
 
@@ -85,14 +86,14 @@ object Functions {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return
 
         val preferences = PreferenceHelper.defaultPrefs(activity)
-        val themeRes: Int = preferences[Constants.THEME_PREF] ?: R.style.AppTheme
+        val themeRes: Int = preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
 
         activity.setTheme(themeRes)
     }
 
     fun selectTheme(theme: Int, activity: Activity) {
         val preferences = PreferenceHelper.defaultPrefs(activity)
-        val oldTheme = preferences[Constants.THEME_PREF] ?: R.style.AppTheme
+        val oldTheme = preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
 
         if(theme != oldTheme) {
             preferences[Constants.THEME_PREF] = theme
@@ -102,7 +103,7 @@ object Functions {
 
     fun getSelectedThemeId(context: Context) : Int {
         val preferences = PreferenceHelper.defaultPrefs(context)
-        return preferences[Constants.THEME_PREF] ?: R.style.AppTheme
+        return preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
     }
 
     fun getScreenWidth(context: Context): Int {
@@ -113,5 +114,21 @@ object Functions {
     fun dpToPx(context: Context, dp : Float) : Float {
         val r = context.getResources()
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics())
+    }
+
+    fun getThemedBgColor(context: Context): Int {
+        val preferences = PreferenceHelper.defaultPrefs(context)
+        val themeRes: Int = preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
+        val colorRes = when(themeRes) {
+            R.style.AppThemeBlue -> R.color.BlueAvatarBg
+            R.style.AppThemeCyan -> R.color.CyanAvatarBg
+            R.style.AppThemeGreen -> R.color.GreenAvatarBg
+            R.style.AppThemeIndigo -> R.color.IndigoAvatarBg
+            R.style.AppThemeYellow -> R.color.YellowAvatarBg
+            R.style.AppThemePurple -> R.color.PurpleAvatarBg
+            else -> R.color.BlueAvatarBg
+        }
+
+        return ContextCompat.getColor(context, colorRes)
     }
 }

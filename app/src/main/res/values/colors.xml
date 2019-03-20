@@ -25,24 +25,32 @@
     <color name="LightGray">#e0e0e0</color>
     <color name="Green">#43a047</color>
     <color name="GreenDark">#2E7D32</color>
+    <color name="GreenAvatarBg">#c8e6c9</color>
 
     <color name="Yellow">#FFEB3B</color>
     <color name="YellowDark">#fbc02d</color>
+    <color name="YellowAvatarBg">#fff9e4</color>
 
     <color name="Red">#e53935</color>
 
     <color name="Cyan">#00BCD4</color>
     <color name="CyanDark">#0097A7</color>
+    <color name="CyanAvatarBg">#b2ebf2</color>
 
     <color name="Blue">#29b6f6</color>
     <color name="DarkBlue">#039BE5</color>
+    <color name="BlueAvatarBg">#bbdefb</color>
 
     <color name="Indigo">#3F51B5</color>
     <color name="IndigoDark">#303F9F</color>
+    <color name="IndigoAvatarBg">#c5cae9</color>
 
     <color name="Purple">#9C27B0</color>
     <color name="PurpleDark">#7B1FA2</color>
     <color name="PurpleAccent">#E040FB</color>
+    <color name="PurpleAvatarBg">#e1bee7</color>
     <color name="semiTransparent">#42000000</color>
     <color name="shadowColor">#9c000000</color>
+
+    <color name="imageBorder">#bbdefb</color>
 </resources>
