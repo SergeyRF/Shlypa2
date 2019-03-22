@@ -15,6 +15,8 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.extensions.observeSafe
+import com.example.sergey.shlypa2.extensions.onDrawn
+import com.example.sergey.shlypa2.extensions.runOnceEver
 import com.example.sergey.shlypa2.screens.players.adapter.ItemTeam
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
@@ -128,7 +130,6 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
     }
 
     fun spotl() {
-
         val shaffleTeam = SimpleTarget.Builder(activity!!)
                 .setPoint(floatingMenu.menuIconView)
                 .setRadius(80f)
@@ -159,17 +160,8 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun globalListentrForSpotl() {
-        val preference = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
-        if (preference.getBoolean(PLAYING_HINT, true)) {
-
-            view!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    view!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    spotl()
-                    editor.putBoolean(PLAYING_HINT, false).apply()
-                }
-            })
+        requireContext().runOnceEver(PLAYING_HINT) {
+            view?.onDrawn { spotl() }
         }
     }
 
