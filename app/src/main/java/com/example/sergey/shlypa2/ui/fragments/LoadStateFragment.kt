@@ -18,6 +18,7 @@ import com.example.sergey.shlypa2.ui.RoundActivity
 import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
 import kotlinx.android.synthetic.main.fragment_load_state.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 /**
@@ -25,12 +26,11 @@ import kotlinx.android.synthetic.main.fragment_load_state.*
  */
 class LoadStateFragment : androidx.fragment.app.Fragment() {
 
-    lateinit var viewModel : WelcomeViewModel
+    private val viewModel : WelcomeViewModel by sharedViewModel()
     lateinit var adapter: RvAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(activity!!).get(WelcomeViewModel::class.java)
 
         adapter = RvAdapter()
         adapter.listener = {state : Any ->

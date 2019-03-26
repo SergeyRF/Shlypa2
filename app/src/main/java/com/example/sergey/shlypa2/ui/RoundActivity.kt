@@ -1,34 +1,29 @@
 package com.example.sergey.shlypa2.ui
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.PersistableBundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.ads.Interstitial
-import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.ui.fragments.*
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import com.google.android.gms.ads.AdListener
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 typealias Command = RoundViewModel.Command
 
 class RoundActivity : AppCompatActivity() {
 
-    lateinit var viewModel: RoundViewModel
-
-    lateinit var dataProvider: DataProvider
+    private val viewModel by viewModel<RoundViewModel>()
 
 
     private var backPressedOnce = false
@@ -49,9 +44,6 @@ class RoundActivity : AppCompatActivity() {
                 }
             })
         }
-
-        viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)
-        dataProvider = DataProvider(applicationContext)
 
         viewModel.commandCallback.observe(this, Observer { command ->
             when (command) {

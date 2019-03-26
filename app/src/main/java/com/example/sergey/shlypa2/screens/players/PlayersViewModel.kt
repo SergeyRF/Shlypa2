@@ -21,6 +21,7 @@ import kotlinx.coroutines.withContext
  * Created by alex on 3/31/18.
  */
 class PlayersViewModel(application: Application,
+                       private val dataProvider: DataProvider,
                        private val dispatchers: DispatchersProvider)
     : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
@@ -28,8 +29,6 @@ class PlayersViewModel(application: Application,
     private val teamsLiveData = MutableLiveData<List<Team>>()
     private val avatarLiveData = MutableLiveData<String>()
     val toastResLD = MutableLiveData<Int>()
-
-    private val dataProvider = DataProvider(application)
 
     val commandLiveData = SingleLiveEvent<Command>()
     val titleLiveData = MutableLiveData<Int>()

@@ -18,11 +18,12 @@ import com.example.sergey.shlypa2.ui.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.since
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class FirstActivity : AppCompatActivity() {
 
-    lateinit var viewModel: WelcomeViewModel
+    private val viewModel by viewModel<WelcomeViewModel>()
 
     var themeId: Int = 0
 
@@ -32,8 +33,6 @@ class FirstActivity : AppCompatActivity() {
         setContentView(R.layout.activity_first)
 
         supportActionBar?.elevation = 0f
-
-        viewModel = ViewModelProviders.of(this).get(WelcomeViewModel::class.java)
 
         viewModel.commandsCallBack.observe(this, Observer { command ->
             when (command) {

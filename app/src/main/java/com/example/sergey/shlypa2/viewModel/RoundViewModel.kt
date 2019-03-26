@@ -24,13 +24,14 @@ import timber.log.Timber
 /**
  * Created by alex on 4/3/18.
  */
-class RoundViewModel(application: Application) : AndroidViewModel(application) {
+class RoundViewModel(
+        application: Application,
+        val dataProvider: DataProvider) : AndroidViewModel(application) {
 
     companion object {
         private const val ADS_TIME_LIMIT = 10 * 60 * 1000
     }
 
-    private val dataProvider = DataProvider(application)
     private var soundManager: SoundManager? = null
 
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()

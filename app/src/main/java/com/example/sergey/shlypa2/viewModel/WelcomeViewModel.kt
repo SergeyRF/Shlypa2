@@ -15,9 +15,9 @@ import org.jetbrains.anko.uiThread
 /**
  * Created by alex on 4/17/18.
  */
-class WelcomeViewModel(application: Application) : AndroidViewModel(application) {
+class WelcomeViewModel(application: Application,
+                       val dataProvider: DataProvider) : AndroidViewModel(application) {
 
-    val dataProvider = DataProvider(application)
 
     val commandsCallBack : MutableLiveData<Commands> = SingleLiveEvent()
     private val savedStates : MutableLiveData<List<GameState>> = MutableLiveData()

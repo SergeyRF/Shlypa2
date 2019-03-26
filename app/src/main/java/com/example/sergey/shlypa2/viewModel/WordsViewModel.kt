@@ -17,7 +17,9 @@ import java.util.*
 /**
  * Created by sergey on 4/3/18.
  */
-class WordsViewModel(application: Application) : AndroidViewModel(application) {
+class WordsViewModel(
+        application: Application,
+        val dataProvider: DataProvider) : AndroidViewModel(application) {
 
     private val wordsLiveData = MutableLiveData<List<Word>>()
     private val playerLivaData = MutableLiveData<Player>()
@@ -29,7 +31,6 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
     private var pos: Int = 0
     private var words: MutableList<Word> = mutableListOf()
 
-    private var db = DataProvider(application)
     private var randomWords: ArrayDeque<Word> = ArrayDeque()
 
     init {
@@ -101,7 +102,7 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private fun loadRandomWords() {
-        val dbWords = db.getRandomWords(100, Game.getSettings().typeId)
+        val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
         for (w in dbWords) Timber.d("$w")
 
         val unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !words.contains(it) }

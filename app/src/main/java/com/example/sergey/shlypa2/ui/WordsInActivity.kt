@@ -20,6 +20,7 @@ import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_words_in.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
@@ -27,7 +28,7 @@ class WordsInActivity : AppCompatActivity() {
 
 
     private lateinit var wordsAdapter: RvAdapter
-    lateinit var viewModel: WordsViewModel
+    private val viewModel by viewModel<WordsViewModel>()
 
     private var animated = false
 
@@ -58,8 +59,6 @@ class WordsInActivity : AppCompatActivity() {
         wordsAdapter = RvAdapter()
         rvWords.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         rvWords.adapter = wordsAdapter
-
-        viewModel = ViewModelProviders.of(this).get(WordsViewModel::class.java)
 
         Timber.d("random allowed ${viewModel.randomAllowed()}")
 
