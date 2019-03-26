@@ -23,4 +23,6 @@ object Constants {
     const val DATE_FIRST_LAUNCH = "date_first_launch"
     const val LAUNCH_COUNT = "launch_times_count"
 
+    const val RELEASE_COMMON_TOPIC = "hat_release_common"
+    const val DEBUG_COMMON_TOPIC = "hat_debug_common"
 }

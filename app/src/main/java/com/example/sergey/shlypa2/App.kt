@@ -3,14 +3,11 @@ package com.example.sergey.shlypa2
 import androidx.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.example.sergey.shlypa2.ads.AdsManager
-import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.DbExporter
-import com.example.sergey.shlypa2.utils.PreferenceHelper
-import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.TimberDebugTree
 import com.example.sergey.shlypa2.utils.TimberReleaseTree
+import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
@@ -32,26 +29,12 @@ class App : MultiDexApplication() {
         }
 
         AdsManager.initAds(this)
+        //todo refactor this shit  !!!
         val namesArray = resources.getStringArray(R.array.teams)
         Game.teamNames = namesArray.toMutableList()
 
-//        DbCreator.createPlayers(DataBase.getInstance(this), this)
-//        DbCreator.createWords(DataBase.getInstance(this), this)
-//        DbCreator.sortAndWritesWordsFromRes(this)
-//        DbCreator.sortAndWriteWords(this)
-//        DbCreator.loadFileList(this)
-        DbExporter().exportDbToFile(this, Contract.DB_NAME)
-
-        val preferences = PreferenceHelper.defaultPrefs(this)
-        val dbImported = preferences.getBoolean(DB_IMPORTED, false)
-        if (!dbImported) {
-            val success = DbExporter().importDbFromAsset(this, "shlyapa_db")
-            preferences[DB_IMPORTED] = success
-        } else {
-            Timber.d("Db already imported")
-        }
-
         buildCaoc()
+        initFcm()
     }
 
     fun buildCaoc() {
@@ -62,7 +45,10 @@ class App : MultiDexApplication() {
                 .apply()
     }
 
-    companion object {
-        private const val DB_IMPORTED = "db_imported"
+    private fun initFcm() {
+        FirebaseMessaging.getInstance().subscribeToTopic(
+                if (BuildConfig.DEBUG) Constants.DEBUG_COMMON_TOPIC
+                else Constants.RELEASE_COMMON_TOPIC
+        )
     }
 }
