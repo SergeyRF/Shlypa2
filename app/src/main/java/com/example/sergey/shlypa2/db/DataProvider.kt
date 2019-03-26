@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.db
 
 import android.content.Context
+import com.example.sergey.shlypa2.beans.Lang
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.StateRepresent
 import com.example.sergey.shlypa2.beans.Word
@@ -27,12 +28,17 @@ class DataProvider(
     private val stateDao = db.stateDao()
     private val typesDao = db.typesDap()
 
-    val locale: String = Locale.getDefault().language.toLowerCase()
+    private val locale: String = Locale.getDefault().language.toLowerCase()
 
     //we only need to use locales for which we have a translate
-    val usefullLocale = when (locale) {
+    private val usefullLocale = when (locale) {
         "ru" -> locale
         else -> "en"
+    }
+
+    private val lang = when(locale) {
+        "ru" -> Lang.RU
+        else -> Lang.EN
     }
 
     fun getPlayers(type: PlayerType = PlayerType.STANDARD): List<Player> {
@@ -89,5 +95,5 @@ class DataProvider(
         return fileNameList
     }
 
-    fun getTypes() = typesDao.getAllTypes()
+    fun getTypes() = typesDao.getTypesForLang(lang)
 }

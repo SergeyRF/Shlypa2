@@ -9,10 +9,15 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dimen
+import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -72,8 +77,11 @@ object HolderInflater {
                 child.addView(tvScores)
             }
 
-            Picasso.get()
-                    .load(Functions.imageNameToUrl("player_avatars/small/${player.avatar}"))
+            val borderColor = Functions.getThemedBgColor(root.context)
+            Glide.with(root)
+                    .load(player.getSmallImage())
+                    .apply(RequestOptions()
+                            .transforms(CircleCrop(), CircleBorderTransform(borderColor, 1.dpToPx)))
                     .into(avatarView)
 
             root.addView(child)
