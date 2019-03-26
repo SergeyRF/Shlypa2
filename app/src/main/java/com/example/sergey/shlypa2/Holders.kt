@@ -122,9 +122,10 @@ class WordsHolder(val view: View) : BaseHolder(view) {
         etReNameW.hide()
         tvName.show()
 
-        if (word.type == WordType.USER) {
+        /*if (word.type == WordType.USER) {
             ibNextWord.hide()
-        }
+        }*/
+        //fixme
 
         tvName.text = word.word
         Timber.d("${word.word}")

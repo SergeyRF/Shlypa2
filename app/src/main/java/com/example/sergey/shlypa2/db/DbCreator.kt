@@ -4,11 +4,12 @@ import android.content.Context
 import android.os.Environment
 import android.widget.Toast
 import com.crashlytics.android.Crashlytics
-import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.beans.*
+import com.example.sergey.shlypa2.beans.Dictionary
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber
@@ -40,7 +41,7 @@ object DbCreator {
     }
 
     fun createWords(dataBase: DataBase, context: Context) {
-        val wordsList = dataBase.wordDao().getAllWords()
+        /*val wordsList = dataBase.wordDao().getAllWords()
         if (wordsList.isNotEmpty()) return
 
 
@@ -52,7 +53,24 @@ object DbCreator {
         addWordsFromStream(context, dataBase, "words/easyEn", WordType.EASY, "en")
         addWordsFromStream(context, dataBase, "words/mediumEn", WordType.MEDIUM, "en")
         addWordsFromStream(context, dataBase, "words/hardEn", WordType.HARD, "en")
-        addWordsFromStream(context, dataBase, "words/veryhardEn", WordType.VERY_HARD, "en")
+        addWordsFromStream(context, dataBase, "words/veryhardEn", WordType.VERY_HARD, "en")*/
+
+        val wordsJsonFile = context.assets.open("words/wordsRu.json")
+        val jsonString = String(wordsJsonFile.readBytes())
+        val gson = GsonBuilder().create()
+        val dictionaryList: List<Dictionary> = gson.fromJson(jsonString,
+                object : TypeToken<List<Dictionary>>() {}.type)
+
+        Timber.d("TESTING $dictionaryList")
+
+        dictionaryList.forEach {
+            val typeId = dataBase.typesDap().insertType(Type(0, it.name, Lang.RU))
+            it.words.forEach { word ->
+                dataBase.wordDao().insertWord(
+                        Word(word, 0, typeId, 0)
+                )
+            }
+        }
     }
 
     private fun addWordsFromStream(context: Context, dataBase: DataBase, fileName: String,
@@ -70,11 +88,11 @@ object DbCreator {
             line = reader.readLine()
         }
 
-        wordsList.filter { it.isNotEmpty() }
+        /*wordsList.filter { it.isNotEmpty() }
                 .forEach {
                     it.trim()
                     dataBase.wordDao().insertWord(Word(it, type = type, lang = lang))
-                }
+                }*/
 
 
     }

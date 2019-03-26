@@ -40,8 +40,8 @@ class DataProvider(val context: Context) {
         return db.playersDao().insertPlayer(player)
     }
 
-    fun getRandomWords(wordsLimit: Int, dificulty: WordType): List<Word> {
-        return db.wordDao().getRandomWords(wordsLimit, dificulty, usefullLocale)
+    fun getRandomWords(wordsLimit: Int, typeId: Long): List<Word> {
+        return db.wordDao().getRandomWords(wordsLimit, typeId) //fixme
     }
 
     fun getSavedStates(): List<GameState> {
@@ -82,4 +82,6 @@ class DataProvider(val context: Context) {
         val fileNameList: List<String> = gson.fromJson(jsonList, object : TypeToken<List<String>>() {}.type)
         return fileNameList
     }
+
+    fun getTypes() = db.typesDap().getAllTypes()
 }

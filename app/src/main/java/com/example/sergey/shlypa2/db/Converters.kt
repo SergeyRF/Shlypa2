@@ -1,6 +1,8 @@
 package com.example.sergey.shlypa2.db
 
 import androidx.room.TypeConverter
+import com.example.sergey.shlypa2.beans.Lang
+import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.game.WordType
 
@@ -45,4 +47,12 @@ class PlayerTypeConverter {
             else -> throw RuntimeException("Unsupported type")
         }
     }
+}
+
+class LangsConverter {
+    @TypeConverter
+    fun langToString(lang: Lang) = lang.toString()
+
+    @TypeConverter
+    fun stringToLang(lang: String) = Lang.valueOf(lang)
 }

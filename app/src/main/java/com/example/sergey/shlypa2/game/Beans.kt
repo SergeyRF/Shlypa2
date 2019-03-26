@@ -20,7 +20,7 @@ class RoundDescriptor(var description: Int, var rules: Int, var name:Int, var im
 
 class Settings(var time: Int = 30,
                var word: Int = 5,
-               var type: WordType = WordType.EASY,
+               var typeId: Long = 0,
                var allowRandomWords: Boolean = true,
                var returnSkipedToHat: Boolean = true,
                var minusBal: Boolean = false,

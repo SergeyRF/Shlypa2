@@ -32,7 +32,7 @@
             android:label="@string/player_actyvity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.GameSettingsActivity"
+            android:name=".screens.game_settings.GameSettingsActivity"
             android:label="@string/state_actyvity"
             android:screenOrientation="portrait"/>
         <activity

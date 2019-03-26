@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2
 import androidx.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.example.sergey.shlypa2.ads.AdsManager
+import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.DbExporter
@@ -39,7 +40,7 @@ class App : MultiDexApplication() {
 //        DbCreator.sortAndWritesWordsFromRes(this)
 //        DbCreator.sortAndWriteWords(this)
 //        DbCreator.loadFileList(this)
-//        DbExporter().exportDbToFile(this, Contract.DB_NAME)
+        DbExporter().exportDbToFile(this, Contract.DB_NAME)
 
         val preferences = PreferenceHelper.defaultPrefs(this)
         val dbImported = preferences.getBoolean(DB_IMPORTED, false)

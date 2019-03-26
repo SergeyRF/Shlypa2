@@ -1,21 +1,32 @@
-package com.example.sergey.shlypa2.viewModel
+package com.example.sergey.shlypa2.screens.game_settings
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import com.example.sergey.shlypa2.beans.Type
+import com.example.sergey.shlypa2.db.DataBase
+import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.SettingsProviderImpl
 import com.example.sergey.shlypa2.game.WordType
+import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
+import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
  * Created by sergey on 4/1/18.
  */
-class SettingsViewModel(application: Application) : AndroidViewModel(application) {
+class GameSettingsViewModel(application: Application,
+                            private val dataProvider: DataProvider,
+                            private val dispatchers: DispatchersProvider)
+    : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
     private var wordsCount = 0
 
 
-    private var dificult: WordType
+    private var wordsTypeId: Long = 0
 
     private var allowRandom = false
     private var minusBal = false
@@ -26,13 +37,17 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     private var settings = settingsProvider.getSettings()
 
+    val typesLiveData = MutableLiveData<List<Type>>()
+    var selectedType: Type? = null
+
     init {
         turnTime = settings.time
         wordsCount = settings.word
         allowRandom = settings.allowRandomWords
-        dificult = settings.type
+        wordsTypeId = settings.typeId
         minusBal = settings.minusBal
         numberMinusBal = settings.numberMinusBal
+        loadTypes()
     }
 
     fun getTime(): Int = turnTime
@@ -45,10 +60,10 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         settings.word = i
     }
 
-    fun getDifficulty(): WordType = dificult
-    fun setDifficulty(d: WordType) {
-        Timber.d("$d")
-        settings.type = d
+    fun getDifficulty(): Long = wordsTypeId
+    fun setDifficulty(wordType: Type) {
+        Timber.d("$wordType")
+        settings.typeId = wordType.id
     }
 
     fun getAllowRandom(): Boolean = allowRandom
@@ -69,5 +84,15 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     fun onFinish() {
         Game.setSettings(settings)
         settingsProvider.writeSettings(settings)
+    }
+
+    private fun loadTypes() {
+      launch {
+          val types = withContext(dispatchers.ioDispatcher) {
+              dataProvider.getTypes()
+          }
+
+          typesLiveData.value = types
+      }
     }
 }

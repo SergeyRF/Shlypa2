@@ -80,7 +80,8 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun reNameWord(word: Word) {
-        word.type = WordType.USER
+        //word.type = WordType.USER
+        //fixme
     }
 
     fun fillWithRandomWords() {
@@ -100,7 +101,7 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private fun loadRandomWords() {
-        val dbWords = db.getRandomWords(100, Game.getSettings().type)
+        val dbWords = db.getRandomWords(100, Game.getSettings().typeId)
         for (w in dbWords) Timber.d("$w")
 
         val unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !words.contains(it) }
