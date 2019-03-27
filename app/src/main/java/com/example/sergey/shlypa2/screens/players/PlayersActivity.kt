@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
@@ -21,6 +22,7 @@ class PlayersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_players)
 
         viewModel.commandLiveData.observe(this, Observer { command ->
             if (command != null) onCommand(command)
@@ -34,7 +36,7 @@ class PlayersActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
-        if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
+        if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             startPlayersFragment()
         }
 
@@ -51,14 +53,14 @@ class PlayersActivity : AppCompatActivity() {
     private fun startPlayersFragment() {
         val fragment = PlayersFragment()
         supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, fragment)
+                .replace(R.id.container, fragment)
                 .commit()
     }
 
     private fun startTeamsFragment() {
         val fragment = TeamsFragment()
         supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, fragment)
+                .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()

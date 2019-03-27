@@ -37,6 +37,7 @@ class DbExporter {
     }
 
     fun importDbFromAsset(context: Context, dbName: String): Boolean {
+        Timber.d("Import db from assets")
         var dbIs: InputStream? = null
         var dbOus: FileOutputStream? = null
         val dbFileTarget = context.getDatabasePath(dbName)

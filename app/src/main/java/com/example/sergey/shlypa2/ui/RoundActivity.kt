@@ -32,6 +32,7 @@ class RoundActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Functions.setThemeApi21(this)
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_round)
 
         supportActionBar?.elevation = 0F
 
@@ -59,7 +60,7 @@ class RoundActivity : AppCompatActivity() {
             }
         })
 
-        if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
+        if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             startStartFragment()
         }
 
@@ -69,7 +70,7 @@ class RoundActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(android.R.id.content)
+        val fragment = supportFragmentManager.findFragmentById(R.id.container)
         if (fragment is TeamHintFragment) {
             super.onBackPressed()
         } else {
@@ -140,7 +141,7 @@ class RoundActivity : AppCompatActivity() {
     private fun startFragment(fragment: androidx.fragment.app.Fragment, addToBackStack: Boolean = false) {
         val transaction = supportFragmentManager.beginTransaction()
                 .setTransition(androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(android.R.id.content, fragment)
+                .replace(R.id.container, fragment)
 
         if (addToBackStack) transaction.addToBackStack(null)
 

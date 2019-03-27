@@ -28,7 +28,7 @@ import timber.log.Timber
 class LaunchActivity : AppCompatActivity() {
 
     companion object {
-        private const val DB_IMPORTED = "db_imported_v1"
+        private const val DB_IMPORTED = "db_imported_v1_1_4"
         private const val STORAGE_REQUEST = 1056
     }
 
@@ -46,16 +46,6 @@ class LaunchActivity : AppCompatActivity() {
             startActivity(Intent(this@LaunchActivity, FirstActivity::class.java))
             finish()
         }*/
-
-
-        val preferences = PreferenceHelper.defaultPrefs(this)
-        val dbImported = preferences.getBoolean(DB_IMPORTED, false)
-        if (!dbImported) {
-            val success = DbExporter().importDbFromAsset(this, "shlyapa_db")
-            preferences[DB_IMPORTED] = success
-        } else {
-            Timber.d("Db already imported")
-        }
 
         startActivity(Intent(this@LaunchActivity, FirstActivity::class.java))
         finish()

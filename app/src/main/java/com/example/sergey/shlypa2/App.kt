@@ -10,6 +10,14 @@ import com.example.sergey.shlypa2.utils.TimberReleaseTree
 import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
+import com.crashlytics.android.Crashlytics
+import com.example.sergey.shlypa2.screens.splash.LaunchActivity
+import com.example.sergey.shlypa2.utils.DbExporter
+import com.example.sergey.shlypa2.utils.PreferenceHelper
+import com.example.sergey.shlypa2.utils.PreferenceHelper.set
+import io.fabric.sdk.android.Fabric
+
+
 
 
 /**
@@ -17,8 +25,14 @@ import timber.log.Timber
  */
 class App : MultiDexApplication() {
 
+    companion object {
+        private const val DB_IMPORTED = "db_imported_v1_1_4b"
+    }
+
     override fun onCreate() {
         super.onCreate()
+
+        manageDb()
 
         startKoin(this, listOf(appModule))
 
@@ -35,6 +49,8 @@ class App : MultiDexApplication() {
 
         buildCaoc()
         initFcm()
+
+        Fabric.with(this, Crashlytics())
     }
 
     fun buildCaoc() {
@@ -50,5 +66,16 @@ class App : MultiDexApplication() {
                 if (BuildConfig.DEBUG) Constants.DEBUG_COMMON_TOPIC
                 else Constants.RELEASE_COMMON_TOPIC
         )
+    }
+
+    private fun manageDb() {
+        val preferences = PreferenceHelper.defaultPrefs(this)
+        val dbImported = preferences.getBoolean(DB_IMPORTED, false)
+        if (!dbImported) {
+            val success = DbExporter().importDbFromAsset(this, "shlyapa_db")
+            preferences[DB_IMPORTED] = success
+        } else {
+            Timber.d("Db already imported")
+        }
     }
 }
