@@ -16,6 +16,7 @@ class DbExporter {
     fun exportDbToFile(context: Context, dbName: String) {
         val sd = Environment.getExternalStorageDirectory()
         val data = Environment.getDataDirectory()
+        Timber.d("External storage is $sd")
         var source: FileChannel? = null
         var destination: FileChannel? = null
         val currentDBPath = context.getDatabasePath(dbName).toString()

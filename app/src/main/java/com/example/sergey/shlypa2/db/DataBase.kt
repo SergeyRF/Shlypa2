@@ -23,20 +23,4 @@ abstract class DataBase : RoomDatabase() {
     abstract fun stateDao(): StateDao
     abstract fun typesDap(): TypesDao
 
-    companion object {
-        private var INSTANCE: DataBase? = null
-
-        fun getInstance(context: Context): DataBase {
-            if (INSTANCE == null) {
-                synchronized(DataBase::class) {
-                    INSTANCE = Room.databaseBuilder(context, DataBase::class.java, Contract.DB_NAME)
-                            .fallbackToDestructiveMigration()
-                            .allowMainThreadQueries()
-                            .build()
-                }
-            }
-
-            return INSTANCE!!
-        }
-    }
 }
