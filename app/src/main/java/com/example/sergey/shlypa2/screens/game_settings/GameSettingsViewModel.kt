@@ -64,6 +64,7 @@ class GameSettingsViewModel(application: Application,
     fun setDifficulty(wordType: Type) {
         Timber.d("$wordType")
         settings.typeId = wordType.id
+        settings.typeName = wordType.name
     }
 
     fun getAllowRandom(): Boolean = allowRandom

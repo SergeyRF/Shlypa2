@@ -9,13 +9,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceManager
 import android.widget.Button
 import android.widget.ImageView
+import com.example.sergey.shlypa2.utils.anal.AnalSender
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
 
-class AppRater {
+class AppRater: KoinComponent {
 
     companion object {
         const val APP_PNAME = "com.attiladroid.shlypa"
     }
+
+    private val anal by inject<AnalSender>()
+    private var lightedStars = 0
 
     fun app_launched(mContext: Context) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(mContext)
@@ -52,6 +58,7 @@ class AppRater {
     }
 
     fun showRateDialogMy(context: Context) {
+        anal.rateDialogOpened()
 
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_rater)
@@ -76,7 +83,7 @@ class AppRater {
         listStars.add(star_5)
 
         fun lightStars(i: Int) {
-
+            lightedStars = i
             for (n in 0..(listStars.size - 1)) {
                 listStars[n].setImageResource(R.drawable.ic_star)
             }
@@ -86,11 +93,13 @@ class AppRater {
         }
 
         bt_positive.setOnClickListener {
+            anal.rateStarred(lightedStars)
             editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true)
             rateApp(context)
             dialog.dismiss()
         }
         bt_negative.setOnClickListener {
+            anal.rateDialogNeverClicked()
             editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true).apply()
             dialog.dismiss()
         }
@@ -99,7 +108,9 @@ class AppRater {
             editor.putLong(Constants.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply()
             dialog.dismiss()
         }
+
         dialog.setOnCancelListener {
+            anal.rateDialogCanceled()
             editor.putLong(Constants.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply()
         }
 
@@ -126,7 +137,5 @@ class AppRater {
         } catch (ex: ActivityNotFoundException) {
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=$APP_PNAME")))
         }
-
-
     }
 }

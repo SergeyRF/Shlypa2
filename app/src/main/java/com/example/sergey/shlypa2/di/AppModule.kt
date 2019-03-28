@@ -7,6 +7,7 @@ import com.example.sergey.shlypa2.db.DataBase
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsViewModel
 import com.example.sergey.shlypa2.screens.players.PlayersViewModel
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
@@ -18,10 +19,10 @@ import org.koin.dsl.module.module
 
 val appModule = module {
     viewModel { WelcomeViewModel(get(), get()) }
-    viewModel { PlayersViewModel(get(), get(), get()) }
+    viewModel { PlayersViewModel(get(), get(), get(), get()) }
     viewModel { GameSettingsViewModel(get(), get(), get()) }
-    viewModel { RoundViewModel(get(), get()) }
-    viewModel { WordsViewModel(get(), get()) }
+    viewModel { RoundViewModel(get(), get(), get()) }
+    viewModel { WordsViewModel(get(), get(), get()) }
 
     single<DispatchersProvider> { DispatchersProviderImpl() }
 
@@ -34,6 +35,8 @@ val appModule = module {
     single { (db: DataBase) -> db.wordDao() }
 
     single { DataProvider(get(), get(), get()) }
+
+    single { AnalSender(get())}
 }
 
 private fun createDb(context: Context): DataBase {

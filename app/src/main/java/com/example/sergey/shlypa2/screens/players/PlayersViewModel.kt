@@ -12,6 +12,7 @@ import com.example.sergey.shlypa2.extensions.random
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
@@ -22,7 +23,8 @@ import kotlinx.coroutines.withContext
  */
 class PlayersViewModel(application: Application,
                        private val dataProvider: DataProvider,
-                       private val dispatchers: DispatchersProvider)
+                       private val dispatchers: DispatchersProvider,
+                       private val anal: AnalSender)
     : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
     private val playersLiveData = MutableLiveData<List<Player>>()
@@ -81,6 +83,7 @@ class PlayersViewModel(application: Application,
             }
 
             updateData()
+            anal.playerAdded(true)
         }
     }
 
@@ -103,7 +106,7 @@ class PlayersViewModel(application: Application,
             } else {
                 toastResLD.value = R.string.name_not_unic
             }
-
+            anal.playerAdded(false)
         }
     }
 
@@ -161,6 +164,7 @@ class PlayersViewModel(application: Application,
 
     fun startSettings() {
         commandLiveData.value = Command.START_SETTINGS
+        anal.sendEventTeamsCreated(Game.state.players.size, Game.state.teams.size)
     }
 
     enum class Command {

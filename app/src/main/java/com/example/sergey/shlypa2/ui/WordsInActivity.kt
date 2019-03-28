@@ -16,9 +16,11 @@ import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.extensions.*
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_words_in.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -28,6 +30,7 @@ class WordsInActivity : AppCompatActivity() {
 
     private lateinit var wordsAdapter: RvAdapter
     private val viewModel by viewModel<WordsViewModel>()
+    private val anal by inject<AnalSender>()
 
     private var animated = false
 
@@ -194,6 +197,7 @@ class WordsInActivity : AppCompatActivity() {
 
 
     private fun onStartGame() {
+        anal.gameStarted(Game.getSettings().allowRandomWords, Game.getSettings().typeName)
         Game.beginNextRound()
         startActivity(Intent(this, RoundActivity::class.java))
         finish()

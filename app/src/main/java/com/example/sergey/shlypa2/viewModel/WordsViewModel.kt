@@ -9,6 +9,7 @@ import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.WordType
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import timber.log.Timber
@@ -19,7 +20,8 @@ import java.util.*
  */
 class WordsViewModel(
         application: Application,
-        val dataProvider: DataProvider) : AndroidViewModel(application) {
+        val dataProvider: DataProvider,
+        val anal: AnalSender) : AndroidViewModel(application) {
 
     private val wordsLiveData = MutableLiveData<List<Word>>()
     private val playerLivaData = MutableLiveData<Player>()
@@ -78,6 +80,7 @@ class WordsViewModel(
     fun addWord(s: String) {
         words.add(Word(s))
         updateData()
+        anal.wordAdded(false)
     }
 
     fun reNameWord(word: Word) {
@@ -109,6 +112,7 @@ class WordsViewModel(
         Timber.d("unic words size ${unicWords.size}")
 
         randomWords.addAll(unicWords)
+        anal.wordAdded(true)
     }
 
     fun deleteWord(word: Word) {

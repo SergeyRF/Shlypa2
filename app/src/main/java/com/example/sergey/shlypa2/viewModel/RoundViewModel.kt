@@ -16,6 +16,7 @@ import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.SoundManager
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import timber.log.Timber
@@ -26,7 +27,8 @@ import timber.log.Timber
  */
 class RoundViewModel(
         application: Application,
-        val dataProvider: DataProvider) : AndroidViewModel(application) {
+        val dataProvider: DataProvider,
+        val anal: AnalSender) : AndroidViewModel(application) {
 
     companion object {
         private const val ADS_TIME_LIMIT = 10 * 60 * 1000
@@ -161,6 +163,7 @@ class RoundViewModel(
                 dataProvider.deleteState(Game.state.gameId)
                 uiThread { commandCallback.value = Command.SHOW_GAME_RESULTS }
             }
+            anal.gameFinished()
         }
     }
 

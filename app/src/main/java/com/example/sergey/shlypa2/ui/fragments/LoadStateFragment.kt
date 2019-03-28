@@ -16,8 +16,10 @@ import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.ui.RoundActivity
 import com.example.sergey.shlypa2.extensions.show
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
 import kotlinx.android.synthetic.main.fragment_load_state.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -27,6 +29,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class LoadStateFragment : androidx.fragment.app.Fragment() {
 
     private val viewModel : WelcomeViewModel by sharedViewModel()
+    private val anal by inject<AnalSender>()
     lateinit var adapter: RvAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +43,7 @@ class LoadStateFragment : androidx.fragment.app.Fragment() {
             Game.state = loadedState
 
             startActivity(Intent(context, RoundActivity::class.java))
+            anal.gameLoaded()
         }
 
         return inflater.inflate(R.layout.fragment_load_state, container, false)

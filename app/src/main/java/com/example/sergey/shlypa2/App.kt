@@ -15,7 +15,11 @@ import com.example.sergey.shlypa2.screens.splash.LaunchActivity
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
+import com.flurry.android.FlurryAgent
+
+
 
 
 
@@ -51,6 +55,12 @@ class App : MultiDexApplication() {
         initFcm()
 
         Fabric.with(this, Crashlytics())
+        FirebaseAnalytics.getInstance(this)
+                .setAnalyticsCollectionEnabled(BuildConfig.DEBUG.not())
+
+        FlurryAgent.Builder()
+                .withLogEnabled(true)
+                .build(this, "S85BYYPTT7FXNJZCTPB3")
     }
 
     fun buildCaoc() {
