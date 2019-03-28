@@ -21,6 +21,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.utils.since
 
@@ -69,7 +70,7 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
 
             spinnerThemes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    Functions.selectTheme(themeIds[position], activity!!)
+                    requireActivity().selectTheme(themeIds[position])
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

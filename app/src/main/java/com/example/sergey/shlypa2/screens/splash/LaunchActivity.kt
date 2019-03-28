@@ -16,6 +16,7 @@ import com.example.sergey.shlypa2.BuildConfig
 import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.db.DataBase
 import com.example.sergey.shlypa2.db.DbCreator
+import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.main.FirstActivity
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.Functions
@@ -33,7 +34,7 @@ class LaunchActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
 
         /*GlobalScope.launch {

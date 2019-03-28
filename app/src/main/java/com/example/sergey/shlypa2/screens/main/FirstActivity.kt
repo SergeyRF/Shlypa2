@@ -10,6 +10,9 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.extensions.selectTheme
+import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.extensions.setThemedBackground
 import com.example.sergey.shlypa2.screens.players.PlayersActivity
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
 import com.example.sergey.shlypa2.ui.fragments.RulesFragment
@@ -28,9 +31,10 @@ class FirstActivity : AppCompatActivity() {
     var themeId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
+        setThemedBackground()
 
         supportActionBar?.elevation = 0f
 
@@ -55,10 +59,10 @@ class FirstActivity : AppCompatActivity() {
             }
         }
 
-        if (supportFragmentManager.findFragmentById(R.id.containerFirst) == null) {
+        if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             val fragment = WelcomeFragment()
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.containerFirst, fragment)
+                    .replace(R.id.container, fragment)
                     .commit()
         }
 
@@ -77,13 +81,13 @@ class FirstActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         item?.let {
             when (item.itemId) {
-                R.id.item_blue -> Functions.selectTheme(R.style.AppThemeBlue, this)
-                R.id.item_cyan -> Functions.selectTheme(R.style.AppThemeCyan, this)
-                R.id.item_teal -> Functions.selectTheme(R.style.AppTheme, this)
-                R.id.item_indigo -> Functions.selectTheme(R.style.AppThemeIndigo, this)
-                R.id.item_purple -> Functions.selectTheme(R.style.AppThemePurple, this)
-                R.id.item_green -> Functions.selectTheme(R.style.AppThemeGreen, this)
-                R.id.item_yellow -> Functions.selectTheme(R.style.AppThemeYellow, this)
+                R.id.item_blue -> selectTheme(R.style.AppThemeBlue)
+                R.id.item_cyan -> selectTheme(R.style.AppThemeCyan)
+                R.id.item_teal -> selectTheme(R.style.AppTheme)
+                R.id.item_indigo -> selectTheme(R.style.AppThemeIndigo)
+                R.id.item_purple -> selectTheme(R.style.AppThemePurple)
+                R.id.item_green -> selectTheme(R.style.AppThemeGreen)
+                R.id.item_yellow -> selectTheme(R.style.AppThemeYellow)
 
                 R.id.item_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             }
@@ -100,7 +104,7 @@ class FirstActivity : AppCompatActivity() {
     private fun startGameLoadFragment() {
         val fragment = LoadStateFragment()
         supportFragmentManager.beginTransaction()
-                .replace(R.id.containerFirst, fragment)
+                .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit()
     }
@@ -108,7 +112,7 @@ class FirstActivity : AppCompatActivity() {
     private fun startRulesFragment() {
         val fragment = RulesFragment()
         supportFragmentManager.beginTransaction()
-                .replace(R.id.containerFirst, fragment)
+                .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit()
 

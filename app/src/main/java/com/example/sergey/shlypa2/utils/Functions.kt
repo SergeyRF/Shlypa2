@@ -82,24 +82,9 @@ object Functions {
         return result
     }
 
-    fun setThemeApi21(activity: Activity) {
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return
 
-        val preferences = PreferenceHelper.defaultPrefs(activity)
-        val themeRes: Int = preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
 
-        activity.setTheme(themeRes)
-    }
 
-    fun selectTheme(theme: Int, activity: Activity) {
-        val preferences = PreferenceHelper.defaultPrefs(activity)
-        val oldTheme = preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
-
-        if(theme != oldTheme) {
-            preferences[Constants.THEME_PREF] = theme
-            activity.recreate()
-        }
-    }
 
     fun getSelectedThemeId(context: Context) : Int {
         val preferences = PreferenceHelper.defaultPrefs(context)

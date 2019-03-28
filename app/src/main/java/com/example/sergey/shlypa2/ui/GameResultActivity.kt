@@ -12,6 +12,7 @@ import com.example.sergey.shlypa2.screens.main.FirstActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.extensions.gone
+import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.extensions.show
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_game_result.*
@@ -56,7 +57,7 @@ class GameResultActivity : AppCompatActivity() {
     val resultsAdapter = RvAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_result)
 

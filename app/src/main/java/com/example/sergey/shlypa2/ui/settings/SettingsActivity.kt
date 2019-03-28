@@ -6,13 +6,14 @@ import androidx.fragment.app.Fragment
 import com.artitk.licensefragment.model.License
 import com.artitk.licensefragment.model.LicenseType
 import com.artitk.licensefragment.support.v4.RecyclerViewLicenseFragment
+import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.utils.Functions
 import java.util.*
 
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
 
         if(supportFragmentManager.findFragmentById(android.R.id.content) == null) {

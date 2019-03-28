@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.observeSafe
+import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,7 +21,7 @@ class PlayersActivity : AppCompatActivity() {
     val viewModel by viewModel<PlayersViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_players)
 

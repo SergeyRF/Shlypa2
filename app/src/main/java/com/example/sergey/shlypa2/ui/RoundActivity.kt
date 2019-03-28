@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.ads.Interstitial
+import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.ui.fragments.*
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
@@ -30,7 +31,7 @@ class RoundActivity : AppCompatActivity() {
     private var interstitial: Interstitial? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_round)
 

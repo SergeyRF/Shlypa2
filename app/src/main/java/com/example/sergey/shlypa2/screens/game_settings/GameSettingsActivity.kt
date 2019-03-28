@@ -9,6 +9,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.TypesArrayAdapter
 import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.extensions.observeSafe
+import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.ui.WordsInActivity
 import com.example.sergey.shlypa2.utils.Functions
 import kotlinx.android.synthetic.main.activity_game_settings.*
@@ -21,7 +22,7 @@ class GameSettingsActivity : AppCompatActivity() {
     private val viewModel by viewModel<GameSettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_settings)
 
