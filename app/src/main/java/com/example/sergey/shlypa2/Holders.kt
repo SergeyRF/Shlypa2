@@ -2,17 +2,16 @@ package com.example.sergey.shlypa2
 
 import android.view.View
 import android.widget.*
+import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.game.GameState
-import com.example.sergey.shlypa2.game.TeamWithScores
-import com.example.sergey.shlypa2.game.WordType
-import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.show
+import com.example.sergey.shlypa2.game.GameState
+import com.example.sergey.shlypa2.game.TeamWithScores
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.views.HolderInflater
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import timber.log.Timber
 
@@ -105,8 +104,8 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
             }
         }
 
-        Picasso.get()
-                .load(Functions.imageNameToUrl("player_avatars/small/${player.avatar}"))
+        Glide.with(itemView)
+                .load(player.getSmallImage())
                 .into(avatarImage)
     }
 }

@@ -1,24 +1,23 @@
 package com.example.sergey.shlypa2.ui
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.extensions.*
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.*
+import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_words_in.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -132,7 +131,7 @@ class WordsInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if(!animated) {
+        if (!animated) {
             please(10) {
                 animate(rvWords) {
                     outOfScreen(Gravity.RIGHT)
@@ -161,7 +160,7 @@ class WordsInActivity : AppCompatActivity() {
     fun setPlayer(p: Player?) {
         p?.let {
             //            title = p.name
-            Picasso.get()
+            Glide.with(this)
                     .load(Functions.imageNameToUrl("player_avatars/large/${p.avatar}"))
                     .into(civPlayerAvatar)
 

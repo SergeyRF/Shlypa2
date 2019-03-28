@@ -18,7 +18,6 @@ import com.example.sergey.shlypa2.extensions.dimen
 import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 object HolderInflater {

@@ -30,7 +30,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class HugeTeamsTest {
 
-    public static final int PLAYERS_COUNT = 50;
+    public static final int PLAYERS_COUNT = 10;
     public static final int TEAMS_COUNT = 2;
 
     @Rule

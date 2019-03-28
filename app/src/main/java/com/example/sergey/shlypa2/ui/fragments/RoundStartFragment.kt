@@ -1,19 +1,19 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.viewModel.RoundViewModel
 import com.github.florent37.kotlin.pleaseanimate.PleaseAnim
 import com.github.florent37.kotlin.pleaseanimate.please
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_round_start.*
 
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_round_start.*
  */
 class RoundStartFragment : androidx.fragment.app.Fragment() {
 
-    lateinit var animation:PleaseAnim
+    lateinit var animation: PleaseAnim
 
     var animated = false
     lateinit var viewModel: RoundViewModel
@@ -45,7 +45,7 @@ class RoundStartFragment : androidx.fragment.app.Fragment() {
                 tvRoundName.setText(it.name)
                 tvRules.setText(it.rules)
 
-                Picasso.get()
+                Glide.with(this)
                         .load(Functions.imageNameToUrl("round_avatars/${it.image}"))
                         .into(rulesAvatar)
             }
@@ -79,7 +79,7 @@ class RoundStartFragment : androidx.fragment.app.Fragment() {
         createAnimation()
     }
 
-    fun createAnimation(){
+    fun createAnimation() {
         animated = false
         animation = please {
             animate(tvRoundName) {
@@ -106,10 +106,10 @@ class RoundStartFragment : androidx.fragment.app.Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-       if ( item?.itemId==R.id.item_show_hint ) {
-           viewModel.loadHintTeam()
-           return true
-       }
+        if (item?.itemId == R.id.item_show_hint) {
+            viewModel.loadHintTeam()
+            return true
+        }
         return super.onOptionsItemSelected(item)
     }
 
