@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.screens.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.players.PlayersActivity
@@ -24,14 +26,26 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FirstActivity : AppCompatActivity() {
 
-    private val viewModel by viewModel<WelcomeViewModel>()
+    companion object {
+        private const val EXTRA_SHOW_RATE = "extra_show_rate"
+        fun getIntent(context: Context, showRate: Boolean = false) =
+                Intent(context, FirstActivity::class.java)
+                        .putExtra(EXTRA_SHOW_RATE, showRate)
+    }
 
+    private val viewModel by viewModel<WelcomeViewModel>()
     var themeId: Int = 0
+
+    private val showRate by extraNotNull(EXTRA_SHOW_RATE, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
+
+        if(showRate) {
+            AppRater().rateAppIfRequired(this)
+        }
 
         supportActionBar?.elevation = 0f
 
@@ -47,8 +61,6 @@ class FirstActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val r = AppRater()
-        r.app_launched(this)
 
         since(Build.VERSION_CODES.LOLLIPOP) {
             if (Functions.getSelectedThemeId(this) != themeId) {

@@ -131,6 +131,7 @@
     <string name="no_winner">The winner is not defined</string>
     <string name="no_winner_draw">Draw</string>
     <string name="turn_player">Now it\'s turn of:</string>
+    <string name="finish">finish game</string>
 
 
 </resources>

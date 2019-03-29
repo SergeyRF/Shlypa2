@@ -76,7 +76,7 @@
 
     <Button
         style="@style/btNextStyle"
-        android:text="@string/new_game"
+        android:text="@string/finish"
         android:id="@+id/btCreateNewGame"
         app:layout_constraintBottom_toBottomOf="parent"
         />

@@ -86,7 +86,7 @@
 
     <!-- Rate -->
     <string name="rate">Оценить</string>
-    <string name="rate_massage">Оцените приложение Шляпа</string>
+    <string name="rate_massage">Вам понравилось играть в Шляпу? Уделите минутку, чтобы поставить нам оценку?</string>
     <string name="rate_never">Никогда</string>
     <string name="rate_last">Позже</string>
     <string name="rate_ok">Оценить</string>
@@ -132,5 +132,9 @@
     <!-- no winner-->
     <string name="no_winner">Победитель неопределён</string>
     <string name="no_winner_draw">Ничья</string>
+    <string name="turn_player">Now it\'s turn of:</string>
+    <string name="finish">Закончить игру</string>
+
+    <string name="no_saved_games">Вы пока не сохраняли игр…</string>
 
 </resources>
