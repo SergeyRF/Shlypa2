@@ -40,6 +40,7 @@ class Round(words: List<Word>) {
         return currentPlayer
     }
 
+    //todo remove
     fun nextPlayer(): Player {
         var playerScores = 0
 
@@ -70,6 +71,34 @@ class Round(words: List<Word>) {
         currentPlayer = currentTeam.nextPlayer()
 
         return currentPlayer
+    }
+
+    fun applyTurnResults(checkedIds: List<Long>) {
+        var scores = 0
+        results[currentPlayer.id]?.let {
+            scores = it
+        }
+
+        wordsAnsweredByPlayer.forEach {
+            it.right = checkedIds.contains(it.id)
+            if(it.right) {
+                scores++
+            } else {
+                if(Game.getSettings().minusBal) {
+                    scores -= Game.getSettings().numberMinusBal
+                }
+
+                if(Game.getSettings().returnSkipedToHat) {
+                    wordsQueue.add(it)
+                }
+            }
+        }
+
+        results[currentPlayer.id] = scores
+        wordsAnsweredByPlayer.clear()
+
+        currentTeam = Game.nextTeam()
+        currentPlayer = currentTeam.nextPlayer()
     }
 
     fun getWord(): Word? {

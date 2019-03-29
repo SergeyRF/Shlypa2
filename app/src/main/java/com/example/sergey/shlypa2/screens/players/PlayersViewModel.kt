@@ -29,7 +29,7 @@ class PlayersViewModel(application: Application,
 
     private val playersLiveData = MutableLiveData<List<Player>>()
     private val teamsLiveData = MutableLiveData<List<Team>>()
-    private val avatarLiveData = MutableLiveData<String>()
+    val avatarLiveData = MutableLiveData<String>()
     val toastResLD = MutableLiveData<Int>()
 
     val commandLiveData = SingleLiveEvent<Command>()
@@ -39,20 +39,12 @@ class PlayersViewModel(application: Application,
 
     init {
         updateData()
+        loadAvatars()
     }
 
     fun getPlayersLiveData(): LiveData<List<Player>> = playersLiveData
 
     fun getTeamsLiveData(): LiveData<List<Team>> = teamsLiveData
-
-    fun getAvatarLiveData(): LiveData<String> {
-        if (listOfAvatars.isEmpty()) {
-            launch(dispatchers.ioDispatcher) {
-                synchronized(this) { loadAvatars() }
-            }
-        }
-        return avatarLiveData
-    }
 
     fun removePlayer(player: Player) {
         Game.removePlayer(player)
@@ -110,9 +102,12 @@ class PlayersViewModel(application: Application,
         }
     }
 
-    private fun loadAvatars() {
-        listOfAvatars.addAll(dataProvider.getListOfAvatars())
-        avatarLiveData.postValue(listOfAvatars.random())
+    private fun loadAvatars() = launch {
+        withContext(dispatchers.ioDispatcher) {
+            listOfAvatars.addAll(dataProvider.getListOfAvatars())
+        }
+
+        avatarLiveData.value = listOfAvatars.random()
     }
 
     fun initTeams() {

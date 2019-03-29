@@ -10,7 +10,7 @@ import com.example.sergey.shlypa2.screens.players.PlayersViewModel
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
-import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.google.gson.GsonBuilder

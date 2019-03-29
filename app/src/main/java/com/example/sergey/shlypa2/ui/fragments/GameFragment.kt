@@ -19,7 +19,7 @@ import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.show
-import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.fragment_game.*
 import timber.log.Timber

@@ -5,8 +5,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +13,8 @@ import android.widget.TextView
 
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
-import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.ui.RoundActivity
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
-import com.example.sergey.shlypa2.viewModel.RoundViewModel
-import timber.log.Timber
+import com.example.sergey.shlypa2.screens.game.RoundViewModel
 
 
 /**

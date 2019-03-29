@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
-import androidx.preference.PreferenceManager
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
@@ -125,11 +124,11 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        spotl()
+        runGuide()
         return super.onOptionsItemSelected(item)
     }
 
-    fun spotl() {
+    private fun runGuide() {
         val shaffleTeam = SimpleTarget.Builder(activity!!)
                 .setPoint(floatingMenu.menuIconView)
                 .setRadius(80f)
@@ -161,7 +160,7 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
 
     private fun globalListentrForSpotl() {
         requireContext().runOnceEver(PLAYING_HINT) {
-            view?.onDrawn { spotl() }
+            view?.onDrawn { runGuide() }
         }
     }
 

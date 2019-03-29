@@ -9,7 +9,7 @@
 
     <dimen name="text_sub_title">18sp</dimen>
 
-    <dimen name="word_holder_height">40dp</dimen>
+    <dimen name="word_holder_height">52dp</dimen>
 
     <dimen name="player_holder_height">64dp</dimen>
     <dimen name="player_avatar">48dp</dimen>

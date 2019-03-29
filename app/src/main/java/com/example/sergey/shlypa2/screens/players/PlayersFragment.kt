@@ -8,7 +8,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -44,8 +43,6 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     companion object {
         const val SHOW_SPOTLIGHT = "spotlight_show"
     }
-
-    private var avatar: String? = null
 
     private val borderColor by lazy { Functions.getThemedBgColor(requireContext()) }
     private val avatarOptions by lazy(LazyThreadSafetyMode.NONE) {
@@ -116,9 +113,9 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             onPlayersChanged(list)
         }
 
-        viewModel.getAvatarLiveData().observe(this, Observer { avatar ->
-            avatar?.let { showAvatar(it) }
-        })
+        viewModel.avatarLiveData.observeSafe(this) {
+            showAvatar(it)
+        }
     }
 
     val dialogOnSelect: (String) -> Unit = { fileName ->
@@ -162,8 +159,6 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun showAvatar(fileName: String) {
-        avatar = fileName
-        val fileLink = Functions.imageNameToUrl("player_avatars/small/$fileName")
         Glide.with(this)
                 .load(Player.smallImagePath(fileName))
                 .apply(avatarOptions)

@@ -1,59 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/word_holder_height"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white">
+    app:cardCornerRadius="0dp"
+    app:contentPaddingLeft="@dimen/big_margin"
+    app:contentPaddingRight="12dp">
 
-    <TextView
-        android:id="@+id/word_out"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
-        android:layout_marginLeft="@dimen/big_margin"
-        tools:text="some word"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/word_holder_height"
+        android:background="@color/white">
 
-    <RadioGroup
-        android:id="@+id/groupCorrect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        <TextView
+            android:id="@+id/word_out"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_medium"
+            tools:text="some ddddddddddddddfdfdfdf"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/groupCorrect"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/radioCorrect"
+        <RadioGroup
+            android:id="@+id/groupCorrect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/radio_thumbs_up"
-            android:layout_marginRight="@dimen/medium_margin"
-            />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/radioWrong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/radio_thumbs_down"
-            android:layout_marginRight="@dimen/big_margin"
-            />
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/radioCorrect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:gravity="center"
+                android:button="@drawable/radio_thumbs_up"
+                />
 
-    </RadioGroup>
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/radioWrong"
+                android:padding="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/radio_thumbs_down"
+                />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@color/LightGray"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@color/LightGray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+

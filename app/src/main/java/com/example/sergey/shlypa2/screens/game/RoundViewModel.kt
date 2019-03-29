@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.viewModel
+package com.example.sergey.shlypa2.screens.game
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -189,11 +189,12 @@ class RoundViewModel(
         handler.removeCallbacksAndMessages(null)
     }
 
-    fun nextTurn() {
+    fun nextTurn(checkedIds: List<Long>) {
         saveGameState()
 
         round.turnFinished = false
-        round.nextPlayer()
+        round.applyTurnResults(checkedIds)
+
         if (round.getWord() != null) {
             answeredCountLiveData.value = 0 to 0
             commandCallback.value = Command.GET_READY

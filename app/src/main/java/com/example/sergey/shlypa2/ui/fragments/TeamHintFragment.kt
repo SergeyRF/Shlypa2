@@ -2,14 +2,12 @@ package com.example.sergey.shlypa2.ui.fragments
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
-import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import kotlinx.android.synthetic.main.fragment_team_hint.*
 
 
