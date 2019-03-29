@@ -25,4 +25,6 @@ object Constants {
 
     const val RELEASE_COMMON_TOPIC = "hat_release_common"
     const val DEBUG_COMMON_TOPIC = "hat_debug_common"
+
+    const val APP_STORE_LINK = "https://play.google.com/store/apps/details?id=com.attiladroid.shlypa"
 }

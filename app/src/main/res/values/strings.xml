@@ -132,6 +132,8 @@
     <string name="no_winner_draw">Draw</string>
     <string name="turn_player">Now it\'s turn of:</string>
     <string name="finish">finish game</string>
+    <string name="share">Share</string>
+    <string name="invite_friend">Share the Hat Game with your friends</string>
 
 
 </resources>

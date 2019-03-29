@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.AppRater
+import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.selectTheme
@@ -99,10 +101,19 @@ class FirstActivity : AppCompatActivity() {
                 R.id.item_yellow -> selectTheme(R.style.AppThemeYellow)
 
                 R.id.item_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+                R.id.item_share -> share()
             }
         }
 
         return true
+    }
+
+    private fun share() {
+        ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain") // or "message/rfc822"
+                .setChooserTitle(R.string.invite_friend)
+                .setText(Constants.APP_STORE_LINK)
+                .startChooser()
     }
 
     private fun startNewGame() {
