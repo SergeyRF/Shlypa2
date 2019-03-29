@@ -41,7 +41,7 @@ class RulesFragment : androidx.fragment.app.Fragment() {
                     else -> "rulesen.html"
                 }
 
-        val rulesStream = context!!.assets!!.open(fileName)
+        val rulesStream = requireContext().assets!!.open(fileName)
         val bufferedReader = BufferedReader(InputStreamReader(rulesStream))
 
         val stringBuilder = StringBuilder()
