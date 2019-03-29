@@ -11,7 +11,6 @@ import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
-import com.example.sergey.shlypa2.utils.Functions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayersActivity : AppCompatActivity() {

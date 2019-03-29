@@ -1,18 +1,16 @@
 package com.example.sergey.shlypa2.screens.main
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.extensions.setThemedBackground
 import com.example.sergey.shlypa2.screens.players.PlayersActivity
 import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
 import com.example.sergey.shlypa2.ui.fragments.RulesFragment
@@ -34,7 +32,6 @@ class FirstActivity : AppCompatActivity() {
         setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
-        setThemedBackground()
 
         supportActionBar?.elevation = 0f
 

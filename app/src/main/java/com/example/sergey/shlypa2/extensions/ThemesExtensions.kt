@@ -10,17 +10,6 @@ import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 
-fun Activity.setThemedBackground() {
-    findViewById<ViewGroup>(R.id.container)?.let {
-        val themeId = getThemeId(this)
-        val backgroundRes = when(themeId) {
-            R.style.AppThemeBlue, R.style.AppTheme -> R.drawable.background_blue
-            else -> R.drawable.background_green
-        }
-        it.setBackgroundResource(backgroundRes)
-    }
-}
-
 
 fun Activity.selectTheme(theme: Int) {
     val preferences = PreferenceHelper.defaultPrefs(this)
@@ -39,9 +28,4 @@ fun Activity.setThemeApi21() {
     val themeRes: Int = preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
 
     setTheme(themeRes)
-}
-
-private fun getThemeId(context: Context): Int {
-    val preferences = PreferenceHelper.defaultPrefs(context)
-    return preferences[Constants.THEME_PREF, R.style.AppThemeBlue] ?: R.style.AppThemeBlue
 }
