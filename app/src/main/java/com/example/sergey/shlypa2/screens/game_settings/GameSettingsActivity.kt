@@ -63,7 +63,9 @@ class GameSettingsActivity : AppCompatActivity() {
 
     private fun acceptSettings() {
         viewModel.setAllowRandom(switchSettingAllowRandom.isChecked())
-        viewModel.setDifficulty(spinnerDificult.selectedItem as Type)
+        (spinnerDificult.selectedItem as? Type)?.let {
+            viewModel.setDifficulty(it)
+        }
         viewModel.setMinusBal(ssPenalty.isChecked())
         viewModel.onFinish()
     }

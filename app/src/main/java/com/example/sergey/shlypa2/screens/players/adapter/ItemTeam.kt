@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.holder_teem.view.*
 
 
 class ItemTeam(val team: Team,
-               val onRenameClick: (Team) -> Unit) : AbstractFlexibleItem<ItemTeam.ViewHolder>() {
+               val onRenameClick: (ItemTeam) -> Unit) : AbstractFlexibleItem<ItemTeam.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
                                 holder: ViewHolder,
@@ -26,10 +26,10 @@ class ItemTeam(val team: Team,
             playersList.removeAllViews()
             playersList.addView(HolderInflater.inflatePlayers(team.players, itemView.context))
             ivRename.setOnClickListener {
-                onRenameClick.invoke(team)
+                onRenameClick.invoke(this@ItemTeam)
             }
             teamName.setOnLongClickListener {
-                onRenameClick.invoke(team)
+                onRenameClick.invoke(this@ItemTeam)
                 true
             }
         }

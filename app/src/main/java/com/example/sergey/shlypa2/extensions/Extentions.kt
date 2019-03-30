@@ -65,7 +65,9 @@ fun View.hideKeyboard() {
 
 fun Activity.hideKeyboard() {
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+    currentFocus?.windowToken?.let {
+        imm.hideSoftInputFromWindow(it, 0)
+    }
 }
 
 fun View.dimen(id: Int) : Int = resources.getDimensionPixelSize(id)

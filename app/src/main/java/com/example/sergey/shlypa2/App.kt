@@ -11,6 +11,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 import com.crashlytics.android.Crashlytics
+import com.example.sergey.shlypa2.db.DbCreator
 import com.example.sergey.shlypa2.screens.splash.LaunchActivity
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferenceHelper
@@ -19,18 +20,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
 import com.flurry.android.FlurryAgent
 
-
-
-
-
-
 /**
  * Created by alex on 4/4/18.
  */
 class App : MultiDexApplication() {
 
     companion object {
-        private const val DB_IMPORTED = "db_imported_v1_1_4b"
+        private const val DB_IMPORTED = "db_imported_v1_1_4d"
     }
 
     override fun onCreate() {
@@ -52,7 +48,6 @@ class App : MultiDexApplication() {
         Game.teamNames = namesArray.toMutableList()
 
         buildCaoc()
-        initFcm()
 
         Fabric.with(this, Crashlytics())
         FirebaseAnalytics.getInstance(this)
@@ -61,6 +56,8 @@ class App : MultiDexApplication() {
         FlurryAgent.Builder()
                 .withLogEnabled(true)
                 .build(this, "S85BYYPTT7FXNJZCTPB3")
+
+        initFcm()
     }
 
     fun buildCaoc() {
@@ -72,10 +69,15 @@ class App : MultiDexApplication() {
     }
 
     private fun initFcm() {
-        FirebaseMessaging.getInstance().subscribeToTopic(
-                if (BuildConfig.DEBUG) Constants.DEBUG_COMMON_TOPIC
-                else Constants.RELEASE_COMMON_TOPIC
-        )
+        // todo review this strange error - IllegalStateException
+        try{
+            FirebaseMessaging.getInstance().subscribeToTopic(
+                    if (BuildConfig.DEBUG) Constants.DEBUG_COMMON_TOPIC
+                    else Constants.RELEASE_COMMON_TOPIC
+            )
+        } catch (ex: Exception) {
+            Timber.e(ex)
+        }
     }
 
     private fun manageDb() {

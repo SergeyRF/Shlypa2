@@ -32,7 +32,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class TeamsFragment : androidx.fragment.app.Fragment() {
 
     val viewModel by sharedViewModel<PlayersViewModel>()
-    lateinit var adapterTeam: RvAdapter
     private val teamAdapter = FlexibleAdapter(emptyList(), this)
 
     companion object {
@@ -77,31 +76,29 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
         globalListentrForSpotl()
     }
 
-    private fun showTeamRenameDialog(team: Team) {
+    private fun showTeamRenameDialog(itemTeam: ItemTeam) {
         val dialog = Dialog(requireContext())
 
         dialog.setContentView(R.layout.dialog_edit_text)
         val etTeemD = dialog.findViewById<EditText>(R.id.etDialog)
         val btYesD = dialog.findViewById<Button>(R.id.btYesDialog)
         val btNoD = dialog.findViewById<Button>(R.id.btNoDialog)
-        etTeemD.hint = team.name
+        etTeemD.hint = itemTeam.team.name
 
         btYesD.setOnClickListener {
             if (etTeemD.text.isNotEmpty()) {
-                team.name = etTeemD.text.toString()
-                adapterTeam.notifyDataSetChanged()
+                itemTeam.team.name = etTeemD.text.toString()
+                teamAdapter.updateItem(itemTeam)
                 etTeemD.requestFocus()
             }
             dialog.cancel()
-
-
         }
         btNoD.setOnClickListener { dialog.cancel() }
 
         etTeemD.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_NEXT && etTeemD.text.isNotEmpty()) {
-                team.name = etTeemD.text.toString()
-                adapterTeam.notifyDataSetChanged()
+                itemTeam.team.name = etTeemD.text.toString()
+                teamAdapter.updateItem(itemTeam)
                 dialog.cancel()
             }
             true
