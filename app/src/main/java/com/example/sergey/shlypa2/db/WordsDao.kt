@@ -1,10 +1,9 @@
 package com.example.sergey.shlypa2.db
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.game.WordType
 
 /**
  * Created by alex on 4/10/18.
@@ -13,19 +12,21 @@ import com.example.sergey.shlypa2.game.WordType
 @Dao
 interface WordsDao {
 
-    @Query("SELECT * FROM ${Contract.WORD_TABLE} " +
-            "WHERE ${Contract.WORD_LANG} = :lang")
-    fun getAllWords(lang : String = "en") : List<Word>
+    @Query("SELECT * FROM ${Contract.WORD_TABLE} ") //fixme
+    fun getAllWords(): List<Word>
 
     @Query("SELECT * FROM ${Contract.WORD_TABLE} " +
-            "WHERE ${Contract.WORD_TYPE} = :type " +
-            "AND ${Contract.WORD_LANG} = :lang " +
-            " ORDER BY RANDOM() LIMIT :wordsLimit")
-    fun getRandomWords(wordsLimit : Int, type : WordType = WordType.EASY, lang : String = "en") : List<Word>
+            "WHERE ${Contract.WORD_TYPE} = :typeId " +
+            "ORDER BY RANDOM() LIMIT :wordsLimit") //fixme
+    fun getRandomWords(wordsLimit: Int, typeId: Long): List<Word>
+
+    @Query("SELECT * FROM ${Contract.WORD_TABLE} " +
+            "WHERE ${Contract.WORD_TYPE} = :typeId ")
+    fun getWordsOfType(typeId: Long): List<Word>
 
     @Query("SELECT * FROM ${Contract.WORD_TABLE} WHERE ${Contract.WORD_ID} = :id")
-    fun getWordById(id : Long) : Word
+    fun getWordById(id: Long): Word
 
     @Insert
-    fun insertWord(word: Word) : Long
+    fun insertWord(word: Word): Long
 }

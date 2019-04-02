@@ -1,22 +1,22 @@
 package com.example.sergey.shlypa2.testUtils
 
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.RecyclerView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import android.widget.SeekBar
-import android.support.test.espresso.util.HumanReadables
-import android.support.test.espresso.PerformException
-import android.support.test.espresso.action.CoordinatesProvider
-import android.support.test.espresso.action.Press
-import android.support.test.espresso.action.Swipe
-import android.support.test.espresso.action.GeneralSwipeAction
-import android.support.test.espresso.action.ViewActions.actionWithAssertions
+import androidx.test.espresso.util.HumanReadables
+import androidx.test.espresso.PerformException
+import androidx.test.espresso.action.CoordinatesProvider
+import androidx.test.espresso.action.Press
+import androidx.test.espresso.action.Swipe
+import androidx.test.espresso.action.GeneralSwipeAction
+import androidx.test.espresso.action.ViewActions.actionWithAssertions
 
 
 
@@ -43,7 +43,7 @@ object CustomActions {
 
     class ScrollToPositionViewAction constructor(private val position: Int) : ViewAction {
         override fun getConstraints(): Matcher<View> {
-            return allOf<View>(isAssignableFrom(RecyclerView::class.java), isDisplayed())
+            return allOf<View>(isAssignableFrom(androidx.recyclerview.widget.RecyclerView::class.java), isDisplayed())
         }
 
         override fun getDescription(): String {
@@ -51,14 +51,14 @@ object CustomActions {
         }
 
         override fun perform(uiController: UiController, view: View) {
-            val recyclerView = view as RecyclerView
+            val recyclerView = view as androidx.recyclerview.widget.RecyclerView
             recyclerView.smoothScrollToPosition(position)
         }
     }
 
     class SlideToPositionAction constructor(private val position: Int) : ViewAction {
         override fun getConstraints(): Matcher<View> {
-            return allOf<View>(isAssignableFrom(ViewPager::class.java), isDisplayed())
+            return allOf<View>(isAssignableFrom(androidx.viewpager.widget.ViewPager::class.java), isDisplayed())
         }
 
         override fun getDescription(): String {
@@ -66,7 +66,7 @@ object CustomActions {
         }
 
         override fun perform(uiController: UiController, view: View) {
-            val pager = view as ViewPager
+            val pager = view as androidx.viewpager.widget.ViewPager
             pager.currentItem = position
         }
     }

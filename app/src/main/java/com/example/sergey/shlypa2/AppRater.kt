@@ -5,93 +5,47 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AlertDialog
-import android.support.v7.preference.PreferenceManager
+import androidx.appcompat.app.AlertDialog
+import androidx.preference.PreferenceManager
 import android.widget.Button
 import android.widget.ImageView
+import com.example.sergey.shlypa2.utils.PreferenceHelper
+import com.example.sergey.shlypa2.utils.anal.AnalSender
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
 
-/**
- * Created by sergey on 5/1/18.
- */
-class AppRater {
+class AppRater: KoinComponent {
 
     companion object {
-        const val APP_PNAME = "com.attiladroid.shlypa"
+        const val APP_NAME = "com.attiladroid.shlypa"
+        private const val RATED = "rated"
+        private const val SHOW_LATER_SELECTED = "show_later_selected"
+        private const val LAST_SHOWN_TIME = "last_shown_time"
+        private const val DAYS_UNTIL_SHOW = 3
     }
 
-    fun app_launched(mContext: Context) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(mContext)
-        if (prefs.getBoolean(Constants.DONT_SHOW_RATE_DIALOG, false)) {
-            return
+    private val anal by inject<AnalSender>()
+    private var lightedStars = 0
+
+    fun rateAppIfRequired(mContext: Context) {
+        val preferenceHelper = PreferenceHelper.defaultPrefs(mContext)
+        if(preferenceHelper.getBoolean(RATED, false)) return
+        if(preferenceHelper.getBoolean(SHOW_LATER_SELECTED, false)) {
+            val lastShown = preferenceHelper.getLong(LAST_SHOWN_TIME, Long.MAX_VALUE)
+            if(System.currentTimeMillis() < lastShown +  DAYS_UNTIL_SHOW * 24 * 60 * 60 * 1000) return
         }
 
-        val editor = prefs.edit()
-
-        // Increment launch counter
-        val launch_count = prefs.getLong(Constants.LAUNCH_COUNT, 0) + 1
-        editor.putLong(Constants.LAUNCH_COUNT, launch_count)
-
-
-        // Get date of first launch
-        var date_firstLaunch = prefs.getLong(Constants.DATE_FIRST_LAUNCH, 0)
-        if (date_firstLaunch == 0L) {
-            date_firstLaunch = System.currentTimeMillis()
-            editor.putLong(Constants.DATE_FIRST_LAUNCH, date_firstLaunch)
-        }
-
-        val rateLastRemind = prefs.getLong(Constants.LAST_RATE_SHOW_TIME, 0)
-
-        // Wait at least n days before opening
-        if (launch_count >= Constants.LAUNCHES_UNTIL_PROMPT) {
-            if (System.currentTimeMillis() >= date_firstLaunch + Constants.DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000) {
-                if (System.currentTimeMillis() >= rateLastRemind + Constants.DAYS_UNTIL_REMIND * 24 * 60 * 60 * 1000) {
-                    showRateDialogMy(mContext)
-                }
-            }
-        }
-
-        editor.apply()
+        showRateDialogMy(mContext)
     }
 
-    fun showRateDialog(context: Context) {
-        val builder = AlertDialog.Builder(context)
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
-
-        builder.setTitle(R.string.rate)
-        builder.setMessage(R.string.rate_massage)
-
-        builder.setNeutralButton(R.string.rate_last) { dialog, which ->
-            editor.putLong(Constants.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply()
-            dialog.dismiss()
-        }
-
-        builder.setNegativeButton(R.string.rate_never) { dialog, which ->
-            editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true).apply()
-            dialog.dismiss()
-        }
-
-        builder.setPositiveButton(R.string.rate_ok) { dialog, which ->
-            editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true)
-            rateApp(context)
-            dialog.dismiss()
-        }
-
-        builder.setOnCancelListener {
-            editor.putLong(Constants.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply()
-        }
-
-
-        builder.show()
-
-    }
-
-    fun showRateDialogMy(context: Context) {
+    private fun showRateDialogMy(context: Context) {
+        anal.rateDialogOpened()
 
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_rater)
 
-        val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+
 
         val bt_positive = dialog.findViewById<Button>(R.id.bt_positive)
         val bt_neutral = dialog.findViewById<Button>(R.id.bt_neutral)
@@ -111,7 +65,7 @@ class AppRater {
         listStars.add(star_5)
 
         fun lightStars(i: Int) {
-
+            lightedStars = i
             for (n in 0..(listStars.size - 1)) {
                 listStars[n].setImageResource(R.drawable.ic_star)
             }
@@ -120,22 +74,31 @@ class AppRater {
             }
         }
 
+        val prefs = PreferenceHelper.defaultPrefs(context)
+
         bt_positive.setOnClickListener {
-            editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true)
+            anal.rateStarred(lightedStars)
+            prefs.edit().putBoolean(RATED, true).apply()
             rateApp(context)
             dialog.dismiss()
         }
+
         bt_negative.setOnClickListener {
-            editor.putBoolean(Constants.DONT_SHOW_RATE_DIALOG, true).apply()
+            anal.rateDialogNeverClicked()
+            prefs.edit().putBoolean(RATED, true).apply()
             dialog.dismiss()
         }
 
         bt_neutral.setOnClickListener {
-            editor.putLong(Constants.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply()
+            prefs.edit().putLong(LAST_SHOWN_TIME, System.currentTimeMillis()).apply()
+            prefs.edit().putBoolean(SHOW_LATER_SELECTED, true).apply()
             dialog.dismiss()
         }
+
         dialog.setOnCancelListener {
-            editor.putLong(Constants.LAST_RATE_SHOW_TIME, System.currentTimeMillis()).apply()
+            anal.rateDialogCanceled()
+            prefs.edit().putLong(LAST_SHOWN_TIME, System.currentTimeMillis()).apply()
+            prefs.edit().putBoolean(SHOW_LATER_SELECTED, true).apply()
         }
 
         star_1.setOnClickListener { lightStars(1) }
@@ -155,13 +118,11 @@ class AppRater {
         dialog.show()
     }
 
-    fun rateApp(context: Context) {
+    private fun rateApp(context: Context) {
         try {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$APP_PNAME")))
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$APP_NAME")))
         } catch (ex: ActivityNotFoundException) {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=$APP_PNAME")))
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=$APP_NAME")))
         }
-
-
     }
 }

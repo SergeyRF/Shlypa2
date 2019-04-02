@@ -1,26 +1,17 @@
 package com.example.sergey.shlypa2.ui.fragments
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
-import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import kotlinx.android.synthetic.main.fragment_team_hint.*
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [TeamHintFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [TeamHintFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class TeamHintFragment : Fragment() {
+
+class TeamHintFragment : androidx.fragment.app.Fragment() {
 
 
     val adapter = RvAdapter()
@@ -42,7 +33,7 @@ class TeamHintFragment : Fragment() {
         viewModel = ViewModelProviders.of(activity!!).get(RoundViewModel::class.java)
 
         adapter.setData(viewModel.loadCurrrentBal())
-        rvHintTeam_and_Result.layoutManager = LinearLayoutManager(view.context)
+        rvHintTeam_and_Result.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(view.context)
         rvHintTeam_and_Result.adapter = adapter
 
     }

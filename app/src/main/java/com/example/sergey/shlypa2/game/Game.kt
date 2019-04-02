@@ -18,7 +18,12 @@ object Game {
 
 
     fun addPlayer(player: Player): Boolean {
-        return if (state.players.containsKey(player.id)) {
+        val playerExists = state.players.values
+                .firstOrNull {
+                    it.id == player.id || it.name.equals(player.name, ignoreCase = true)
+                } != null
+
+        return if (playerExists) {
             false
         } else {
             state.players[player.id] = player

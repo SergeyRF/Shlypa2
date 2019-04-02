@@ -1,18 +1,17 @@
 package com.example.sergey.shlypa2.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.extensions.gone
+import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.TeamWithScores
-import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.screens.main.FirstActivity
 import com.example.sergey.shlypa2.utils.SoundManager
-import com.example.sergey.shlypa2.utils.gone
-import com.example.sergey.shlypa2.utils.show
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_game_result.*
 
@@ -56,7 +55,7 @@ class GameResultActivity : AppCompatActivity() {
     val resultsAdapter = RvAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_result)
 
@@ -70,10 +69,10 @@ class GameResultActivity : AppCompatActivity() {
 
         tv_winner.text = tm?.team?.name ?: "Unknown"
 
-        rvGameResults.layoutManager = LinearLayoutManager(this)
+        rvGameResults.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         rvGameResults.adapter = resultsAdapter
         btCreateNewGame.setOnClickListener {
-            startActivity(Intent(this, FirstActivity::class.java))
+            startActivity(FirstActivity.getIntent(this, true))
             finish()
         }
 

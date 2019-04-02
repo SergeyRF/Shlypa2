@@ -1,9 +1,9 @@
 package com.example.sergey.shlypa2
 
-import android.app.Instrumentation
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.viewModel.PlayersViewModel
+import com.example.sergey.shlypa2.screens.players.PlayersViewModel
+import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,10 +21,10 @@ class PlayersViewModelTest {
     @Before
     fun setup() {
         Game.clear()
-        playersViewModel = PlayersViewModel(RuntimeEnvironment.application)
-        playersViewModel.addPlayer(Player("John"))
-        playersViewModel.addPlayer(Player("Jack"))
-        playersViewModel.addPlayer(Player("Soul"))
+        playersViewModel = PlayersViewModel(RuntimeEnvironment.application, DispatchersProviderImpl())
+        playersViewModel.addPlayer("John")
+        playersViewModel.addPlayer("Jack")
+        playersViewModel.addPlayer("Soul")
         println("Before $playersViewModel")
     }
 
@@ -33,13 +33,13 @@ class PlayersViewModelTest {
         val playersLiveData = playersViewModel.getPlayersLiveData()
         assertEquals(3, playersLiveData.value!!.size)
 
-        playersViewModel.addPlayer(Player("Matt"))
+        playersViewModel.addPlayer("Matt")
         assertEquals(4, playersLiveData.value!!.size)
     }
 
     @Test
     fun testPlayersWithSameNameCantBeInserted() {
-        playersViewModel.addPlayer(Player("John"))
+        playersViewModel.addPlayer("John")
 
         val playersLiveDate = playersViewModel.getPlayersLiveData()
         assertEquals(3, playersLiveDate.value!!.size)

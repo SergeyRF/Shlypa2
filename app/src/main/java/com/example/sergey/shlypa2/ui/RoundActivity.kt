@@ -1,42 +1,39 @@
 package com.example.sergey.shlypa2.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.PersistableBundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.ads.Interstitial
-import com.example.sergey.shlypa2.db.DataProvider
+import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.screens.game.TurnResultFragment
 import com.example.sergey.shlypa2.ui.fragments.*
-import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.viewModel.RoundViewModel
+import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import com.google.android.gms.ads.AdListener
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 typealias Command = RoundViewModel.Command
 
 class RoundActivity : AppCompatActivity() {
 
-    lateinit var viewModel: RoundViewModel
-
-    lateinit var dataProvider: DataProvider
+    private val viewModel by viewModel<RoundViewModel>()
 
 
     private var backPressedOnce = false
     private var interstitial: Interstitial? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_round)
 
         supportActionBar?.elevation = 0F
 
@@ -49,9 +46,6 @@ class RoundActivity : AppCompatActivity() {
                 }
             })
         }
-
-        viewModel = ViewModelProviders.of(this).get(RoundViewModel::class.java)
-        dataProvider = DataProvider(applicationContext)
 
         viewModel.commandCallback.observe(this, Observer { command ->
             when (command) {
@@ -67,7 +61,7 @@ class RoundActivity : AppCompatActivity() {
             }
         })
 
-        if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
+        if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             startStartFragment()
         }
 
@@ -77,7 +71,7 @@ class RoundActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val fragment = supportFragmentManager.findFragmentById(android.R.id.content)
+        val fragment = supportFragmentManager.findFragmentById(R.id.container)
         if (fragment is TeamHintFragment) {
             super.onBackPressed()
         } else {
@@ -145,10 +139,10 @@ class RoundActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun startFragment(fragment: Fragment, addToBackStack: Boolean = false) {
+    private fun startFragment(fragment: androidx.fragment.app.Fragment, addToBackStack: Boolean = false) {
         val transaction = supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(android.R.id.content, fragment)
+                .setTransition(androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.container, fragment)
 
         if (addToBackStack) transaction.addToBackStack(null)
 

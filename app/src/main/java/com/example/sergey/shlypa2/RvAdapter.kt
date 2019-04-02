@@ -1,6 +1,6 @@
 package com.example.sergey.shlypa2
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.TeamWithScores
 
 
-class RvAdapter : RecyclerView.Adapter<BaseHolder>() {
+class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>() {
 
     private var data: List<Any>? = null
 

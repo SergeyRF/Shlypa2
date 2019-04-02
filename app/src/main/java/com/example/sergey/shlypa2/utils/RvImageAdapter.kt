@@ -1,20 +1,18 @@
 package com.example.sergey.shlypa2.utils
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.holder_image.view.*
 
 /**
  * Created by alex on 4/21/18.
  */
-class RvImageAdapter() : RecyclerView.Adapter<ImageHolder>(){
+class RvImageAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<ImageHolder>() {
 
-    private var data : List<String>? = null
+    private var data: List<String>? = null
 
     var listener: ((String) -> Unit)? = null
 
@@ -33,20 +31,20 @@ class RvImageAdapter() : RecyclerView.Adapter<ImageHolder>(){
         holder.listener = listener
     }
 
-    fun setData(list : List<String>?) {
+    fun setData(list: List<String>?) {
         data = list
         notifyDataSetChanged()
     }
 }
 
-class ImageHolder(val view : View) : RecyclerView.ViewHolder(view) {
-    val iv : ImageView = view.findViewById(R.id.ivImageDialog)
+class ImageHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    val iv: ImageView = view.findViewById(R.id.ivImageDialog)
 
     var listener: ((String) -> Unit)? = null
 
-    fun bind(imageName : String) {
+    fun bind(imageName: String) {
         val link = Functions.imageNameToUrl("player_avatars/small/$imageName")
-        Picasso.get()
+        Glide.with(itemView)
                 .load(link)
                 .into(iv)
 

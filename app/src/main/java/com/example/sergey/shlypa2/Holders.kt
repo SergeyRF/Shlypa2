@@ -1,19 +1,17 @@
 package com.example.sergey.shlypa2
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.*
+import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.extensions.hide
+import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.TeamWithScores
-import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.utils.hide
-import com.example.sergey.shlypa2.utils.show
 import com.example.sergey.shlypa2.views.HolderInflater
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import timber.log.Timber
 
@@ -22,7 +20,7 @@ import timber.log.Timber
  * Created by alex on 4/4/18.
  */
 
-abstract class BaseHolder(view: View) : RecyclerView.ViewHolder(view) {
+abstract class BaseHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
     var listener: ((Any) -> Unit)? = null
     var listenerTwo: ((Any) -> Unit)? = null
     var listenerThree: ((Any) -> Unit)? = null
@@ -106,8 +104,8 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
             }
         }
 
-        Picasso.get()
-                .load(Functions.imageNameToUrl("player_avatars/small/${player.avatar}"))
+        Glide.with(itemView)
+                .load(player.getSmallImage())
                 .into(avatarImage)
     }
 }
@@ -123,9 +121,10 @@ class WordsHolder(val view: View) : BaseHolder(view) {
         etReNameW.hide()
         tvName.show()
 
-        if (word.type == WordType.USER) {
+        /*if (word.type == WordType.USER) {
             ibNextWord.hide()
-        }
+        }*/
+        //fixme
 
         tvName.text = word.word
         Timber.d("${word.word}")

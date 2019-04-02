@@ -1,14 +1,12 @@
 package com.example.sergey.shlypa2.views
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.utils.onChange
 
 /**
  * Created by alex on 4/25/18.

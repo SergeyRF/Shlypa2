@@ -2,8 +2,8 @@ package com.example.sergey.shlypa2.testUtils
 
 import android.app.Activity
 import android.app.Instrumentation
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
-import android.support.test.runner.lifecycle.Stage
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
+import androidx.test.runner.lifecycle.Stage
 
 /**
  * Created by alex on 4/29/18.

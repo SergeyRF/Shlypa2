@@ -2,7 +2,7 @@ package com.example.sergey.shlypa2.views
 
 import android.content.Context
 import android.graphics.*
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import com.example.sergey.shlypa2.R

@@ -1,24 +1,24 @@
 package com.example.sergey.shlypa2.ui.fragments
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.viewModel.RoundViewModel
-import com.squareup.picasso.Picasso
+import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class TurnStartFragment : Fragment() {
+class TurnStartFragment : androidx.fragment.app.Fragment() {
 
     lateinit var viewModel: RoundViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +38,7 @@ class TurnStartFragment : Fragment() {
             round?.let {
                 teamName.text = it.currentTeam.name
                 playerTv.text = it.getPlayer().name
-                Picasso.get()
+                Glide.with(this)
                         .load(Functions.imageNameToUrl("player_avatars/large/${it.getPlayer().avatar}"))
                         .into(playerAvatar)
             }

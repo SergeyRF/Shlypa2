@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -7,9 +7,9 @@
     android:layout_marginLeft="@dimen/small_margin"
     android:layout_marginRight="@dimen/small_margin"
     android:layout_marginTop="@dimen/small_margin"
-    android:elevation="4dp">
+    app:cardElevation="4dp">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -20,28 +20,28 @@
             android:id="@+id/tvTeamName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/medium_margin"
+            android:layout_marginLeft="@dimen/big_margin"
             android:layout_marginRight="@dimen/big_margin"
-            android:layout_marginStart="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/small_margin"
-            android:textColor="@color/primary_text"
-            android:textSize="@dimen/text_medium"
+            android:layout_marginStart="@dimen/big_margin"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:textColor="@color/darkGrey"
+            android:textSize="@dimen/text_sub_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@id/ibTeemRename"
             app:layout_constraintTop_toTopOf="parent"
+            android:fontFamily="sans-serif-medium"
             tools:text="Name" />
 
 
-        <android.support.v7.widget.AppCompatImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ibTeemRename"
-            android:layout_width="@dimen/text_medium"
-            android:layout_height="@dimen/text_medium"
-            android:layout_marginRight="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="@dimen/big_margin"
             android:background="@color/Transparent"
-
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTeamName"
+            app:layout_constraintBottom_toBottomOf="@id/tvTeamName"
             app:srcCompat="@drawable/ic_create_black_24dp" />
 
         <View
@@ -60,13 +60,15 @@
             android:id="@+id/llPlayers"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginLeft="@dimen/big_margin"
+            android:layout_marginStart="@dimen/big_margin"
             android:orientation="vertical"
+            android:paddingTop="@dimen/medium_margin"
+            android:paddingBottom="@dimen/medium_margin"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameDivider" />
 
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

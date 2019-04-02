@@ -16,6 +16,7 @@ class DbExporter {
     fun exportDbToFile(context: Context, dbName: String) {
         val sd = Environment.getExternalStorageDirectory()
         val data = Environment.getDataDirectory()
+        Timber.d("External storage is $sd")
         var source: FileChannel? = null
         var destination: FileChannel? = null
         val currentDBPath = context.getDatabasePath(dbName).toString()
@@ -36,6 +37,7 @@ class DbExporter {
     }
 
     fun importDbFromAsset(context: Context, dbName: String): Boolean {
+        Timber.d("Import db from assets")
         var dbIs: InputStream? = null
         var dbOus: FileOutputStream? = null
         val dbFileTarget = context.getDatabasePath(dbName)

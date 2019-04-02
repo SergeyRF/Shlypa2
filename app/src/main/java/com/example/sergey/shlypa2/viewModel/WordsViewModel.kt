@@ -1,14 +1,15 @@
 package com.example.sergey.shlypa2.viewModel
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.WordType
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import timber.log.Timber
@@ -17,7 +18,10 @@ import java.util.*
 /**
  * Created by sergey on 4/3/18.
  */
-class WordsViewModel(application: Application) : AndroidViewModel(application) {
+class WordsViewModel(
+        application: Application,
+        val dataProvider: DataProvider,
+        val anal: AnalSender) : AndroidViewModel(application) {
 
     private val wordsLiveData = MutableLiveData<List<Word>>()
     private val playerLivaData = MutableLiveData<Player>()
@@ -29,7 +33,6 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
     private var pos: Int = 0
     private var words: MutableList<Word> = mutableListOf()
 
-    private var db = DataProvider(application)
     private var randomWords: ArrayDeque<Word> = ArrayDeque()
 
     init {
@@ -77,10 +80,12 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
     fun addWord(s: String) {
         words.add(Word(s))
         updateData()
+        anal.wordAdded(false)
     }
 
     fun reNameWord(word: Word) {
-        word.type = WordType.USER
+        //word.type = WordType.USER
+        //fixme
     }
 
     fun fillWithRandomWords() {
@@ -100,13 +105,14 @@ class WordsViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private fun loadRandomWords() {
-        val dbWords = db.getRandomWords(100, Game.getSettings().type)
+        val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
         for (w in dbWords) Timber.d("$w")
 
         val unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !words.contains(it) }
         Timber.d("unic words size ${unicWords.size}")
 
         randomWords.addAll(unicWords)
+        anal.wordAdded(true)
     }
 
     fun deleteWord(word: Word) {

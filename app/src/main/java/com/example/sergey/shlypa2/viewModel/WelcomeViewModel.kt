@@ -1,9 +1,9 @@
 package com.example.sergey.shlypa2.viewModel
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.GameState
@@ -15,9 +15,9 @@ import org.jetbrains.anko.uiThread
 /**
  * Created by alex on 4/17/18.
  */
-class WelcomeViewModel(application: Application) : AndroidViewModel(application) {
+class WelcomeViewModel(application: Application,
+                       val dataProvider: DataProvider) : AndroidViewModel(application) {
 
-    val dataProvider = DataProvider(application)
 
     val commandsCallBack : MutableLiveData<Commands> = SingleLiveEvent()
     private val savedStates : MutableLiveData<List<GameState>> = MutableLiveData()

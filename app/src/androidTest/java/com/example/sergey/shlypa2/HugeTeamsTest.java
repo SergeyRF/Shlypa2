@@ -1,28 +1,27 @@
 package com.example.sergey.shlypa2;
 
 import android.os.SystemClock;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.RecyclerView;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.sergey.shlypa2.game.Game;
 import com.example.sergey.shlypa2.testUtils.CustomActions;
 import com.example.sergey.shlypa2.testUtils.Utils;
-import com.example.sergey.shlypa2.ui.FirstActivity;
+import com.example.sergey.shlypa2.screens.main.FirstActivity;
 import com.example.sergey.shlypa2.ui.RoundActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeUp;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.swipeUp;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Created by alex on 4/29/18.
@@ -31,7 +30,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class HugeTeamsTest {
 
-    public static final int PLAYERS_COUNT = 50;
+    public static final int PLAYERS_COUNT = 10;
     public static final int TEAMS_COUNT = 2;
 
     @Rule

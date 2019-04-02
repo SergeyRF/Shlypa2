@@ -2,7 +2,7 @@ package com.example.sergey.shlypa2.ui.settings
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,14 +21,15 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import com.example.sergey.shlypa2.utils.show
+import com.example.sergey.shlypa2.extensions.selectTheme
+import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.utils.since
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class SettingsFragment : Fragment() {
+class SettingsFragment : androidx.fragment.app.Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +70,7 @@ class SettingsFragment : Fragment() {
 
             spinnerThemes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    Functions.selectTheme(themeIds[position], activity!!)
+                    requireActivity().selectTheme(themeIds[position])
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

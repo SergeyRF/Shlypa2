@@ -26,7 +26,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/tvTitleSetting"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <android.support.v7.widget.AppCompatSeekBar
+    <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/sbSetting"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

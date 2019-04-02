@@ -1,25 +1,27 @@
 package com.example.sergey.shlypa2.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.extensions.*
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.*
+import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.github.florent37.kotlin.pleaseanimate.please
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_words_in.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
@@ -27,7 +29,8 @@ class WordsInActivity : AppCompatActivity() {
 
 
     private lateinit var wordsAdapter: RvAdapter
-    lateinit var viewModel: WordsViewModel
+    private val viewModel by viewModel<WordsViewModel>()
+    private val anal by inject<AnalSender>()
 
     private var animated = false
 
@@ -48,7 +51,7 @@ class WordsInActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Functions.setThemeApi21(this)
+        setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_words_in)
 
@@ -56,10 +59,8 @@ class WordsInActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         wordsAdapter = RvAdapter()
-        rvWords.layoutManager = LinearLayoutManager(this)
+        rvWords.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         rvWords.adapter = wordsAdapter
-
-        viewModel = ViewModelProviders.of(this).get(WordsViewModel::class.java)
 
         Timber.d("random allowed ${viewModel.randomAllowed()}")
 
@@ -133,7 +134,7 @@ class WordsInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if(!animated) {
+        if (!animated) {
             please(10) {
                 animate(rvWords) {
                     outOfScreen(Gravity.RIGHT)
@@ -162,7 +163,7 @@ class WordsInActivity : AppCompatActivity() {
     fun setPlayer(p: Player?) {
         p?.let {
             //            title = p.name
-            Picasso.get()
+            Glide.with(this)
                     .load(Functions.imageNameToUrl("player_avatars/large/${p.avatar}"))
                     .into(civPlayerAvatar)
 
@@ -196,6 +197,7 @@ class WordsInActivity : AppCompatActivity() {
 
 
     private fun onStartGame() {
+        anal.gameStarted(Game.getSettings().allowRandomWords, Game.getSettings().typeName)
         Game.beginNextRound()
         startActivity(Intent(this, RoundActivity::class.java))
         finish()
