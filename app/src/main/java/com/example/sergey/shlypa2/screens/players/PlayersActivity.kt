@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.screens.players
 
+import android.content.Context
 import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +15,10 @@ import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayersActivity : AppCompatActivity() {
+
+    companion object {
+        fun getIntent(context: Context) = Intent(context, PlayersActivity::class.java)
+    }
 
     lateinit var adapter: RvAdapter
 

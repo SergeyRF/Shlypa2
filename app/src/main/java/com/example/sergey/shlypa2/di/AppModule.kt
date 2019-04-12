@@ -11,14 +11,14 @@ import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
 import com.example.sergey.shlypa2.screens.game.RoundViewModel
-import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
+import com.example.sergey.shlypa2.screens.main.WelcomeViewModel
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.google.gson.GsonBuilder
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
 val appModule = module {
-    viewModel { WelcomeViewModel(get(), get()) }
+    viewModel { WelcomeViewModel(get(), get(), get()) }
     viewModel { PlayersViewModel(get(), get(), get(), get()) }
     viewModel { GameSettingsViewModel(get(), get(), get()) }
     viewModel { RoundViewModel(get(), get(), get()) }

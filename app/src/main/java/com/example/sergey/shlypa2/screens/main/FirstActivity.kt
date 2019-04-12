@@ -8,21 +8,20 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
-import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.extraNotNull
+import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.screens.main.pages.LoadStateFragment
+import com.example.sergey.shlypa2.screens.main.pages.RulesFragment
+import com.example.sergey.shlypa2.screens.main.pages.WelcomeFragment
 import com.example.sergey.shlypa2.screens.players.PlayersActivity
-import com.example.sergey.shlypa2.ui.fragments.LoadStateFragment
-import com.example.sergey.shlypa2.ui.fragments.RulesFragment
-import com.example.sergey.shlypa2.ui.fragments.WelcomeFragment
 import com.example.sergey.shlypa2.ui.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.since
-import com.example.sergey.shlypa2.viewModel.WelcomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -51,13 +50,13 @@ class FirstActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0f
 
-        viewModel.commandsCallBack.observe(this, Observer { command ->
+        viewModel.commandsCallBack.observeSafe(this) { command ->
             when (command) {
                 WelcomeViewModel.Commands.NEW_GAME -> startNewGame()
                 WelcomeViewModel.Commands.RULES -> startRulesFragment()
                 WelcomeViewModel.Commands.SAVED_GAMES -> startGameLoadFragment()
             }
-        })
+        }
     }
 
 
@@ -117,8 +116,7 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun startNewGame() {
-        val intent = Intent(this, PlayersActivity::class.java)
-        startActivity(intent)
+        startActivity(PlayersActivity.getIntent(this))
     }
 
     private fun startGameLoadFragment() {
@@ -135,8 +133,5 @@ class FirstActivity : AppCompatActivity() {
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit()
-
     }
-
-
 }

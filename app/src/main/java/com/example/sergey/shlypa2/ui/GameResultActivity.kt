@@ -24,12 +24,12 @@ class GameResultActivity : AppCompatActivity() {
 
             animate(civWinnerAvatar) {
                 belowOf(tvGameWinner, 4f)
-                rightOfHisParent(10f)
+                leftOfItsParent(10f)
                 scale(0.3f, 0.3f)
             }
 
             animate(tv_winner) {
-                leftOfHisParent(10f)
+                leftOfItsParent(10f)
                 scale(0.7f, 0.7f)
                 alignTop(civWinnerAvatar)
 
