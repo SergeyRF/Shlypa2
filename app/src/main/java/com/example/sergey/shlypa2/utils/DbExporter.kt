@@ -36,7 +36,7 @@ class DbExporter {
 
     }
 
-    fun importDbFromAsset(context: Context, dbName: String): Boolean {
+    fun importDbFromAsset(context: Context, dbName: String, fileName: String): Boolean {
         Timber.d("Import db from assets")
         var dbIs: InputStream? = null
         var dbOus: FileOutputStream? = null
@@ -45,7 +45,7 @@ class DbExporter {
         try {
             dbFileTarget.parentFile.mkdirs()
             dbOus = FileOutputStream(dbFileTarget)
-            dbIs = context.assets.open(dbName)
+            dbIs = context.assets.open(fileName)
 
             val buffer = ByteArray(1024)
             var read = dbIs!!.read(buffer)

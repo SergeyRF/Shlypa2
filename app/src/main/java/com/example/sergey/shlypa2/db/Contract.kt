@@ -5,7 +5,7 @@ package com.example.sergey.shlypa2.db
  */
 object Contract {
     const val DB_VERSION = 2
-    const val DB_NAME = "shlyapa_db"
+    const val DB_NAME = "shlyapa2_db"
 
     //Players table columns
     const val PLAYER_TABLE = "players"
