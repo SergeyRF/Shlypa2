@@ -193,12 +193,12 @@ class GameFragment : androidx.fragment.app.Fragment() {
             }
         }.thenCouldYou(1000, interpolator = AccelerateInterpolator()) {
             animate(ivHand) {
-                topOfHisParent(marginDp = 32f)
+                topOfItsParent(marginDp = 32f)
                 invisible()
             }
 
             animate(tvGuideLabel) {
-                topOfHisParent()
+                topOfItsParent()
                 invisible()
             }
         }.withEndAction {
@@ -217,12 +217,12 @@ class GameFragment : androidx.fragment.app.Fragment() {
             Timber.d("animate to invisible")
             animate(ivHand) {
                 invisible()
-                bottomOfHisParent()
+                bottomOfItsParent()
             }
 
             animate(tvGuideLabel) {
                 invisible()
-                bottomOfHisParent()
+                bottomOfItsParent()
             }
         }.thenCouldYou {
             animate(ivHand) {

@@ -83,13 +83,13 @@ class RoundStartFragment : androidx.fragment.app.Fragment() {
         animated = false
         animation = please {
             animate(tvRoundName) {
-                topOfHisParent(16f)
-                leftOfHisParent(16f)
+                topOfItsParent(16f)
+                leftOfItsParent(16f)
             }
 
             animate(civRulesAvatar) {
-                topOfHisParent(16f)
-                rightOfHisParent(16f)
+                topOfItsParent(16f)
+                rightOfItsParent(16f)
                 scale(0.3f, 0.3f)
             }
 

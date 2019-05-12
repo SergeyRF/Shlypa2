@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sergey.shlypa2.ui.fragments.LoadStateFragment">
+    tools:context="com.example.sergey.shlypa2.screens.main.pages.LoadStateFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStates"
