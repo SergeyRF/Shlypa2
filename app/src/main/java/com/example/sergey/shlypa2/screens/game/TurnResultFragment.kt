@@ -1,30 +1,22 @@
 package com.example.sergey.shlypa2.screens.game
 
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import androidx.lifecycle.ViewModelProviders
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import com.example.sergey.shlypa2.extensions.gone
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.screens.game.adapter.ItemWordCheck
+import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_turn_result.*
 
 
-/**
- * A simple [Fragment] subclass.
- */
 class TurnResultFragment : androidx.fragment.app.Fragment() {
 
     lateinit var viewModel: RoundViewModel
@@ -40,7 +32,7 @@ class TurnResultFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         viewModel.roundLiveData.observeSafe(this) {
-            if(it.wordsAnsweredByPlayer.isNotEmpty()) {
+            if (it.wordsAnsweredByPlayer.isNotEmpty()) {
                 onWords(it.wordsAnsweredByPlayer)
             } else {
                 showNoAnswers()

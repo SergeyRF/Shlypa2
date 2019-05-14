@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.fragments
+package com.example.sergey.shlypa2.screens.game
 
 
 import android.os.Bundle
@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
-import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import com.github.florent37.kotlin.pleaseanimate.PleaseAnim
 import com.github.florent37.kotlin.pleaseanimate.please
 import de.hdodenhof.circleimageview.CircleImageView

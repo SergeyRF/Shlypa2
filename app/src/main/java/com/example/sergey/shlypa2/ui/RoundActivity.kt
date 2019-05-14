@@ -11,9 +11,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.ads.Interstitial
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.screens.game.TurnResultFragment
-import com.example.sergey.shlypa2.ui.fragments.*
-import com.example.sergey.shlypa2.screens.game.RoundViewModel
+import com.example.sergey.shlypa2.screens.game.*
 import com.google.android.gms.ads.AdListener
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread

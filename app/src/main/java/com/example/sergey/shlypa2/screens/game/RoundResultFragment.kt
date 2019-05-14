@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.fragments
+package com.example.sergey.shlypa2.screens.game
 
 
 import androidx.lifecycle.Observer
@@ -14,7 +14,6 @@ import android.widget.TextView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
-import com.example.sergey.shlypa2.screens.game.RoundViewModel
 
 
 /**

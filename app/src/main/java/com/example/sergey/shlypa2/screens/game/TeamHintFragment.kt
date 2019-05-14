@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.fragments
+package com.example.sergey.shlypa2.screens.game
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
-import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import kotlinx.android.synthetic.main.fragment_team_hint.*
 
 
