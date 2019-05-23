@@ -15,6 +15,9 @@ import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.screens.features_testing.MotionTestFragment
+import com.example.sergey.shlypa2.screens.game.RoundStartFragment
+import com.example.sergey.shlypa2.screens.game.TurnStartFragment
 import com.example.sergey.shlypa2.screens.main.pages.LoadStateFragment
 import com.example.sergey.shlypa2.screens.main.pages.RulesFragment
 import com.example.sergey.shlypa2.screens.main.pages.WelcomeFragment
@@ -128,7 +131,8 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun startRulesFragment() {
-        val fragment = RulesFragment()
+        //val fragment = RulesFragment()
+        val fragment = MotionTestFragment()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)

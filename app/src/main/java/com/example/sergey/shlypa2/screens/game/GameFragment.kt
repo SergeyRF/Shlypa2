@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.animation.AccelerateInterpolator
+import androidx.core.view.ViewCompat.animate
 import com.example.sergey.shlypa2.OnSwipeTouchListener
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
