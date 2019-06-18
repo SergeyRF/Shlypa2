@@ -1,8 +1,11 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layoutDescription="@xml/game_fragment_motion"
+    app:currentState="@+id/end"
+    android:id="@+id/rootGame"
     tools:context="com.example.sergey.shlypa2.screens.game.GameFragment">
 
 
@@ -150,17 +153,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_tap"/>
+        app:srcCompat="@drawable/ic_tap"
+        android:alpha="1"/>
 
     <TextView
         android:id="@+id/tvGuideLabel"
         android:text="@string/answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/ivHand"
-        app:layout_constraintTop_toTopOf="@id/ivHand"
         android:textSize="@dimen/text_big"
         android:textColor="@color/Black"
         tools:text="skip"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

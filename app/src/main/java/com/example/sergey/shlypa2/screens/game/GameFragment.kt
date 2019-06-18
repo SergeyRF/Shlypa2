@@ -19,6 +19,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.extensions.hide
+import com.example.sergey.shlypa2.extensions.onTransitionCompletedOnce
 import com.example.sergey.shlypa2.extensions.show
 import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -54,16 +55,8 @@ class GameFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    private val guideOnGlobal = object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            view?.viewTreeObserver?.removeOnGlobalLayoutListener(this)
-            animateGuide()
-        }
-    }
-
     //todo can cause problems better to keep it in a viewmodel
     var timerStop: Boolean = false
-    private var guideAnimated = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -111,8 +104,12 @@ class GameFragment : androidx.fragment.app.Fragment() {
             viewModel.answerWord(true)
         }
 
-        if(!guideAnimated) {
-            view.viewTreeObserver.addOnGlobalLayoutListener (guideOnGlobal)
+        rootGame.setTransition(R.id.start, R.id.end)
+        rootGame.transitionToEnd()
+        rootGame.onTransitionCompletedOnce {
+            tvGuideLabel.setText(R.string.skip)
+            rootGame.setTransition(R.id.start, R.id.endSkip)
+            rootGame.transitionToEnd()
         }
     }
 
@@ -167,74 +164,6 @@ class GameFragment : androidx.fragment.app.Fragment() {
 
     fun onAnsweredCount(answered: Pair<Int, Int>) {
         tvAnsweredCount.text = answered.first.toString()
-    }
-
-    private fun uselessHideAnimation() {
-        please(10) {
-            animate(tvGuideLabel) {
-                invisible()
-            }
-
-            animate(ivHand) {
-                invisible()
-            }
-        }.start()
-    }
-
-    private fun animateGuide() {
-        guideAnimated = true
-        please {
-            animate(ivHand) {
-                visible()
-            }
-
-            animate(tvGuideLabel) {
-                visible()
-            }
-        }.thenCouldYou(1000, interpolator = AccelerateInterpolator()) {
-            animate(ivHand) {
-                topOfItsParent(marginDp = 32f)
-                invisible()
-            }
-
-            animate(tvGuideLabel) {
-                topOfItsParent()
-                invisible()
-            }
-        }.withEndAction {
-            tvGuideLabel?.setText(R.string.skip)
-        }.thenCouldYou(10) {
-            animate(ivHand) {
-                visible()
-                originalPosition()
-            }
-
-            animate(tvGuideLabel) {
-                visible()
-                originalPosition()
-            }
-        }.thenCouldYou(1000, interpolator = AccelerateInterpolator()) {
-            Timber.d("animate to invisible")
-            animate(ivHand) {
-                invisible()
-                bottomOfItsParent()
-            }
-
-            animate(tvGuideLabel) {
-                invisible()
-                bottomOfItsParent()
-            }
-        }.thenCouldYou {
-            animate(ivHand) {
-                originalPosition()
-            }
-
-            animate(tvGuideLabel) {
-                originalPosition()
-            }
-        }.withEndAction {
-            tvGuideLabel?.setText(R.string.skip)
-        }.start()
     }
 
     fun runWordAppearAnimation() {

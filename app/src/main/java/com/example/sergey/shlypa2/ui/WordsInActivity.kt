@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat.animate
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R

@@ -11,10 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
-import com.github.florent37.kotlin.pleaseanimate.PleaseAnim
-import com.github.florent37.kotlin.pleaseanimate.please
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.fragment_round_start.*
 
 
 /**

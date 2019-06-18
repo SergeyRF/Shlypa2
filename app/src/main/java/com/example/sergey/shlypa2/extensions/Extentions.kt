@@ -9,6 +9,8 @@ import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.SeekBar
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.motion.widget.MotionScene
 import com.example.sergey.shlypa2.BuildConfig
 import java.util.*
 
@@ -109,3 +111,20 @@ inline fun Any.debug(block : () -> Unit) {
 val Int.dpToPx: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 val Int.pxToDp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+
+fun MotionLayout.onTransitionCompletedOnce(action: () -> Unit) {
+    setTransitionListener(object : MotionLayout.TransitionListener {
+        override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
+
+        override fun allowsTransition(p0: MotionScene.Transition?) = true
+
+        override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
+
+        override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}
+
+        override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+            action.invoke()
+            p0?.setTransitionListener(null)
+        }
+    })
+}
