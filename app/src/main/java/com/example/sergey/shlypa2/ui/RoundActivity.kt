@@ -2,9 +2,8 @@ package com.example.sergey.shlypa2.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.os.PersistableBundle
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
@@ -73,20 +72,8 @@ class RoundActivity : AppCompatActivity() {
         if (fragment is TeamHintFragment) {
             super.onBackPressed()
         } else {
-            if (backPressedOnce) {
-                doAsync {
-                    viewModel.portionClear(viewModel.saveGameState().get())
-                    uiThread {
-                        finish()
-                    }
-                }
-            } else {
-                backPressedOnce = true
-                Toast.makeText(this, R.string.press_more_to_finish_game, Toast.LENGTH_LONG).show()
-                Handler().postDelayed({ backPressedOnce = false }, 2000)
-            }
+            leaveGameDialog()
         }
-
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
@@ -149,5 +136,25 @@ class RoundActivity : AppCompatActivity() {
 
     private fun showInterstitial() {
         interstitial?.showAd()
+    }
+
+    private fun leaveGameDialog() {
+
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.leaveTitle)
+            setMessage(R.string.leaveMessage)
+            setPositiveButton(R.string.leavePositive) { _, _ ->
+                doAsync {
+                    viewModel.portionClear(viewModel.saveGameState().get())
+                    uiThread {
+                        finish()
+                    }
+                }
+            }
+            setNegativeButton(R.string.leaveNegative) { dialog, _ -> dialog.cancel() }
+        }
+                .create()
+                .show()
+
     }
 }
