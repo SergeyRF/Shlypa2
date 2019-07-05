@@ -28,18 +28,23 @@ class MotionTestFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_game_result, container, false)
+        return inflater.inflate(R.layout.fragment_round_start, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tv_winner.text = "Good guys"
-        /*tvRoundName.text = "First round"
-        tvRoundRules.text = "SOme rules"
+        //tv_winner.text = "Good guys"
+        tvRoundName.text = "First round"
+        tvRoundRules.text =
+                """Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    |Suspendisse nisl massa, scelerisque at ex congue, congue fringilla magna.
+                    |Cras viverra enim non neque commodo pretium. Suspendisse dictum lectus libero,
+                    |ut ultrices mi ornare non. Aliquam erat volutpat. Maecenas venenatis at sem ac vestibulum.
+                    """.trimMargin()
         Glide.with(this)
                 .load(Functions.imageNameToUrl("round_avatars/silence.png"))
-                .into(civRulesAvatar)*/
+                .into(civRulesAvatar)
 
         /*rootGame.setTransition(R.id.start, R.id.end)
         rootGame.transitionToEnd()

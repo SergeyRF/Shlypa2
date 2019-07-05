@@ -116,10 +116,6 @@ fun MotionLayout.onTransitionCompletedOnce(action: () -> Unit) {
     setTransitionListener(object : MotionLayout.TransitionListener {
         override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
 
-        override fun allowsTransition(p0: MotionScene.Transition?): Boolean {
-            return true
-        }
-
         override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
 
         override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}
