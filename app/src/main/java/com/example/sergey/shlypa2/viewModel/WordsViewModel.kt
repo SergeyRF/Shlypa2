@@ -6,12 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import org.koin.core.context.GlobalContext.getOrNull
 import timber.log.Timber
 import java.util.*
 
@@ -21,6 +23,7 @@ import java.util.*
 class WordsViewModel(
         application: Application,
         val dataProvider: DataProvider,
+        val playersRepository: PlayersRepository,
         val anal: AnalSender) : AndroidViewModel(application) {
 
     private val wordsLiveData = MutableLiveData<List<Word>>()
@@ -47,11 +50,10 @@ class WordsViewModel(
         words.clear()
         pos++
 
-        if (pos < Game.getPlayers().size) {
+        if (pos < playersRepository.getPlayers().size) {
             updateData()
         } else {
-            pos = 0
-            inputFinishCallBack.value = true
+            applyGameAndStart()
         }
     }
 
@@ -103,6 +105,13 @@ class WordsViewModel(
 
     }
 
+    private fun applyGameAndStart() {
+        Game.setPlayers(playersRepository.getPlayers())
+        Game.setTeams(playersRepository.getTeams())
+        pos = 0
+        inputFinishCallBack.value = true
+    }
+
 
     private fun loadRandomWords() {
         val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
@@ -137,8 +146,7 @@ class WordsViewModel(
 
     private fun updateData() {
         wordsLiveData.value = words
-
-        playerLivaData.value = Game.getPlayers().getOrNull(pos)
+        playerLivaData.value = playersRepository.getPlayers().getOrNull(pos)
         needWord.value = needWord()
     }
 }

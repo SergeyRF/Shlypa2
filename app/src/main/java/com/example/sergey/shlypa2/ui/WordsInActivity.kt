@@ -60,9 +60,9 @@ class WordsInActivity : AppCompatActivity() {
                     needWords?.let { onNeedWordsChanged(it) }
                 })
 
-        viewModel.inputFinishCallBack.observe(this, Observer { bool ->
-            if (bool != null && bool) onStartGame()
-        })
+        viewModel.inputFinishCallBack.observeSafe(this) { bool ->
+            if (bool) onStartGame()
+        }
 
         ibAddWord.setOnClickListener {
             if (etWord.text.toString().isNotEmpty()) {
