@@ -3,25 +3,21 @@ package com.example.sergey.shlypa2.screens.game
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.view.animation.AccelerateInterpolator
-import androidx.core.view.ViewCompat.animate
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.sergey.shlypa2.OnSwipeTouchListener
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.onTransitionCompletedOnce
 import com.example.sergey.shlypa2.extensions.show
-import com.github.florent37.kotlin.pleaseanimate.please
+import com.example.sergey.shlypa2.utils.Functions
 import kotlinx.android.synthetic.main.fragment_game.*
 import timber.log.Timber
 
@@ -36,7 +32,7 @@ class GameFragment : androidx.fragment.app.Fragment() {
 
     private var cardYPath: Int? = null
 
-    val onSwipeTouchListener = object : OnSwipeTouchListener() {
+    private val onSwipeTouchListener = object : OnSwipeTouchListener() {
         override fun onActionUp() {
             cv_word.translationY = 0F
             cv_word.translationX = 0F

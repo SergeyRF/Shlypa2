@@ -72,8 +72,6 @@ dependencies {
     //Images & views
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.github.florent37:shapeofview:1.0.7'
-    implementation 'com.github.florent37:kotlinpleaseanimate:1.0.2'
     implementation 'com.github.clans:fab:1.6.4'
 
     //Architecture components

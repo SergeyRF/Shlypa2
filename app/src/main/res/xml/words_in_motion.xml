@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Transition
+        android:id="@+id/wordsTransition"
+        app:constraintSetStart="@id/start"
+        app:constraintSetEnd="@id/end"
+        app:duration="500">
+
+    </Transition>
+
+
+    <ConstraintSet android:id="@+id/start"
+        >
+
+        <Constraint
+            android:id="@+id/rvWords"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.99"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btNextWords"
+            app:layout_constraintTop_toBottomOf="@+id/etWord"
+            />
+
+        <Constraint
+            android:id="@+id/civPlayerAvatar"
+            android:layout_width="@dimen/turn_player_avatar_size"
+            android:layout_height="@dimen/turn_player_avatar_size"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvWhoWrites"/>
+
+        <Constraint
+            android:id="@+id/tvWhoWrites"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.99"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etWord" />
+
+        <Constraint
+            android:id="@+id/etWord"
+            app:visibilityMode="ignore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/in_card_horizontal_margin"
+            android:layout_marginRight="@dimen/in_card_horizontal_margin"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+            android:id="@+id/rvWords"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btNextWords"
+            app:layout_constraintTop_toBottomOf="@+id/etWord"/>
+
+        <Constraint
+            android:id="@+id/civPlayerAvatar"
+            android:layout_width="@dimen/turn_player_avatar_size"
+            android:layout_height="@dimen/turn_player_avatar_size"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvWhoWrites"/>
+
+        <Constraint
+            android:id="@+id/tvWhoWrites"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.99"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etWord" />
+
+        <Constraint
+            android:id="@+id/etWord"
+            app:visibilityMode="ignore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/in_card_horizontal_margin"
+            android:layout_marginRight="@dimen/in_card_horizontal_margin"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </ConstraintSet>
+
+    <!--<ConstraintSet android:id="@+id/editTextHidden">
+
+        <Constraint
+            android:id="@+id/rvWords"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btNextWords"
+            app:layout_constraintTop_toBottomOf="@+id/etWord"/>
+
+        <Constraint
+            android:id="@+id/civPlayerAvatar"
+            android:layout_width="@dimen/turn_player_avatar_size"
+            android:layout_height="@dimen/turn_player_avatar_size"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvWhoWrites"/>
+
+        <Constraint
+            android:id="@+id/tvWhoWrites"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.99"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etWord" />
+
+        <Constraint
+            android:id="@+id/etWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/in_card_horizontal_margin"
+            android:layout_marginRight="@dimen/in_card_horizontal_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
+
+    </ConstraintSet>-->
+
+</MotionScene>

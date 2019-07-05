@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Transition
+        app:constraintSetStart="@id/start"
+        app:constraintSetEnd="@id/end"
+        app:duration="700">
+
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint android:id="@+id/rvGameResults">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+
+        <Constraint android:id="@+id/tv_game_resalt">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+
+        <Constraint android:id="@+id/tvGameWinner">
+            <PropertySet android:alpha="1"/>
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/civWinnerAvatar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btCreateNewGame"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvGameWinner"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintWidth_percent="0.50"
+            app:layout_goneMarginTop="@dimen/medium_margin"
+            />
+
+        <Constraint
+            android:id="@+id/tv_winner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_huge"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/civWinnerAvatar" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+      <Constraint android:id="@+id/rvGameResults">
+          <PropertySet android:alpha="1"/>
+      </Constraint>
+
+      <Constraint android:id="@+id/tv_game_resalt">
+          <PropertySet android:alpha="1"/>
+      </Constraint>
+
+        <Constraint android:id="@+id/tvGameWinner">
+            <PropertySet android:alpha="0"/>
+        </Constraint>
+
+        <Constraint
+            android:id="@+id/civWinnerAvatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/big_margin"
+            app:layout_goneMarginTop="@dimen/big_margin"
+            />
+
+        <Constraint
+            android:id="@+id/tv_winner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_big"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            app:layout_constraintLeft_toRightOf="@id/civWinnerAvatar"
+            app:layout_constraintTop_toTopOf="@id/civWinnerAvatar"
+            app:layout_constraintBottom_toBottomOf="@id/civWinnerAvatar"/>
+
+    </ConstraintSet>
+
+</MotionScene>

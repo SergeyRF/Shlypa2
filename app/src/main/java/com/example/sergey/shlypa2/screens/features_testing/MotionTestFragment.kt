@@ -14,6 +14,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.onTransitionCompletedOnce
 import com.example.sergey.shlypa2.utils.Functions
 import com.flurry.sdk.t
+import kotlinx.android.synthetic.main.activity_game_result.*
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlinx.android.synthetic.main.fragment_game.view.*
 import kotlinx.android.synthetic.main.fragment_round_start.*
@@ -27,24 +28,25 @@ class MotionTestFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_game, container, false)
+        return inflater.inflate(R.layout.activity_game_result, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        tv_winner.text = "Good guys"
         /*tvRoundName.text = "First round"
         tvRoundRules.text = "SOme rules"
         Glide.with(this)
                 .load(Functions.imageNameToUrl("round_avatars/silence.png"))
                 .into(civRulesAvatar)*/
 
-        rootGame.setTransition(R.id.start, R.id.end)
+        /*rootGame.setTransition(R.id.start, R.id.end)
         rootGame.transitionToEnd()
         rootGame.onTransitionCompletedOnce {
             tvGuideLabel.setText(R.string.skip)
             rootGame.setTransition(R.id.start, R.id.endSkip)
             rootGame.transitionToEnd()
-        }
+        }*/
     }
 }

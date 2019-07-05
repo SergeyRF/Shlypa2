@@ -19,7 +19,6 @@ import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
-import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_words_in.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,21 +34,6 @@ class WordsInActivity : AppCompatActivity() {
 
     private var animated = false
 
-    private val avatarHideAnimation by lazy {
-        please(300, interpolator = AccelerateInterpolator()) {
-            animate(civPlayerAvatar) toBe {
-                outOfScreen(Gravity.LEFT)
-            }
-            animate(tvWhoWrites) toBe {
-                outOfScreen(Gravity.LEFT)
-            }
-
-            animate(rvWords) toBe {
-                originalPosition()
-            }
-        }
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
@@ -58,6 +42,8 @@ class WordsInActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        container.setTransition(R.id.start, R.id.end)
 
         wordsAdapter = RvAdapter()
         rvWords.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
@@ -120,6 +106,8 @@ class WordsInActivity : AppCompatActivity() {
             wordsAdapter.notifyDataSetChanged()
         }
 
+        wordsAdapter.setData(listOf(Word("hello"), Word("hello2")))
+
         onChangeEt()
     }
 
@@ -133,32 +121,30 @@ class WordsInActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (!animated) {
-            please(10) {
-                animate(rvWords) {
-                    outOfScreen(Gravity.RIGHT)
-                }
-            }.now()
-        }
-    }
-
 
     private fun setWordRv(words: List<Word>?) {
         if (words == null || words.isEmpty()) {
             if (animated) {
-                avatarHideAnimation.reset()
+                hideList()
                 animated = false
             }
         } else {
             if (!animated) {
-                avatarHideAnimation.start()
+                showList()
                 animated = true
             }
+
         }
 
         wordsAdapter.setData(words)
+    }
+
+    private fun showList() {
+        container.transitionToEnd()
+    }
+
+    private fun hideList() {
+        container.transitionToStart()
     }
 
     fun setPlayer(p: Player?) {

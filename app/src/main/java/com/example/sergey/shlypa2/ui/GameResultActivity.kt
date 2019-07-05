@@ -8,49 +8,15 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.gone
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.TeamWithScores
 import com.example.sergey.shlypa2.screens.main.FirstActivity
 import com.example.sergey.shlypa2.utils.SoundManager
-import com.github.florent37.kotlin.pleaseanimate.please
 import kotlinx.android.synthetic.main.activity_game_result.*
 
 class GameResultActivity : AppCompatActivity() {
 
     private val soundManager = SoundManager(this)
-
-    val animation by lazy {
-        please {
-
-            animate(civWinnerAvatar) {
-                belowOf(tvGameWinner, 4f)
-                leftOfItsParent(10f)
-                scale(0.3f, 0.3f)
-            }
-
-            animate(tv_winner) {
-                leftOfItsParent(10f)
-                scale(0.7f, 0.7f)
-                alignTop(civWinnerAvatar)
-
-            }
-            animate(tv_game_resalt) {
-                belowOf(civWinnerAvatar, null)
-                visible()
-                tv_game_resalt.show()
-            }
-            animate(rvGameResults) {
-                belowOf(tv_game_resalt)
-                aboveOf(btCreateNewGame)
-                rvGameResults.show()
-
-                visible()
-            }
-
-        }
-
-    }
 
     var animated = false
     val resultsAdapter = RvAdapter()
@@ -81,33 +47,20 @@ class GameResultActivity : AppCompatActivity() {
         tv_game_resalt.gone()
 
         civWinnerAvatar.setOnClickListener {
-            animated = if (animated) {
-                animation.reset()
-                false
-            } else {
-                animation.start()
-                true
-            }
-            resultsAdapter.notifyDataSetChanged()
+            runAnimation()
         }
 
-        please(3) {
-            animate(tv_game_resalt) {
-                invisible()
-
-            }
-            animate(rvGameResults) {
-                invisible()
-
-            }
-        }.start()
-
         Handler().postDelayed({
-            if (!animated) {
-                animated = true
-                animation.start()
-            }
+            runAnimation()
         }, 3000)
+    }
+
+    private fun runAnimation() {
+        if (!animated) {
+            animated = true
+            rootGameResult.setTransition(R.id.start, R.id.end)
+            rootGameResult.transitionToEnd()
+        }
     }
 }
 

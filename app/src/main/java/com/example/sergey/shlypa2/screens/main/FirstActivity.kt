@@ -131,8 +131,8 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun startRulesFragment() {
-        //val fragment = RulesFragment()
-        val fragment = MotionTestFragment()
+        val fragment = RulesFragment()
+//        val fragment = MotionTestFragment()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
