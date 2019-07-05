@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.db
 
 import android.content.Context
+import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Lang
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.StateRepresent
@@ -29,6 +30,8 @@ class DataProvider(
     private val typesDao = db.typesDap()
 
     private val locale: String = Locale.getDefault().language.toLowerCase()
+
+    val teamNames by lazy { context.resources.getStringArray(R.array.teams) }
 
     //we only need to use locales for which we have a translate
     private val usefullLocale = when (locale) {

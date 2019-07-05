@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
+import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.extensions.random
-import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.anal.AnalSender
@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 class PlayersViewModel(application: Application,
                        private val dataProvider: DataProvider,
                        private val dispatchers: DispatchersProvider,
+                       private val playersRepository: PlayersRepository,
                        private val anal: AnalSender)
     : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
@@ -47,21 +48,21 @@ class PlayersViewModel(application: Application,
     fun getTeamsLiveData(): LiveData<List<Team>> = teamsLiveData
 
     fun removePlayer(player: Player) {
-        Game.removePlayer(player)
+        playersRepository.removePlayer(player)
         updateData()
     }
 
     fun reNamePlayer(player: Player) {
         launch(dispatchers.ioDispatcher) {
             if (player.type == PlayerType.USER) {
-                Game.reNamePlayer(player)
+                playersRepository.reNamePlayer(player)
             } else {
-                Game.removePlayer(player)
+                playersRepository.removePlayer(player)
                 //set id to zero before inserting
                 player.type = PlayerType.USER
                 player.id = 0
                 player.id = dataProvider.insertPlayer(player)
-                Game.addPlayer(player)
+                playersRepository.addPlayer(player)
             }
         }
     }
@@ -69,9 +70,10 @@ class PlayersViewModel(application: Application,
     fun addRandomPlayer() {
         launch {
             withContext(dispatchers.ioDispatcher) {
-                val playersList = dataProvider.getPlayers()
-                val player: Player? = playersList.find { !Game.getPlayers().contains(it) }
-                if (player != null) Game.addPlayer(player)
+                val currentPlayers = playersRepository.getPlayers()
+                dataProvider.getPlayers()
+                        .find { !currentPlayers.contains(it) }
+                        ?.let { playersRepository.addPlayer(it) }
             }
 
             updateData()
@@ -89,7 +91,7 @@ class PlayersViewModel(application: Application,
             val success = withContext(dispatchers.ioDispatcher) {
                 val player = Player(name, avatar = avatarLiveData.value ?: "")
                 player.id = dataProvider.insertPlayer(player)
-                Game.addPlayer(player)
+                playersRepository.addPlayer(player)
             }
 
             if (success) {
@@ -111,14 +113,14 @@ class PlayersViewModel(application: Application,
     }
 
     fun initTeams() {
-        Game.createTeams(2)
+        playersRepository.createTeams(2)
         updateData()
     }
 
     fun addTeam() {
-        val teamsCount = Game.getTeams().size + 1
-        if (teamsCount <= Game.maxTeamsCount()) {
-            Game.createTeams(teamsCount)
+        val teamsCount = playersRepository.getTeams().size + 1
+        if (teamsCount <= playersRepository.maxTeamsCount) {
+            playersRepository.createTeams(teamsCount)
             updateData()
         } else {
             Toast.makeText(getApplication(), R.string.cant_create_teams, Toast.LENGTH_SHORT).show()
@@ -126,9 +128,9 @@ class PlayersViewModel(application: Application,
     }
 
     fun reduceTeam() {
-        if (Game.getTeams().size > 2) {
-            val teamsCount = Game.getTeams().size - 1
-            Game.createTeams(teamsCount)
+        if (playersRepository.getTeams().size > 2) {
+            val teamsCount = playersRepository.getTeams().size - 1
+            playersRepository.createTeams(teamsCount)
             updateData()
         } else {
             Toast.makeText(getApplication(), R.string.two_team_min, Toast.LENGTH_SHORT).show()
@@ -138,28 +140,32 @@ class PlayersViewModel(application: Application,
     fun shuffleTeams() {
         launch {
             withContext(dispatchers.ioDispatcher) {
-                Game.createTeams(Game.getTeams().size)
+                playersRepository.createTeams(playersRepository.getTeams().size)
             }
             updateData()
         }
     }
 
     private fun updateData() {
-        playersLiveData.value = Game.getPlayers()
-        teamsLiveData.value = Game.getTeams()
+        playersLiveData.value = playersRepository.getPlayers()
+        teamsLiveData.value = playersRepository.getTeams()
+    }
+
+    fun onPlayersNextClicked() {
+        if (playersRepository.getPlayers().size < 4) {
+            toastResLD.value = R.string.not_enough_players
+        } else {
+            commandLiveData.value = Command.START_TEAMS
+        }
     }
 
     fun setTitleId(resourceId: Int) {
         titleLiveData.value = resourceId
     }
 
-    fun startTeams() {
-        commandLiveData.value = Command.START_TEAMS
-    }
-
     fun startSettings() {
         commandLiveData.value = Command.START_SETTINGS
-        anal.sendEventTeamsCreated(Game.state.players.size, Game.state.teams.size)
+        anal.sendEventTeamsCreated(playersRepository.getPlayers().size, playersRepository.getTeams().size)
     }
 
     enum class Command {

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -18,7 +17,6 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
-import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
 import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
 import com.example.sergey.shlypa2.utils.Functions
@@ -98,9 +96,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         }
 
         btGoNextPlayers.setOnClickListener {
-            if (Game.getPlayers().size < 4) {
-                Toast.makeText(context, R.string.not_enough_players, Toast.LENGTH_LONG).show()
-            } else viewModel.startTeams()
+            viewModel.onPlayersNextClicked()
         }
 
         btAddRandomPlayer.setOnClickListener {
@@ -204,7 +200,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.item_show_hint -> {
                 runSpotlight()
                 true
