@@ -16,7 +16,8 @@ import com.flurry.android.FlurryAgent
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import io.fabric.sdk.android.Fabric
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /**
@@ -33,7 +34,10 @@ class App : MultiDexApplication() {
 
         manageDb()
 
-        startKoin(this, listOf(appModule))
+        startKoin {
+            androidContext(this@App)
+            modules(listOf(appModule))
+        }
 
         if (BuildConfig.DEBUG) {
             Timber.plant(TimberDebugTree())

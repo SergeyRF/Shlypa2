@@ -14,8 +14,8 @@ import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import com.example.sergey.shlypa2.screens.main.WelcomeViewModel
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.google.gson.GsonBuilder
-import org.koin.androidx.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 val appModule = module {
     viewModel { WelcomeViewModel(get(), get(), get()) }

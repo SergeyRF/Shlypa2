@@ -11,8 +11,8 @@ import android.widget.Button
 import android.widget.ImageView
 import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.anal.AnalSender
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 
 class AppRater: KoinComponent {

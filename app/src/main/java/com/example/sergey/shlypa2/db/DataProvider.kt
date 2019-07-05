@@ -10,7 +10,6 @@ import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.Functions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.koin.standalone.KoinComponent
 import timber.log.Timber
 import java.util.*
 
