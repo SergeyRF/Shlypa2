@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,6 +32,8 @@ class RoundActivity : AppCompatActivity() {
         setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_round)
+
+        initToolbar()
 
         supportActionBar?.elevation = 0F
 
@@ -155,6 +158,19 @@ class RoundActivity : AppCompatActivity() {
         }
                 .create()
                 .show()
+    }
+    private fun initToolbar() {
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

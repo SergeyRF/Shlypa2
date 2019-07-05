@@ -95,10 +95,11 @@ class GameSettingsViewModel(application: Application,
             flagStartGame = true
             Game.setSettings(settings)
             settingsProvider.writeSettings(settings)
-            if (allWordRandom) {
+            if (settings.all_word_random) {
                 addRandomWords()
             } else {
                 startNextActivity.value = StartActivity.WORLD_IN
+                flagStartGame = false
             }
         }
     }

@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.screens.game_settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
@@ -24,6 +25,8 @@ class GameSettingsActivity : AppCompatActivity() {
         setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_settings)
+
+        initToolbar()
 
         ssbTurnTime.setValues(Constants.MIN_ROUND_TIME, Constants.MAX_ROUMD_TIME)
         ssbTurnTime.setProgress(viewModel.getTime())
@@ -104,5 +107,20 @@ class GameSettingsActivity : AppCompatActivity() {
 
     private fun onStartActivity(activity: AppCompatActivity) {
         startActivity(Intent(this, activity::class.java))
+    }
+
+    private fun initToolbar() {
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
