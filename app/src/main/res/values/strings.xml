@@ -62,6 +62,7 @@
     <string name="allow_random">Allow random words</string>
     <string name="name">Name</string>
     <string name="add_player">new player</string>
+    <string name="add_all_word_random">Add all word random</string>
 
 
     <string name="shuffle_teams">Shuffle teams</string>
@@ -135,12 +136,11 @@
     <string name="share">Share</string>
     <string name="invite_friend">Share the Hat Game with your friends</string>
 
-   <!-- leaveDialog-->
+    <!-- leaveDialog-->
     <string name="leaveTitle">Leave Game</string>
     <string name="leaveMessage">Are you sure?</string>
     <string name="leaveNegative">No</string>
     <string name="leavePositive">Save and quit</string>
-
 
 
 </resources>

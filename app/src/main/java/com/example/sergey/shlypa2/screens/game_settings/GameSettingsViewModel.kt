@@ -1,16 +1,16 @@
 package com.example.sergey.shlypa2.screens.game_settings
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.beans.Type
-import com.example.sergey.shlypa2.db.DataBase
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.SettingsProviderImpl
-import com.example.sergey.shlypa2.game.WordType
+import com.example.sergey.shlypa2.utils.SingleLiveEvent
+import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -20,18 +20,17 @@ import timber.log.Timber
  */
 class GameSettingsViewModel(application: Application,
                             private val dataProvider: DataProvider,
-                            private val dispatchers: DispatchersProvider)
+                            private val dispatchers: DispatchersProvider,
+                            private val anal: AnalSender)
     : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
     private var wordsCount = 0
-
-
     private var wordsTypeId: Long = 0
-
     private var allowRandom = false
     private var minusBal = false
     private var numberMinusBal = 1
     private var turnTime = 0
+    private var allWordRandom = false
 
     private val settingsProvider = SettingsProviderImpl(application)
 
@@ -40,6 +39,9 @@ class GameSettingsViewModel(application: Application,
     val typesLiveData = MutableLiveData<List<Type>>()
     var selectedType: Type? = null
 
+    val startNextActivity = SingleLiveEvent<StartActivity>()
+    var flagStartGame: Boolean = false
+
     init {
         turnTime = settings.time
         wordsCount = settings.word
@@ -47,6 +49,7 @@ class GameSettingsViewModel(application: Application,
         wordsTypeId = settings.typeId
         minusBal = settings.minusBal
         numberMinusBal = settings.numberMinusBal
+        allWordRandom = settings.all_word_random
         loadTypes()
     }
 
@@ -82,18 +85,52 @@ class GameSettingsViewModel(application: Application,
         settings.numberMinusBal = i
     }
 
+    fun getAllWorldRandom() = allWordRandom
+    fun setAllWorldRandom(b: Boolean) {
+        settings.all_word_random = b
+    }
+
     fun onFinish() {
-        Game.setSettings(settings)
-        settingsProvider.writeSettings(settings)
+        if (!flagStartGame) {
+            flagStartGame = true
+            Game.setSettings(settings)
+            settingsProvider.writeSettings(settings)
+            if (allWordRandom) {
+                addRandomWords()
+            } else {
+                startNextActivity.value = StartActivity.WORLD_IN
+            }
+        }
     }
 
     private fun loadTypes() {
-      launch {
-          val types = withContext(dispatchers.ioDispatcher) {
-              dataProvider.getTypes()
-          }
+        launch {
+            val types = withContext(dispatchers.ioDispatcher) {
+                dataProvider.getTypes()
+            }
 
-          typesLiveData.value = types
-      }
+            typesLiveData.value = types
+        }
+    }
+
+    private fun addRandomWords() {
+        GlobalScope.launch {
+            val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
+            val wordNeeds = Game.getPlayers().size * wordsCount
+            Game.addWord(dbWords.subList(0, wordNeeds - 1))
+            Game.beginNextRound()
+            startNextActivity.postValue(StartActivity.START_GAME)
+            flagStartGame = false
+            anal.gameStarted(
+                    Game.getSettings().allowRandomWords,
+                    Game.getSettings().typeName,
+                    true)
+        }
+
+    }
+
+    enum class StartActivity {
+        WORLD_IN,
+        START_GAME
     }
 }

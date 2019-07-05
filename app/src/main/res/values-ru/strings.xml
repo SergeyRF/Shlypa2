@@ -79,6 +79,7 @@
     <string name="vvodi">Пиши слово</string>
     <string name="dificult">Сложность добавляемых слов</string>
     <string name="allow_random">Разрешить случайные слова</string>
+    <string name="add_all_word_random">Автозаполнение шляпы </string>
 
 
     <string name="shuffle_teams">Перемешать</string>

@@ -137,6 +137,7 @@ object Game {
     }
 
     fun addWord(word: Word) = state.allWords.add(word)
+    fun addWord(words:List<Word>) = state.allWords.addAll(words)
 
     fun getWords(): List<Word> = state.allWords
 
