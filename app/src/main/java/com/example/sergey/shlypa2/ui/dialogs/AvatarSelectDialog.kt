@@ -2,10 +2,11 @@ package com.example.sergey.shlypa2.ui.dialogs
 
 import android.app.Dialog
 import android.content.Context
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.Window
 import android.view.WindowManager
+import android.widget.ImageView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.RvImageAdapter
@@ -17,6 +18,7 @@ import com.example.sergey.shlypa2.utils.RvImageAdapter
 class AvatarSelectDialog(val context: Context, val images: List<String>) {
 
     var onSelect: ((String) -> Unit)? = null
+    var onSelectCustom: ((CustomAvatar) -> Unit)? = null
 
     fun show() {
         val dialog = Dialog(context)
@@ -24,8 +26,11 @@ class AvatarSelectDialog(val context: Context, val images: List<String>) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_avatar_select)
 
-        val rv: androidx.recyclerview.widget.RecyclerView = dialog.findViewById(R.id.rvAvatarDialog)
-        val gridLayout = androidx.recyclerview.widget.GridLayoutManager(context, 4)
+        val loadImage: ImageView = dialog.findViewById(R.id.ivLoadImage)
+        val loadPhoto: ImageView = dialog.findViewById(R.id.ivLoadPhoto)
+
+        val rv: RecyclerView = dialog.findViewById(R.id.rvAvatarDialog)
+        val gridLayout = GridLayoutManager(context, 4)
         rv.layoutManager = gridLayout
 
         val adapter = RvImageAdapter()
@@ -34,8 +39,16 @@ class AvatarSelectDialog(val context: Context, val images: List<String>) {
             dialog.dismiss()
             onSelect?.invoke(file)
         }
-
         rv.adapter = adapter
+
+        loadImage.setOnClickListener {
+            onSelectCustom?.invoke(CustomAvatar.IMAGE)
+            dialog.dismiss()
+        }
+        loadPhoto.setOnClickListener {
+            onSelectCustom?.invoke(CustomAvatar.PHOTO)
+            dialog.dismiss()
+        }
 
         dialog.show()
 
@@ -45,8 +58,13 @@ class AvatarSelectDialog(val context: Context, val images: List<String>) {
 
         val width = Functions.getScreenWidth(context)
         layoutParams.width = width
-        layoutParams.height = (width * 0.7).toInt()
+        layoutParams.height = (width * 1.2).toInt()
 
         dialog.window.attributes = layoutParams
     }
+}
+
+enum class CustomAvatar {
+    IMAGE,
+    PHOTO
 }
