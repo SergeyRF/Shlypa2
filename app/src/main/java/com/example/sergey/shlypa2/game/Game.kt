@@ -137,7 +137,7 @@ object Game {
     }
 
     fun addWord(word: Word) = state.allWords.add(word)
-    fun addWord(words:List<Word>) = state.allWords.addAll(words)
+    fun addWord(words: List<Word>) = state.allWords.addAll(words)
 
     fun getWords(): List<Word> = state.allWords
 
@@ -155,7 +155,7 @@ object Game {
 
 
     fun portionClear() {
-        var newState: GameState = GameState()
+        val newState = GameState()
         newState.players.putAll(state.players)
         newState.teams.addAll(state.teams)
         state = newState
@@ -163,5 +163,15 @@ object Game {
 
     fun clear() {
         state = GameState()
+    }
+
+    fun repeatGame(): Boolean {
+        state = GameState().apply {
+            players.putAll(state.players)
+            teams.addAll(state.teams)
+            setSettings(state.settings)
+        }
+        return state.settings.all_word_random
+
     }
 }

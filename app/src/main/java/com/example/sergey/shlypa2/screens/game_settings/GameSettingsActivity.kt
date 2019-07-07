@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.screens.game_settings
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,6 +9,7 @@ import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.TypesArrayAdapter
 import com.example.sergey.shlypa2.beans.Type
+import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.ui.RoundActivity
@@ -19,7 +21,17 @@ import timber.log.Timber
 
 class GameSettingsActivity : AppCompatActivity() {
 
+    companion object {
+        private const val REPEAT_GAME = "repeat_game"
+        fun getIntent(context: Context, repeat: Boolean = false) =
+                Intent(context, GameSettingsActivity::class.java).apply {
+                    putExtra(REPEAT_GAME, repeat)
+                }
+    }
+
     private val viewModel by viewModel<GameSettingsViewModel>()
+
+    private val repeat by extraNotNull(REPEAT_GAME, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
@@ -27,6 +39,10 @@ class GameSettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_settings)
 
         initToolbar()
+
+        if (repeat) {
+            viewModel.onFinish()
+        }
 
         ssbTurnTime.setValues(Constants.MIN_ROUND_TIME, Constants.MAX_ROUMD_TIME)
         ssbTurnTime.setProgress(viewModel.getTime())
