@@ -103,7 +103,6 @@ class FirstActivity : AppCompatActivity() {
                 R.id.item_share -> share()
                 android.R.id.home -> {
                     onBackPressed()
-                    disableToolbar()
                 }
             }
         }
@@ -150,6 +149,11 @@ class FirstActivity : AppCompatActivity() {
     private fun disableToolbar() {
         supportActionBar?.setHomeButtonEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        disableToolbar()
     }
 
 
