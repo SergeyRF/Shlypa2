@@ -40,8 +40,7 @@ class WordsInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_words_in)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        initToolbar()
 
         container.setTransition(R.id.start, R.id.end)
 
@@ -110,17 +109,20 @@ class WordsInActivity : AppCompatActivity() {
 
         onChangeEt()
     }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        item?.let {
-            when (item.itemId) {
-                android.R.id.home -> super.onBackPressed()
-            }
-        }
-
-        return true
+    private fun initToolbar() {
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     private fun setWordRv(words: List<Word>?) {
         if (words == null || words.isEmpty()) {
@@ -151,7 +153,7 @@ class WordsInActivity : AppCompatActivity() {
         p?.let {
             //            title = p.name
             Glide.with(this)
-                    .load(Functions.imageNameToUrl("player_avatars/large/${p.avatar}"))
+                    .load(p.getLargeImage(this))
                     .into(civPlayerAvatar)
 
             tvWhoWrites.text = getString(R.string.who_inputs, p.name)

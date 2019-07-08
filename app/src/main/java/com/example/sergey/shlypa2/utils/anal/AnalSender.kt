@@ -29,6 +29,8 @@ class AnalSender(val context: Context) {
 
         private const val PLAYER_ADDED = "player_added"
         private const val PLAYER_ADDED_AUTO = "player_added_auto"
+
+        private const val GAME_ALL_WORD_AUTOFILL = "game_all_word_autofill"
     }
 
     private val firebase = FirebaseAnalytics.getInstance(context)
@@ -75,12 +77,14 @@ class AnalSender(val context: Context) {
         FlurryAgent.logEvent(PLAYER_ADDED, mapOf(PLAYER_ADDED_AUTO to auto.toString()))
     }
 
-    fun gameStarted(autoAllowed: Boolean, wordType: String) {
+    fun gameStarted(autoAllowed: Boolean, wordType: String, wordAutofill:Boolean = false) {
         FlurryAgent.logEvent(GAME_STARTED, mapOf(
                 GAME_AUTO_ALLOWED to autoAllowed.toString(),
-                GAME_WORDS_TYPE to wordType
+                GAME_WORDS_TYPE to wordType,
+                GAME_ALL_WORD_AUTOFILL to wordAutofill.toString()
         ))
     }
+
 
     fun gameLoaded() {
         firebase.logEvent(GAME_LOADED, null)

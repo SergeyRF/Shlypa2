@@ -14,6 +14,7 @@ object Contract {
     const val PLAYER_NAME = "player_name"
     const val PLAYER_LOCALE = "player_locale"
     const val PLAYER_TYPE = "player_type"
+    const val PLAYER_AVATAR_TYPE= "player_avatar_type"
 
     //Word table columns
     const val WORD_TABLE = "words"

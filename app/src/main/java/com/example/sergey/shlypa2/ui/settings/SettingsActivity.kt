@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.ui.settings
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.artitk.licensefragment.model.License
 import com.artitk.licensefragment.model.LicenseType
@@ -15,6 +16,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
         super.onCreate(savedInstanceState)
+        initToolbar()
 
         if(supportFragmentManager.findFragmentById(android.R.id.content) == null) {
             val fragment = SettingsFragment()
@@ -58,5 +60,20 @@ class SettingsActivity : AppCompatActivity() {
         fragment.addCustomLicense(licenses)
 
         return fragment
+    }
+
+    private fun initToolbar() {
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

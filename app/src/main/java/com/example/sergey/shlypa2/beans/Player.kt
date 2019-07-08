@@ -6,7 +6,6 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.game.PlayerType
-import com.example.sergey.shlypa2.utils.Functions
 
 /**
  * Created by alex on 4/10/18.
@@ -27,11 +26,4 @@ class Player(@ColumnInfo(name = Contract.PLAYER_NAME) var name: String = "Namele
 
     override fun equals(other: Any?) = other is Player
             && other.id == id
-
-    fun getSmallImage() = smallImagePath(avatar)
-
-    companion object {
-        fun smallImagePath(imageName: String) =
-                Functions.imageNameToUrl("player_avatars/small/$imageName")
-    }
 }

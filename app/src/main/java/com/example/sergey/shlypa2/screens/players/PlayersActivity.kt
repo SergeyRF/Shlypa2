@@ -1,12 +1,13 @@
 package com.example.sergey.shlypa2.screens.players
 
 import android.content.Context
-import androidx.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.observeSafe
@@ -29,12 +30,14 @@ class PlayersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_players)
 
+        initToolbar()
+
         viewModel.commandLiveData.observe(this, Observer { command ->
             if (command != null) onCommand(command)
         })
 
         viewModel.titleLiveData.observe(this, Observer { titleId ->
-            if(titleId != null) setTitle(titleId)
+            if (titleId != null) setTitle(titleId)
         })
 
         viewModel.toastResLD.observeSafe(this) {
@@ -73,6 +76,21 @@ class PlayersActivity : AppCompatActivity() {
 
     private fun startSettings() {
         startActivity(Intent(this, GameSettingsActivity::class.java))
+    }
+
+    private fun initToolbar() {
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

@@ -79,6 +79,7 @@
     <string name="vvodi">Пиши слово</string>
     <string name="dificult">Сложность добавляемых слов</string>
     <string name="allow_random">Разрешить случайные слова</string>
+    <string name="add_all_word_random">Автозаполнение шляпы </string>
 
 
     <string name="shuffle_teams">Перемешать</string>
@@ -134,8 +135,22 @@
     <string name="no_winner_draw">Ничья</string>
     <string name="turn_player">Now it\'s turn of:</string>
     <string name="finish">Закончить игру</string>
-
+    <string name="share">Share</string>
     <string name="no_saved_games">Вы пока не сохраняли игр…</string>
     <string name="invite_friend">Расскажите друзьям о Шляпе</string>
+
+    <!-- leaveDialog-->
+    <string name="leaveTitle">Покинуть игру</string>
+    <string name="leaveMessage">Вы точно этого хотите?</string>
+    <string name="leaveNegative">Нет</string>
+    <string name="leavePositive">Сохранить и выйти</string>
+
+    <!-- RepeatGame-->
+    <string name="repeatTitle">Игра завершена</string>
+    <string name="repaetMessage">Хотите сыграть еще раз с теми-же настройками?</string>
+    <string name="repeatNegative">Нет</string>
+    <string name="repeatPositive">Да</string>
+
+    <string name="add_user_avatar">Добавить вашу картинку</string>
 
 </resources>

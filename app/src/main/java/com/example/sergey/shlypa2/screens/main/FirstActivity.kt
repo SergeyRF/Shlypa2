@@ -15,9 +15,6 @@ import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.screens.features_testing.MotionTestFragment
-import com.example.sergey.shlypa2.screens.game.RoundStartFragment
-import com.example.sergey.shlypa2.screens.game.TurnStartFragment
 import com.example.sergey.shlypa2.screens.main.pages.LoadStateFragment
 import com.example.sergey.shlypa2.screens.main.pages.RulesFragment
 import com.example.sergey.shlypa2.screens.main.pages.WelcomeFragment
@@ -47,7 +44,7 @@ class FirstActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_first)
 
-        if(showRate) {
+        if (showRate) {
             AppRater().rateAppIfRequired(this)
         }
 
@@ -104,6 +101,9 @@ class FirstActivity : AppCompatActivity() {
 
                 R.id.item_settings -> startActivity(Intent(this, SettingsActivity::class.java))
                 R.id.item_share -> share()
+                android.R.id.home -> {
+                    onBackPressed()
+                }
             }
         }
 
@@ -128,6 +128,7 @@ class FirstActivity : AppCompatActivity() {
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit()
+        initToolbar()
     }
 
     private fun startRulesFragment() {
@@ -137,5 +138,23 @@ class FirstActivity : AppCompatActivity() {
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit()
+        initToolbar()
     }
+
+    private fun initToolbar() {
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun disableToolbar() {
+        supportActionBar?.setHomeButtonEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        disableToolbar()
+    }
+
+
 }
