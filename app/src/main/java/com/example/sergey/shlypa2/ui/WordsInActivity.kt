@@ -153,7 +153,7 @@ class WordsInActivity : AppCompatActivity() {
         p?.let {
             //            title = p.name
             Glide.with(this)
-                    .load(Functions.imageNameToUrl("player_avatars/large/${p.avatar}"))
+                    .load(p.getLargeImage())
                     .into(civPlayerAvatar)
 
             tvWhoWrites.text = getString(R.string.who_inputs, p.name)

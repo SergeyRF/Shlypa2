@@ -38,7 +38,7 @@ class TurnStartFragment : androidx.fragment.app.Fragment() {
                 teamName.text = it.currentTeam.name
                 playerTv.text = it.getPlayer().name
                 Glide.with(this)
-                        .load(Functions.imageNameToUrl("player_avatars/large/${it.getPlayer().avatar}"))
+                        .load(it.getPlayer().getLargeImage())
                         .into(playerAvatar)
             }
         })

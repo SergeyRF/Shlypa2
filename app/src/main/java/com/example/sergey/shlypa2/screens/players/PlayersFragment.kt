@@ -22,6 +22,7 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
+import com.example.sergey.shlypa2.game.AvatarType
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
 import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
@@ -172,6 +173,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                 .load(Player.smallImagePath(fileName))
                 .apply(avatarOptions)
                 .into(civPlayerAvatar)
+        viewModel.addImage(fileName)
     }
 
     private fun runSpotlight() {
@@ -233,6 +235,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                 .load(imageUri)
                 .apply(avatarOptions)
                 .into(civPlayerAvatar)
+        viewModel.addImage(imageUri.toString(),AvatarType.USER)
     }
 
     private fun startCropImageActivity(imageUri: Uri? = null) {

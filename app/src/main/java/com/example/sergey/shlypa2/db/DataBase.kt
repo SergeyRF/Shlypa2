@@ -1,8 +1,6 @@
 package com.example.sergey.shlypa2.db
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.sergey.shlypa2.beans.Player
@@ -15,7 +13,7 @@ import com.example.sergey.shlypa2.beans.Word
  */
 
 @Database(entities = arrayOf(Player::class, Word::class, StateRepresent::class, Type::class), version = Contract.DB_VERSION)
-@TypeConverters(WordTypeConverter::class, PlayerTypeConverter::class, LangsConverter::class)
+@TypeConverters(WordTypeConverter::class, PlayerTypeConverter::class, LangsConverter::class, AvatarTypeConverter::class)
 abstract class DataBase : RoomDatabase() {
 
     abstract fun playersDao(): PlayersDao

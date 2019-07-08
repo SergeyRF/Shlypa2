@@ -9,6 +9,7 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.extensions.random
+import com.example.sergey.shlypa2.game.AvatarType
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
@@ -36,6 +37,9 @@ class PlayersViewModel(application: Application,
     val titleLiveData = MutableLiveData<Int>()
 
     val listOfAvatars: MutableList<String> = mutableListOf()
+
+    var playerImage:String? = null
+    var playerImageType:AvatarType = AvatarType.STANDARD
 
     init {
         updateData()
@@ -79,6 +83,11 @@ class PlayersViewModel(application: Application,
         }
     }
 
+    fun addImage(image:String,type: AvatarType = AvatarType.STANDARD){
+        playerImage = image
+        playerImageType = type
+    }
+
     fun addPlayer(name: String) {
         if (name.isBlank()) {
             toastResLD.value = R.string.player_name_empty
@@ -87,7 +96,10 @@ class PlayersViewModel(application: Application,
 
         launch {
             val success = withContext(dispatchers.ioDispatcher) {
-                val player = Player(name, avatar = avatarLiveData.value ?: "")
+                val player = Player(name,
+                        avatar = playerImage ?: avatarLiveData.value?:"",
+                        avatarType = playerImageType
+                )
                 player.id = dataProvider.insertPlayer(player)
                 Game.addPlayer(player)
             }

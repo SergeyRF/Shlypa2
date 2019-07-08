@@ -39,3 +39,7 @@ enum class WordType(val title: Int) {
 enum class PlayerType {
     STANDARD, USER
 }
+
+enum class AvatarType{
+    STANDARD, USER
+}
