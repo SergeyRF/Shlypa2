@@ -1,15 +1,17 @@
 package com.example.sergey.shlypa2.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat.animate
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.gone
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.TeamWithScores
+import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
 import com.example.sergey.shlypa2.screens.main.FirstActivity
 import com.example.sergey.shlypa2.utils.SoundManager
 import kotlinx.android.synthetic.main.activity_game_result.*
@@ -39,8 +41,7 @@ class GameResultActivity : AppCompatActivity() {
         rvGameResults.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         rvGameResults.adapter = resultsAdapter
         btCreateNewGame.setOnClickListener {
-            startActivity(FirstActivity.getIntent(this, true))
-            finish()
+            dialogRepeatGame()
         }
 
         rvGameResults.gone()
@@ -61,6 +62,30 @@ class GameResultActivity : AppCompatActivity() {
             rootGameResult.setTransition(R.id.start, R.id.end)
             rootGameResult.transitionToEnd()
         }
+    }
+
+    private fun dialogRepeatGame() {
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.repeatTitle)
+            setMessage(R.string.repaetMessage)
+            setPositiveButton(R.string.repeatPositive) { dialog, _ ->
+                Game.repeatGame()
+                startActivity(GameSettingsActivity.getIntent(this@GameResultActivity, true))
+                finish()
+            }
+            setNegativeButton(R.string.repeatNegative) { dialog, _ ->
+                startActivity(FirstActivity.getIntent(this@GameResultActivity, true)
+                        .apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP })
+                dialog.dismiss()
+                finish()
+            }
+        }
+                .create()
+                .show()
+    }
+
+    override fun onBackPressed() {
+        dialogRepeatGame()
     }
 }
 

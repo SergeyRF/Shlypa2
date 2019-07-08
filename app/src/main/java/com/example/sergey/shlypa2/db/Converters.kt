@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2.db
 import androidx.room.TypeConverter
 import com.example.sergey.shlypa2.beans.Lang
 import com.example.sergey.shlypa2.beans.Type
+import com.example.sergey.shlypa2.game.AvatarType
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.game.WordType
 
@@ -55,4 +56,21 @@ class LangsConverter {
 
     @TypeConverter
     fun stringToLang(lang: String) = Lang.valueOf(lang)
+}
+
+class AvatarTypeConverter {
+
+    @TypeConverter
+    fun avatarTypeToString(avatarType: AvatarType):String{
+        return avatarType.toString()
+    }
+
+    @TypeConverter
+    fun stringToAvatarType(avatarType: String):AvatarType{
+        return when(avatarType){
+            AvatarType.USER.toString() -> AvatarType.USER
+            AvatarType.STANDARD.toString() -> AvatarType.STANDARD
+            else -> throw RuntimeException("Unsupported type")
+        }
+    }
 }

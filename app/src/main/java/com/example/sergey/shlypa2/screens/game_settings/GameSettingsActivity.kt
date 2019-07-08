@@ -1,17 +1,19 @@
 package com.example.sergey.shlypa2.screens.game_settings
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Button
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.TypesArrayAdapter
 import com.example.sergey.shlypa2.beans.Type
+import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.ui.RoundActivity
 import com.example.sergey.shlypa2.ui.WordsInActivity
-import com.example.sergey.shlypa2.utils.Functions
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -19,12 +21,28 @@ import timber.log.Timber
 
 class GameSettingsActivity : AppCompatActivity() {
 
+    companion object {
+        private const val REPEAT_GAME = "repeat_game"
+        fun getIntent(context: Context, repeat: Boolean = false) =
+                Intent(context, GameSettingsActivity::class.java).apply {
+                    putExtra(REPEAT_GAME, repeat)
+                }
+    }
+
     private val viewModel by viewModel<GameSettingsViewModel>()
+
+    private val repeat by extraNotNull(REPEAT_GAME, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_settings)
+
+        initToolbar()
+
+        if (repeat) {
+            viewModel.onFinish()
+        }
 
         ssbTurnTime.setValues(Constants.MIN_ROUND_TIME, Constants.MAX_ROUMD_TIME)
         ssbTurnTime.setProgress(viewModel.getTime())
@@ -46,13 +64,27 @@ class GameSettingsActivity : AppCompatActivity() {
 
         onSwitch(viewModel.getAllowRandom())
         onBalSwitch(viewModel.getMinusBal())
+        onAllRandomSwitch(viewModel.getAllWorldRandom())
 
         btNextSettings.setOnClickListener {
             acceptSettings()
-            startActivity(Intent(this, WordsInActivity::class.java))
         }
 
-        viewModel.typesLiveData.observeSafe(this) { onTypes(it)}
+        viewModel.typesLiveData.observeSafe(this) { onTypes(it) }
+
+        viewModel.startNextActivity.observeSafe(this) {
+            when (it) {
+                GameSettingsViewModel.StartActivity.START_GAME -> {
+                    onStartActivity(RoundActivity())
+                }
+                GameSettingsViewModel.StartActivity.WORLD_IN -> {
+                    onStartActivity(WordsInActivity())
+                }
+                else -> {
+                    Timber.e(it.toString())
+                }
+            }
+        }
     }
 
     private fun onTypes(types: List<Type>) {
@@ -67,6 +99,7 @@ class GameSettingsActivity : AppCompatActivity() {
             viewModel.setDifficulty(it)
         }
         viewModel.setMinusBal(ssPenalty.isChecked())
+        viewModel.setAllWorldRandom(switchSettingAddAllWordRandom.isChecked())
         viewModel.onFinish()
     }
 
@@ -82,5 +115,28 @@ class GameSettingsActivity : AppCompatActivity() {
 
     private fun onBalSwitch(b: Boolean) {
         ssPenalty.setChecked(b)
+    }
+
+    private fun onAllRandomSwitch(b: Boolean) {
+        switchSettingAddAllWordRandom.setChecked(b)
+    }
+
+    private fun onStartActivity(activity: AppCompatActivity) {
+        startActivity(Intent(this, activity::class.java))
+    }
+
+    private fun initToolbar() {
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

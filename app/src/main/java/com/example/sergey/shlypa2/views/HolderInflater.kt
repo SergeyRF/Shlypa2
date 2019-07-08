@@ -16,6 +16,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dimen
 import com.example.sergey.shlypa2.extensions.dpToPx
+import com.example.sergey.shlypa2.extensions.getSmallImage
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import de.hdodenhof.circleimageview.CircleImageView
@@ -78,7 +79,7 @@ object HolderInflater {
 
             val borderColor = Functions.getThemedBgColor(root.context)
             Glide.with(root)
-                    .load(player.getSmallImage())
+                    .load(player.getSmallImage(root.context))
                     .apply(RequestOptions()
                             .transforms(CircleCrop(), CircleBorderTransform(borderColor, 1.dpToPx)))
                     .into(avatarView)
