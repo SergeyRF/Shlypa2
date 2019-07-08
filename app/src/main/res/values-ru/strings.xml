@@ -145,4 +145,10 @@
     <string name="leaveNegative">Нет</string>
     <string name="leavePositive">Сохранить и выйти</string>
 
+    <!-- RepeatGame-->
+    <string name="repeatTitle">Игра завершена</string>
+    <string name="repaetMessage">Хотите сыграть еще раз с теми-же настройками?</string>
+    <string name="repeatNegative">Нет</string>
+    <string name="repeatPositive">Да</string>
+
 </resources>

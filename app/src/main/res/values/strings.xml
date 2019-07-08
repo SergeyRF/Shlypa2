@@ -142,5 +142,11 @@
     <string name="leaveNegative">No</string>
     <string name="leavePositive">Save and quit</string>
 
+    <!-- RepeatGame-->
+    <string name="repeatTitle">Game completed</string>
+    <string name="repaetMessage">Do you want to play again with the same settings?</string>
+    <string name="repeatNegative">Нет</string>
+    <string name="repeatPositive">Да</string>
+
 
 </resources>

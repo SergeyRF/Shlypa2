@@ -66,14 +66,14 @@ class GameResultActivity : AppCompatActivity() {
 
     private fun dialogRepeatGame() {
         AlertDialog.Builder(this).apply {
-            setTitle("Игра завершена")
-            setMessage("Хотите сыграть еще раз с теми-же настройками?")
-            setPositiveButton("Да") { dialog, _ ->
+            setTitle(R.string.repeatTitle)
+            setMessage(R.string.repaetMessage)
+            setPositiveButton(R.string.repeatPositive) { dialog, _ ->
                 Game.repeatGame()
                 startActivity(GameSettingsActivity.getIntent(this@GameResultActivity, true))
                 finish()
             }
-            setNegativeButton("Нет") { dialog, _ ->
+            setNegativeButton(R.string.repeatNegative) { dialog, _ ->
                 startActivity(FirstActivity.getIntent(this@GameResultActivity, true)
                         .apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP })
                 dialog.dismiss()
