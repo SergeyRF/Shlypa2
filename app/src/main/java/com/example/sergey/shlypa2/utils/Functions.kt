@@ -60,7 +60,10 @@ object Functions {
     }
 
     fun imageNameToUrl(name: String): String {
+        return "file:///android_asset/$name"
+    }
 
+    fun imageCustomNameToUrl(name: String): String {
         return "file:///android_asset/$name"
     }
 

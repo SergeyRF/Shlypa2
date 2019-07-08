@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.utils.Functions
 import de.hdodenhof.circleimageview.CircleImageView
 

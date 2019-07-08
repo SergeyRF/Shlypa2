@@ -97,8 +97,7 @@ class PlayersViewModel(application: Application,
         launch {
             val success = withContext(dispatchers.ioDispatcher) {
                 val player = Player(name,
-                        avatar = playerImage ?: avatarLiveData.value?:"",
-                        avatarType = playerImageType
+                        avatar = playerImage ?: avatarLiveData.value?:""
                 )
                 player.id = dataProvider.insertPlayer(player)
                 Game.addPlayer(player)

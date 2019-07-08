@@ -115,11 +115,13 @@ class GameSettingsViewModel(application: Application,
     }
 
     private fun addRandomWords() {
-        GlobalScope.launch {
-            val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
-            val wordNeeds = Game.getPlayers().size * settings.word
-            Game.addWord(dbWords.subList(0, wordNeeds))
-            Game.beginNextRound()
+        launch {
+            withContext(dispatchers.ioDispatcher) {
+                val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
+                val wordNeeds = Game.getPlayers().size * settings.word
+                Game.addWord(dbWords.subList(0, wordNeeds))
+                Game.beginNextRound()
+            }
             startNextActivity.postValue(StartActivity.START_GAME)
             flagStartGame = false
             anal.gameStarted(
@@ -127,7 +129,6 @@ class GameSettingsViewModel(application: Application,
                     Game.getSettings().typeName,
                     true)
         }
-
     }
 
     enum class StartActivity {

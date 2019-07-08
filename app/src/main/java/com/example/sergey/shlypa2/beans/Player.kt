@@ -1,7 +1,6 @@
 package com.example.sergey.shlypa2.beans
 
 import androidx.room.*
-import com.example.sergey.shlypa2.db.AvatarTypeConverter
 import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.game.AvatarType
 import com.example.sergey.shlypa2.game.PlayerType
@@ -17,7 +16,6 @@ class Player(@ColumnInfo(name = Contract.PLAYER_NAME) var name: String = "Namele
              @PrimaryKey(autoGenerate = true)
              @ColumnInfo(name = Contract.PLAYER_ID) var id: Long = 0,
              @ColumnInfo(name = Contract.PLAYER_AVATAR) var avatar: String = "",
-             @ColumnInfo(name = Contract.PLAYER_AVATAR_TYPE) var avatarType: AvatarType = AvatarType.STANDARD,
              @ColumnInfo(name = Contract.PLAYER_TYPE) var type: PlayerType = PlayerType.USER
 ) {
 
@@ -28,14 +26,22 @@ class Player(@ColumnInfo(name = Contract.PLAYER_NAME) var name: String = "Namele
     override fun equals(other: Any?) = other is Player
             && other.id == id
 
-    fun getSmallImage() = if (avatarType == AvatarType.STANDARD) smallImagePath(avatar) else avatar
-    fun getLargeImage() = if (avatarType == AvatarType.STANDARD) largeImagePath(avatar) else avatar
+    fun getSmallImage() = smallImagePath(avatar)
+    fun getLargeImage() = largeImagePath(avatar)
 
     companion object {
-        fun smallImagePath(imageName: String) =
-                Functions.imageNameToUrl("player_avatars/small/$imageName")
+        const val CUSTOM_AVATAR_PREFIX = "xt45xz"
 
-        fun largeImagePath(imageName: String) =
-                Functions.imageNameToUrl("player_avatars/large/$imageName")
+        fun smallImagePath(image: String): String {
+            return if(isCustomAvatar(image)) Functions.imageCustomNameToUrl("player_avatars/small/$image")
+            else  Functions.imageNameToUrl("player_avatars/small/$image")
+        }
+
+        fun largeImagePath(image: String) : String {
+            return if(isCustomAvatar(image)) Functions.imageCustomNameToUrl("player_avatars/large/$image")
+            else  Functions.imageNameToUrl("player_avatars/large/$image")
+        }
+
+        private fun isCustomAvatar(avatar: String) = avatar.startsWith(CUSTOM_AVATAR_PREFIX)
     }
 }
