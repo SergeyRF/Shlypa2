@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -277,6 +278,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startCropImageActivity(mCropImageUri)
             } else {
+                //todo require refactoring
                 Toast.makeText(requireContext(),
                         "Cancelling, required permissions are not granted",
                         Toast.LENGTH_LONG)
