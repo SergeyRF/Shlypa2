@@ -151,4 +151,6 @@
     <string name="repeatNegative">Нет</string>
     <string name="repeatPositive">Да</string>
 
+    <string name="add_user_avatar">Добавить вашу картинку</string>
+
 </resources>

@@ -26,7 +26,6 @@ import com.example.sergey.shlypa2.game.AvatarType
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
 import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
-import com.example.sergey.shlypa2.ui.dialogs.CustomAvatar
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.takusemba.spotlight.OnTargetStateChangedListener
@@ -226,7 +225,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
 
     //Load custom avatar
 
-    private val getCustomAvatar: (CustomAvatar) -> Unit = { custom ->
+    private val getCustomAvatar: () -> Unit = {
         startCropImageActivity()
     }
 
@@ -235,7 +234,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                 .load(imageUri)
                 .apply(avatarOptions)
                 .into(civPlayerAvatar)
-        viewModel.addImage(imageUri.toString(),AvatarType.USER)
+        viewModel.addImage(imageUri.toString(), AvatarType.USER)
     }
 
     private fun startCropImageActivity(imageUri: Uri? = null) {

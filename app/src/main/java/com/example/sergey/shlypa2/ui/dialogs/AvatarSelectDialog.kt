@@ -18,7 +18,7 @@ import com.example.sergey.shlypa2.utils.RvImageAdapter
 class AvatarSelectDialog(val context: Context, val images: List<String>) {
 
     var onSelect: ((String) -> Unit)? = null
-    var onSelectCustom: ((CustomAvatar) -> Unit)? = null
+    var onSelectCustom: (() -> Unit)? = null
 
     fun show() {
         val dialog = Dialog(context)
@@ -41,7 +41,7 @@ class AvatarSelectDialog(val context: Context, val images: List<String>) {
         rv.adapter = adapter
 
         loadImage.setOnClickListener {
-            onSelectCustom?.invoke(CustomAvatar.IMAGE)
+            onSelectCustom?.invoke()
             dialog.dismiss()
         }
 
@@ -57,9 +57,4 @@ class AvatarSelectDialog(val context: Context, val images: List<String>) {
 
         dialog.window.attributes = layoutParams
     }
-}
-
-enum class CustomAvatar {
-    IMAGE,
-    PHOTO
 }
