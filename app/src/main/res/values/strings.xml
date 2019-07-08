@@ -147,6 +147,7 @@
     <string name="repaetMessage">Do you want to play again with the same settings?</string>
     <string name="repeatNegative">Нет</string>
     <string name="repeatPositive">Да</string>
+    <string name="add_user_avatar">Add yours picture</string>
 
 
 </resources>

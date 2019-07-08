@@ -65,6 +65,7 @@ class AvatarTypeConverter {
         return avatarType.toString()
     }
 
+    @TypeConverter
     fun stringToAvatarType(avatarType: String):AvatarType{
         return when(avatarType){
             AvatarType.USER.toString() -> AvatarType.USER

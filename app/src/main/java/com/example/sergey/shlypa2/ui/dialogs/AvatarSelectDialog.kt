@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
@@ -26,8 +27,7 @@ class AvatarSelectDialog(val context: Context, val images: List<String>) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_avatar_select)
 
-        val loadImage: ImageView = dialog.findViewById(R.id.ivLoadImage)
-        val loadPhoto: ImageView = dialog.findViewById(R.id.ivLoadPhoto)
+        val loadImage: CardView = dialog.findViewById(R.id.cvAddUserAvatar)
 
         val rv: RecyclerView = dialog.findViewById(R.id.rvAvatarDialog)
         val gridLayout = GridLayoutManager(context, 4)
@@ -43,10 +43,6 @@ class AvatarSelectDialog(val context: Context, val images: List<String>) {
 
         loadImage.setOnClickListener {
             onSelectCustom?.invoke(CustomAvatar.IMAGE)
-            dialog.dismiss()
-        }
-        loadPhoto.setOnClickListener {
-            onSelectCustom?.invoke(CustomAvatar.PHOTO)
             dialog.dismiss()
         }
 
