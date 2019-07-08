@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.sergey.shlypa2.ImagesHelper
 import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.db.DataBase
 import com.example.sergey.shlypa2.db.DataProvider

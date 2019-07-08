@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.example.sergey.shlypa2.ImagesHelper
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dpToPx
@@ -169,7 +170,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
 
     private fun showAvatar(fileName: String) {
         Glide.with(this)
-                .load(Player.smallImagePath(fileName))
+                .load(ImagesHelper.smallImagePathPlayer(fileName, requireContext()))
                 .apply(avatarOptions)
                 .into(civPlayerAvatar)
         viewModel.addImage(fileName)
@@ -234,7 +235,8 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                 .load(imageUri)
                 .apply(avatarOptions)
                 .into(civPlayerAvatar)
-        viewModel.addImage(imageUri.toString(), AvatarType.USER)
+        //viewModel.addImage(imageUri.toString(), AvatarType.USER)
+        viewModel.addImage(imageUri)
     }
 
     private fun startCropImageActivity(imageUri: Uri? = null) {

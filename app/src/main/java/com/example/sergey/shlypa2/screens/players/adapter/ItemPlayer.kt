@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dpToPx
+import com.example.sergey.shlypa2.extensions.getSmallImage
 import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.utils.Functions
@@ -69,7 +70,7 @@ class ItemPlayer(val player: Player,
             }
 
             Glide.with(itemView)
-                    .load(player.getSmallImage())
+                    .load(player.getSmallImage(itemView.context))
                     .apply(RequestOptions()
                             .transforms(CircleCrop(), CircleBorderTransform(borderColor, 1.dpToPx)))
                     .into(avatarImage)

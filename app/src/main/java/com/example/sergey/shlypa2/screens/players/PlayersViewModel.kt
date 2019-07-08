@@ -1,9 +1,11 @@
 package com.example.sergey.shlypa2.screens.players
 
 import android.app.Application
+import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.sergey.shlypa2.ImagesHelper
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
@@ -39,6 +41,7 @@ class PlayersViewModel(application: Application,
     val listOfAvatars: MutableList<String> = mutableListOf()
 
     var playerImage:String? = null
+    //todo refactor this shit  !!!
     var playerImageType:AvatarType = AvatarType.STANDARD
 
     init {
@@ -80,6 +83,15 @@ class PlayersViewModel(application: Application,
 
             updateData()
             anal.playerAdded(true)
+        }
+    }
+
+    fun addImage(image: Uri ) {
+        playerImageType = AvatarType.USER
+        launch {
+            withContext(dispatchers.ioDispatcher) {
+                playerImage = ImagesHelper.saveImage(image, getApplication())
+            }
         }
     }
 

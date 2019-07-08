@@ -1,10 +1,11 @@
 package com.example.sergey.shlypa2.beans
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.example.sergey.shlypa2.db.Contract
-import com.example.sergey.shlypa2.game.AvatarType
 import com.example.sergey.shlypa2.game.PlayerType
-import com.example.sergey.shlypa2.utils.Functions
 
 /**
  * Created by alex on 4/10/18.
@@ -25,23 +26,4 @@ class Player(@ColumnInfo(name = Contract.PLAYER_NAME) var name: String = "Namele
 
     override fun equals(other: Any?) = other is Player
             && other.id == id
-
-    fun getSmallImage() = smallImagePath(avatar)
-    fun getLargeImage() = largeImagePath(avatar)
-
-    companion object {
-        const val CUSTOM_AVATAR_PREFIX = "xt45xz"
-
-        fun smallImagePath(image: String): String {
-            return if(isCustomAvatar(image)) Functions.imageCustomNameToUrl("player_avatars/small/$image")
-            else  Functions.imageNameToUrl("player_avatars/small/$image")
-        }
-
-        fun largeImagePath(image: String) : String {
-            return if(isCustomAvatar(image)) Functions.imageCustomNameToUrl("player_avatars/large/$image")
-            else  Functions.imageNameToUrl("player_avatars/large/$image")
-        }
-
-        private fun isCustomAvatar(avatar: String) = avatar.startsWith(CUSTOM_AVATAR_PREFIX)
-    }
 }
