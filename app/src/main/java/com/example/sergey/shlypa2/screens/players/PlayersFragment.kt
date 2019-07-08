@@ -108,9 +108,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         }
 
         btGoNextPlayers.setOnClickListener {
-            if (Game.getPlayers().size < 4) {
-                Toast.makeText(context, R.string.not_enough_players, Toast.LENGTH_LONG).show()
-            } else viewModel.startTeams()
+            viewModel.onPlayersNextClicked()
         }
 
         btAddRandomPlayer.setOnClickListener {
@@ -209,13 +207,13 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.hint_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.hint_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.item_show_hint -> {
                 runSpotlight()
                 true
@@ -280,6 +278,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startCropImageActivity(mCropImageUri)
             } else {
+                //todo require refactoring
                 Toast.makeText(requireContext(),
                         "Cancelling, required permissions are not granted",
                         Toast.LENGTH_LONG)

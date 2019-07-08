@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.ImagesHelper
 import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.db.DataBase
@@ -20,10 +21,10 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel { WelcomeViewModel(get(), get(), get()) }
-    viewModel { PlayersViewModel(get(), get(), get(), get()) }
+    viewModel { PlayersViewModel(get(), get(), get(), get(), get()) }
     viewModel { GameSettingsViewModel(get(), get(), get(),get()) }
     viewModel { RoundViewModel(get(), get(), get()) }
-    viewModel { WordsViewModel(get(), get(), get()) }
+    viewModel { WordsViewModel(get(), get(), get(), get()) }
 
     single<DispatchersProvider> { DispatchersProviderImpl() }
 
@@ -38,6 +39,7 @@ val appModule = module {
     single { DataProvider(get(), get(), get()) }
 
     single { AnalSender(get())}
+    single { PlayersRepository(get())}
 }
 
 private fun createDb(context: Context): DataBase {

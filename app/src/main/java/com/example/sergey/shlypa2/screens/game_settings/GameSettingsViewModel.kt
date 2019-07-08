@@ -115,7 +115,8 @@ class GameSettingsViewModel(application: Application,
     }
 
     private fun addRandomWords() {
-        launch {
+        //todo move somewhere else
+        /*launch {
             withContext(dispatchers.ioDispatcher) {
                 val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
                 val wordNeeds = Game.getPlayers().size * settings.word
@@ -128,7 +129,7 @@ class GameSettingsViewModel(application: Application,
                     Game.getSettings().allowRandomWords,
                     Game.getSettings().typeName,
                     true)
-        }
+        }*/
     }
 
     enum class StartActivity {
