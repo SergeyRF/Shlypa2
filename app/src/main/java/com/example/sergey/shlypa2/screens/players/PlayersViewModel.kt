@@ -117,7 +117,7 @@ class PlayersViewModel(application: Application,
 
             if (success) {
                 avatarLiveData.value = listOfAvatars.random()
-                updateData()
+                updateData(true)
             } else {
                 toastResLD.value = R.string.name_not_unic
             }
@@ -131,7 +131,7 @@ class PlayersViewModel(application: Application,
                 playersRepository.addPlayer(player)
             }
             if (success) {
-                updateData()
+                updateData(true)
             } else {
                 toastResLD.value = R.string.name_not_unic
             }
@@ -182,9 +182,21 @@ class PlayersViewModel(application: Application,
         }
     }
 
-    private fun updateData() {
-        playersLiveData.value = playersRepository.getPlayers()
+    private fun updateData(updateSavedPlayer: Boolean = false) {
+        val listPlayers = playersRepository.getPlayers()
+        playersLiveData.value = listPlayers
         teamsLiveData.value = playersRepository.getTeams()
+        if (updateSavedPlayer) {
+            listOfUserPlayers.clear()
+            launch {
+                withContext(dispatchers.ioDispatcher) {
+                    val playerFromDb = dataProvider.getPlayersUser()
+                    listOfUserPlayers.addAll(playerFromDb
+                            .filter { !listPlayers.contains(it) }.toMutableList())
+                }
+                print(listOfUserPlayers)
+            }
+        }
     }
 
     fun onPlayersNextClicked() {
