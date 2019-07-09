@@ -10,8 +10,8 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/player_holder_height"
         android:layout_marginLeft="@dimen/small_margin"
-        android:layout_marginRight="@dimen/small_margin"
         android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginRight="@dimen/small_margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,9 +25,9 @@
                 android:id="@+id/civPlayerAvatar"
                 android:layout_width="@dimen/player_avatar"
                 android:layout_height="@dimen/player_avatar"
-                android:layout_marginBottom="@dimen/in_card_horizontal_margin"
-                android:layout_marginTop="@dimen/in_card_horizontal_margin"
                 android:layout_marginLeft="@dimen/in_card_horizontal_margin"
+                android:layout_marginTop="@dimen/in_card_horizontal_margin"
+                android:layout_marginBottom="@dimen/in_card_horizontal_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,12 +52,12 @@
                 android:id="@+id/imageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/big_margin"
                 android:background="@color/Transparent"
+                android:tint="@color/iconsTint"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginRight="@dimen/big_margin"
-                android:tint="@color/iconsTint"
                 app:srcCompat="@drawable/ic_person_add_black_24dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -83,14 +83,47 @@
         app:layout_constraintRight_toRightOf="parent" />
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btAddRandomPlayer"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/floatingMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/medium_margin"
-        android:src="@drawable/ic_dice"
-        android:text="random"
+        android:tint="@color/white"
         app:layout_constraintBottom_toTopOf="@id/btGoNextPlayers"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu_colorNormal="?attr/colorPrimary"
+        app:menu_colorPressed="?attr/colorPrimaryDark"
+        app:menu_icon="@drawable/ic_dice"
+        app:menu_labels_colorNormal="@color/darkGrey"
+        app:menu_labels_ellipsize="end"
+        app:menu_labels_maxLines="2"
+        app:menu_labels_singleLine="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabPlayerUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            android:src="@drawable/ic_player"
+            app:fab_colorNormal="@color/Green"
+            app:fab_colorPressed="@color/GreenDark"
+            app:fab_label="@string/add_user_player"
+            app:fab_size="mini"
+            app:layout_constraintBottom_toTopOf="@id/btNextWords"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabPlayerRandom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            android:src="@drawable/ic_dice"
+            app:fab_colorNormal="@color/Yellow"
+            app:fab_colorPressed="@color/YellowDark"
+            app:fab_label="@string/add_random_player"
+            app:fab_size="mini"
+            app:layout_constraintBottom_toTopOf="@id/btNextWords"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

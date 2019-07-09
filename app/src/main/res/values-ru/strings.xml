@@ -153,4 +153,6 @@
 
     <string name="add_user_avatar">Добавить вашу картинку</string>
 
+    <string name="add_user_player">Сохраненные игроки</string>
+    <string name="add_random_player">Добавить рандомно</string>
 </resources>

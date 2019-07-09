@@ -48,6 +48,8 @@ class DataProvider(
         return playersDao.getPlayersByType(type, locale = usefullLocale)
     }
 
+    fun getPlayersUser() = playersDao.getPlayersByType(PlayerType.USER)
+
 
     fun getPlayer(id: Long) = playersDao.getPlayerById(id)
 

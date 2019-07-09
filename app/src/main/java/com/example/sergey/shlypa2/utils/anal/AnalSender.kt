@@ -29,6 +29,7 @@ class AnalSender(val context: Context) {
 
         private const val PLAYER_ADDED = "player_added"
         private const val PLAYER_ADDED_AUTO = "player_added_auto"
+        private const val PLAYER_FROM_SAVED = "player_from_saved"
 
         private const val GAME_ALL_WORD_AUTOFILL = "game_all_word_autofill"
     }
@@ -75,6 +76,9 @@ class AnalSender(val context: Context) {
 
     fun playerAdded(auto: Boolean) {
         FlurryAgent.logEvent(PLAYER_ADDED, mapOf(PLAYER_ADDED_AUTO to auto.toString()))
+    }
+    fun playerAddedFromSaved(){
+        FlurryAgent.logEvent(PLAYER_FROM_SAVED)
     }
 
     fun gameStarted(autoAllowed: Boolean, wordType: String, wordAutofill:Boolean = false) {

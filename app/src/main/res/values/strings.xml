@@ -151,5 +151,8 @@
 
     <string name="add_user_avatar">Add yours picture</string>
 
+    <string name="add_user_player">Saved players</string>
+    <string name="add_random_player">Random player</string>
+
 
 </resources>

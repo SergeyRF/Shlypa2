@@ -23,9 +23,8 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
-import com.example.sergey.shlypa2.game.AvatarType
-import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
+import com.example.sergey.shlypa2.screens.players.dialog.PlayerSelectDialog
 import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
@@ -111,9 +110,19 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             viewModel.onPlayersNextClicked()
         }
 
-        btAddRandomPlayer.setOnClickListener {
+        fabPlayerRandom.setOnClickListener {
             viewModel.addRandomPlayer()
         }
+
+        fabPlayerUser.setOnClickListener{
+            PlayerSelectDialog(requireContext(),viewModel.listOfUserPlayers).apply {
+                onSelect={player ->
+                    viewModel.addPlayer(player)
+                }
+                show()
+            }
+        }
+
     }
 
     private fun initSubscriptions() {
@@ -177,7 +186,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     private fun runSpotlight() {
 
         val custom = SimpleTarget.Builder(activity!!)
-                .setPoint(btAddRandomPlayer)
+                .setPoint(floatingMenu)
                 .setRadius(80f)
                 .setTitle(getString(R.string.hint_random_player))
                 .setDescription(getString(R.string.hint_inject_random_player))
