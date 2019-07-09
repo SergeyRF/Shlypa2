@@ -22,11 +22,13 @@
 
             <com.example.sergey.shlypa2.views.SeekbarSetting
                 android:id="@+id/ssbTurnTime"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 app:layout_constraintBottom_toTopOf="@id/view"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:seek_setting_title="@string/timeN" />
 
@@ -40,11 +42,13 @@
 
             <com.example.sergey.shlypa2.views.SeekbarSetting
                 android:id="@+id/ssbWordsCount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 app:layout_constraintBottom_toTopOf="@id/view2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view"
                 app:seek_setting_title="@string/wordN" />
 
@@ -130,11 +134,13 @@
 
             <com.example.sergey.shlypa2.views.SeekbarSetting
                 android:id="@+id/ssbPenalty"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 app:layout_constraintBottom_toTopOf="@id/view6"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view5"
                 app:seek_setting_title="@string/how_minus_bal" />
 
