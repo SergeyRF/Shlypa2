@@ -24,7 +24,7 @@ val appModule = module {
     viewModel { PlayersViewModel(get(), get(), get(), get(), get()) }
     viewModel { GameSettingsViewModel(get(), get(), get(),get()) }
     viewModel { RoundViewModel(get(), get(), get()) }
-    viewModel { WordsViewModel(get(), get(), get(), get()) }
+    viewModel { WordsViewModel(get(), get(), get(), get(),get()) }
 
     single<DispatchersProvider> { DispatchersProviderImpl() }
 

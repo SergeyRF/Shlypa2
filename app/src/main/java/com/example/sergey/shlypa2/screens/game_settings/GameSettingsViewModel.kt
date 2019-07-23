@@ -10,7 +10,6 @@ import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -40,7 +39,6 @@ class GameSettingsViewModel(application: Application,
     var selectedType: Type? = null
 
     val startNextActivity = SingleLiveEvent<StartActivity>()
-    var flagStartGame: Boolean = false
 
     init {
         turnTime = settings.time
@@ -91,17 +89,12 @@ class GameSettingsViewModel(application: Application,
     }
 
     fun onFinish() {
-        if (!flagStartGame) {
-            flagStartGame = true
-            Game.setSettings(settings)
-            settingsProvider.writeSettings(settings)
-            if (settings.all_word_random) {
-                addRandomWords()
-            } else {
-                startNextActivity.value = StartActivity.WORLD_IN
-                flagStartGame = false
-            }
+        Game.setSettings(settings)
+        settingsProvider.writeSettings(settings)
+        if (settings.all_word_random) {
+            addRandomWords()
         }
+        startNextActivity.value = StartActivity.WORLD_IN
     }
 
     private fun loadTypes() {
@@ -115,21 +108,10 @@ class GameSettingsViewModel(application: Application,
     }
 
     private fun addRandomWords() {
-        //todo move somewhere else
-        /*launch {
-            withContext(dispatchers.ioDispatcher) {
-                val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
-                val wordNeeds = Game.getPlayers().size * settings.word
-                Game.addWord(dbWords.subList(0, wordNeeds))
-                Game.beginNextRound()
-            }
-            startNextActivity.postValue(StartActivity.START_GAME)
-            flagStartGame = false
-            anal.gameStarted(
-                    Game.getSettings().allowRandomWords,
-                    Game.getSettings().typeName,
-                    true)
-        }*/
+        anal.gameStarted(
+                Game.getSettings().allowRandomWords,
+                Game.getSettings().typeName,
+                true)
     }
 
     enum class StartActivity {
