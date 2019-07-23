@@ -219,6 +219,11 @@ class PlayersViewModel(application: Application,
         anal.sendEventTeamsCreated(playersRepository.getPlayers().size, playersRepository.getTeams().size)
     }
 
+    fun onBackPressed() {
+        Timber.d("TESTING PlayersViewModel clear players repository")
+        playersRepository.clear()
+    }
+
     enum class Command {
         START_TEAMS,
         START_SETTINGS

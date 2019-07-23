@@ -69,4 +69,9 @@ class PlayersRepository(
             currentTeam = if (currentTeam >= teams.size - 1) 0 else currentTeam + 1
         }
     }
+
+    fun clear() {
+        players.clear()
+        teams.clear()
+    }
 }

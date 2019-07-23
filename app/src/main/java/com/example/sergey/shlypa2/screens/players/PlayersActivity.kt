@@ -83,6 +83,15 @@ class PlayersActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onBackPressed() {
+        if(supportFragmentManager.findFragmentById(R.id.container) is PlayersFragment) {
+            viewModel.onBackPressed()
+        }
+        super.onBackPressed()
+    }
+
+
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             android.R.id.home -> {
