@@ -91,9 +91,10 @@ class GameSettingsViewModel(application: Application,
     fun onFinish() {
         Game.setSettings(settings)
         settingsProvider.writeSettings(settings)
-        if (settings.all_word_random) {
-            addRandomWords()
-        }
+        anal.gameStarted(
+                Game.getSettings().allowRandomWords,
+                Game.getSettings().typeName,
+                true)
         startNextActivity.value = StartActivity.WORLD_IN
     }
 
@@ -105,13 +106,6 @@ class GameSettingsViewModel(application: Application,
 
             typesLiveData.value = types
         }
-    }
-
-    private fun addRandomWords() {
-        anal.gameStarted(
-                Game.getSettings().allowRandomWords,
-                Game.getSettings().typeName,
-                true)
     }
 
     enum class StartActivity {

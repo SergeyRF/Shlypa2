@@ -19,6 +19,7 @@ import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * Created by alex on 3/31/18.
@@ -39,7 +40,7 @@ class PlayersViewModel(application: Application,
     val titleLiveData = MutableLiveData<Int>()
 
     val listOfAvatars: MutableList<String> = mutableListOf()
-    val listOfUserPlayers = mutableListOf<Player>()
+    private val listOfUserPlayers = mutableListOf<Player>()
 
     var playerImage: String? = null
 
@@ -99,7 +100,7 @@ class PlayersViewModel(application: Application,
         playerImage = image
     }
 
-    fun addPlayer(name: String) {
+    fun addPlayerFromDb(name: String) {
         if (name.isBlank()) {
             toastResLD.value = R.string.player_name_empty
             return
@@ -125,7 +126,7 @@ class PlayersViewModel(application: Application,
         }
     }
 
-    fun addPlayer(player: Player) {
+    fun addPlayerFromDb(player: Player) {
         launch {
             val success = withContext(dispatchers.ioDispatcher) {
                 playersRepository.addPlayer(player)
@@ -182,6 +183,8 @@ class PlayersViewModel(application: Application,
         }
     }
 
+    fun getUserAddedPlayers() = listOfUserPlayers
+
     private fun updateData(updateSavedPlayer: Boolean = false) {
         val listPlayers = playersRepository.getPlayers()
         playersLiveData.value = listPlayers
@@ -192,9 +195,9 @@ class PlayersViewModel(application: Application,
                 withContext(dispatchers.ioDispatcher) {
                     val playerFromDb = dataProvider.getPlayersUser()
                     listOfUserPlayers.addAll(playerFromDb
-                            .filter { !listPlayers.contains(it) }.toMutableList())
+                            .filter { !listPlayers.contains(it) })
                 }
-                print(listOfUserPlayers)
+                Timber.d("TESTING $listOfUserPlayers")
             }
         }
     }

@@ -35,8 +35,8 @@ interface PlayersDao {
     fun insertPlayer(player: Player) : Long
 
     @Delete
-    fun deletePlayer(players: List<Player>):Int
+    fun deletePlayers(players: List<Player>):Int
 
     @Delete
-    fun deletePlayer(player: Player):Int
+    fun deletePlayers(player: Player):Int
 }

@@ -115,9 +115,9 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         }
 
         fabPlayerUser.setOnClickListener{
-            PlayerSelectDialog(requireContext(),viewModel.listOfUserPlayers).apply {
+            PlayerSelectDialog(requireContext(),viewModel.getUserAddedPlayers()).apply {
                 onSelect={player ->
-                    viewModel.addPlayer(player)
+                    viewModel.addPlayerFromDb(player)
                 }
                 show()
             }
@@ -141,7 +141,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun addPlayer() {
-        viewModel.addPlayer(etName.text.toString())
+        viewModel.addPlayerFromDb(etName.text.toString())
         etName.text.clear()
     }
 
