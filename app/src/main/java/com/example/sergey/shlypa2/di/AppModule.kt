@@ -14,7 +14,10 @@ import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
 import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import com.example.sergey.shlypa2.screens.main.WelcomeViewModel
+import com.example.sergey.shlypa2.screens.splash.LaunchViewModel
 import com.example.sergey.shlypa2.ui.settings.SettingsViewModel
+import com.example.sergey.shlypa2.utils.DbExporter
+import com.example.sergey.shlypa2.utils.PreferencesProvider
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.google.gson.GsonBuilder
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -27,6 +30,7 @@ val appModule = module {
     viewModel { RoundViewModel(get(), get(), get()) }
     viewModel { WordsViewModel(get(), get(), get(), get(),get()) }
     viewModel { SettingsViewModel(get(),get(),get()) }
+    viewModel { LaunchViewModel(get(), get(), get()) }
 
     single<DispatchersProvider> { DispatchersProviderImpl() }
 
@@ -42,6 +46,8 @@ val appModule = module {
 
     single { AnalSender(get())}
     single { PlayersRepository(get())}
+    single { PreferencesProvider(get(), null)}
+    factory { DbExporter(get()) }
 }
 
 private fun createDb(context: Context): DataBase {

@@ -25,14 +25,8 @@ import timber.log.Timber
  */
 class App : MultiDexApplication() {
 
-    companion object {
-        private const val DB_IMPORTED = "db_imported_v1_1_5"
-    }
-
     override fun onCreate() {
         super.onCreate()
-
-        manageDb()
 
         startKoin {
             androidContext(this@App)
@@ -80,17 +74,6 @@ class App : MultiDexApplication() {
             )
         } catch (ex: Exception) {
             Timber.e(ex)
-        }
-    }
-
-    private fun manageDb() {
-        val preferences = PreferenceHelper.defaultPrefs(this)
-        val dbImported = preferences.getBoolean(DB_IMPORTED, false)
-        if (!dbImported) {
-            val success = DbExporter().importDbFromAsset(this, Contract.DB_NAME, "shlyapa_db")
-            preferences[DB_IMPORTED] = success
-        } else {
-            Timber.d("Db already imported")
         }
     }
 }
