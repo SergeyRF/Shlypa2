@@ -1,7 +1,6 @@
 package com.example.sergey.shlypa2.viewModel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.beans.Player
@@ -9,11 +8,13 @@ import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.WordType
 import com.example.sergey.shlypa2.utils.anal.AnalSender
+import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
+import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import org.koin.core.context.GlobalContext.getOrNull
 import timber.log.Timber
 import java.util.*
 
@@ -22,9 +23,11 @@ import java.util.*
  */
 class WordsViewModel(
         application: Application,
-        val dataProvider: DataProvider,
-        val playersRepository: PlayersRepository,
-        val anal: AnalSender) : AndroidViewModel(application) {
+        private val dataProvider: DataProvider,
+        private val playersRepository: PlayersRepository,
+        private val dispatchers: DispatchersProvider,
+        private val anal: AnalSender)
+    : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
     private val wordsLiveData = MutableLiveData<List<Word>>()
     private val playerLivaData = MutableLiveData<Player>()
@@ -39,7 +42,22 @@ class WordsViewModel(
     private var randomWords: ArrayDeque<Word> = ArrayDeque()
 
     init {
-        updateData()
+        allWordsRandom()
+    }
+
+    private fun allWordsRandom() {
+        launch {
+            if (Game.getSettings().all_word_random) {
+                val wordNeeds = playersRepository.getPlayersSize() * Game.getSettings().word
+                withContext(dispatchers.ioDispatcher) {
+                    val dbWords = dataProvider.getRandomWords(wordNeeds, Game.getSettings().typeId)
+                    Game.addWord(dbWords)
+                }
+                applyGameAndStart()
+            } else {
+                updateData()
+            }
+        }
     }
 
     fun nextPlayer() {

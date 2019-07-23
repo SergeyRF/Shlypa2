@@ -40,6 +40,8 @@ class PlayersRepository(
         return players.values.toList()
     }
 
+    fun getPlayersSize():Int = players.size
+
     fun getTeams() = teams as List<Team>
 
     fun createTeams(count: Int) {

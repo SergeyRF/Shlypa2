@@ -12,8 +12,6 @@ import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.extensions.random
-import com.example.sergey.shlypa2.game.AvatarType
-import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.anal.AnalSender
@@ -21,6 +19,7 @@ import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * Created by alex on 3/31/18.
@@ -41,10 +40,10 @@ class PlayersViewModel(application: Application,
     val titleLiveData = MutableLiveData<Int>()
 
     val listOfAvatars: MutableList<String> = mutableListOf()
+    private val listOfUserPlayers = mutableListOf<Player>()
 
-    var playerImage:String? = null
-    //todo refactor this shit  !!!
-    var playerImageType:AvatarType = AvatarType.STANDARD
+    var playerImage: String? = null
+
 
     init {
         updateData()
@@ -57,7 +56,7 @@ class PlayersViewModel(application: Application,
 
     fun removePlayer(player: Player) {
         playersRepository.removePlayer(player)
-        updateData()
+        updateData(true)
     }
 
     fun reNamePlayer(player: Player) {
@@ -89,8 +88,7 @@ class PlayersViewModel(application: Application,
         }
     }
 
-    fun addImage(image: Uri ) {
-        playerImageType = AvatarType.USER
+    fun addImage(image: Uri) {
         launch {
             withContext(dispatchers.ioDispatcher) {
                 playerImage = ImagesHelper.saveImage(image, getApplication())
@@ -98,12 +96,11 @@ class PlayersViewModel(application: Application,
         }
     }
 
-    fun addImage(image:String,type: AvatarType = AvatarType.STANDARD){
+    fun addImage(image: String) {
         playerImage = image
-        playerImageType = type
     }
 
-    fun addPlayer(name: String) {
+    fun addPlayerFromDb(name: String) {
         if (name.isBlank()) {
             toastResLD.value = R.string.player_name_empty
             return
@@ -112,7 +109,8 @@ class PlayersViewModel(application: Application,
         launch {
             val success = withContext(dispatchers.ioDispatcher) {
                 val player = Player(name,
-                        avatar = playerImage ?: avatarLiveData.value?:""
+                        avatar = playerImage ?: avatarLiveData.value ?: "",
+                        type = PlayerType.USER
                 )
                 player.id = dataProvider.insertPlayer(player)
                 playersRepository.addPlayer(player)
@@ -120,7 +118,7 @@ class PlayersViewModel(application: Application,
 
             if (success) {
                 avatarLiveData.value = listOfAvatars.random()
-                updateData()
+                updateData(true)
             } else {
                 toastResLD.value = R.string.name_not_unic
             }
@@ -128,9 +126,24 @@ class PlayersViewModel(application: Application,
         }
     }
 
+    fun addPlayerFromDb(player: Player) {
+        launch {
+            val success = withContext(dispatchers.ioDispatcher) {
+                playersRepository.addPlayer(player)
+            }
+            if (success) {
+                updateData(true)
+            } else {
+                toastResLD.value = R.string.name_not_unic
+            }
+            anal.playerAddedFromSaved()
+        }
+    }
+
     private fun loadAvatars() = launch {
         withContext(dispatchers.ioDispatcher) {
             listOfAvatars.addAll(dataProvider.getListOfAvatars())
+            listOfUserPlayers.addAll(dataProvider.getPlayersUser())
         }
 
         avatarLiveData.value = listOfAvatars.random()
@@ -170,9 +183,23 @@ class PlayersViewModel(application: Application,
         }
     }
 
-    private fun updateData() {
-        playersLiveData.value = playersRepository.getPlayers()
+    fun getUserAddedPlayers() = listOfUserPlayers
+
+    private fun updateData(updateSavedPlayer: Boolean = false) {
+        val listPlayers = playersRepository.getPlayers()
+        playersLiveData.value = listPlayers
         teamsLiveData.value = playersRepository.getTeams()
+        if (updateSavedPlayer) {
+            listOfUserPlayers.clear()
+            launch {
+                withContext(dispatchers.ioDispatcher) {
+                    val playerFromDb = dataProvider.getPlayersUser()
+                    listOfUserPlayers.addAll(playerFromDb
+                            .filter { !listPlayers.contains(it) })
+                }
+                Timber.d("TESTING $listOfUserPlayers")
+            }
+        }
     }
 
     fun onPlayersNextClicked() {

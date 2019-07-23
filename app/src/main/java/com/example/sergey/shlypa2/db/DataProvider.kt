@@ -48,12 +48,17 @@ class DataProvider(
         return playersDao.getPlayersByType(type, locale = usefullLocale)
     }
 
+    fun getPlayersUser() = playersDao.getPlayersByType(PlayerType.USER)
+
 
     fun getPlayer(id: Long) = playersDao.getPlayerById(id)
 
     fun insertPlayer(player: Player): Long {
         return playersDao.insertPlayer(player)
     }
+
+    fun deletePlayers(players:List<Player>) = playersDao.deletePlayers(players)
+    fun deletePlayer(player: Player) = playersDao.deletePlayers(player)
 
     fun getRandomWords(wordsLimit: Int, typeId: Long): List<Word> {
         return wordsDao.getRandomWords(wordsLimit, typeId)

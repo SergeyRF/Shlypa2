@@ -1,9 +1,6 @@
 package com.example.sergey.shlypa2.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.game.PlayerType
 
@@ -30,6 +27,16 @@ interface PlayersDao {
     @Query("SELECT * FROM ${Contract.PLAYER_TABLE} WHERE ${Contract.PLAYER_NAME} = :name")
     fun getPlayerByName(name : String) : Player?
 
+    @Query("SELECT * FROM ${Contract.PLAYER_TABLE} " +
+            "WHERE ${Contract.PLAYER_TYPE}= :type")
+    fun getPlayersByType(type : PlayerType) : List<Player>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlayer(player: Player) : Long
+
+    @Delete
+    fun deletePlayers(players: List<Player>):Int
+
+    @Delete
+    fun deletePlayers(player: Player):Int
 }

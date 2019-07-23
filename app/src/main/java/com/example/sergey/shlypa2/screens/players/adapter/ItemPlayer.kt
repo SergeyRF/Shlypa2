@@ -25,7 +25,7 @@ import eu.davidea.viewholders.FlexibleViewHolder
 import timber.log.Timber
 
 
-class ItemPlayer(val player: Player,
+open class ItemPlayer(val player: Player,
                  val renameListener: (Player) -> Unit = {},
                  val removeListener: (Player) -> Unit = {})
     : AbstractFlexibleItem<ItemPlayer.ViewHolder>() {

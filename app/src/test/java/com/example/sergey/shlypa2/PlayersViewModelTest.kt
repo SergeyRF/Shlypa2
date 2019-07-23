@@ -22,9 +22,9 @@ class PlayersViewModelTest {
     fun setup() {
         Game.clear()
         playersViewModel = PlayersViewModel(RuntimeEnvironment.application, DispatchersProviderImpl())
-        playersViewModel.addPlayer("John")
-        playersViewModel.addPlayer("Jack")
-        playersViewModel.addPlayer("Soul")
+        playersViewModel.addPlayerFromDb("John")
+        playersViewModel.addPlayerFromDb("Jack")
+        playersViewModel.addPlayerFromDb("Soul")
         println("Before $playersViewModel")
     }
 
@@ -33,13 +33,13 @@ class PlayersViewModelTest {
         val playersLiveData = playersViewModel.getPlayersLiveData()
         assertEquals(3, playersLiveData.value!!.size)
 
-        playersViewModel.addPlayer("Matt")
+        playersViewModel.addPlayerFromDb("Matt")
         assertEquals(4, playersLiveData.value!!.size)
     }
 
     @Test
     fun testPlayersWithSameNameCantBeInserted() {
-        playersViewModel.addPlayer("John")
+        playersViewModel.addPlayerFromDb("John")
 
         val playersLiveDate = playersViewModel.getPlayersLiveData()
         assertEquals(3, playersLiveDate.value!!.size)
