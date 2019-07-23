@@ -55,7 +55,7 @@ class PlayersViewModel(application: Application,
 
     fun removePlayer(player: Player) {
         playersRepository.removePlayer(player)
-        updateData()
+        updateData(true)
     }
 
     fun reNamePlayer(player: Player) {
