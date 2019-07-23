@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.observeSafe
+import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.ui.settings.adapter.ItemPlayerDelete
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_delete_player.*
@@ -37,6 +38,9 @@ class DeletePlayerFragment : Fragment() {
     }
 
     private fun onPlayersChanged(players: List<Player>) {
+        if (players.isEmpty()) {
+            tvNotPlayer.show()
+        }
         players.map {
             ItemPlayerDelete(it, removeListenerD = { player ->
                 viewModel.removePlayer(player)

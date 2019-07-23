@@ -110,6 +110,7 @@
     <string name="used_content">Images and sounds used in project</string>
     <string name="privasy_policy">Privacy policy</string>
     <string name="delete_players">Delete saved Player</string>
+    <string name="not_saved_players">You don\'t have saved Player</string>
 
     <string name="no_saved_games">No games saved yet..</string>
 

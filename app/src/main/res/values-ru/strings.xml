@@ -116,6 +116,7 @@
     <string name="used_content">Использованные изображения и звуки</string>
     <string name="privasy_policy">Политика конфиденциальности</string>
     <string name="delete_players">Удалить сохраненых Игроков</string>
+    <string name="not_saved_players">У вас нет сохраненных Игроков</string>
 
     <!-- fatal error activity -->
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">Произошла неожиданная ошибка.\nВиновные будут наказаны.</string>
