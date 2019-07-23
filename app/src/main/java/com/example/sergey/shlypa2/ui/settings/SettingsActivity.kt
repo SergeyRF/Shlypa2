@@ -1,14 +1,13 @@
 package com.example.sergey.shlypa2.ui.settings
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.artitk.licensefragment.model.License
 import com.artitk.licensefragment.model.LicenseType
 import com.artitk.licensefragment.support.v4.RecyclerViewLicenseFragment
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.utils.Functions
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class SettingsActivity : AppCompatActivity() {
@@ -18,7 +17,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initToolbar()
 
-        if(supportFragmentManager.findFragmentById(android.R.id.content) == null) {
+        if (supportFragmentManager.findFragmentById(android.R.id.content) == null) {
             val fragment = SettingsFragment()
             supportFragmentManager.beginTransaction()
                     .replace(android.R.id.content, fragment)
@@ -34,6 +33,13 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
     }
 
+    fun showDeletePlayers(){
+        supportFragmentManager.beginTransaction()
+                .replace(android.R.id.content, DeletePlayerFragment())
+                .addToBackStack(null)
+                .commit()
+    }
+
     fun showOpensourceLicenses() {
         val fragment = createLicenseFragment()
         supportFragmentManager.beginTransaction()
@@ -42,7 +48,7 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
     }
 
-    fun createLicenseFragment() : androidx.fragment.app.Fragment {
+    fun createLicenseFragment(): androidx.fragment.app.Fragment {
         val fragment = RecyclerViewLicenseFragment.newInstance()
         val licenses = ArrayList<License>()
         licenses.add(License(this, "Support Library", LicenseType.APACHE_LICENSE_20, "2016", "Android Open Source Project"))

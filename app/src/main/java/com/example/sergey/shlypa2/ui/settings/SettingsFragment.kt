@@ -1,29 +1,29 @@
 package com.example.sergey.shlypa2.ui.settings
 
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.extensions.selectTheme
+import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
-import kotlinx.android.synthetic.main.fragment_settings.*
-import android.widget.Toast
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import com.example.sergey.shlypa2.extensions.selectTheme
-import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.utils.since
+import kotlinx.android.synthetic.main.fragment_settings.*
 
 
 /**
@@ -48,7 +48,7 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
         ssPrefSound.setChecked(soundEnabled)
 
         ssPrefSound.setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
-             preferences[Constants.SOUND_ON_PREF] = isChecked
+            preferences[Constants.SOUND_ON_PREF] = isChecked
         })
 
         since(Build.VERSION_CODES.LOLLIPOP) {
@@ -61,7 +61,7 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
                     .map { context!!.getString(it) }
 
             val adapter = ArrayAdapter<String>(context!!, android.R.layout.simple_list_item_1,
-                    themeNames )
+                    themeNames)
 
             spinnerThemes.adapter = adapter
 
@@ -94,6 +94,10 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
 
         viewPrivacyBack.setOnClickListener {
             openWebPage("https://hatproject-2535f.firebaseapp.com/hat_en.html")
+        }
+
+        viewDeletePlayers.setOnClickListener {
+            activity?.let { (it as SettingsActivity).showDeletePlayers() }
         }
     }
 

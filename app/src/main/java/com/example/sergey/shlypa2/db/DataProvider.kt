@@ -57,6 +57,9 @@ class DataProvider(
         return playersDao.insertPlayer(player)
     }
 
+    fun deletePlayer(players:List<Player>) = playersDao.deletePlayer(players)
+    fun deletePlayer(player: Player) = playersDao.deletePlayer(player)
+
     fun getRandomWords(wordsLimit: Int, typeId: Long): List<Word> {
         return wordsDao.getRandomWords(wordsLimit, typeId)
     }
