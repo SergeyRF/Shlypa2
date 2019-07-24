@@ -115,14 +115,8 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         }
 
         fabPlayerUser.setOnClickListener{
-            PlayerSelectDialog(requireContext(),viewModel.getUserAddedPlayers()).apply {
-                onSelect={player ->
-                    viewModel.addPlayerFromDb(player)
-                }
-                show()
-            }
+            viewModel.onAddFromSavedClicked()
         }
-
     }
 
     private fun initSubscriptions() {
@@ -133,9 +127,25 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         viewModel.avatarLiveData.observeSafe(this) {
             showAvatar(it)
         }
+
+        viewModel.playersCommandLiveData.observeSafe(this) {
+            when(it) {
+                PlayersViewModel.Command.SHOW_SELECT_PLAYER_DIALOG -> showPlayerSelectDialog()
+                else -> {}
+            }
+        }
     }
 
-    val dialogOnSelect: (String) -> Unit = { fileName ->
+    private fun showPlayerSelectDialog() {
+        PlayerSelectDialog(requireContext(),viewModel.getUserAddedPlayers()).apply {
+            onSelect={player ->
+                viewModel.addPlayerFromDb(player)
+            }
+            show()
+        }
+    }
+
+    private val dialogOnSelect: (String) -> Unit = { fileName ->
         Timber.d("avatar select $fileName")
         showAvatar(fileName)
     }
@@ -185,9 +195,15 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
 
     private fun runSpotlight() {
 
+        val locations = intArrayOf(0, 0)
+        floatingMenu.getLocationOnScreen(locations)
+
+        val fabX = locations[0] + floatingMenu.width - 32.dpToPx
+        val fabY = locations[1] + floatingMenu.height - 32.dpToPx
+
         val custom = SimpleTarget.Builder(activity!!)
-                .setPoint(floatingMenu)
-                .setRadius(80f)
+                .setPoint(fabX.toFloat(), fabY.toFloat())
+                .setRadius(70f)
                 .setTitle(getString(R.string.hint_random_player))
                 .setDescription(getString(R.string.hint_inject_random_player))
                 .setOnSpotlightStartedListener(object : OnTargetStateChangedListener<SimpleTarget> {
@@ -199,14 +215,15 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                     }
                 })
                 .build()
-        val injectName = SimpleTarget.Builder(activity!!)
+
+        val injectName = SimpleTarget.Builder(requireActivity())
                 .setRadius(80f)
                 .setPoint(imageButton)
                 .setTitle(getString(R.string.hint_inject_name))
                 .setDescription(getString(R.string.hint_inject_name_button))
                 .build()
 
-        Spotlight.with(activity!!)
+        Spotlight.with(requireActivity())
                 .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
                 .setDuration(300L)
                 .setTargets(injectName, custom)

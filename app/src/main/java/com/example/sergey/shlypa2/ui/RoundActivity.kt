@@ -76,9 +76,8 @@ class RoundActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
         super.onSaveInstanceState(outState, outPersistentState)
-        viewModel.saveGameState()
+        viewModel.saveState()
     }
-
 
     private fun startHintTeam() {
         val fragment = TeamHintFragment()

@@ -37,6 +37,7 @@ class PlayersViewModel(application: Application,
     val toastResLD = MutableLiveData<Int>()
 
     val commandLiveData = SingleLiveEvent<Command>()
+    val playersCommandLiveData = SingleLiveEvent<Command>()
     val titleLiveData = MutableLiveData<Int>()
 
     val listOfAvatars: MutableList<String> = mutableListOf()
@@ -210,6 +211,14 @@ class PlayersViewModel(application: Application,
         }
     }
 
+    fun onAddFromSavedClicked() {
+        if(listOfUserPlayers.isNotEmpty()){
+            playersCommandLiveData.value = Command.SHOW_SELECT_PLAYER_DIALOG
+        } else {
+            toastResLD.value = R.string.not_saved_players
+        }
+    }
+
     fun setTitleId(resourceId: Int) {
         titleLiveData.value = resourceId
     }
@@ -226,6 +235,7 @@ class PlayersViewModel(application: Application,
 
     enum class Command {
         START_TEAMS,
-        START_SETTINGS
+        START_SETTINGS,
+        SHOW_SELECT_PLAYER_DIALOG
     }
 }

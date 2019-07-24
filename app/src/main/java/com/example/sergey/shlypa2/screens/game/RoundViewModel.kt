@@ -30,9 +30,9 @@ import timber.log.Timber
  */
 class RoundViewModel(
         application: Application,
-        val dispatchersProvider: DispatchersProvider,
+        val dispatchers: DispatchersProvider,
         val dataProvider: DataProvider,
-        val anal: AnalSender) : CoroutineViewModel(dispatchersProvider.uiDispatcher) {
+        val anal: AnalSender) : CoroutineViewModel(dispatchers.uiDispatcher) {
 
     companion object {
         private const val ADS_TIME_LIMIT = 10 * 60 * 1000
@@ -87,7 +87,7 @@ class RoundViewModel(
 
     private fun loadLastSaved() {
         launch {
-            val state = withContext(dispatchersProvider.ioDispatcher) {
+            val state = withContext(dispatchers.ioDispatcher) {
                 dataProvider.getLastSavedState()
             }
 
@@ -155,7 +155,7 @@ class RoundViewModel(
 
     fun onFinishGameAccepted() {
         launch {
-            withContext(dispatchersProvider.ioDispatcher) {
+            withContext(dispatchers.ioDispatcher) {
                 saveGameState()
                 Game.portionClear()
             }
@@ -169,19 +169,21 @@ class RoundViewModel(
             roundFinished = true
         }
 
-        if (Game.hasRound()) {
-            saveGameState()
-            commandCallback.value = Command.START_NEXT_ROUND
-        } else {
-            launch {
-                withContext(dispatchersProvider.ioDispatcher) {
+        launch {
+            if (Game.hasRound()) {
+                withContext(dispatchers.ioDispatcher) {
+                    saveGameState()
+                }
+                commandCallback.value = Command.START_NEXT_ROUND
+            } else {
+                withContext(dispatchers.ioDispatcher) {
                     dataProvider.deleteState(Game.state.gameId)
                 }
-
                 commandCallback.value = Command.SHOW_GAME_RESULTS
                 anal.gameFinished()
             }
         }
+
     }
 
     private fun showAds() {
@@ -205,7 +207,9 @@ class RoundViewModel(
     }
 
     fun nextTurn(checkedIds: List<Long>) {
-        saveGameState()
+        launch(dispatchers.ioDispatcher) {
+            saveGameState()
+        }
 
         round.turnFinished = false
         round.applyTurnResults(checkedIds)
@@ -232,7 +236,6 @@ class RoundViewModel(
     }
 
     fun startTimer() {
-
         launch {
             ticker = ticker(1000, 1000).apply {
                 consumeEach {
@@ -257,10 +260,14 @@ class RoundViewModel(
         ticker?.cancel()
     }
 
-    fun saveGameState() {
-        launch(dispatchersProvider.ioDispatcher) {
-            dataProvider.insertState(Game.state)
+    fun saveState() {
+        launch(dispatchers.ioDispatcher) {
+            saveGameState()
         }
+    }
+
+    private fun saveGameState() {
+        dataProvider.insertState(Game.state)
     }
 
     override fun onCleared() {
