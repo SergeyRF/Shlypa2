@@ -3,21 +3,20 @@ package com.example.sergey.shlypa2.di
 import android.content.Context
 import androidx.room.Room
 import com.example.sergey.shlypa2.data.PlayersRepository
-import com.example.sergey.shlypa2.ImagesHelper
 import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.db.DataBase
 import com.example.sergey.shlypa2.db.DataProvider
-import com.example.sergey.shlypa2.screens.game_settings.GameSettingsViewModel
-import com.example.sergey.shlypa2.screens.players.PlayersViewModel
-import com.example.sergey.shlypa2.utils.anal.AnalSender
-import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
-import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
 import com.example.sergey.shlypa2.screens.game.RoundViewModel
+import com.example.sergey.shlypa2.screens.game_settings.GameSettingsViewModel
 import com.example.sergey.shlypa2.screens.main.WelcomeViewModel
+import com.example.sergey.shlypa2.screens.players.PlayersViewModel
 import com.example.sergey.shlypa2.screens.splash.LaunchViewModel
 import com.example.sergey.shlypa2.ui.settings.SettingsViewModel
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferencesProvider
+import com.example.sergey.shlypa2.utils.anal.AnalSender
+import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
 import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.google.gson.GsonBuilder
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -27,7 +26,7 @@ val appModule = module {
     viewModel { WelcomeViewModel(get(), get(), get()) }
     viewModel { PlayersViewModel(get(), get(), get(), get(), get()) }
     viewModel { GameSettingsViewModel(get(), get(), get(),get()) }
-    viewModel { RoundViewModel(get(), get(), get()) }
+    viewModel { RoundViewModel(get(), get(), get(), get()) }
     viewModel { WordsViewModel(get(), get(), get(), get(),get()) }
     viewModel { SettingsViewModel(get(),get(),get()) }
     viewModel { LaunchViewModel(get(), get(), get()) }

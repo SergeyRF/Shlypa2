@@ -13,8 +13,6 @@ import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import timber.log.Timber
 import java.util.*
 
@@ -109,18 +107,18 @@ class WordsViewModel(
     }
 
     fun fillWithRandomWords() {
+        launch {
+            withContext(dispatchers.ioDispatcher) {
+                val needWordsCount = Game.getSettings().word - words.size
+                if (randomWords.size < needWordsCount) loadRandomWords()
 
-        doAsync {
-            val needWordsCount = Game.getSettings().word - words.size
-            if (randomWords.size < needWordsCount) loadRandomWords()
+                Timber.d("queue size after loading = ${randomWords.size}")
+                for (i in 0 until needWordsCount)
+                    words.add(randomWords.poll())
+            }
 
-            Timber.d("queue size after loading = ${randomWords.size}")
-            for (i in 0 until needWordsCount)
-                words.add(randomWords.poll())
-
-            uiThread { updateData() }
+            updateData()
         }
-
     }
 
     private fun applyGameAndStart() {
@@ -149,12 +147,12 @@ class WordsViewModel(
 
     fun newRandomWord(word: Word) {
         if (randomWords.isEmpty()) {
-            doAsync {
-                loadRandomWords()
-                words[words.indexOf(word)] = randomWords.poll()
-                uiThread {
-                    updateData()
+            launch {
+                withContext(dispatchers.ioDispatcher) {
+                    loadRandomWords()
+                    words[words.indexOf(word)] = randomWords.poll()
                 }
+                updateData()
             }
         } else {
             words[words.indexOf(word)] = randomWords.poll()

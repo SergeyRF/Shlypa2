@@ -1,9 +1,8 @@
 package com.example.sergey.shlypa2.screens.game
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import android.os.Handler
+import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
@@ -17,8 +16,10 @@ import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.utils.anal.AnalSender
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import com.example.sergey.shlypa2.utils.coroutines.CoroutineViewModel
+import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 
@@ -27,8 +28,9 @@ import timber.log.Timber
  */
 class RoundViewModel(
         application: Application,
+        val dispatchersProvider: DispatchersProvider,
         val dataProvider: DataProvider,
-        val anal: AnalSender) : AndroidViewModel(application) {
+        val anal: AnalSender) : CoroutineViewModel(dispatchersProvider.uiDispatcher) {
 
     companion object {
         private const val ADS_TIME_LIMIT = 10 * 60 * 1000
@@ -84,19 +86,21 @@ class RoundViewModel(
     }
 
     private fun loadLastSaved() {
-        doAsync {
-            val state = dataProvider.getLastSavedState()
-
-            uiThread {
-                if (state != null && Game.state.currentRound != null) {
-                    loadGameState(Game.state)
-                } else {
-                    Timber.e(RuntimeException("Can't load game state"))
-                    //Just for avoiding possible errors
-                    round = Round(mutableListOf())
-                    commandCallback.value = Command.EXIT
-                }
+        launch {
+            val state = withContext(dispatchersProvider.ioDispatcher) {
+                dataProvider.getLastSavedState()
             }
+
+
+            if (state != null && Game.state.currentRound != null) {
+                loadGameState(Game.state)
+            } else {
+                Timber.e(RuntimeException("Can't load game state"))
+                //Just for avoiding possible errors
+                round = Round(mutableListOf())
+                commandCallback.value = Command.EXIT
+            }
+
         }
     }
 
@@ -149,6 +153,16 @@ class RoundViewModel(
         commandCallback.value = Command.GET_READY
     }
 
+    fun onFinishGameAccepted() {
+        launch {
+            withContext(dispatchersProvider.ioDispatcher) {
+                saveGameState()
+                Game.portionClear()
+            }
+            commandCallback.value = Command.EXIT
+        }
+    }
+
     fun finishRound() {
         if (!roundFinished) {
             Game.beginNextRound()
@@ -159,11 +173,14 @@ class RoundViewModel(
             saveGameState()
             commandCallback.value = Command.START_NEXT_ROUND
         } else {
-            val job = doAsync {
-                dataProvider.deleteState(Game.state.gameId)
-                uiThread { commandCallback.value = Command.SHOW_GAME_RESULTS }
+            launch {
+                withContext(dispatchersProvider.ioDispatcher) {
+                    dataProvider.deleteState(Game.state.gameId)
+                }
+
+                commandCallback.value = Command.SHOW_GAME_RESULTS
+                anal.gameFinished()
             }
-            anal.gameFinished()
         }
     }
 
@@ -210,7 +227,7 @@ class RoundViewModel(
     }
 
     private fun showTimeAds() {
-        if(System.currentTimeMillis() > adsShowedTime + ADS_TIME_LIMIT) {
+        if (System.currentTimeMillis() > adsShowedTime + ADS_TIME_LIMIT) {
             adsShowedTime = System.currentTimeMillis()
             showAds()
         }
@@ -227,11 +244,11 @@ class RoundViewModel(
         handler.removeCallbacksAndMessages(null)
     }
 
-    fun saveGameState() =
-            doAsync {
-                dataProvider.insertState(Game.state)
-            }
-
+    fun saveGameState() {
+        launch(dispatchersProvider.ioDispatcher) {
+            dataProvider.insertState(Game.state)
+        }
+    }
 
     fun portionClear(unit: Unit) {
         Game.portionClear()

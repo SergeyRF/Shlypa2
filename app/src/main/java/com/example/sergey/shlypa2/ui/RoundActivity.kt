@@ -13,8 +13,6 @@ import com.example.sergey.shlypa2.ads.Interstitial
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game.*
 import com.google.android.gms.ads.AdListener
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -23,9 +21,6 @@ typealias Command = RoundViewModel.Command
 class RoundActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<RoundViewModel>()
-
-
-    private var backPressedOnce = false
     private var interstitial: Interstitial? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,18 +142,14 @@ class RoundActivity : AppCompatActivity() {
             setTitle(R.string.leaveTitle)
             setMessage(R.string.leaveMessage)
             setPositiveButton(R.string.leavePositive) { _, _ ->
-                doAsync {
-                    viewModel.portionClear(viewModel.saveGameState().get())
-                    uiThread {
-                        finish()
-                    }
-                }
+                viewModel.onFinishGameAccepted()
             }
             setNegativeButton(R.string.leaveNegative) { dialog, _ -> dialog.cancel() }
         }
                 .create()
                 .show()
     }
+
     private fun initToolbar() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
