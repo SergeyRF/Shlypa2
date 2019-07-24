@@ -1,7 +1,6 @@
 package com.example.sergey.shlypa2.screens.game
 
 import android.app.Application
-import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
@@ -18,6 +17,9 @@ import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -50,14 +52,12 @@ class RoundViewModel(
 
     val timerLiveData = MutableLiveData<Int>()
     var timeLeft = Game.getSettings().time
-    var timerStarted = true
+    private var ticker: ReceiveChannel<Unit>? = null
 
     private var roundFinished = false
-    private var turnFinished = false
 
     private var adsShowedTime = System.currentTimeMillis()
 
-    val handler = Handler()
 
     init {
         val preference = PreferenceHelper.defaultPrefs(application)
@@ -197,13 +197,11 @@ class RoundViewModel(
     }
 
     private fun finishTurn() {
-        //TODO save state of game here or in the finish round function
-        timerStarted = false
         round.turnFinished = true
 
         commandCallback.value = Command.FINISH_TURN
 
-        handler.removeCallbacksAndMessages(null)
+        ticker?.cancel()
     }
 
     fun nextTurn(checkedIds: List<Long>) {
@@ -234,14 +232,29 @@ class RoundViewModel(
     }
 
     fun startTimer() {
-        timerStarted = true
-        handler.removeCallbacksAndMessages(null)
-        handler.postDelayed(timerRunnable, 1000)
+
+        launch {
+            ticker = ticker(1000, 1000).apply {
+                consumeEach {
+                    timeLeft--
+                    if (timeLeft >= 0) {
+                        if (timeLeft == 10) {
+                            soundManager?.play(R.raw.time_warn, 0.5f, 0.5f)
+                        }
+                        if (timeLeft == 1) {
+                            soundManager?.play(R.raw.time_over, 0.5f, 0.5f)
+                        }
+                        timerLiveData.value = timeLeft
+                    } else {
+                        finishTurn()
+                    }
+                }
+            }
+        }
     }
 
     fun pauseTimer() {
-        timerStarted = false
-        handler.removeCallbacksAndMessages(null)
+        ticker?.cancel()
     }
 
     fun saveGameState() {
@@ -250,32 +263,9 @@ class RoundViewModel(
         }
     }
 
-    fun portionClear(unit: Unit) {
-        Game.portionClear()
-    }
-
     override fun onCleared() {
         super.onCleared()
         soundManager?.release()
-    }
-
-    private val timerRunnable = object : Runnable {
-        override fun run() {
-            timeLeft--
-            if (timeLeft >= 0) {
-                if (timeLeft == 10) {
-                    soundManager?.play(R.raw.time_warn, 0.5f, 0.5f)
-                }
-                if (timeLeft == 1) {
-                    soundManager?.play(R.raw.time_over, 0.5f, 0.5f)
-                }
-                timerLiveData.value = timeLeft
-            } else {
-                finishTurn()
-            }
-
-            if (timerStarted) handler.postDelayed(this, 1000)
-        }
     }
 
     enum class Command {
@@ -306,5 +296,4 @@ class RoundViewModel(
 
         return g
     }
-
 }
