@@ -228,6 +228,10 @@ class PlayersViewModel(application: Application,
         anal.sendEventTeamsCreated(playersRepository.getPlayers().size, playersRepository.getTeams().size)
     }
 
+    fun setChangedTeams(teams: List<Team>) {
+
+    }
+
     fun onBackPressed() {
         Timber.d("TESTING PlayersViewModel clear players repository")
         playersRepository.clear()

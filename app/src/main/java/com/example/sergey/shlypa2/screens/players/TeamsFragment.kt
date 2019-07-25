@@ -3,20 +3,21 @@ package com.example.sergey.shlypa2.screens.players
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.extensions.runOnceEver
+import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayerSectionable
 import com.example.sergey.shlypa2.screens.players.adapter.ItemTeam
+import com.example.sergey.shlypa2.screens.players.adapter.ItemTeamSectionable
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import com.takusemba.spotlight.SimpleTarget
@@ -24,6 +25,7 @@ import com.takusemba.spotlight.Spotlight
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_teams.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 
 /**
@@ -49,12 +51,31 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
         viewModel.getTeamsLiveData().observeSafe(this) { teams -> onTeams(teams)}
         viewModel.initTeams()
 
+
+
         btNextWords.setOnClickListener {
+            teamAdapter.currentItems.forEach {
+                Timber.d("TESTING $it")
+            }
+            val reorderderedTeams = teamAdapter.currentItems.filterIsInstance<ItemTeamSectionable>()
+                    .map { Team(it.team.name) }
+
+            teamAdapter.currentItems.filterIsInstance<ItemPlayerSectionable>()
+                    .forEach { item ->
+                        reorderderedTeams.find { it.name == item.teamHeader?.team?.name}
+                                ?.players?.add(item.player)
+                    }
+
+            reorderderedTeams.forEach {
+                Timber.d("TESTING $it")
+            }
+
             viewModel.startSettings()
         }
 
         rvTeams.layoutManager = PrecaheLayoutManager(context)
         rvTeams.adapter = teamAdapter
+        teamAdapter.isLongPressDragEnabled = true
 
         fabAddTeam.setOnClickListener {
             viewModel.addTeam()
@@ -108,11 +129,22 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun onTeams(teams: List<Team>) {
-        teams.map {
+        /*teams.map {
             ItemTeam(it) { team -> showTeamRenameDialog(team) }
         }.apply {
             teamAdapter.updateDataSet(this)
+        }*/
+
+        val items = teams.map {
+            val header = ItemTeamSectionable(it)
+            it.players.forEach {
+                header.addSubItem(ItemPlayerSectionable(header, it))
+            }
+            header
         }
+
+        teamAdapter.updateDataSet(items)
+        teamAdapter.expandAll()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
