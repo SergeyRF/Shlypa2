@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Team
 import eu.davidea.flexibleadapter.FlexibleAdapter
-import eu.davidea.flexibleadapter.items.AbstractExpandableHeaderItem
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible
-import eu.davidea.flexibleadapter.items.IHeader
 import eu.davidea.viewholders.ExpandableViewHolder
 import kotlinx.android.synthetic.main.holder_team_sectionable.view.*
 
 
-class ItemTeamSectionable(val team: Team) : AbstractExpandableHeaderItem<ItemTeamSectionable.ViewHolder, ItemPlayerSectionable>(), IHeader<ItemTeamSectionable.ViewHolder> {
+class ItemTeamSectionable(val team: Team) : AbstractFlexibleItem<ItemTeamSectionable.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
                                 holder: ViewHolder,
@@ -22,9 +21,10 @@ class ItemTeamSectionable(val team: Team) : AbstractExpandableHeaderItem<ItemTea
         holder.itemView.tvTeamName.text = team.name
     }
 
-    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?) = ItemTeamSectionable.ViewHolder(view, adapter)
+    override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?) = ViewHolder(view, adapter)
 
     override fun equals(other: Any?) = other is ItemTeamSectionable
+            && other.team == team
 
     override fun getLayoutRes() = R.layout.holder_team_sectionable
 

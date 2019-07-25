@@ -16,13 +16,13 @@ import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.extensions.runOnceEver
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayerSectionable
-import com.example.sergey.shlypa2.screens.players.adapter.ItemTeam
 import com.example.sergey.shlypa2.screens.players.adapter.ItemTeamSectionable
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_teams.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -30,7 +30,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 /**
  * A simple [Fragment] subclass.
  */
-class TeamsFragment : androidx.fragment.app.Fragment() {
+class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     val viewModel by sharedViewModel<PlayersViewModel>()
     private val teamAdapter = FlexibleAdapter(emptyList(), this)
@@ -95,7 +95,7 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
         return newTeams
     }
 
-    private fun showTeamRenameDialog(itemTeam: ItemTeam) {
+    private fun showTeamRenameDialog(itemTeam: ItemTeamSectionable) {
         val dialog = Dialog(requireContext())
 
         dialog.setContentView(R.layout.dialog_edit_text)
@@ -133,12 +133,10 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
             teamAdapter.updateDataSet(this)
         }*/
 
-        val items = teams.map {
-            val header = ItemTeamSectionable(it)
-            it.players.forEach {
-                header.addSubItem(ItemPlayerSectionable(header, it))
-            }
-            header
+        val items = mutableListOf<IFlexible<*>>()
+        teams.forEach {
+            items.add(ItemTeamSectionable(it))
+            items.addAll(it.players.map { player -> ItemPlayerSectionable(player) })
         }
 
         teamAdapter.updateDataSet(items)
@@ -153,6 +151,16 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         runGuide()
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onItemClick(view: View?, position: Int): Boolean {
+        return when(val item = teamAdapter.getItem(position)) {
+            is ItemTeamSectionable -> {
+                showTeamRenameDialog(item)
+                true
+            }
+            else -> false
+        }
     }
 
     private fun runGuide() {

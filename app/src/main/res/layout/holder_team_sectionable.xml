@@ -4,7 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:contentPadding="@dimen/big_margin"
+    app:contentPaddingRight="@dimen/big_margin"
+    app:contentPaddingLeft="@dimen/big_margin"
+    app:contentPaddingTop="@dimen/big_margin"
+    app:contentPaddingBottom="@dimen/medium_margin"
     app:cardCornerRadius="0dp">
 
     <TextView
