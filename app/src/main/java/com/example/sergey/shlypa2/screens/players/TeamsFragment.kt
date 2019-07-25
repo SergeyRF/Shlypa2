@@ -19,6 +19,7 @@ import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayerSectionable
 import com.example.sergey.shlypa2.screens.players.adapter.ItemTeamSectionable
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
+import com.example.sergey.shlypa2.views.RecyclerGapDecorator
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -47,15 +48,20 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getTeamsLiveData().observeSafe(this) { teams -> onTeams(teams)}
+        viewModel.getTeamsLiveData().observeSafe(this) { teams -> onTeams(teams) }
         viewModel.initTeams()
 
         btNextWords.setOnClickListener {
             viewModel.saveTeamsAndStartSettitngs(getReorderedTeams())
         }
 
-        rvTeams.layoutManager = PrecaheLayoutManager(context)
-        rvTeams.adapter = teamAdapter
+        with(rvTeams) {
+            layoutManager = PrecaheLayoutManager(context)
+            adapter = teamAdapter
+            addItemDecoration(RecyclerGapDecorator()
+                    .withExtraOffsetBetween(8, R.layout.holder_player_sectionable to R.layout.holder_team_sectionable))
+        }
+
         teamAdapter.isLongPressDragEnabled = true
 
         fabAddTeam.setOnClickListener {
@@ -83,10 +89,10 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         var team: Team? = null
 
         teamAdapter.currentItems.forEach {
-            if(it is ItemTeamSectionable) {
+            if (it is ItemTeamSectionable) {
                 team?.let { team -> newTeams.add(team) }
                 team = Team(it.team.name)
-            } else if(it is ItemPlayerSectionable) {
+            } else if (it is ItemPlayerSectionable) {
                 team?.players?.add(it.player)
             }
         }
@@ -154,7 +160,7 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(view: View?, position: Int): Boolean {
-        return when(val item = teamAdapter.getItem(position)) {
+        return when (val item = teamAdapter.getItem(position)) {
             is ItemTeamSectionable -> {
                 showTeamRenameDialog(item)
                 true

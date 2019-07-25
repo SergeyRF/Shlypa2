@@ -17,6 +17,7 @@ import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -45,6 +46,7 @@ class PlayersViewModel(application: Application,
 
     var playerImage: String? = null
 
+    var addPlayerJob: Job? = null
 
     init {
         updateData()
@@ -76,7 +78,8 @@ class PlayersViewModel(application: Application,
     }
 
     fun addRandomPlayer() {
-        launch {
+        if(addPlayerJob?.isActive == true) return
+        addPlayerJob = launch {
             withContext(dispatchers.ioDispatcher) {
                 val currentPlayers = playersRepository.getPlayers()
                 dataProvider.getPlayers()
@@ -107,7 +110,8 @@ class PlayersViewModel(application: Application,
             return
         }
 
-        launch {
+        if(addPlayerJob?.isActive == true) return
+        addPlayerJob = launch {
             val success = withContext(dispatchers.ioDispatcher) {
                 val player = Player(name,
                         avatar = playerImage ?: avatarLiveData.value ?: "",
@@ -128,7 +132,8 @@ class PlayersViewModel(application: Application,
     }
 
     fun addPlayerFromDb(player: Player) {
-        launch {
+        if(addPlayerJob?.isActive == true) return
+        addPlayerJob = launch {
             val success = withContext(dispatchers.ioDispatcher) {
                 playersRepository.addPlayer(player)
             }
