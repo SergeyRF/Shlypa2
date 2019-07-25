@@ -9,7 +9,7 @@ class PlayersRepository(
         private val dataProvider: DataProvider
 ) {
     private val players = mutableMapOf<Long, Player>()
-    private val teams = mutableListOf<Team>()
+    private var teams = mutableListOf<Team>()
 
     val maxTeamsCount: Int
         get() = players.size / 2
@@ -68,6 +68,10 @@ class PlayersRepository(
 
             currentTeam = if (currentTeam >= teams.size - 1) 0 else currentTeam + 1
         }
+    }
+
+    fun changeTeams(teams: List<Team>) {
+        this.teams = teams.toMutableList()
     }
 
     fun clear() {

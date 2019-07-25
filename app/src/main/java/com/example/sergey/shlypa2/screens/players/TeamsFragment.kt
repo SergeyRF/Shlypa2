@@ -25,7 +25,6 @@ import com.takusemba.spotlight.Spotlight
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_teams.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
 
 
 /**
@@ -51,26 +50,8 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
         viewModel.getTeamsLiveData().observeSafe(this) { teams -> onTeams(teams)}
         viewModel.initTeams()
 
-
-
         btNextWords.setOnClickListener {
-            teamAdapter.currentItems.forEach {
-                Timber.d("TESTING $it")
-            }
-            val reorderderedTeams = teamAdapter.currentItems.filterIsInstance<ItemTeamSectionable>()
-                    .map { Team(it.team.name) }
-
-            teamAdapter.currentItems.filterIsInstance<ItemPlayerSectionable>()
-                    .forEach { item ->
-                        reorderderedTeams.find { it.name == item.teamHeader?.team?.name}
-                                ?.players?.add(item.player)
-                    }
-
-            reorderderedTeams.forEach {
-                Timber.d("TESTING $it")
-            }
-
-            viewModel.startSettings()
+            viewModel.saveTeamsAndStartSettitngs(getReorderedTeams())
         }
 
         rvTeams.layoutManager = PrecaheLayoutManager(context)
@@ -95,6 +76,23 @@ class TeamsFragment : androidx.fragment.app.Fragment() {
         viewModel.setTitleId(R.string.teem_actyvity)
         //show hint if first game
         globalListentrForSpotl()
+    }
+
+    private fun getReorderedTeams(): List<Team> {
+        val newTeams = mutableListOf<Team>()
+        var team: Team? = null
+
+        teamAdapter.currentItems.forEach {
+            if(it is ItemTeamSectionable) {
+                team?.let { team -> newTeams.add(team) }
+                team = Team(it.team.name)
+            } else if(it is ItemPlayerSectionable) {
+                team?.players?.add(it.player)
+            }
+        }
+
+        team?.let { newTeams.add(it) }
+        return newTeams
     }
 
     private fun showTeamRenameDialog(itemTeam: ItemTeam) {

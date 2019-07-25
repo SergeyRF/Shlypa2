@@ -228,8 +228,19 @@ class PlayersViewModel(application: Application,
         anal.sendEventTeamsCreated(playersRepository.getPlayers().size, playersRepository.getTeams().size)
     }
 
-    fun setChangedTeams(teams: List<Team>) {
+    fun saveTeamsAndStartSettitngs(teams: List<Team>) {
+        if(saveTeams(teams)) startSettings()
+    }
 
+    fun saveTeams(teams: List<Team>): Boolean {
+        teams.forEach {
+            if(it.players.size < 2) {
+                toastResLD.value = R.string.teams_need_at_least_two
+                return false
+            }
+        }
+        playersRepository.changeTeams(teams)
+        return true
     }
 
     fun onBackPressed() {
