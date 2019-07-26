@@ -8,6 +8,7 @@
     app:contentPaddingLeft="@dimen/big_margin"
     app:contentPaddingTop="@dimen/big_margin"
     app:contentPaddingBottom="@dimen/medium_margin"
+    android:layout_marginTop="@dimen/medium_margin"
     app:cardCornerRadius="0dp">
 
     <TextView

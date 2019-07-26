@@ -19,7 +19,6 @@ import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayerSectionable
 import com.example.sergey.shlypa2.screens.players.adapter.ItemTeamSectionable
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
-import com.example.sergey.shlypa2.views.RecyclerGapDecorator
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -52,14 +51,12 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         viewModel.initTeams()
 
         btNextWords.setOnClickListener {
-            viewModel.saveTeamsAndStartSettitngs(getReorderedTeams())
+            viewModel.saveTeamsAndStartSetings(getReorderedTeams())
         }
 
         with(rvTeams) {
             layoutManager = PrecaheLayoutManager(context)
             adapter = teamAdapter
-            addItemDecoration(RecyclerGapDecorator()
-                    .withExtraOffsetBetween(8, R.layout.holder_player_sectionable to R.layout.holder_team_sectionable))
         }
 
         teamAdapter.isLongPressDragEnabled = true

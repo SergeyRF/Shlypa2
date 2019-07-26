@@ -10,6 +10,7 @@ import com.example.sergey.shlypa2.screens.game.RoundViewModel
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsViewModel
 import com.example.sergey.shlypa2.screens.main.WelcomeViewModel
 import com.example.sergey.shlypa2.screens.players.PlayersViewModel
+import com.example.sergey.shlypa2.screens.players.dialog.PlayerSelectViewModel
 import com.example.sergey.shlypa2.screens.splash.LaunchViewModel
 import com.example.sergey.shlypa2.ui.settings.SettingsViewModel
 import com.example.sergey.shlypa2.utils.DbExporter
@@ -30,6 +31,7 @@ val appModule = module {
     viewModel { WordsViewModel(get(), get(), get(), get(),get()) }
     viewModel { SettingsViewModel(get(),get(),get()) }
     viewModel { LaunchViewModel(get(), get(), get()) }
+    viewModel { PlayerSelectViewModel(get(), get(), get()) }
 
     single<DispatchersProvider> { DispatchersProviderImpl() }
 

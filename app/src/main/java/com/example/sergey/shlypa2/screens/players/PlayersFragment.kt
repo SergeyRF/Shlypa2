@@ -24,7 +24,7 @@ import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
-import com.example.sergey.shlypa2.screens.players.dialog.PlayerSelectDialog
+import com.example.sergey.shlypa2.screens.players.dialog.SelectPlayerDialogFragment
 import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
@@ -137,12 +137,8 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun showPlayerSelectDialog() {
-        PlayerSelectDialog(requireContext(),viewModel.getUserAddedPlayers()).apply {
-            onSelect={player ->
-                viewModel.addPlayerFromDb(player)
-            }
-            show()
-        }
+        val dialog = SelectPlayerDialogFragment()
+        dialog.show(requireFragmentManager(), "SelectPlayer")
     }
 
     private val dialogOnSelect: (String) -> Unit = { fileName ->
@@ -151,7 +147,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun addPlayer() {
-        viewModel.addPlayerFromDb(etName.text.toString())
+        viewModel.addNewPlayer(etName.text.toString())
         etName.text.clear()
     }
 
