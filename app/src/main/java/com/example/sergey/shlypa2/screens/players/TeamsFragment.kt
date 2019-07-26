@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Team
+import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.extensions.runOnceEver
@@ -24,6 +25,8 @@ import com.takusemba.spotlight.Spotlight
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_teams.*
+import kotlinx.android.synthetic.main.holder_player_sectionable.view.*
+import kotlinx.android.synthetic.main.holder_team_sectionable.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -167,29 +170,49 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun runGuide() {
-        val shaffleTeam = SimpleTarget.Builder(activity!!)
+        val shuffleGuide = SimpleTarget.Builder(activity!!)
                 .setPoint(floatingMenu.menuIconView)
                 .setRadius(80f)
                 .setTitle(getString(R.string.hint_team_shaffle))
                 .setDescription(getString(R.string.hint_team_shaffle_button))
-
                 .build()
 
-        //Position for rename icon
-        val x = Functions.getScreenWidth(activity!!) - 40
-        val y = 40F + Functions.dpToPx(context!!, 72F)
-        val renameGuide = SimpleTarget.Builder(activity!!)
-                .setPoint(x.toFloat(), y)
-                .setRadius(40f)
+        //Position for team name
+        val teamNameView = rvTeams.getChildAt(0)?.tvTeamName
+        val x = Functions.getScreenWidth(requireActivity()).toFloat() / 3
+        val y = 40F + 72.dpToPx
+        val renameGuide = SimpleTarget.Builder(requireActivity())
+                .apply {
+                    teamNameView?.let {
+                        setPoint(it)
+                    } ?: run {
+                        setPoint(x, y)
+                    }
+                }
+                .setRadius(80f)
                 .setTitle(getString(R.string.rename))
                 .setDescription(getString(R.string.click_to_rename))
                 .build()
 
+        val playerAvatarView = rvTeams.getChildAt(1)?.ivPlayerAvatar
+        val reorderGuide = SimpleTarget.Builder(requireActivity())
+                .apply {
+                    playerAvatarView?.let {
+                        setPoint(it)
+                    } ?: run {
+                        setPoint(x, y + 50.dpToPx)
+                    }
+                }
+                .setRadius(60f)
+                .setTitle(getString(R.string.team_reorder))
+                .setDescription(getString(R.string.team_reorder_guide))
+                .build()
+
 
         Spotlight.with(activity!!)
-                .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
+                .setOverlayColor(ContextCompat.getColor(requireActivity(), R.color.anotherBlack))
                 .setDuration(100L)
-                .setTargets(shaffleTeam, renameGuide)
+                .setTargets(shuffleGuide, renameGuide, reorderGuide)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
                 .start()
