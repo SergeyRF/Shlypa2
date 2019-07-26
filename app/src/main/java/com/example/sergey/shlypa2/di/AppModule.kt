@@ -31,7 +31,7 @@ val appModule = module {
     viewModel { WordsViewModel(get(), get(), get(), get(),get()) }
     viewModel { SettingsViewModel(get(),get(),get()) }
     viewModel { LaunchViewModel(get(), get(), get()) }
-    viewModel { PlayerSelectViewModel(get(), get(), get()) }
+    viewModel { PlayerSelectViewModel(get(), get()) }
 
     single<DispatchersProvider> { DispatchersProviderImpl() }
 

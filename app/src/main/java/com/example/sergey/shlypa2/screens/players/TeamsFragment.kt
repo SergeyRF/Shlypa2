@@ -47,11 +47,11 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getTeamsLiveData().observeSafe(this) { teams -> onTeams(teams) }
+        viewModel.teamsLiveData.observeSafe(this) { teams -> onTeams(teams) }
         viewModel.initTeams()
 
         btNextWords.setOnClickListener {
-            viewModel.saveTeamsAndStartSetings(getReorderedTeams())
+            viewModel.saveTeamsAndStartSettings(getReorderedTeams())
         }
 
         with(rvTeams) {
@@ -78,7 +78,7 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         super.onStart()
         viewModel.setTitleId(R.string.teem_actyvity)
         //show hint if first game
-        globalListentrForSpotl()
+        runSpotlight()
     }
 
     private fun getReorderedTeams(): List<Team> {
@@ -130,12 +130,6 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     }
 
     private fun onTeams(teams: List<Team>) {
-        /*teams.map {
-            ItemTeam(it) { team -> showTeamRenameDialog(team) }
-        }.apply {
-            teamAdapter.updateDataSet(this)
-        }*/
-
         val items = mutableListOf<IFlexible<*>>()
         teams.forEach {
             items.add(ItemTeamSectionable(it))
@@ -163,6 +157,12 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 true
             }
             else -> false
+        }
+    }
+
+    private fun runSpotlight() {
+        requireContext().runOnceEver(PLAYING_HINT) {
+            view?.onDrawn { runGuide() }
         }
     }
 
@@ -195,11 +195,4 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                 .start()
 
     }
-
-    private fun globalListentrForSpotl() {
-        requireContext().runOnceEver(PLAYING_HINT) {
-            view?.onDrawn { runGuide() }
-        }
-    }
-
 }

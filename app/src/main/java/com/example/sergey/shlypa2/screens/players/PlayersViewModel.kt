@@ -2,8 +2,6 @@ package com.example.sergey.shlypa2.screens.players
 
 import android.app.Application
 import android.net.Uri
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.ImagesHelper
 import com.example.sergey.shlypa2.R
@@ -12,7 +10,6 @@ import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.extensions.random
-import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
@@ -31,8 +28,8 @@ class PlayersViewModel(application: Application,
                        private val anal: AnalSender)
     : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
-    private val playersLiveData = MutableLiveData<List<Player>>()
-    private val teamsLiveData = MutableLiveData<List<Team>>()
+    val playersLiveData = playersRepository.getPlayersLiveData()
+    val teamsLiveData = playersRepository.getTeamsLiveData()
     val avatarLiveData = MutableLiveData<String>()
     val toastResLD = MutableLiveData<Int>()
 
@@ -46,45 +43,26 @@ class PlayersViewModel(application: Application,
     var addPlayerJob: Job? = null
 
     init {
-        updateData()
         loadAvatars()
     }
 
-    fun getPlayersLiveData(): LiveData<List<Player>> = playersLiveData
-
-    fun getTeamsLiveData(): LiveData<List<Team>> = teamsLiveData
-
     fun removePlayer(player: Player) {
         playersRepository.removePlayer(player)
-        updateData()
     }
 
     fun reNamePlayer(player: Player) {
         launch(dispatchers.ioDispatcher) {
-            if (player.type == PlayerType.USER) {
-                playersRepository.reNamePlayer(player)
-            } else {
-                playersRepository.removePlayer(player)
-                //set id to zero before inserting
-                player.type = PlayerType.USER
-                player.id = 0
-                player.id = dataProvider.insertPlayer(player)
-                playersRepository.addPlayer(player)
-            }
+            playersRepository.reNamePlayer(player)
         }
     }
 
     fun addRandomPlayer() {
-        if(addPlayerJob?.isActive == true) return
+        if (addPlayerJob?.isActive == true) return
         addPlayerJob = launch {
             withContext(dispatchers.ioDispatcher) {
-                val currentPlayers = playersRepository.getPlayers()
-                dataProvider.getPlayers()
-                        .find { !currentPlayers.contains(it) }
-                        ?.let { playersRepository.addPlayer(it) }
+                playersRepository.addRandomPlayer()
             }
 
-            updateData()
             anal.playerAdded(true)
         }
     }
@@ -107,39 +85,19 @@ class PlayersViewModel(application: Application,
             return
         }
 
-        if(addPlayerJob?.isActive == true) return
+        if (addPlayerJob?.isActive == true) return
         addPlayerJob = launch {
             val success = withContext(dispatchers.ioDispatcher) {
-                val player = Player(name,
-                        avatar = playerImage ?: avatarLiveData.value ?: "",
-                        type = PlayerType.USER
-                )
-                player.id = dataProvider.insertPlayer(player)
-                playersRepository.addPlayer(player)
+                playersRepository.addNewPlayer(name, avatarLiveData.value ?: "")
             }
 
             if (success) {
                 avatarLiveData.value = listOfAvatars.random()
-                updateData()
             } else {
                 toastResLD.value = R.string.name_not_unic
             }
-            anal.playerAdded(false)
-        }
-    }
 
-    fun addPlayerFromDb(player: Player) {
-        if(addPlayerJob?.isActive == true) return
-        addPlayerJob = launch {
-            val success = withContext(dispatchers.ioDispatcher) {
-                playersRepository.addPlayer(player)
-            }
-            if (success) {
-                updateData()
-            } else {
-                toastResLD.value = R.string.name_not_unic
-            }
-            anal.playerAddedFromSaved()
+            anal.playerAdded(false)
         }
     }
 
@@ -151,44 +109,30 @@ class PlayersViewModel(application: Application,
         avatarLiveData.value = listOfAvatars.random()
     }
 
-    fun initTeams() {
-        playersRepository.createTeams(2)
-        updateData()
+    fun initTeams() = launch(dispatchers.ioDispatcher) {
+        playersRepository.initTeams()
+
     }
 
-    fun addTeam() {
-        val teamsCount = playersRepository.getTeams().size + 1
-        if (teamsCount <= playersRepository.maxTeamsCount) {
-            playersRepository.createTeams(teamsCount)
-            updateData()
-        } else {
-            Toast.makeText(getApplication(), R.string.cant_create_teams, Toast.LENGTH_SHORT).show()
+    fun addTeam() = launch {
+        val success = withContext(dispatchers.ioDispatcher) {
+            playersRepository.incrementTeams()
         }
+
+        if (!success) toastResLD.value = R.string.cant_create_teams
     }
 
-    fun reduceTeam() {
-        if (playersRepository.getTeams().size > 2) {
-            val teamsCount = playersRepository.getTeams().size - 1
-            playersRepository.createTeams(teamsCount)
-            updateData()
-        } else {
-            Toast.makeText(getApplication(), R.string.two_team_min, Toast.LENGTH_SHORT).show()
+
+    fun reduceTeam() = launch {
+        val success = withContext(dispatchers.ioDispatcher) {
+            playersRepository.reduceTeams()
         }
+        if (!success) toastResLD.value = R.string.two_team_min
     }
 
-    fun shuffleTeams() {
-        launch {
-            withContext(dispatchers.ioDispatcher) {
-                playersRepository.createTeams(playersRepository.getTeams().size)
-            }
-            updateData()
-        }
-    }
 
-    fun updateData() {
-        val listPlayers = playersRepository.getPlayers()
-        playersLiveData.value = listPlayers
-        teamsLiveData.value = playersRepository.getTeams()
+    fun shuffleTeams() = launch(dispatchers.ioDispatcher) {
+        playersRepository.shuffleTeams()
     }
 
     fun onPlayersNextClicked() {
@@ -199,23 +143,18 @@ class PlayersViewModel(application: Application,
         }
     }
 
-    fun onAddFromSavedClicked() {
-        launch {
-            val hasSaved = withContext(dispatchers.ioDispatcher) {
-                val currentPlayers = playersRepository.getPlayers()
-                dataProvider.getPlayersUser()
-                        .filterNot { currentPlayers.contains(it) }
-                        .isNotEmpty()
-            }
-
-            if(hasSaved){
-                playersCommandLiveData.value = Command.SHOW_SELECT_PLAYER_DIALOG
-            } else {
-                toastResLD.value = R.string.not_saved_players
-            }
+    fun onAddFromSavedClicked() = launch {
+        val hasSaved = withContext(dispatchers.ioDispatcher) {
+            playersRepository.hasGoodUserPlayers()
         }
 
+        if (hasSaved) {
+            playersCommandLiveData.value = Command.SHOW_SELECT_PLAYER_DIALOG
+        } else {
+            toastResLD.value = R.string.not_saved_players
+        }
     }
+
 
     fun setTitleId(resourceId: Int) {
         titleLiveData.value = resourceId
@@ -226,13 +165,13 @@ class PlayersViewModel(application: Application,
         anal.sendEventTeamsCreated(playersRepository.getPlayers().size, playersRepository.getTeams().size)
     }
 
-    fun saveTeamsAndStartSetings(teams: List<Team>) {
-        if(saveTeams(teams)) startSettings()
+    fun saveTeamsAndStartSettings(teams: List<Team>) {
+        if (saveTeams(teams)) startSettings()
     }
 
     fun saveTeams(teams: List<Team>): Boolean {
         teams.forEach {
-            if(it.players.size < 2) {
+            if (it.players.size < 2) {
                 toastResLD.value = R.string.teams_need_at_least_two
                 return false
             }

@@ -8,17 +8,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.observeSafe
-import com.example.sergey.shlypa2.screens.players.PlayersViewModel
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayerSelect
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.dialog_player_select.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SelectPlayerDialogFragment : DialogFragment(), FlexibleAdapter.OnItemClickListener {
 
     private val viewModel by viewModel<PlayerSelectViewModel>()
-    private val sharedViewModel by sharedViewModel<PlayersViewModel>()
 
     val playersAdapter = FlexibleAdapter(emptyList(), this)
 
@@ -45,7 +42,7 @@ class SelectPlayerDialogFragment : DialogFragment(), FlexibleAdapter.OnItemClick
             )
         }
 
-        viewModel.dismissLiveData.observeSafe(this) { notifyAndDismiss() }
+        viewModel.dismissLiveData.observeSafe(this) { dismissAllowingStateLoss() }
     }
 
     override fun onItemClick(view: View?, position: Int): Boolean {
@@ -56,10 +53,5 @@ class SelectPlayerDialogFragment : DialogFragment(), FlexibleAdapter.OnItemClick
             }
             else -> false
         }
-    }
-
-    private fun notifyAndDismiss() {
-        sharedViewModel.updateData()
-        dismissAllowingStateLoss()
     }
 }

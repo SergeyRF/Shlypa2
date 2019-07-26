@@ -1,50 +1,135 @@
 package com.example.sergey.shlypa2.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.db.DataProvider
+import com.example.sergey.shlypa2.game.PlayerType
 import java.util.*
 
 class PlayersRepository(
         private val dataProvider: DataProvider
 ) {
-    private val players = mutableMapOf<Long, Player>()
-    private var teams = mutableListOf<Team>()
+    private val players = Collections.synchronizedMap(mutableMapOf<Long, Player>())
+    private var teams = Collections.synchronizedList(mutableListOf<Team>())
+    private val playersLiveData = MutableLiveData<List<Player>>()
+    private val teamsLiveData = MutableLiveData<List<Team>>()
 
-    val maxTeamsCount: Int
+    private val randomPlayers: Queue<Player> by lazy {
+        LinkedList(dataProvider.getPlayers().shuffled())
+    }
+
+    private val maxTeamsCount: Int
         get() = players.size / 2
 
-    fun addPlayer(player: Player): Boolean {
-        val playerExists = players.values
-                .any {
-                    it.id == player.id || it.name.equals(player.name, ignoreCase = true)
-                }
+    fun getTeamsLiveData(): LiveData<List<Team>> = Transformations.map(teamsLiveData) { it }
 
-        return if (playerExists) {
-            false
-        } else {
-            players[player.id] = player
-            true
-        }
-    }
-
-    fun removePlayer(player: Player) {
-        players.remove(player.id)
-    }
-
-    fun reNamePlayer(player: Player) {
-        players[player.id]?.name = player.name
-    }
+    fun getPlayersLiveData(): LiveData<List<Player>> = Transformations.map(playersLiveData) { it }
 
     fun getPlayers(): List<Player> {
         return players.values.toList()
     }
 
-    fun getPlayersSize():Int = players.size
+    /**
+     * Returns a list with players saved by user and
+     * not added to the game yet
+     */
+    fun getUserSavedPlayers(): List<Player> {
+        return dataProvider.getPlayersUser()
+                .filterNot { players.containsKey(it.id) }
+                .toList()
+    }
 
-    fun getTeams() = teams as List<Team>
+    /**
+     * Is there any player in the data base which is
+     * created by a user and not added to the game yet
+     */
+    fun hasGoodUserPlayers(): Boolean {
+        return dataProvider.getPlayersUser()
+                .any { !players.containsKey(it.id) }
+    }
 
-    fun createTeams(count: Int) {
+    fun getPlayersSize(): Int = players.size
+
+    fun getTeams() = teams.toList()
+
+    fun removePlayer(player: Player) {
+        players.remove(player.id)
+        // return a player to the random queue
+        if(player.type == PlayerType.STANDARD) {
+            randomPlayers.offer(player)
+        }
+        notifyPlayers()
+    }
+
+    fun reNamePlayer(player: Player) {
+        if (player.type == PlayerType.USER) {
+            players[player.id]?.name = player.name
+        } else {
+            players.remove(player.id)
+            //set id to zero before inserting
+            player.type = PlayerType.USER
+            player.id = 0
+            player.id = dataProvider.insertPlayer(player)
+            players[player.id] = player
+        }
+        notifyPlayers()
+    }
+
+    fun addPlayer(player: Player) {
+        players[player.id] = player
+        notifyPlayers()
+    }
+
+    fun addNewPlayer(name: String, avatar: String): Boolean {
+        val playerExists = players.values
+                .any {
+                    it.name.equals(name, ignoreCase = true)
+                }
+        if(playerExists) return false
+
+        val newPlayer = Player(name, avatar = avatar, type = PlayerType.USER)
+        newPlayer.id = dataProvider.insertPlayer(newPlayer)
+
+        players[newPlayer.id] = newPlayer
+        return true
+    }
+
+    fun addRandomPlayer() {
+        val newPlayer = randomPlayers.poll() ?: return
+        players[newPlayer.id] = newPlayer
+        notifyPlayers()
+    }
+
+    fun incrementTeams(): Boolean {
+        val newTeamsCount = teams.size + 1
+        return if (newTeamsCount <= maxTeamsCount) {
+            createTeams(newTeamsCount)
+            true
+        } else false
+    }
+
+    fun reduceTeams(): Boolean {
+        val newTeamsCount = teams.size - 1
+        return if (newTeamsCount >= 2) {
+            createTeams(newTeamsCount)
+            true
+        } else false
+    }
+
+    fun shuffleTeams() {
+        createTeams(teams.size)
+    }
+
+    fun initTeams() {
+        if (teams.isEmpty()) {
+            createTeams(2)
+        }
+    }
+
+    private fun createTeams(count: Int) {
         val shuffledPlayers: MutableList<Player> = players.values.toMutableList()
         shuffledPlayers.shuffle()
 
@@ -68,6 +153,8 @@ class PlayersRepository(
 
             currentTeam = if (currentTeam >= teams.size - 1) 0 else currentTeam + 1
         }
+
+        notifyTeams()
     }
 
     fun changeTeams(teams: List<Team>) {
@@ -77,5 +164,13 @@ class PlayersRepository(
     fun clear() {
         players.clear()
         teams.clear()
+    }
+
+    private fun notifyPlayers() {
+        playersLiveData.postValue(players.values.toList())
+    }
+
+    private fun notifyTeams() {
+        teamsLiveData.postValue(teams)
     }
 }

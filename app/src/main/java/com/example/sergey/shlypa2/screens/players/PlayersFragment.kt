@@ -88,8 +88,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             dialog.show()
         }
 
-        //enter
-        etName.setOnEditorActionListener { v, actionId, event ->
+        etName.setOnEditorActionListener { _, actionId, _ ->
             if (this.isResumed/* strange error */ && actionId == EditorInfo.IME_ACTION_NEXT) {
                 // обработка нажатия Enter
                 runCatching {
@@ -120,7 +119,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun initSubscriptions() {
-        viewModel.getPlayersLiveData().observeSafe(this) { list ->
+        viewModel.playersLiveData.observeSafe(this) { list ->
             onPlayersChanged(list)
         }
 
