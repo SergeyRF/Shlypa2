@@ -1,13 +1,9 @@
 package com.example.sergey.shlypa2.screens.players
 
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
-import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.R
@@ -101,37 +97,6 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
         return newTeams
     }
 
-    private fun showTeamRenameDialog(itemTeam: ItemTeamSectionable) {
-        val dialog = Dialog(requireContext())
-
-        dialog.setContentView(R.layout.dialog_edit_text)
-        val etTeemD = dialog.findViewById<EditText>(R.id.etDialog)
-        val btYesD = dialog.findViewById<Button>(R.id.btYesDialog)
-        val btNoD = dialog.findViewById<Button>(R.id.btNoDialog)
-        etTeemD.hint = itemTeam.team.name
-
-        btYesD.setOnClickListener {
-            if (etTeemD.text.isNotEmpty()) {
-                itemTeam.team.name = etTeemD.text.toString()
-                teamAdapter.updateItem(itemTeam)
-                etTeemD.requestFocus()
-            }
-            dialog.cancel()
-        }
-        btNoD.setOnClickListener { dialog.cancel() }
-
-        etTeemD.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT && etTeemD.text.isNotEmpty()) {
-                itemTeam.team.name = etTeemD.text.toString()
-                teamAdapter.updateItem(itemTeam)
-                dialog.cancel()
-            }
-            true
-
-        }
-        dialog.show()
-    }
-
     private fun onTeams(teams: List<Team>) {
         val items = mutableListOf<IFlexible<*>>()
         teams.forEach {
@@ -156,7 +121,7 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     override fun onItemClick(view: View?, position: Int): Boolean {
         return when (val item = teamAdapter.getItem(position)) {
             is ItemTeamSectionable -> {
-                showTeamRenameDialog(item)
+                viewModel.onTeamClicked(item.team)
                 true
             }
             else -> false

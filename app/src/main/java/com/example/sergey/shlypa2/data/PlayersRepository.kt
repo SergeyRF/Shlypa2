@@ -94,6 +94,7 @@ class PlayersRepository(
         newPlayer.id = dataProvider.insertPlayer(newPlayer)
 
         players[newPlayer.id] = newPlayer
+        notifyPlayers()
         return true
     }
 
@@ -101,6 +102,12 @@ class PlayersRepository(
         val newPlayer = randomPlayers.poll() ?: return
         players[newPlayer.id] = newPlayer
         notifyPlayers()
+    }
+
+    fun renameTeam(newName: String, oldName: String) {
+        teams.find { it.name == oldName }
+                ?.name = newName
+        notifyTeams()
     }
 
     fun incrementTeams(): Boolean {
@@ -123,10 +130,24 @@ class PlayersRepository(
         createTeams(teams.size)
     }
 
+    /**
+     * Creates 2 teams if teams haven't been created yet or
+     * add players which currently not in any team into existing teams
+     */
     fun initTeams() {
         if (teams.isEmpty()) {
             createTeams(2)
+            return
         }
+
+        val teamPlayers = teams.map { it.players }.flatten()
+        getPlayers()
+                .filterNot { teamPlayers.contains(it) }
+                .forEachIndexed { index, player ->
+                   teams[index % teams.size].players.add(player)
+                }
+
+        notifyTeams()
     }
 
     private fun createTeams(count: Int) {

@@ -90,5 +90,10 @@
         <item name="android:windowMinWidthMinor">85%</item>
     </style>
 
+    <style name="RenameDialogStyle" parent="CustomDialog">
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
+    </style>
+
 
 </resources>

@@ -30,6 +30,7 @@ class PlayersViewModel(application: Application,
 
     val playersLiveData = playersRepository.getPlayersLiveData()
     val teamsLiveData = playersRepository.getTeamsLiveData()
+    val teamRenameLiveData = SingleLiveEvent<Team>()
     val avatarLiveData = MutableLiveData<String>()
     val toastResLD = MutableLiveData<Int>()
 
@@ -54,6 +55,14 @@ class PlayersViewModel(application: Application,
         launch(dispatchers.ioDispatcher) {
             playersRepository.reNamePlayer(player)
         }
+    }
+
+    fun onTeamClicked(team: Team) {
+        teamRenameLiveData.value = team
+    }
+
+    fun renameTeam(newName: String, oldName: String) {
+        playersRepository.renameTeam(newName, oldName)
     }
 
     fun addRandomPlayer() {
@@ -111,7 +120,6 @@ class PlayersViewModel(application: Application,
 
     fun initTeams() = launch(dispatchers.ioDispatcher) {
         playersRepository.initTeams()
-
     }
 
     fun addTeam() = launch {
