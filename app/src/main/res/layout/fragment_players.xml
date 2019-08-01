@@ -92,11 +92,10 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu_colorNormal="?attr/colorPrimary"
         app:menu_colorPressed="?attr/colorPrimaryDark"
-        app:menu_icon="@drawable/ic_dice"
         app:menu_labels_colorNormal="@color/darkGrey"
         app:menu_labels_ellipsize="end"
-        app:menu_labels_maxLines="2"
-        app:menu_labels_singleLine="true">
+        app:menu_labels_singleLine="true"
+        app:srcCompat="@drawable/ic_add_black_24dp">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fabPlayerUser"

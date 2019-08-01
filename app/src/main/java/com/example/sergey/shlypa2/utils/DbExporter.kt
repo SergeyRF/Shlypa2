@@ -11,9 +11,9 @@ import java.nio.channels.FileChannel
 /**
  * Created by alex on 5/2/18.
  */
-class DbExporter {
+class DbExporter(val context: Context) {
 
-    fun exportDbToFile(context: Context, dbName: String) {
+    fun exportDbToFile(dbName: String) {
         val sd = Environment.getExternalStorageDirectory()
         val data = Environment.getDataDirectory()
         Timber.d("External storage is $sd")
@@ -36,7 +36,7 @@ class DbExporter {
 
     }
 
-    fun importDbFromAsset(context: Context, dbName: String, fileName: String): Boolean {
+    fun importDbFromAsset(dbName: String, fileName: String): Boolean {
         Timber.d("Import db from assets")
         var dbIs: InputStream? = null
         var dbOus: FileOutputStream? = null
@@ -59,7 +59,7 @@ class DbExporter {
             dbOus.flush()
             dbOus.close()
 
-            Timber.d("Db imported from assets")
+            Timber.d("TESTING Db imported from assets")
 
         } catch (ex: IOException) {
             Timber.e(ex)

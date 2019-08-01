@@ -24,7 +24,7 @@ import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
-import com.example.sergey.shlypa2.screens.players.dialog.PlayerSelectDialog
+import com.example.sergey.shlypa2.screens.players.dialog.SelectPlayerDialogFragment
 import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
@@ -88,8 +88,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             dialog.show()
         }
 
-        //enter
-        etName.setOnEditorActionListener { v, actionId, event ->
+        etName.setOnEditorActionListener { _, actionId, _ ->
             if (this.isResumed/* strange error */ && actionId == EditorInfo.IME_ACTION_NEXT) {
                 // обработка нажатия Enter
                 runCatching {
@@ -115,33 +114,39 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         }
 
         fabPlayerUser.setOnClickListener{
-            PlayerSelectDialog(requireContext(),viewModel.getUserAddedPlayers()).apply {
-                onSelect={player ->
-                    viewModel.addPlayerFromDb(player)
-                }
-                show()
-            }
+            viewModel.onAddFromSavedClicked()
         }
-
     }
 
     private fun initSubscriptions() {
-        viewModel.getPlayersLiveData().observeSafe(this) { list ->
+        viewModel.playersLiveData.observeSafe(this) { list ->
             onPlayersChanged(list)
         }
 
         viewModel.avatarLiveData.observeSafe(this) {
             showAvatar(it)
         }
+
+        viewModel.playersCommandLiveData.observeSafe(this) {
+            when(it) {
+                PlayersViewModel.Command.SHOW_SELECT_PLAYER_DIALOG -> showPlayerSelectDialog()
+                else -> {}
+            }
+        }
     }
 
-    val dialogOnSelect: (String) -> Unit = { fileName ->
+    private fun showPlayerSelectDialog() {
+        val dialog = SelectPlayerDialogFragment()
+        dialog.show(requireFragmentManager(), "SelectPlayer")
+    }
+
+    private val dialogOnSelect: (String) -> Unit = { fileName ->
         Timber.d("avatar select $fileName")
         showAvatar(fileName)
     }
 
     private fun addPlayer() {
-        viewModel.addPlayerFromDb(etName.text.toString())
+        viewModel.addNewPlayer(etName.text.toString())
         etName.text.clear()
     }
 
@@ -185,9 +190,15 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
 
     private fun runSpotlight() {
 
+        val locations = intArrayOf(0, 0)
+        floatingMenu.getLocationOnScreen(locations)
+
+        val fabX = locations[0] + floatingMenu.width - 32.dpToPx
+        val fabY = locations[1] + floatingMenu.height - 32.dpToPx
+
         val custom = SimpleTarget.Builder(activity!!)
-                .setPoint(floatingMenu)
-                .setRadius(80f)
+                .setPoint(fabX.toFloat(), fabY.toFloat())
+                .setRadius(70f)
                 .setTitle(getString(R.string.hint_random_player))
                 .setDescription(getString(R.string.hint_inject_random_player))
                 .setOnSpotlightStartedListener(object : OnTargetStateChangedListener<SimpleTarget> {
@@ -199,14 +210,15 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                     }
                 })
                 .build()
-        val injectName = SimpleTarget.Builder(activity!!)
+
+        val injectName = SimpleTarget.Builder(requireActivity())
                 .setRadius(80f)
                 .setPoint(imageButton)
                 .setTitle(getString(R.string.hint_inject_name))
                 .setDescription(getString(R.string.hint_inject_name_button))
                 .build()
 
-        Spotlight.with(activity!!)
+        Spotlight.with(requireActivity())
                 .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
                 .setDuration(300L)
                 .setTargets(injectName, custom)

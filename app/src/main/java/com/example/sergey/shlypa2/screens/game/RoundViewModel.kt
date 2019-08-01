@@ -1,9 +1,7 @@
 package com.example.sergey.shlypa2.screens.game
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import android.os.Handler
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
@@ -17,8 +15,13 @@ import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.utils.anal.AnalSender
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import com.example.sergey.shlypa2.utils.coroutines.CoroutineViewModel
+import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 
@@ -27,8 +30,9 @@ import timber.log.Timber
  */
 class RoundViewModel(
         application: Application,
+        val dispatchers: DispatchersProvider,
         val dataProvider: DataProvider,
-        val anal: AnalSender) : AndroidViewModel(application) {
+        val anal: AnalSender) : CoroutineViewModel(dispatchers.uiDispatcher) {
 
     companion object {
         private const val ADS_TIME_LIMIT = 10 * 60 * 1000
@@ -48,14 +52,12 @@ class RoundViewModel(
 
     val timerLiveData = MutableLiveData<Int>()
     var timeLeft = Game.getSettings().time
-    var timerStarted = true
+    private var ticker: ReceiveChannel<Unit>? = null
 
     private var roundFinished = false
-    private var turnFinished = false
 
     private var adsShowedTime = System.currentTimeMillis()
 
-    val handler = Handler()
 
     init {
         val preference = PreferenceHelper.defaultPrefs(application)
@@ -84,19 +86,21 @@ class RoundViewModel(
     }
 
     private fun loadLastSaved() {
-        doAsync {
-            val state = dataProvider.getLastSavedState()
-
-            uiThread {
-                if (state != null && Game.state.currentRound != null) {
-                    loadGameState(Game.state)
-                } else {
-                    Timber.e(RuntimeException("Can't load game state"))
-                    //Just for avoiding possible errors
-                    round = Round(mutableListOf())
-                    commandCallback.value = Command.EXIT
-                }
+        launch {
+            val state = withContext(dispatchers.ioDispatcher) {
+                dataProvider.getLastSavedState()
             }
+
+
+            if (state != null && Game.state.currentRound != null) {
+                loadGameState(Game.state)
+            } else {
+                Timber.e(RuntimeException("Can't load game state"))
+                //Just for avoiding possible errors
+                round = Round(mutableListOf())
+                commandCallback.value = Command.EXIT
+            }
+
         }
     }
 
@@ -149,22 +153,37 @@ class RoundViewModel(
         commandCallback.value = Command.GET_READY
     }
 
+    fun onFinishGameAccepted() {
+        launch {
+            withContext(dispatchers.ioDispatcher) {
+                saveGameState()
+                Game.portionClear()
+            }
+            commandCallback.value = Command.EXIT
+        }
+    }
+
     fun finishRound() {
         if (!roundFinished) {
             Game.beginNextRound()
             roundFinished = true
         }
 
-        if (Game.hasRound()) {
-            saveGameState()
-            commandCallback.value = Command.START_NEXT_ROUND
-        } else {
-            val job = doAsync {
-                dataProvider.deleteState(Game.state.gameId)
-                uiThread { commandCallback.value = Command.SHOW_GAME_RESULTS }
+        launch {
+            if (Game.hasRound()) {
+                withContext(dispatchers.ioDispatcher) {
+                    saveGameState()
+                }
+                commandCallback.value = Command.START_NEXT_ROUND
+            } else {
+                withContext(dispatchers.ioDispatcher) {
+                    dataProvider.deleteState(Game.state.gameId)
+                }
+                commandCallback.value = Command.SHOW_GAME_RESULTS
+                anal.gameFinished()
             }
-            anal.gameFinished()
         }
+
     }
 
     private fun showAds() {
@@ -180,17 +199,17 @@ class RoundViewModel(
     }
 
     private fun finishTurn() {
-        //TODO save state of game here or in the finish round function
-        timerStarted = false
         round.turnFinished = true
 
         commandCallback.value = Command.FINISH_TURN
 
-        handler.removeCallbacksAndMessages(null)
+        ticker?.cancel()
     }
 
     fun nextTurn(checkedIds: List<Long>) {
-        saveGameState()
+        launch(dispatchers.ioDispatcher) {
+            saveGameState()
+        }
 
         round.turnFinished = false
         round.applyTurnResults(checkedIds)
@@ -210,55 +229,50 @@ class RoundViewModel(
     }
 
     private fun showTimeAds() {
-        if(System.currentTimeMillis() > adsShowedTime + ADS_TIME_LIMIT) {
+        if (System.currentTimeMillis() > adsShowedTime + ADS_TIME_LIMIT) {
             adsShowedTime = System.currentTimeMillis()
             showAds()
         }
     }
 
     fun startTimer() {
-        timerStarted = true
-        handler.removeCallbacksAndMessages(null)
-        handler.postDelayed(timerRunnable, 1000)
+        launch {
+            ticker = ticker(1000, 1000).apply {
+                consumeEach {
+                    timeLeft--
+                    if (timeLeft >= 0) {
+                        if (timeLeft == 10) {
+                            soundManager?.play(R.raw.time_warn, 0.5f, 0.5f)
+                        }
+                        if (timeLeft == 1) {
+                            soundManager?.play(R.raw.time_over, 0.5f, 0.5f)
+                        }
+                        timerLiveData.value = timeLeft
+                    } else {
+                        finishTurn()
+                    }
+                }
+            }
+        }
     }
 
     fun pauseTimer() {
-        timerStarted = false
-        handler.removeCallbacksAndMessages(null)
+        ticker?.cancel()
     }
 
-    fun saveGameState() =
-            doAsync {
-                dataProvider.insertState(Game.state)
-            }
+    fun saveState() {
+        launch(dispatchers.ioDispatcher) {
+            saveGameState()
+        }
+    }
 
-
-    fun portionClear(unit: Unit) {
-        Game.portionClear()
+    private fun saveGameState() {
+        dataProvider.insertState(Game.state)
     }
 
     override fun onCleared() {
         super.onCleared()
         soundManager?.release()
-    }
-
-    private val timerRunnable = object : Runnable {
-        override fun run() {
-            timeLeft--
-            if (timeLeft >= 0) {
-                if (timeLeft == 10) {
-                    soundManager?.play(R.raw.time_warn, 0.5f, 0.5f)
-                }
-                if (timeLeft == 1) {
-                    soundManager?.play(R.raw.time_over, 0.5f, 0.5f)
-                }
-                timerLiveData.value = timeLeft
-            } else {
-                finishTurn()
-            }
-
-            if (timerStarted) handler.postDelayed(this, 1000)
-        }
     }
 
     enum class Command {
@@ -289,5 +303,4 @@ class RoundViewModel(
 
         return g
     }
-
 }

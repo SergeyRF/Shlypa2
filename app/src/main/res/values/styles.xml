@@ -82,5 +82,18 @@
         <item name="android:layout_marginBottom">@dimen/medium_margin</item>
     </style>
 
+    <style name="CustomDialog" parent="AppTheme">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowMinWidthMajor">85%</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+    </style>
+
+    <style name="RenameDialogStyle" parent="CustomDialog">
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
+    </style>
+
 
 </resources>

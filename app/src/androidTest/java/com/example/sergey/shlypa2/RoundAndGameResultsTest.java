@@ -1,20 +1,21 @@
 package com.example.sergey.shlypa2;
 
 import android.os.SystemClock;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.recyclerview.widget.RecyclerView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 
 import com.example.sergey.shlypa2.beans.Player;
 import com.example.sergey.shlypa2.beans.Word;
 import com.example.sergey.shlypa2.game.Game;
 import com.example.sergey.shlypa2.game.Round;
 import com.example.sergey.shlypa2.game.TeamWithScores;
-import com.example.sergey.shlypa2.testUtils.Utils;
 import com.example.sergey.shlypa2.screens.main.FirstActivity;
+import com.example.sergey.shlypa2.testUtils.Utils;
 import com.example.sergey.shlypa2.ui.RoundActivity;
 
 import org.junit.Rule;
@@ -169,9 +170,10 @@ public class RoundAndGameResultsTest {
 
     public void startGame() {
         onView(withId(R.id.btNewGame)).perform(click());
+        onView(withId(R.id.floatingMenu)).perform(click());
 
         for (int i = 0; i <= PLAYERS_COUNT; i++) {
-            onView(withId(R.id.btAddRandomPlayer)).perform(click());
+            onView(withId(R.id.fabPlayerRandom)).perform(click());
         }
 
         onView(withId(R.id.btGoNextPlayers)).perform(click());

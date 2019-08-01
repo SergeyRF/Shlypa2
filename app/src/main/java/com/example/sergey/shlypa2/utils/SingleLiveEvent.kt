@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 /**
  * Created by alex on 4/12/18.
  */
-class SingleLiveEvent<T> : MutableLiveData<T>() {
+open class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     private val mPending = AtomicBoolean(false)
 
@@ -40,7 +40,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
      * Used for cases where T is Void, to make calls cleaner.
      */
     @MainThread
-    fun call() {
+    open fun call() {
         value = null
     }
 }

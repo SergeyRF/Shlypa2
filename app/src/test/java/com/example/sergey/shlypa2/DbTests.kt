@@ -1,10 +1,7 @@
 package com.example.sergey.shlypa2
 
-import android.app.Instrumentation
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.db.DataBase
-import com.example.sergey.shlypa2.db.DataProvider
-import com.example.sergey.shlypa2.game.Game.getPlayers
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith

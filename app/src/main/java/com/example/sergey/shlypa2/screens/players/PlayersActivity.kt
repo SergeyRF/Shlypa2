@@ -10,14 +10,18 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
+import com.example.sergey.shlypa2.screens.players.dialog.RenameDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PlayersActivity : AppCompatActivity() {
+class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogListener {
 
     companion object {
+        const val DIALOG_RENAME_TAG = "teams_rename_dialog_tag"
+
         fun getIntent(context: Context) = Intent(context, PlayersActivity::class.java)
     }
 
@@ -44,11 +48,13 @@ class PlayersActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
+        viewModel.teamRenameLiveData.observeSafe(this) {
+            showTeamRenameDialog(it)
+        }
+
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             startPlayersFragment()
         }
-
-        //val color = Functions.getThemedBgColor(this, R.color.)
     }
 
     private fun onCommand(command: PlayersViewModel.Command) {
@@ -74,6 +80,23 @@ class PlayersActivity : AppCompatActivity() {
                 .commit()
     }
 
+    private fun showTeamRenameDialog(team: Team) {
+        (supportFragmentManager
+                .findFragmentByTag(DIALOG_RENAME_TAG) as? RenameDialogFragment)
+                ?.dismissAllowingStateLoss()
+
+        RenameDialogFragment.newInstance(
+                team.name,
+                getString(R.string.team_rename),
+                team.id.toLong(),
+                RenameDialogFragment.EntityType.TEAM
+        ).show(supportFragmentManager, DIALOG_RENAME_TAG)
+    }
+
+    override fun onRenamed(newName: String, oldName: String, id: Long, type: RenameDialogFragment.EntityType) {
+        viewModel.renameTeam(newName, oldName)
+    }
+
     private fun startSettings() {
         startActivity(Intent(this, GameSettingsActivity::class.java))
     }
@@ -81,6 +104,13 @@ class PlayersActivity : AppCompatActivity() {
     private fun initToolbar() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onBackPressed() {
+        if(supportFragmentManager.findFragmentById(R.id.container) is PlayersFragment) {
+            viewModel.onBackPressed()
+        }
+        super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

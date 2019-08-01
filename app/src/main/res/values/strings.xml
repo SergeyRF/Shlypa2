@@ -155,7 +155,9 @@
 
     <string name="add_user_player">Saved players</string>
     <string name="add_random_player">Random player</string>
-
+    <string name="teams_need_at_least_two">A team must have at least two players</string>
+    <string name="team_reorder">Team reordering</string>
+    <string name="team_reorder_guide">Long click and drag player to move it to another team</string>
 
 
 </resources>

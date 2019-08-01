@@ -115,8 +115,8 @@
     <string name="opensource_title">Лицензии сторонних библиотек</string>
     <string name="used_content">Использованные изображения и звуки</string>
     <string name="privasy_policy">Политика конфиденциальности</string>
-    <string name="delete_players">Удалить сохраненых Игроков</string>
-    <string name="not_saved_players">У вас нет сохраненных Игроков</string>
+    <string name="delete_players">Удалить сохраненых игроков</string>
+    <string name="not_saved_players">У вас нет сохраненных игроков</string>
 
     <!-- fatal error activity -->
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">Произошла неожиданная ошибка.\nВиновные будут наказаны.</string>
@@ -126,7 +126,7 @@
     <string name="hint_inject_name">Напиши имя игрока</string>
     <string name="hint_inject_name_button">Нажми на кнопку чтобы добавить его в игру. Для игры нужно как минимум 4 игрока</string>
     <string name="hint_random_player">Случайный игрок</string>
-    <string name="hint_inject_random_player">Нажми на кнопку, чтобы добавить игрока со случайным именем</string>
+    <string name="hint_inject_random_player">Нажми на кнопку, чтобы добавить случайного игрока или выбрать из сохраненных</string>
     <string name="hint_team_shaffle">Генератор команд</string>
     <string name="hint_team_shaffle_button">Нажми, чтобы добавить, удалить или перемешать команды</string>
     <string name="click_to_rename">Нажми, чтобы сменить имя коfманды</string>
@@ -156,6 +156,6 @@
     <string name="add_user_avatar">Добавить вашу картинку</string>
 
     <string name="add_user_player">Сохраненные игроки</string>
-    <string name="add_random_player">Добавить рандомно</string>
+    <string name="add_random_player">Случайный игрок</string>
 
 </resources>
