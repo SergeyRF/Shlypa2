@@ -24,13 +24,12 @@ class PlayersRepository(
     private val maxTeamsCount: Int
         get() = players.size / 2
 
+    val playersList: List<Player>
+        get() = players.values.toList()
+
     fun getTeamsLiveData(): LiveData<List<Team>> = Transformations.map(teamsLiveData) { it }
 
     fun getPlayersLiveData(): LiveData<List<Player>> = Transformations.map(playersLiveData) { it }
-
-    fun getPlayers(): List<Player> {
-        return players.values.toList()
-    }
 
     /**
      * Returns a list with players saved by user and
@@ -58,7 +57,7 @@ class PlayersRepository(
     fun removePlayer(player: Player) {
         players.remove(player.id)
         // return a player to the random queue
-        if(player.type == PlayerType.STANDARD) {
+        if (player.type == PlayerType.STANDARD) {
             randomPlayers.offer(player)
         }
         notifyPlayers()
@@ -88,7 +87,7 @@ class PlayersRepository(
                 .any {
                     it.name.equals(name, ignoreCase = true)
                 }
-        if(playerExists) return false
+        if (playerExists) return false
 
         val newPlayer = Player(name, avatar = avatar, type = PlayerType.USER)
         newPlayer.id = dataProvider.insertPlayer(newPlayer)
@@ -141,10 +140,9 @@ class PlayersRepository(
         }
 
         val teamPlayers = teams.map { it.players }.flatten()
-        getPlayers()
-                .filterNot { teamPlayers.contains(it) }
+        playersList.filterNot { teamPlayers.contains(it) }
                 .forEachIndexed { index, player ->
-                   teams[index % teams.size].players.add(player)
+                    teams[index % teams.size].players.add(player)
                 }
 
         notifyTeams()
@@ -175,6 +173,8 @@ class PlayersRepository(
             currentTeam = if (currentTeam >= teams.size - 1) 0 else currentTeam + 1
         }
 
+
+
         notifyTeams()
     }
 
@@ -185,6 +185,8 @@ class PlayersRepository(
     fun clear() {
         players.clear()
         teams.clear()
+        notifyPlayers()
+        notifyTeams()
     }
 
     private fun notifyPlayers() {

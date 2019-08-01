@@ -66,7 +66,7 @@ class WordsViewModel(
         words.clear()
         pos++
 
-        if (pos < playersRepository.getPlayers().size) {
+        if (pos < playersRepository.playersList.size) {
             updateData()
         } else {
             applyGameAndStart()
@@ -122,7 +122,7 @@ class WordsViewModel(
     }
 
     private fun applyGameAndStart() {
-        Game.setPlayers(playersRepository.getPlayers())
+        Game.setPlayers(playersRepository.playersList)
         Game.setTeams(playersRepository.getTeams())
         pos = 0
         inputFinishCallBack.value = true
@@ -162,7 +162,7 @@ class WordsViewModel(
 
     private fun updateData() {
         wordsLiveData.value = words
-        playerLivaData.value = playersRepository.getPlayers().getOrNull(pos)
+        playerLivaData.value = playersRepository.playersList.getOrNull(pos)
         needWord.value = needWord()
     }
 }

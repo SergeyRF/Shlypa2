@@ -55,8 +55,6 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             startPlayersFragment()
         }
-
-        //val color = Functions.getThemedBgColor(this, R.color.)
     }
 
     private fun onCommand(command: PlayersViewModel.Command) {

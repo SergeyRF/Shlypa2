@@ -14,7 +14,7 @@ import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
-import kotlinx.coroutines.Job
+import com.example.sergey.shlypa2.utils.coroutines.SerialJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -41,7 +41,7 @@ class PlayersViewModel(application: Application,
     val listOfAvatars: MutableList<String> = mutableListOf()
 
     var playerImage: String? = null
-    var addPlayerJob: Job? = null
+    var addPlayerJob = SerialJob(this)
 
     init {
         loadAvatars()
@@ -66,8 +66,7 @@ class PlayersViewModel(application: Application,
     }
 
     fun addRandomPlayer() {
-        if (addPlayerJob?.isActive == true) return
-        addPlayerJob = launch {
+        addPlayerJob.offer {
             withContext(dispatchers.ioDispatcher) {
                 playersRepository.addRandomPlayer()
             }
@@ -94,8 +93,7 @@ class PlayersViewModel(application: Application,
             return
         }
 
-        if (addPlayerJob?.isActive == true) return
-        addPlayerJob = launch {
+        addPlayerJob.offer {
             val success = withContext(dispatchers.ioDispatcher) {
                 playersRepository.addNewPlayer(name, avatarLiveData.value ?: "")
             }
@@ -144,7 +142,7 @@ class PlayersViewModel(application: Application,
     }
 
     fun onPlayersNextClicked() {
-        if (playersRepository.getPlayers().size < 4) {
+        if (playersRepository.playersList.size < 4) {
             toastResLD.value = R.string.not_enough_players
         } else {
             commandLiveData.value = Command.START_TEAMS
@@ -170,7 +168,7 @@ class PlayersViewModel(application: Application,
 
     fun startSettings() {
         commandLiveData.value = Command.START_SETTINGS
-        anal.sendEventTeamsCreated(playersRepository.getPlayers().size, playersRepository.getTeams().size)
+        anal.sendEventTeamsCreated(playersRepository.playersList.size, playersRepository.getTeams().size)
     }
 
     fun saveTeamsAndStartSettings(teams: List<Team>) {
@@ -178,12 +176,12 @@ class PlayersViewModel(application: Application,
     }
 
     fun saveTeams(teams: List<Team>): Boolean {
-        teams.forEach {
-            if (it.players.size < 2) {
-                toastResLD.value = R.string.teams_need_at_least_two
-                return false
-            }
-        }
+        teams.firstOrNull { it.players.size < 2 }
+                ?.let {
+                    toastResLD.value = R.string.teams_need_at_least_two
+                    return false
+                }
+
         playersRepository.changeTeams(teams)
         return true
     }
