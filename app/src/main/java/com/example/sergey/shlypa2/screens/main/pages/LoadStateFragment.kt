@@ -3,18 +3,17 @@ package com.example.sergey.shlypa2.screens.main.pages
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.extensions.observeSafe
+import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.GameState
-import com.example.sergey.shlypa2.ui.RoundActivity
-import com.example.sergey.shlypa2.extensions.show
+import com.example.sergey.shlypa2.screens.game.RoundActivity
 import com.example.sergey.shlypa2.screens.main.WelcomeViewModel
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import kotlinx.android.synthetic.main.fragment_load_state.*

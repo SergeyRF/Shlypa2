@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layoutDescription="@xml/game_result_motion"
     android:id="@+id/rootGameResult"
-    tools:context="com.example.sergey.shlypa2.ui.GameResultActivity">
+    tools:context="com.example.sergey.shlypa2.screens.game_result.GameResultActivity">
 
 
     <TextView

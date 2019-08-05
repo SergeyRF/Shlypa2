@@ -14,9 +14,9 @@ import com.example.sergey.shlypa2.beans.Word;
 import com.example.sergey.shlypa2.game.Game;
 import com.example.sergey.shlypa2.game.Round;
 import com.example.sergey.shlypa2.game.TeamWithScores;
+import com.example.sergey.shlypa2.screens.game.RoundActivity;
 import com.example.sergey.shlypa2.screens.main.FirstActivity;
 import com.example.sergey.shlypa2.testUtils.Utils;
-import com.example.sergey.shlypa2.ui.RoundActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

@@ -19,7 +19,7 @@ import com.example.sergey.shlypa2.screens.main.pages.LoadStateFragment
 import com.example.sergey.shlypa2.screens.main.pages.RulesFragment
 import com.example.sergey.shlypa2.screens.main.pages.WelcomeFragment
 import com.example.sergey.shlypa2.screens.players.PlayersActivity
-import com.example.sergey.shlypa2.ui.settings.SettingsActivity
+import com.example.sergey.shlypa2.screens.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.since
 import org.koin.androidx.viewmodel.ext.android.viewModel

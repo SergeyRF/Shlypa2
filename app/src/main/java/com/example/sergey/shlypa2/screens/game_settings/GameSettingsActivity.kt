@@ -12,8 +12,8 @@ import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.ui.RoundActivity
-import com.example.sergey.shlypa2.ui.WordsInActivity
+import com.example.sergey.shlypa2.screens.game.RoundActivity
+import com.example.sergey.shlypa2.screens.words_in.WordsInActivity
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.settings.adapter
+package com.example.sergey.shlypa2.screens.settings.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

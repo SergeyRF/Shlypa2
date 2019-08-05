@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sergey.shlypa2.ui.WordsInActivity"
+    tools:context="com.example.sergey.shlypa2.screens.words_in.WordsInActivity"
     android:id="@+id/container"
     app:layoutDescription="@xml/words_in_motion">
 

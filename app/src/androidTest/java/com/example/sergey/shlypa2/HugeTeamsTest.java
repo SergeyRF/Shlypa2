@@ -8,10 +8,10 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.sergey.shlypa2.game.Game;
+import com.example.sergey.shlypa2.screens.game.RoundActivity;
 import com.example.sergey.shlypa2.screens.main.FirstActivity;
 import com.example.sergey.shlypa2.testUtils.CustomActions;
 import com.example.sergey.shlypa2.testUtils.Utils;
-import com.example.sergey.shlypa2.ui.RoundActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

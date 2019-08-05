@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui
+package com.example.sergey.shlypa2.screens.game_result
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui
+package com.example.sergey.shlypa2.screens.game
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.ads.Interstitial
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.screens.game.*
+import com.example.sergey.shlypa2.screens.game_result.GameResultActivity
 import com.google.android.gms.ads.AdListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber

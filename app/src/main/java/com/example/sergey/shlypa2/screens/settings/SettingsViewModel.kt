@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.settings
+package com.example.sergey.shlypa2.screens.settings
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
