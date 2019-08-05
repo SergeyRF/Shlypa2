@@ -16,6 +16,7 @@ import com.example.sergey.shlypa2.screens.splash.LaunchViewModel
 import com.example.sergey.shlypa2.screens.words_in.WordsViewModel
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferencesProvider
+import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
@@ -48,6 +49,7 @@ val appModule = module {
     single { AnalSender(get())}
     single { PlayersRepository(get())}
     single { PreferencesProvider(get(), null)}
+    single { SoundManager(get(), get())}
     factory { DbExporter(get()) }
 }
 
