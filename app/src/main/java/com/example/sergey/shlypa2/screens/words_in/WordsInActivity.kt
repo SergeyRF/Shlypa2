@@ -1,13 +1,10 @@
-package com.example.sergey.shlypa2.ui
+package com.example.sergey.shlypa2.screens.words_in
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
-import android.view.animation.AccelerateInterpolator
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat.animate
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
@@ -16,9 +13,8 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.extensions.*
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.screens.game.RoundActivity
 import com.example.sergey.shlypa2.utils.anal.AnalSender
-import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import kotlinx.android.synthetic.main.activity_words_in.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

@@ -1,19 +1,15 @@
 package com.example.sergey.shlypa2.screens.game
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.example.sergey.shlypa2.Constants
-import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.Round
 import com.example.sergey.shlypa2.game.TeamWithScores
-import com.example.sergey.shlypa2.utils.PreferenceHelper
-import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.SoundManager
+import com.example.sergey.shlypa2.utils.Sounds
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
@@ -23,22 +19,24 @@ import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.collections.List
+import kotlin.collections.forEach
+import kotlin.collections.mutableListOf
+import kotlin.collections.set
 
 
 /**
  * Created by alex on 4/3/18.
  */
 class RoundViewModel(
-        application: Application,
-        val dispatchers: DispatchersProvider,
-        val dataProvider: DataProvider,
-        val anal: AnalSender) : CoroutineViewModel(dispatchers.uiDispatcher) {
+        private val dispatchers: DispatchersProvider,
+        private val dataProvider: DataProvider,
+        private val anal: AnalSender,
+        private val soundManager: SoundManager) : CoroutineViewModel(dispatchers.uiDispatcher) {
 
     companion object {
         private const val ADS_TIME_LIMIT = 10 * 60 * 1000
     }
-
-    private var soundManager: SoundManager? = null
 
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()
 
@@ -60,11 +58,6 @@ class RoundViewModel(
 
 
     init {
-        val preference = PreferenceHelper.defaultPrefs(application)
-        val soundsEnabledPref: Boolean = preference[Constants.SOUND_ON_PREF, true] ?: true
-        if (soundsEnabledPref) {
-            soundManager = SoundManager(application)
-        }
 
         val gameRound = Game.getRound()
 
@@ -138,8 +131,7 @@ class RoundViewModel(
 
         answeredCountLiveData.value = round.getTurnAnswersCount()
 
-        //play sound
-        soundManager?.play(if (answer) R.raw.correct else R.raw.wrong)
+        soundManager.playSound(if (answer) Sounds.ANSWER_CORRECT else Sounds.ANSWER_WRONG)
 
         val word = round.getWord()
         if (word != null) {
@@ -200,9 +192,7 @@ class RoundViewModel(
 
     private fun finishTurn() {
         round.turnFinished = true
-
         commandCallback.value = Command.FINISH_TURN
-
         ticker?.cancel()
     }
 
@@ -236,21 +226,16 @@ class RoundViewModel(
     }
 
     fun startTimer() {
+        Timber.d("TESTING startTimer - ticker is $ticker")
         launch {
-            ticker = ticker(1000, 1000).apply {
-                consumeEach {
-                    timeLeft--
-                    if (timeLeft >= 0) {
-                        if (timeLeft == 10) {
-                            soundManager?.play(R.raw.time_warn, 0.5f, 0.5f)
-                        }
-                        if (timeLeft == 1) {
-                            soundManager?.play(R.raw.time_over, 0.5f, 0.5f)
-                        }
-                        timerLiveData.value = timeLeft
-                    } else {
-                        finishTurn()
-                    }
+            ticker?.cancel()
+            ticker = ticker(1000, 1000)
+            ticker?.consumeEach {
+                timerLiveData.value = --timeLeft
+                when(timeLeft) {
+                   10 -> soundManager.playSound(Sounds.TIME_WARNING)
+                   1 ->  soundManager.playSound(Sounds.TIME_OVER)
+                   0 -> finishTurn()
                 }
             }
         }
@@ -268,11 +253,6 @@ class RoundViewModel(
 
     private fun saveGameState() {
         dataProvider.insertState(Game.state)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        soundManager?.release()
     }
 
     enum class Command {

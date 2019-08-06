@@ -11,14 +11,15 @@ import com.example.sergey.shlypa2.screens.game_settings.GameSettingsViewModel
 import com.example.sergey.shlypa2.screens.main.WelcomeViewModel
 import com.example.sergey.shlypa2.screens.players.PlayersViewModel
 import com.example.sergey.shlypa2.screens.players.dialog.PlayerSelectViewModel
+import com.example.sergey.shlypa2.screens.settings.SettingsViewModel
 import com.example.sergey.shlypa2.screens.splash.LaunchViewModel
-import com.example.sergey.shlypa2.ui.settings.SettingsViewModel
+import com.example.sergey.shlypa2.screens.words_in.WordsViewModel
 import com.example.sergey.shlypa2.utils.DbExporter
 import com.example.sergey.shlypa2.utils.PreferencesProvider
+import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
-import com.example.sergey.shlypa2.viewModel.WordsViewModel
 import com.google.gson.GsonBuilder
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -28,7 +29,7 @@ val appModule = module {
     viewModel { PlayersViewModel(get(), get(), get(), get(), get()) }
     viewModel { GameSettingsViewModel(get(), get(), get(),get()) }
     viewModel { RoundViewModel(get(), get(), get(), get()) }
-    viewModel { WordsViewModel(get(), get(), get(), get(),get()) }
+    viewModel { WordsViewModel(get(), get(), get(), get(), get()) }
     viewModel { SettingsViewModel(get(),get(),get()) }
     viewModel { LaunchViewModel(get(), get(), get()) }
     viewModel { PlayerSelectViewModel(get(), get()) }
@@ -48,6 +49,7 @@ val appModule = module {
     single { AnalSender(get())}
     single { PlayersRepository(get())}
     single { PreferencesProvider(get(), null)}
+    single { SoundManager(get(), get())}
     factory { DbExporter(get()) }
 }
 

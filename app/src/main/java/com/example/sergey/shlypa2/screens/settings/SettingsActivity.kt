@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.settings
+package com.example.sergey.shlypa2.screens.settings
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,7 +7,6 @@ import com.artitk.licensefragment.model.License
 import com.artitk.licensefragment.model.LicenseType
 import com.artitk.licensefragment.support.v4.RecyclerViewLicenseFragment
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class SettingsActivity : AppCompatActivity() {

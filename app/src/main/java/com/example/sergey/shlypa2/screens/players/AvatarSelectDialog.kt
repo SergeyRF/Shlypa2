@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.dialogs
+package com.example.sergey.shlypa2.screens.players
 
 import android.app.Dialog
 import android.content.Context

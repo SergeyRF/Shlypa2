@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.ui.settings
+package com.example.sergey.shlypa2.screens.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.show
-import com.example.sergey.shlypa2.ui.settings.adapter.ItemPlayerDelete
+import com.example.sergey.shlypa2.screens.settings.adapter.ItemPlayerDelete
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_delete_player.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

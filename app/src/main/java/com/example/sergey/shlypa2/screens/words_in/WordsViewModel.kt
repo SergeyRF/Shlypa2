@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.viewModel
+package com.example.sergey.shlypa2.screens.words_in
 
 import android.app.Application
 import androidx.lifecycle.LiveData
