@@ -51,18 +51,18 @@ class GameSettingsActivity : AppCompatActivity() {
                 }
 
         ssbWordsCount.setValues(Constants.MIN_WORDS_COUNT, Constants.MAX_WORDS_COUNT)
-        ssbWordsCount.setProgress(viewModel.getWordsCount())
-        ssbWordsCount.seekbarListener = { _, progress, _ ->
-            viewModel.setWordsLD(progress)
-        }
+                .setProgress(viewModel.getWordsCount())
+                .setProgressListener { progress ->
+                    viewModel.setWordsLD(progress)
+                }
 
         ssbPenalty.setValues(Constants.MIN_MINUS_BAL, Constants.MAX_MINUS_BAL)
-        ssbPenalty.setProgress(viewModel.getnumberMinusBal())
-        ssbPenalty.seekbarListener = { _, progress, _ ->
-            viewModel.setnumberMInusBal(progress)
-        }
+                .setProgress(viewModel.getNumberMinusBal())
+                .setProgressListener { progress ->
+                    viewModel.setNumberMinusBal(progress)
+                }
 
-        onSwitch(viewModel.getAllowRandom())
+        onSwitchAllowRandom(viewModel.getAllowRandom())
         onBalSwitch(viewModel.getMinusBal())
         onAllRandomSwitch(viewModel.getAllWorldRandom())
 
@@ -94,10 +94,11 @@ class GameSettingsActivity : AppCompatActivity() {
     }
 
     private fun acceptSettings() {
-        viewModel.setAllowRandom(switchSettingAllowRandom.isChecked())
         (spinnerDificult.selectedItem as? Type)?.let {
             viewModel.setDifficulty(it)
         }
+
+        viewModel.setAllowRandom(switchSettingAllowRandom.isChecked())
         viewModel.setMinusBal(ssPenalty.isChecked())
         viewModel.setAllWorldRandom(switchSettingAddAllWordRandom.isChecked())
         viewModel.onFinish()
@@ -108,8 +109,7 @@ class GameSettingsActivity : AppCompatActivity() {
                 ?.let { spinnerDificult.setSelection(it) }
     }
 
-    private fun onSwitch(b: Boolean) {
-        Timber.d("$b")
+    private fun onSwitchAllowRandom(b: Boolean) {
         switchSettingAllowRandom.setChecked(b)
     }
 

@@ -78,8 +78,8 @@ class GameSettingsViewModel(application: Application,
         settings.minusBal = b
     }
 
-    fun getnumberMinusBal(): Int = numberMinusBal
-    fun setnumberMInusBal(i: Int) {
+    fun getNumberMinusBal(): Int = numberMinusBal
+    fun setNumberMinusBal(i: Int) {
         settings.numberMinusBal = i
     }
 

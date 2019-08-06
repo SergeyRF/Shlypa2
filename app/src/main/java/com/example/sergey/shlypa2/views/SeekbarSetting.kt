@@ -1,32 +1,46 @@
 package com.example.sergey.shlypa2.views
 
 import android.content.Context
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.sergey.shlypa2.R
 
 /**
  * Created by alex on 4/25/18.
  */
-class SeekbarSetting : ConstraintLayout {
+class SeekbarSetting @JvmOverloads
+constructor(context: Context,
+            attrs: AttributeSet? = null,
+            defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    lateinit var title : TextView
-    lateinit var count : TextView
-    lateinit var seekbar : SeekBar
+    private var title: TextView
+    private lateinit var count: TextView
+    private var seekbar: SeekBar
 
-    var seekbarListener : ((seekBar: SeekBar?, progress: Int, fromUser: Boolean) -> Unit)? = null
+   private var seekbarListener: ((seekBar: SeekBar?, progress: Int, fromUser: Boolean) -> Unit)? = null
 
     private var minValue = 0
     private var maxValue = 0
 
+    private val listener = object : SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            count.text = (progress + minValue).toString()
+            if (fromUser) seekbarListener?.invoke(seekBar, progress + minValue, fromUser)
+        }
 
-    constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+        }
+    }
+
+    init {
         LayoutInflater.from(context).inflate(R.layout.setting_seekbar, this, true)
 
         title = findViewById(R.id.tvTitleSetting)
@@ -42,37 +56,24 @@ class SeekbarSetting : ConstraintLayout {
         seekbar.setOnSeekBarChangeListener(listener)
     }
 
-    fun setValues(min : Int, max : Int):SeekbarSetting {
+    fun setValues(min: Int, max: Int): SeekbarSetting {
         minValue = min
         maxValue = max
         seekbar.max = maxValue - minValue
         return this
     }
 
-    fun setProgress(progress : Int):SeekbarSetting {
+    fun setProgress(progress: Int): SeekbarSetting {
         seekbar.progress = progress - minValue
         return this
     }
 
-    fun setProgressListener(listener:(Int)->Unit):SeekbarSetting{
-        seekbarListener ={_,progress,_->
+    fun setProgressListener(listener: (Int) -> Unit): SeekbarSetting {
+        seekbarListener = { _, progress, _ ->
             listener.invoke(progress)
         }
         return this
     }
 
-    val listener  = object : SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            count.text = (progress + minValue).toString()
-            if(fromUser) seekbarListener?.invoke(seekBar, progress + minValue, fromUser)
-        }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-        }
-
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-        }
-    }
 }

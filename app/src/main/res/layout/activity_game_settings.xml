@@ -64,7 +64,7 @@
             <com.example.sergey.shlypa2.views.SwitchSetting
                 android:id="@+id/switchSettingAllowRandom"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 app:layout_constraintBottom_toTopOf="@id/view3"
@@ -115,7 +115,7 @@
             <com.example.sergey.shlypa2.views.SwitchSetting
                 android:id="@+id/ssPenalty"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 app:layout_constraintBottom_toTopOf="@id/view5"
@@ -155,7 +155,7 @@
             <com.example.sergey.shlypa2.views.SwitchSetting
                 android:id="@+id/switchSettingAddAllWordRandom"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 app:layout_constraintBottom_toTopOf="@id/view7"
