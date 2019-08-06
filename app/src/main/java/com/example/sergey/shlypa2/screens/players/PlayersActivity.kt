@@ -19,6 +19,7 @@ import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
 import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
 import com.example.sergey.shlypa2.screens.players.dialog.RenameDialogFragment
+import com.example.sergey.shlypa2.screens.players.dialog.SelectPlayerDialogFragment
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -69,7 +70,16 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         when (command) {
             PlayersViewModel.Command.START_SETTINGS -> startSettings()
             PlayersViewModel.Command.START_TEAMS -> startTeamsFragment()
+            PlayersViewModel.Command.SHOW_SELECT_PLAYER_DIALOG -> showPlayerSelectDialog()
         }
+    }
+
+    private fun showPlayerSelectDialog() {
+        (supportFragmentManager
+                .findFragmentByTag(DIALOG_RENAME_TAG) as? SelectPlayerDialogFragment)
+                ?.dismissAllowingStateLoss()
+
+        SelectPlayerDialogFragment().show(supportFragmentManager, "SelectPlayer")
     }
 
     private fun startPlayersFragment() {

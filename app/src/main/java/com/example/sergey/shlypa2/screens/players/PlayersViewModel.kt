@@ -35,7 +35,6 @@ class PlayersViewModel(application: Application,
     val toastResLD = MutableLiveData<Int>()
 
     val commandLiveData = SingleLiveEvent<Command>()
-    val playersCommandLiveData = SingleLiveEvent<Command>()
     val titleLiveData = MutableLiveData<Int>()
 
     val listOfAvatars: MutableList<String> = mutableListOf()
@@ -157,7 +156,7 @@ class PlayersViewModel(application: Application,
         }
 
         if (hasSaved) {
-            playersCommandLiveData.value = Command.SHOW_SELECT_PLAYER_DIALOG
+            commandLiveData.value = Command.SHOW_SELECT_PLAYER_DIALOG
         } else {
             toastResLD.value = R.string.not_saved_players
         }

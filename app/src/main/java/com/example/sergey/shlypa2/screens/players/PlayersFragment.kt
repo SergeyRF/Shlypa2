@@ -20,7 +20,6 @@ import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
 import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
-import com.example.sergey.shlypa2.screens.players.dialog.SelectPlayerDialogFragment
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.takusemba.spotlight.OnTargetStateChangedListener
@@ -116,20 +115,6 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         viewModel.avatarLiveData.observeSafe(this) {
             showAvatar(it)
         }
-
-        viewModel.playersCommandLiveData.observeSafe(this) {
-            when (it) {
-                PlayersViewModel.Command.SHOW_SELECT_PLAYER_DIALOG -> showPlayerSelectDialog()
-                else -> {
-                }
-            }
-        }
-    }
-
-
-    private fun showPlayerSelectDialog() {
-        val dialog = SelectPlayerDialogFragment()
-        dialog.show(requireFragmentManager(), "SelectPlayer")
     }
 
     private fun addPlayer() {
