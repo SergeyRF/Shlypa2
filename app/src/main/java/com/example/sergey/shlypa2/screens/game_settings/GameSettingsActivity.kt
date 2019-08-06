@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
@@ -62,9 +63,9 @@ class GameSettingsActivity : AppCompatActivity() {
                     viewModel.setNumberMinusBal(progress)
                 }
 
-        onSwitchAllowRandom(viewModel.getAllowRandom())
-        onBalSwitch(viewModel.getMinusBal())
-        onAllRandomSwitch(viewModel.getAllWorldRandom())
+        onSwitchAllowRandom()
+        onBalSwitch()
+        onAllRandomSwitch()
 
         btNextSettings.setOnClickListener {
             acceptSettings()
@@ -97,10 +98,6 @@ class GameSettingsActivity : AppCompatActivity() {
         (spinnerDificult.selectedItem as? Type)?.let {
             viewModel.setDifficulty(it)
         }
-
-        viewModel.setAllowRandom(switchSettingAllowRandom.isChecked())
-        viewModel.setMinusBal(ssPenalty.isChecked())
-        viewModel.setAllWorldRandom(switchSettingAddAllWordRandom.isChecked())
         viewModel.onFinish()
     }
 
@@ -109,16 +106,26 @@ class GameSettingsActivity : AppCompatActivity() {
                 ?.let { spinnerDificult.setSelection(it) }
     }
 
-    private fun onSwitchAllowRandom(b: Boolean) {
-        switchSettingAllowRandom.setChecked(b)
+    private fun onSwitchAllowRandom() {
+        switchSettingAllowRandom.setChecked(viewModel.getAllowRandom())
+                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                    viewModel.setAllowRandom(isChecked)
+                })
     }
 
-    private fun onBalSwitch(b: Boolean) {
-        ssPenalty.setChecked(b)
+    private fun onBalSwitch() {
+        ssPenalty.setChecked(viewModel.getMinusBal())
+                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                    viewModel.setMinusBal(isChecked)
+                })
     }
 
-    private fun onAllRandomSwitch(b: Boolean) {
-        switchSettingAddAllWordRandom.setChecked(b)
+    private fun onAllRandomSwitch() {
+        switchSettingAddAllWordRandom.setChecked(viewModel.getAllWorldRandom())
+                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                    viewModel.setAllWorldRandom(isChecked)
+                })
+
     }
 
     private fun onStartActivity(activity: AppCompatActivity) {
@@ -138,5 +145,10 @@ class GameSettingsActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        viewModel.savedSettings()
     }
 }

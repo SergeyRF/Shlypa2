@@ -23,14 +23,6 @@ class GameSettingsViewModel(application: Application,
                             private val anal: AnalSender)
     : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
-    private var wordsCount = 0
-    private var wordsTypeId: Long = 0
-    private var allowRandom = false
-    private var minusBal = false
-    private var numberMinusBal = 1
-    private var turnTime = 0
-    private var allWordRandom = false
-
     private val settingsProvider = SettingsProviderImpl(application)
 
     private var settings = settingsProvider.getSettings()
@@ -41,56 +33,48 @@ class GameSettingsViewModel(application: Application,
     val startNextActivity = SingleLiveEvent<StartActivity>()
 
     init {
-        turnTime = settings.time
-        wordsCount = settings.word
-        allowRandom = settings.allowRandomWords
-        wordsTypeId = settings.typeId
-        minusBal = settings.minusBal
-        numberMinusBal = settings.numberMinusBal
-        allWordRandom = settings.all_word_random
         loadTypes()
     }
 
-    fun getTime(): Int = turnTime
+    fun getTime(): Int = settings.time
     fun setTime(i: Int) {
         settings.time = i
     }
 
-    fun getWordsCount(): Int = wordsCount
+    fun getWordsCount(): Int = settings.word
     fun setWordsLD(i: Int) {
         settings.word = i
     }
 
-    fun getDifficulty(): Long = wordsTypeId
+    fun getDifficulty(): Long = settings.typeId
     fun setDifficulty(wordType: Type) {
         Timber.d("$wordType")
         settings.typeId = wordType.id
         settings.typeName = wordType.name
     }
 
-    fun getAllowRandom(): Boolean = allowRandom
+    fun getAllowRandom(): Boolean = settings.allowRandomWords
     fun setAllowRandom(b: Boolean) {
         settings.allowRandomWords = b
     }
 
-    fun getMinusBal(): Boolean = minusBal
+    fun getMinusBal(): Boolean = settings.minusBal
     fun setMinusBal(b: Boolean) {
         settings.minusBal = b
     }
 
-    fun getNumberMinusBal(): Int = numberMinusBal
+    fun getNumberMinusBal(): Int = settings.numberMinusBal
     fun setNumberMinusBal(i: Int) {
         settings.numberMinusBal = i
     }
 
-    fun getAllWorldRandom() = allWordRandom
+    fun getAllWorldRandom() = settings.all_word_random
     fun setAllWorldRandom(b: Boolean) {
         settings.all_word_random = b
     }
 
     fun onFinish() {
-        Game.setSettings(settings)
-        settingsProvider.writeSettings(settings)
+        savedSettings()
         anal.gameStarted(
                 Game.getSettings().allowRandomWords,
                 Game.getSettings().typeName,
@@ -98,12 +82,16 @@ class GameSettingsViewModel(application: Application,
         startNextActivity.value = StartActivity.WORLD_IN
     }
 
+    fun savedSettings() {
+        Game.setSettings(settings)
+        settingsProvider.writeSettings(settings)
+    }
+
     private fun loadTypes() {
         launch {
             val types = withContext(dispatchers.ioDispatcher) {
                 dataProvider.getTypes()
             }
-
             typesLiveData.value = types
         }
     }

@@ -38,8 +38,9 @@ constructor(context: Context,
 
     fun isChecked(): Boolean = switch.isChecked
 
-    fun setChecked(checked: Boolean) {
+    fun setChecked(checked: Boolean): SwitchSetting {
         switch.isChecked = checked
+        return this
     }
 
     fun setOnCheckedListener(listner: CompoundButton.OnCheckedChangeListener?) = switch.setOnCheckedChangeListener(listner)
