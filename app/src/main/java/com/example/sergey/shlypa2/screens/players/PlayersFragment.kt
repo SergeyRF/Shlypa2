@@ -24,6 +24,8 @@ import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
+import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
+import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogListener
 import com.example.sergey.shlypa2.screens.players.dialog.SelectPlayerDialogFragment
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
@@ -42,7 +44,7 @@ import timber.log.Timber
 /**
  * A simple [Fragment] subclass.
  */
-class PlayersFragment : androidx.fragment.app.Fragment() {
+class PlayersFragment : androidx.fragment.app.Fragment(), AvatarSelectDialogListener {
 
     val viewModel by sharedViewModel<PlayersViewModel>()
     private val playersAdapter = FlexibleAdapter(emptyList(), this)
@@ -81,10 +83,8 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         rvPlayers.adapter = playersAdapter
 
         civPlayerAvatar.setOnClickListener {
-            val dialog = AvatarSelectDialog(requireContext(), viewModel.listOfAvatars)
-            dialog.onSelect = dialogOnSelect
-            dialog.onSelectCustom = getCustomAvatar
-            dialog.show()
+            AvatarSelectDialogFragment.newInstance(viewModel.listOfAvatars, this)
+                    .show(requireFragmentManager(), "AVATAR")
         }
 
         etName.setOnEditorActionListener { _, actionId, _ ->
@@ -112,7 +112,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             viewModel.addRandomPlayer()
         }
 
-        fabPlayerUser.setOnClickListener{
+        fabPlayerUser.setOnClickListener {
             viewModel.onAddFromSavedClicked()
         }
     }
@@ -127,21 +127,26 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         }
 
         viewModel.playersCommandLiveData.observeSafe(this) {
-            when(it) {
+            when (it) {
                 PlayersViewModel.Command.SHOW_SELECT_PLAYER_DIALOG -> showPlayerSelectDialog()
-                else -> {}
+                else -> {
+                }
             }
         }
+    }
+
+    override fun onSelectAvatar(iconString: String) {
+        Timber.d("avatar select $iconString")
+        showAvatar(iconString)
+    }
+
+    override fun onSelectCustomAvatar() {
+        startCropImageActivity()
     }
 
     private fun showPlayerSelectDialog() {
         val dialog = SelectPlayerDialogFragment()
         dialog.show(requireFragmentManager(), "SelectPlayer")
-    }
-
-    private val dialogOnSelect: (String) -> Unit = { fileName ->
-        Timber.d("avatar select $fileName")
-        showAvatar(fileName)
     }
 
     private fun addPlayer() {
@@ -244,16 +249,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
 
     //Load custom avatar
 
-    private val getCustomAvatar: () -> Unit = {
-        startCropImageActivity()
-    }
-
     private fun setAvatarCustom(imageUri: Uri) {
-        Glide.with(this)
-                .load(imageUri)
-                .apply(avatarOptions)
-                .into(civPlayerAvatar)
-        //viewModel.addImage(imageUri.toString(), AvatarType.USER)
         viewModel.addImage(imageUri)
     }
 

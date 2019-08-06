@@ -79,6 +79,7 @@ class PlayersViewModel(application: Application,
         launch {
             withContext(dispatchers.ioDispatcher) {
                 playerImage = ImagesHelper.saveImage(image, getApplication())
+                avatarLiveData.postValue(playerImage)
             }
         }
     }
