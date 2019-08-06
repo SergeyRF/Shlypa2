@@ -1,7 +1,10 @@
 package com.example.sergey.shlypa2.screens.players
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -14,10 +17,15 @@ import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
+import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
 import com.example.sergey.shlypa2.screens.players.dialog.RenameDialogFragment
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
-class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogListener {
+class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogListener,
+        AvatarSelectDialogFragment.AvatarSelectDialogListener {
 
     companion object {
         const val DIALOG_RENAME_TAG = "teams_rename_dialog_tag"
@@ -101,13 +109,23 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         startActivity(Intent(this, GameSettingsActivity::class.java))
     }
 
+    override fun onSelectAvatar(iconString: String) {
+        Timber.d("avatar select $iconString")
+        viewModel.addImage(iconString)
+    }
+
+    override fun onSelectCustomAvatar() {
+        startCropImageActivity()
+    }
+
+
     private fun initToolbar() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onBackPressed() {
-        if(supportFragmentManager.findFragmentById(R.id.container) is PlayersFragment) {
+        if (supportFragmentManager.findFragmentById(R.id.container) is PlayersFragment) {
             viewModel.onBackPressed()
         }
         super.onBackPressed()
@@ -123,4 +141,60 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         }
     }
 
+    //Load custom avatar
+
+    private fun setAvatarCustom(imageUri: Uri) {
+        viewModel.addImage(imageUri)
+    }
+
+    private fun startCropImageActivity(imageUri: Uri? = null) {
+        val cropImage: CropImage.ActivityBuilder = if (imageUri != null) {
+            CropImage.activity(imageUri)
+        } else {
+            CropImage.activity()
+        }
+        cropImage
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setAspectRatio(150, 150)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this)
+
+
+    }
+
+    private var mCropImageUri: Uri? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            when (requestCode) {
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val result = CropImage.getActivityResult(data)
+                    if (resultCode == Activity.RESULT_OK) {
+                        val resultUri = result.uri
+                        setAvatarCustom(resultUri)
+                    } else {
+                        if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                            Timber.e(result.error)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.isNotEmpty()
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCropImageActivity(mCropImageUri)
+            } else {
+                //todo require refactoring
+                Toast.makeText(this,
+                        "Cancelling, required permissions are not granted",
+                        Toast.LENGTH_LONG)
+                        .show()
+            }
+        }
+    }
 }

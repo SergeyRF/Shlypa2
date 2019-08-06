@@ -86,6 +86,7 @@ class PlayersViewModel(application: Application,
 
     fun addImage(image: String) {
         playerImage = image
+        avatarLiveData.value = image
     }
 
     fun addNewPlayer(name: String) {
