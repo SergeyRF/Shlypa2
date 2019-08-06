@@ -45,10 +45,10 @@ class GameSettingsActivity : AppCompatActivity() {
         }
 
         ssbTurnTime.setValues(Constants.MIN_ROUND_TIME, Constants.MAX_ROUMD_TIME)
-        ssbTurnTime.setProgress(viewModel.getTime())
-        ssbTurnTime.seekbarListener = { _, progress, _ ->
-            viewModel.setTime(progress)
-        }
+                .setProgress(viewModel.getTime())
+                .setProgressListener { progress ->
+                    viewModel.setTime(progress)
+                }
 
         ssbWordsCount.setValues(Constants.MIN_WORDS_COUNT, Constants.MAX_WORDS_COUNT)
         ssbWordsCount.setProgress(viewModel.getWordsCount())

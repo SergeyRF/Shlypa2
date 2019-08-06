@@ -42,14 +42,23 @@ class SeekbarSetting : ConstraintLayout {
         seekbar.setOnSeekBarChangeListener(listener)
     }
 
-    fun setValues(min : Int, max : Int) {
+    fun setValues(min : Int, max : Int):SeekbarSetting {
         minValue = min
         maxValue = max
         seekbar.max = maxValue - minValue
+        return this
     }
 
-    fun setProgress(progress : Int) {
+    fun setProgress(progress : Int):SeekbarSetting {
         seekbar.progress = progress - minValue
+        return this
+    }
+
+    fun setProgressListener(listener:(Int)->Unit):SeekbarSetting{
+        seekbarListener ={_,progress,_->
+            listener.invoke(progress)
+        }
+        return this
     }
 
     val listener  = object : SeekBar.OnSeekBarChangeListener {
