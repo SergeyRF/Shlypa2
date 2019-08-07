@@ -74,6 +74,10 @@ class PlayersViewModel(application: Application,
         }
     }
 
+    fun onChangeAvatarClicked() {
+        commandLiveData.value = Command.SHOW_SELECT_AVATAR_DIALOG
+    }
+
     fun addImage(image: Uri) {
         launch {
             withContext(dispatchers.ioDispatcher) {
@@ -194,6 +198,7 @@ class PlayersViewModel(application: Application,
     enum class Command {
         START_TEAMS,
         START_SETTINGS,
-        SHOW_SELECT_PLAYER_DIALOG
+        SHOW_SELECT_PLAYER_DIALOG,
+        SHOW_SELECT_AVATAR_DIALOG
     }
 }

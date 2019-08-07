@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Team
+import com.example.sergey.shlypa2.extensions.dismissDialogFragment
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
@@ -30,6 +31,7 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
 
     companion object {
         const val DIALOG_RENAME_TAG = "teams_rename_dialog_tag"
+        const val DIALOG_AVATAR_TAG = "dialog_avatar_tag"
 
         fun getIntent(context: Context) = Intent(context, PlayersActivity::class.java)
     }
@@ -71,14 +73,12 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
             PlayersViewModel.Command.START_SETTINGS -> startSettings()
             PlayersViewModel.Command.START_TEAMS -> startTeamsFragment()
             PlayersViewModel.Command.SHOW_SELECT_PLAYER_DIALOG -> showPlayerSelectDialog()
+            PlayersViewModel.Command.SHOW_SELECT_AVATAR_DIALOG -> showAvatarDialog()
         }
     }
 
     private fun showPlayerSelectDialog() {
-        (supportFragmentManager
-                .findFragmentByTag(DIALOG_RENAME_TAG) as? SelectPlayerDialogFragment)
-                ?.dismissAllowingStateLoss()
-
+        dismissDialogFragment(DIALOG_RENAME_TAG)
         SelectPlayerDialogFragment().show(supportFragmentManager, "SelectPlayer")
     }
 
@@ -98,10 +98,15 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
                 .commit()
     }
 
+    private fun showAvatarDialog() {
+        dismissDialogFragment(DIALOG_AVATAR_TAG)
+
+        AvatarSelectDialogFragment.newInstance(viewModel.listOfAvatars)
+                .show(supportFragmentManager, DIALOG_AVATAR_TAG)
+    }
+
     private fun showTeamRenameDialog(team: Team) {
-        (supportFragmentManager
-                .findFragmentByTag(DIALOG_RENAME_TAG) as? RenameDialogFragment)
-                ?.dismissAllowingStateLoss()
+        dismissDialogFragment(DIALOG_RENAME_TAG)
 
         RenameDialogFragment.newInstance(
                 team.name,
