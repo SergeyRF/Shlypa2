@@ -179,7 +179,7 @@ public class RoundAndGameResultsTest {
         onView(withId(R.id.btGoNextPlayers)).perform(click());
         onView(withId(R.id.btNextWords)).perform(click());
 
-        onView(withId(R.id.btNextSettings)).perform(click());
+        onView(withId(R.id.btCompletedSettings)).perform(click());
 
         while (!(Utils.Companion.getCurrentActivity(InstrumentationRegistry.getInstrumentation())
                 instanceof RoundActivity)) {

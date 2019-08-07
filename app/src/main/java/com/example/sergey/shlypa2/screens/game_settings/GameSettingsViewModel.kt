@@ -27,14 +27,19 @@ class GameSettingsViewModel(application: Application,
 
     private var settings = settingsProvider.getSettings()
 
-    val typesLiveData = MutableLiveData<List<Type>>()
-    val selectedType = MutableLiveData<Type>()
+    val waitLoadingTypes = MutableLiveData<Boolean>()
+
+    private lateinit var typesList: List<Type>
+    private lateinit var typeSelected: Type
 
     val startNextActivity = SingleLiveEvent<StartActivity>()
 
     init {
         loadTypes()
     }
+
+    fun getTypesList() = typesList.toList()
+    fun getTypeSelected() = typeSelected
 
     fun getTime(): Int = settings.time
     fun setTime(i: Int) {
@@ -88,14 +93,18 @@ class GameSettingsViewModel(application: Application,
     }
 
     private fun loadTypes() {
-        launch {
+        launch(dispatchers.uiDispatcher) {
             val types = withContext(dispatchers.ioDispatcher) {
                 dataProvider.getTypes()
             }
-            typesLiveData.value = types
+            typesList = types
 
             val typeId = settings.typeId
-            selectedType.value = types.first { it.id == typeId }
+
+            typeSelected = types.first { it.id == typeId }
+
+            waitLoadingTypes.value = true
+
         }
     }
 

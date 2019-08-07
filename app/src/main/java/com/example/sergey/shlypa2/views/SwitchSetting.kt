@@ -48,4 +48,9 @@ constructor(context: Context,
         return this
     }
 
+    fun setTitle(title:String):SwitchSetting{
+        this.title.text = title
+        return this
+    }
+
 }

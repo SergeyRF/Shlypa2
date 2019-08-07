@@ -4,21 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.TypesArrayAdapter
-import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.extensions.setVisibility
 import com.example.sergey.shlypa2.screens.game.RoundActivity
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemSeekBar
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemSpinner
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemSwitch
 import com.example.sergey.shlypa2.screens.words_in.WordsInActivity
-import kotlinx.android.synthetic.main.activity_game_settings.*
+import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.items.IFlexible
+import kotlinx.android.synthetic.main.activity_game_settings.btCompletedSettings
+import kotlinx.android.synthetic.main.activity_game_settings_new.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -37,10 +38,12 @@ class GameSettingsActivity : AppCompatActivity() {
 
     private val repeat by extraNotNull(REPEAT_GAME, false)
 
+    private val adapter = FlexibleAdapter(emptyList())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game_settings)
+        setContentView(R.layout.activity_game_settings_new)
 
         initToolbar()
 
@@ -49,22 +52,92 @@ class GameSettingsActivity : AppCompatActivity() {
             return
         }
 
-        initSeekbar()
-        initSwitches()
+        rvSettings.layoutManager = LinearLayoutManager(this)
+        rvSettings.adapter = adapter
 
         initSubscription()
 
-        btNextSettings.setOnClickListener {
+        btCompletedSettings.setOnClickListener {
             viewModel.onFinish()
         }
 
     }
 
-    private fun initSubscription() {
-        viewModel.typesLiveData.observeSafe(this) { onTypes(it) }
+    private fun initItems() {
 
-        viewModel.selectedType.observeSafe(this) {
-            onSelectedType(it)
+        val timeItem = ItemSeekBar(
+                getString(R.string.timeN),
+                Constants.MIN_ROUND_TIME,
+                Constants.MAX_ROUMD_TIME,
+                viewModel.getTime())
+        { progress ->
+            viewModel.setTime(progress)
+        }
+
+        val wordPointItem = ItemSeekBar(
+                getString(R.string.wordN),
+                Constants.MIN_WORDS_COUNT,
+                Constants.MAX_WORDS_COUNT,
+                viewModel.getWordsCount())
+        { progress ->
+            viewModel.setWordsLD(progress)
+        }
+
+        val autoFillHatItem = ItemSwitch(
+                getString(R.string.add_all_word_random),
+                viewModel.getAllWorldRandom()
+        ) { isChecked ->
+            viewModel.setAllWorldRandom(isChecked)
+        }
+
+        val allowRandomWord = ItemSwitch(
+                getString(R.string.allow_random),
+                viewModel.getAllowRandom()
+        ) { allowRandom ->
+            viewModel.setAllowRandom(allowRandom)
+        }
+
+        val difficultItem = ItemSpinner(
+                getString(R.string.dificult),
+                viewModel.getTypesList(),
+                viewModel.getTypeSelected()
+        ) { type ->
+            viewModel.setDifficulty(type)
+        }
+
+        val penaltyItem = ItemSwitch(
+                getString(R.string.penalty_include),
+                viewModel.getPenaltyInclude()
+        ) { penalty ->
+            viewModel.setPenaltyInclude(penalty)
+        }
+
+        val penaltyPointItem = ItemSeekBar(
+                getString(R.string.penalty_point),
+                Constants.MIN_MINUS_BAL,
+                Constants.MAX_MINUS_BAL,
+                viewModel.getPenaltyPoint()
+        ) { penaltyPoint ->
+            viewModel.setPenaltyPoint(penaltyPoint)
+        }
+
+        val items = mutableListOf<IFlexible<*>>(
+                timeItem,
+                wordPointItem,
+                autoFillHatItem,
+                allowRandomWord,
+                difficultItem,
+                penaltyItem,
+                penaltyPointItem)
+
+        adapter.clear()
+        adapter.addItems(0, items)
+
+    }
+
+    private fun initSubscription() {
+        viewModel.waitLoadingTypes.observeSafe(this) {
+            initItems()
         }
 
         viewModel.startNextActivity.observeSafe(this) {
@@ -80,67 +153,6 @@ class GameSettingsActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun onTypes(types: List<Type>) {
-        val typesAdapter = TypesArrayAdapter(this, android.R.layout.simple_list_item_1, types.toTypedArray())
-        spinnerDificult.adapter = typesAdapter
-
-        spinnerDificult.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                viewModel.setDifficulty(types[position])
-            }
-        }
-    }
-
-    private fun onSelectedType(type: Type) {
-        val position = (spinnerDificult.adapter as? TypesArrayAdapter)?.getPosition(type)
-        position?.let { spinnerDificult.setSelection(it) }
-    }
-
-
-    private fun initSwitches() {
-        switchSettingAllowRandom.setChecked(viewModel.getAllowRandom())
-                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
-                    viewModel.setAllowRandom(isChecked)
-                    viewDifficult.setVisibility(viewModel.getAllowRandom())
-                })
-        viewDifficult.setVisibility(viewModel.getAllowRandom())
-
-        ssPenalty.setChecked(viewModel.getPenaltyInclude())
-                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
-                    viewModel.setPenaltyInclude(isChecked)
-                    ssbPenalty.setVisibility(isChecked)
-                })
-        ssbPenalty.setVisibility(viewModel.getPenaltyInclude())
-
-        switchSettingAddAllWordRandom.setChecked(viewModel.getAllWorldRandom())
-                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
-                    viewModel.setAllWorldRandom(isChecked)
-                })
-    }
-
-    private fun initSeekbar() {
-
-        ssbTurnTime.setValues(Constants.MIN_ROUND_TIME, Constants.MAX_ROUMD_TIME)
-                .setProgress(viewModel.getTime())
-                .setProgressListener { progress ->
-                    viewModel.setTime(progress)
-                }
-
-        ssbWordsCount.setValues(Constants.MIN_WORDS_COUNT, Constants.MAX_WORDS_COUNT)
-                .setProgress(viewModel.getWordsCount())
-                .setProgressListener { progress ->
-                    viewModel.setWordsLD(progress)
-                }
-
-        ssbPenalty.setValues(Constants.MIN_MINUS_BAL, Constants.MAX_MINUS_BAL)
-                .setProgress(viewModel.getPenaltyPoint())
-                .setProgressListener { progress ->
-                    viewModel.setPenaltyPoint(progress)
-                }
     }
 
     private fun onStartActivity(activity: AppCompatActivity) {

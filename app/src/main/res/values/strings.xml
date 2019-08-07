@@ -16,8 +16,8 @@
     <string name="team_rename">Team name</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="minus_bal">Penalty for skipped words</string>
-    <string name="how_minus_bal">Penalty points</string>
+    <string name="penalty_include">Penalty for skipped words</string>
+    <string name="penalty_point">Penalty points</string>
     <string name="player_game">Explains player:</string>
     <string name="game_winner">The winner is</string>
     <string name="game_resalt">Game results</string>

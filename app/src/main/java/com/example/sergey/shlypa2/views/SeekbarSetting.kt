@@ -75,5 +75,10 @@ constructor(context: Context,
         return this
     }
 
+    fun setTitle(title:String):SeekbarSetting{
+        this.title.text = title
+        return this
+    }
+
 
 }

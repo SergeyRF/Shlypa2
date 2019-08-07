@@ -102,7 +102,6 @@
                 android:textSize="@dimen/text_settings"
                 app:layout_constraintBottom_toBottomOf="@+id/viewDifficult"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/spinnerDificult"
                 app:layout_constraintTop_toTopOf="@+id/viewDifficult" />
 
             <Spinner
@@ -132,7 +131,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view4"
-                app:switch_setting_title="@string/minus_bal" />
+                app:switch_setting_title="@string/penalty_include" />
 
             <View
                 android:id="@+id/view5"
@@ -151,7 +150,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view5"
-                app:seek_setting_title="@string/how_minus_bal" />
+                app:seek_setting_title="@string/penalty_point" />
 
             <View
                 android:id="@+id/view6"
@@ -186,7 +185,7 @@
 
 
     <Button
-        android:id="@+id/btNextSettings"
+        android:id="@+id/btCompletedSettings"
         style="@style/btNextStyle"
         android:layout_gravity="bottom"
         android:text="@string/play"
