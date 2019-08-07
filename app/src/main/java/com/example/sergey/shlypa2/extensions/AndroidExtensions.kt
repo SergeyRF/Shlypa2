@@ -2,6 +2,8 @@ package com.example.sergey.shlypa2.extensions
 
 import android.app.Activity
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 
@@ -13,6 +15,12 @@ fun Context.runOnceEver(prefKey: String, block: () -> Unit) {
                 .putBoolean(prefKey, true)
                 .apply()
     }
+}
+
+fun AppCompatActivity.dismissDialogFragment(tag: String) {
+    (supportFragmentManager
+            .findFragmentByTag(tag) as? DialogFragment)
+            ?.dismissAllowingStateLoss()
 }
 
 inline fun <reified T: Any> Activity.extra(key: String, default: T? = null) = lazy {

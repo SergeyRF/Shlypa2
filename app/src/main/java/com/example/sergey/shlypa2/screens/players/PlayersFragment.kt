@@ -1,15 +1,10 @@
 package com.example.sergey.shlypa2.screens.players
 
 
-import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -24,15 +19,11 @@ import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
-import com.example.sergey.shlypa2.screens.players.dialog.SelectPlayerDialogFragment
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.takusemba.spotlight.OnTargetStateChangedListener
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImage.ActivityBuilder
-import com.theartofdev.edmodo.cropper.CropImageView
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_players.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -81,10 +72,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         rvPlayers.adapter = playersAdapter
 
         civPlayerAvatar.setOnClickListener {
-            val dialog = AvatarSelectDialog(requireContext(), viewModel.listOfAvatars)
-            dialog.onSelect = dialogOnSelect
-            dialog.onSelectCustom = getCustomAvatar
-            dialog.show()
+            viewModel.onChangeAvatarClicked()
         }
 
         etName.setOnEditorActionListener { _, actionId, _ ->
@@ -112,7 +100,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             viewModel.addRandomPlayer()
         }
 
-        fabPlayerUser.setOnClickListener{
+        fabPlayerUser.setOnClickListener {
             viewModel.onAddFromSavedClicked()
         }
     }
@@ -125,23 +113,6 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         viewModel.avatarLiveData.observeSafe(this) {
             showAvatar(it)
         }
-
-        viewModel.playersCommandLiveData.observeSafe(this) {
-            when(it) {
-                PlayersViewModel.Command.SHOW_SELECT_PLAYER_DIALOG -> showPlayerSelectDialog()
-                else -> {}
-            }
-        }
-    }
-
-    private fun showPlayerSelectDialog() {
-        val dialog = SelectPlayerDialogFragment()
-        dialog.show(requireFragmentManager(), "SelectPlayer")
-    }
-
-    private val dialogOnSelect: (String) -> Unit = { fileName ->
-        Timber.d("avatar select $fileName")
-        showAvatar(fileName)
     }
 
     private fun addPlayer() {
@@ -184,7 +155,6 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                 .load(ImagesHelper.smallImagePathPlayer(fileName, requireContext()))
                 .apply(avatarOptions)
                 .into(civPlayerAvatar)
-        viewModel.addImage(fileName)
     }
 
     private fun runSpotlight() {
@@ -242,69 +212,5 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         }
     }
 
-    //Load custom avatar
-
-    private val getCustomAvatar: () -> Unit = {
-        startCropImageActivity()
-    }
-
-    private fun setAvatarCustom(imageUri: Uri) {
-        Glide.with(this)
-                .load(imageUri)
-                .apply(avatarOptions)
-                .into(civPlayerAvatar)
-        //viewModel.addImage(imageUri.toString(), AvatarType.USER)
-        viewModel.addImage(imageUri)
-    }
-
-    private fun startCropImageActivity(imageUri: Uri? = null) {
-        val cropImage: ActivityBuilder = if (imageUri != null) {
-            CropImage.activity(imageUri)
-        } else {
-            CropImage.activity()
-        }
-        cropImage
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setAspectRatio(150, 150)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .start(requireContext(), this)
-
-
-    }
-
-    private var mCropImageUri: Uri? = null
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data != null) {
-            when (requestCode) {
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                    val result = CropImage.getActivityResult(data)
-                    if (resultCode == Activity.RESULT_OK) {
-                        val resultUri = result.uri
-                        setAvatarCustom(resultUri)
-                    } else {
-                        if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                            Timber.e(result.error)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.isNotEmpty()
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCropImageActivity(mCropImageUri)
-            } else {
-                //todo require refactoring
-                Toast.makeText(requireContext(),
-                        "Cancelling, required permissions are not granted",
-                        Toast.LENGTH_LONG)
-                        .show()
-            }
-        }
-    }
 
 }
