@@ -28,7 +28,7 @@ class GameSettingsViewModel(application: Application,
     private var settings = settingsProvider.getSettings()
 
     val typesLiveData = MutableLiveData<List<Type>>()
-    var selectedType: Type? = null
+    val selectedType = MutableLiveData<Type>()
 
     val startNextActivity = SingleLiveEvent<StartActivity>()
 
@@ -63,9 +63,9 @@ class GameSettingsViewModel(application: Application,
         settings.minusBal = b
     }
 
-    fun getNumberMinusBal(): Int = settings.numberMinusBal
-    fun setNumberMinusBal(i: Int) {
-        settings.numberMinusBal = i
+    fun getPenaltyPoint(): Int = settings.penaltyPoint
+    fun setPenaltyPoint(i: Int) {
+        settings.penaltyPoint = i
     }
 
     fun getAllWorldRandom() = settings.all_word_random
@@ -79,7 +79,7 @@ class GameSettingsViewModel(application: Application,
                 Game.getSettings().allowRandomWords,
                 Game.getSettings().typeName,
                 true)
-        startNextActivity.value = StartActivity.WORLD_IN
+        startNextActivity.value = StartActivity.WORD_IN
     }
 
     fun savedSettings() {
@@ -93,11 +93,14 @@ class GameSettingsViewModel(application: Application,
                 dataProvider.getTypes()
             }
             typesLiveData.value = types
+
+            val typeId = settings.typeId
+            selectedType.value = types.first { it.id == typeId }
         }
     }
 
     enum class StartActivity {
-        WORLD_IN,
+        WORD_IN,
         START_GAME
     }
 }

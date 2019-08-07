@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sergey.shlypa2.Constants
@@ -43,7 +45,79 @@ class GameSettingsActivity : AppCompatActivity() {
 
         if (repeat) {
             viewModel.onFinish()
+            return
         }
+
+        initSeekbar()
+        initSwitches()
+
+        initSubscription()
+
+        btNextSettings.setOnClickListener {
+            viewModel.onFinish()
+        }
+
+    }
+
+    private fun initSubscription() {
+        viewModel.typesLiveData.observeSafe(this) { onTypes(it) }
+
+        viewModel.selectedType.observeSafe(this) {
+            onSelectedType(it)
+        }
+
+        viewModel.startNextActivity.observeSafe(this) {
+            when (it) {
+                GameSettingsViewModel.StartActivity.START_GAME -> {
+                    onStartActivity(RoundActivity())
+                }
+                GameSettingsViewModel.StartActivity.WORD_IN -> {
+                    onStartActivity(WordsInActivity())
+                }
+                else -> {
+                    Timber.e(it.toString())
+                }
+            }
+        }
+    }
+
+    private fun onTypes(types: List<Type>) {
+        val typesAdapter = TypesArrayAdapter(this, android.R.layout.simple_list_item_1, types.toTypedArray())
+        spinnerDificult.adapter = typesAdapter
+
+        spinnerDificult.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.setDifficulty(types[position])
+            }
+        }
+    }
+
+    private fun onSelectedType(type: Type) {
+        val position = (spinnerDificult.adapter as? TypesArrayAdapter)?.getPosition(type)
+        position?.let { spinnerDificult.setSelection(it) }
+    }
+
+
+    private fun initSwitches() {
+        switchSettingAllowRandom.setChecked(viewModel.getAllowRandom())
+                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                    viewModel.setAllowRandom(isChecked)
+                })
+
+        ssPenalty.setChecked(viewModel.getMinusBal())
+                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                    viewModel.setMinusBal(isChecked)
+                })
+
+        switchSettingAddAllWordRandom.setChecked(viewModel.getAllWorldRandom())
+                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                    viewModel.setAllWorldRandom(isChecked)
+                })
+    }
+
+    private fun initSeekbar() {
 
         ssbTurnTime.setValues(Constants.MIN_ROUND_TIME, Constants.MAX_ROUMD_TIME)
                 .setProgress(viewModel.getTime())
@@ -58,74 +132,10 @@ class GameSettingsActivity : AppCompatActivity() {
                 }
 
         ssbPenalty.setValues(Constants.MIN_MINUS_BAL, Constants.MAX_MINUS_BAL)
-                .setProgress(viewModel.getNumberMinusBal())
+                .setProgress(viewModel.getPenaltyPoint())
                 .setProgressListener { progress ->
-                    viewModel.setNumberMinusBal(progress)
+                    viewModel.setPenaltyPoint(progress)
                 }
-
-        onSwitchAllowRandom()
-        onBalSwitch()
-        onAllRandomSwitch()
-
-        btNextSettings.setOnClickListener {
-            acceptSettings()
-        }
-
-        viewModel.typesLiveData.observeSafe(this) { onTypes(it) }
-
-        viewModel.startNextActivity.observeSafe(this) {
-            when (it) {
-                GameSettingsViewModel.StartActivity.START_GAME -> {
-                    onStartActivity(RoundActivity())
-                }
-                GameSettingsViewModel.StartActivity.WORLD_IN -> {
-                    onStartActivity(WordsInActivity())
-                }
-                else -> {
-                    Timber.e(it.toString())
-                }
-            }
-        }
-    }
-
-    private fun onTypes(types: List<Type>) {
-        val typesAdapter = TypesArrayAdapter(this, android.R.layout.simple_list_item_1, types.toTypedArray())
-        spinnerDificult.adapter = typesAdapter
-        viewModel.selectedType?.let { onSelectedType(it) }
-    }
-
-    private fun acceptSettings() {
-        (spinnerDificult.selectedItem as? Type)?.let {
-            viewModel.setDifficulty(it)
-        }
-        viewModel.onFinish()
-    }
-
-    private fun onSelectedType(type: Type) {
-        (spinnerDificult.adapter as? TypesArrayAdapter)?.getPosition(type)
-                ?.let { spinnerDificult.setSelection(it) }
-    }
-
-    private fun onSwitchAllowRandom() {
-        switchSettingAllowRandom.setChecked(viewModel.getAllowRandom())
-                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
-                    viewModel.setAllowRandom(isChecked)
-                })
-    }
-
-    private fun onBalSwitch() {
-        ssPenalty.setChecked(viewModel.getMinusBal())
-                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
-                    viewModel.setMinusBal(isChecked)
-                })
-    }
-
-    private fun onAllRandomSwitch() {
-        switchSettingAddAllWordRandom.setChecked(viewModel.getAllWorldRandom())
-                .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
-                    viewModel.setAllWorldRandom(isChecked)
-                })
-
     }
 
     private fun onStartActivity(activity: AppCompatActivity) {

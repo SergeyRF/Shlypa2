@@ -23,7 +23,7 @@ class Settings(var time: Int = 30,
                var allowRandomWords: Boolean = true,
                var returnSkipedToHat: Boolean = true,
                var minusBal: Boolean = false,
-               var numberMinusBal: Int = 1,
+               var penaltyPoint: Int = 1,
                var typeName: String = "",
                var all_word_random: Boolean = false)
 
