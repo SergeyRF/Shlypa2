@@ -18,6 +18,7 @@ import com.example.sergey.shlypa2.extensions.dismissDialogFragment
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
+import com.example.sergey.shlypa2.screens.players.PlayersViewModel.Command
 import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
 import com.example.sergey.shlypa2.screens.players.dialog.RenameDialogFragment
 import com.example.sergey.shlypa2.screens.players.dialog.SelectPlayerDialogFragment
@@ -59,21 +60,18 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.teamRenameLiveData.observeSafe(this) {
-            showTeamRenameDialog(it)
-        }
-
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             startPlayersFragment()
         }
     }
 
-    private fun onCommand(command: PlayersViewModel.Command) {
+    private fun onCommand(command: Command) {
         when (command) {
-            PlayersViewModel.Command.START_SETTINGS -> startSettings()
-            PlayersViewModel.Command.START_TEAMS -> startTeamsFragment()
-            PlayersViewModel.Command.SHOW_SELECT_PLAYER_DIALOG -> showPlayerSelectDialog()
-            PlayersViewModel.Command.SHOW_SELECT_AVATAR_DIALOG -> showAvatarDialog()
+            Command.StartSettings -> startSettings()
+            Command.StartTeams -> startTeamsFragment()
+            Command.ShowSelectPlayerDialog -> showPlayerSelectDialog()
+            Command.ShowSelectAvatarDialog -> showAvatarDialog()
+            is Command.ShowTeamRenameDialog -> showTeamRenameDialog(command.team)
         }
     }
 
