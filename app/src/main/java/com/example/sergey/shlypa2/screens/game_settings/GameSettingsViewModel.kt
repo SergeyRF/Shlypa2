@@ -58,9 +58,9 @@ class GameSettingsViewModel(application: Application,
         settings.allowRandomWords = b
     }
 
-    fun getMinusBal(): Boolean = settings.minusBal
-    fun setMinusBal(b: Boolean) {
-        settings.minusBal = b
+    fun getPenaltyInclude(): Boolean = settings.penaltyInclude
+    fun setPenaltyInclude(b: Boolean) {
+        settings.penaltyInclude = b
     }
 
     fun getPenaltyPoint(): Int = settings.penaltyPoint

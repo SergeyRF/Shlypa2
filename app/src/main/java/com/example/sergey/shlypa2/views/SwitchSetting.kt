@@ -43,6 +43,9 @@ constructor(context: Context,
         return this
     }
 
-    fun setOnCheckedListener(listner: CompoundButton.OnCheckedChangeListener?) = switch.setOnCheckedChangeListener(listner)
+    fun setOnCheckedListener(listener: CompoundButton.OnCheckedChangeListener?) : SwitchSetting  {
+        switch.setOnCheckedChangeListener(listener)
+        return this
+    }
 
 }

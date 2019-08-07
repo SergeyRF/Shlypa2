@@ -15,6 +15,7 @@ import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.extensions.setVisibility
 import com.example.sergey.shlypa2.screens.game.RoundActivity
 import com.example.sergey.shlypa2.screens.words_in.WordsInActivity
 import kotlinx.android.synthetic.main.activity_game_settings.*
@@ -104,12 +105,16 @@ class GameSettingsActivity : AppCompatActivity() {
         switchSettingAllowRandom.setChecked(viewModel.getAllowRandom())
                 .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
                     viewModel.setAllowRandom(isChecked)
+                    viewDifficult.setVisibility(viewModel.getAllowRandom())
                 })
+        viewDifficult.setVisibility(viewModel.getAllowRandom())
 
-        ssPenalty.setChecked(viewModel.getMinusBal())
+        ssPenalty.setChecked(viewModel.getPenaltyInclude())
                 .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
-                    viewModel.setMinusBal(isChecked)
+                    viewModel.setPenaltyInclude(isChecked)
+                    ssbPenalty.setVisibility(isChecked)
                 })
+        ssbPenalty.setVisibility(viewModel.getPenaltyInclude())
 
         switchSettingAddAllWordRandom.setChecked(viewModel.getAllWorldRandom())
                 .setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->

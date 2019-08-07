@@ -138,7 +138,7 @@ public class RoundAndGameResultsTest {
         int expectedScores = 0;
         for (boolean answer : listOfAnswers) {
             if (answer) expectedScores++;
-            else if (Game.INSTANCE.getSettings().getMinusBal()) {
+            else if (Game.INSTANCE.getSettings().getPenaltyInclude()) {
                 expectedScores -= Game.INSTANCE.getSettings().getPenaltyPoint();
             }
         }

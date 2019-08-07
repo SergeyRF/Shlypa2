@@ -52,7 +52,7 @@ class Round(words: List<Word>) {
             if (it.right) {
                 playerScores++
             } else {
-                if(Game.getSettings().minusBal) {
+                if(Game.getSettings().penaltyInclude) {
                     playerScores -= Game.getSettings().penaltyPoint
                 }
 
@@ -84,7 +84,7 @@ class Round(words: List<Word>) {
             if(it.right) {
                 scores++
             } else {
-                if(Game.getSettings().minusBal) {
+                if(Game.getSettings().penaltyInclude) {
                     scores -= Game.getSettings().penaltyPoint
                 }
 
