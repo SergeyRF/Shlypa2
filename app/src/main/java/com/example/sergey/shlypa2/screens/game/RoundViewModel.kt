@@ -19,9 +19,6 @@ import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import kotlin.collections.List
-import kotlin.collections.forEach
-import kotlin.collections.mutableListOf
 import kotlin.collections.set
 
 
@@ -97,7 +94,7 @@ class RoundViewModel(
         }
     }
 
-    fun loadHintTeam() {
+    fun showScoresTable() {
         commandCallback.value = Command.SHOW_HINT_TEAM_TABLE
     }
 

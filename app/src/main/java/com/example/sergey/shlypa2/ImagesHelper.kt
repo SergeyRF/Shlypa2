@@ -25,6 +25,10 @@ object ImagesHelper {
         return "file:///android_asset/$name"
     }
 
+    fun getRoundImage(image: String): String {
+        return imageNameToUrl("round_avatars/$image")
+    }
+
     private fun imageCustomNameToUrl(name: String, context: Context): String {
         val filesDir = context.filesDir
         return Uri.fromFile(filesDir).toString() + name//"file:///android_asset/$name"
