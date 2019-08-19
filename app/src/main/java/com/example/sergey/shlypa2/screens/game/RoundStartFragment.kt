@@ -8,9 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.ImagesHelper
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.observeSafe
-import com.example.sergey.shlypa2.utils.Functions
 import kotlinx.android.synthetic.main.fragment_round_start.*
-import kotlinx.android.synthetic.main.fragment_rules.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -28,10 +26,10 @@ class RoundStartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.roundLiveData.observeSafe(this) { round ->
             tvRoundName.setText(round.name)
-            tvRules.setText(round.rules)
+            tvRoundRules.setText(round.rules)
 
             Glide.with(this)
-                    .load(Functions.imageNameToUrl(ImagesHelper.getRoundImage(round.image)))
+                    .load(ImagesHelper.getRoundImage(round.image))
                     .into(civRulesAvatar)
 
         }

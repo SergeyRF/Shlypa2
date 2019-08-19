@@ -48,18 +48,18 @@ class TeamHolder(val view: View) : BaseHolder(view) {
 }
 
 class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
-    private val teamName: TextView = view.findViewById(R.id.tvTeamName)
+    /*private val teamName: TextView = view.findViewById(R.id.tvTeamName)
     private val teemScores: TextView = view.findViewById(R.id.tvTeamScores)
-    private val listPlayers: LinearLayout = view.findViewById(R.id.linearPlayers)
+    private val listPlayers: LinearLayout = view.findViewById(R.id.linearPlayers)*/
 
     fun bind(scoredTeam: TeamWithScores) {
-        teamName.text = scoredTeam.team.name
+        /*teamName.text = scoredTeam.team.name
         teemScores.text = scoredTeam.getScores().toString()
 
         listPlayers.removeAllViews()
         listPlayers.addView(HolderInflater.inflatePlayers(scoredTeam.team.players,
                 view.context,
-                scoredTeam.scoresMap))
+                scoredTeam.scoresMap))*/
     }
 }
 
