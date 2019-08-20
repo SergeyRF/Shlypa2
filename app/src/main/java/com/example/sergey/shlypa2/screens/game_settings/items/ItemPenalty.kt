@@ -2,7 +2,6 @@ package com.example.sergey.shlypa2.screens.game_settings.items
 
 
 import android.view.View
-import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.setVisibility
@@ -27,10 +26,10 @@ class ItemPenalty(private val penalty: ItemPenaltySettings) : AbstractFlexibleIt
                     .setChecked(penalty.penaltyCheck)
                     .setOnCheckedListener { isChecked ->
                         penalty.penaltyListener.invoke(isChecked)
-                        seekBarView.setVisibility(isChecked)
+                        penaltySeekBar.setVisibility(isChecked)
                     }
 
-            seekBarView.setVisibility(penalty.penaltyCheck)
+            penaltySeekBar.setVisibility(penalty.penaltyCheck)
             penaltySeekBar.setValues(penalty.min, penalty.max)
                     .setProgress(penalty.progress)
                     .setProgressListener {
@@ -52,7 +51,6 @@ class ItemPenalty(private val penalty: ItemPenaltySettings) : AbstractFlexibleIt
 
         val penaltySwitch: SwitchSetting = view.findViewById(R.id.itemSwitchSettings)
         val penaltySeekBar: SeekbarSetting = view.findViewById(R.id.itemSeekBar)
-        val seekBarView: Group = view.findViewById(R.id.viewSeekBar)
     }
 }
 

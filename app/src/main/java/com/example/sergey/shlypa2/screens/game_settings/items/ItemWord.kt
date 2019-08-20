@@ -31,26 +31,20 @@ class ItemWord(
             switchAllWordRandom.setChecked(word.autoFill)
                     .setOnCheckedListener { isChecked ->
                         word.listenerAutoFill.invoke(isChecked)
-                        viewAllowRandom.setVisibility(!isChecked)
+                        switchAllowRandom.setVisibility(!isChecked)
                         if (isChecked) viewDifficult.setVisibility(false)
                         else viewDifficult.setVisibility(switchAllowRandom.isChecked())
                     }
-            viewAllWordRandom.setOnClickListener {
-                switchAllWordRandom.setChecked(!switchAllWordRandom.isChecked())
-            }
 
-            viewAllowRandom.setVisibility(!switchAllWordRandom.isChecked())
             switchAllowRandom.setChecked(word.allowRandom)
                     .setOnCheckedListener { isChecked ->
                         word.listenerAllowRandom.invoke(isChecked)
                         viewDifficult.setVisibility(isChecked)
                     }
-            viewAllowRandom.setOnClickListener {
-                switchAllowRandom.setChecked(switchAllowRandom.isChecked())
-            }
+                    .setVisibility(!switchAllWordRandom.isChecked())
 
             viewDifficult.setVisibility(switchAllowRandom.isChecked()
-                    && viewAllowRandom.visibility == View.VISIBLE)
+                    && switchAllowRandom.visibility == View.VISIBLE)
             val typesAdapter = TypesArrayAdapter(
                     itemView.context,
                     android.R.layout.simple_list_item_1,
@@ -84,8 +78,6 @@ class ItemWord(
         : FlexibleViewHolder(view, adapter) {
 
         val switchAllWordRandom: SwitchSetting = view.findViewById(R.id.itemSwitchSettings)
-        val viewAllWordRandom: View = view.findViewById(R.id.viewAllRandom)
-        val viewAllowRandom: View = view.findViewById(R.id.viewSwitchAllowRandom)
         val switchAllowRandom: SwitchSetting = view.findViewById(R.id.itemAllowRandom)
         val viewDifficult: Group = view.findViewById(R.id.viewDifficultSub)
         val difficultSpinner: Spinner = view.findViewById(R.id.spinnerDifficult)

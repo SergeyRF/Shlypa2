@@ -43,7 +43,7 @@ constructor(context: Context,
     init {
         LayoutInflater.from(context).inflate(R.layout.setting_seekbar, this, true)
 
-        title = findViewById(R.id.tvTitleSetting)
+        title = findViewById(R.id.tvTitleSwitch)
         count = findViewById(R.id.tvCountSetting)
         seekbar = findViewById(R.id.sbSetting)
 

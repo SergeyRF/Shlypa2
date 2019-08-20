@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.CompoundButton
-import android.widget.LinearLayout
 import android.widget.Switch
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.sergey.shlypa2.R
 
 /**
@@ -15,7 +15,7 @@ import com.example.sergey.shlypa2.R
 class SwitchSetting @JvmOverloads
 constructor(context: Context,
             attrs: AttributeSet? = null,
-            defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
+            defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private var title: TextView
     private var switch: Switch
@@ -23,7 +23,7 @@ constructor(context: Context,
     init {
         LayoutInflater.from(context).inflate(R.layout.switch_setting, this, true)
 
-        title = findViewById(R.id.tvTitleSetting)
+        title = findViewById(R.id.tvTitleSwitch)
         switch = findViewById(R.id.switchSetting)
 
         attrs?.let {
