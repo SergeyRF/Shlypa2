@@ -40,6 +40,7 @@ class RoundViewModel(
     private lateinit var round: Round
     val roundLiveData = MutableLiveData<Round>()
     val rounResultLiveData = MutableLiveData<List<TeamWithScores>>()
+    val scoresSheetLiveData = MutableLiveData<List<TeamWithScores>>()
 
     val wordLiveData = MutableLiveData<Word>()
     //First value - answered, second - skipped
@@ -223,7 +224,6 @@ class RoundViewModel(
     }
 
     fun startTimer() {
-        Timber.d("TESTING startTimer - ticker is $ticker")
         launch {
             ticker?.cancel()
             ticker = ticker(1000, 1000)
@@ -248,6 +248,27 @@ class RoundViewModel(
         }
     }
 
+    fun updateCurrentScoresSheet() {
+        launch {
+            scoresSheetLiveData.value = emptyList()
+            val results = withContext(dispatchers.ioDispatcher) {
+                val currentResults = Game.getGameResults()
+                val roundScores = round.results
+
+                currentResults.forEach {
+                    it.team.players.forEach { player ->
+                        val scores = (roundScores[player.id] ?: 0) + (it.scoresMap[player.id] ?: 0)
+                        it.scoresMap[player.id] = scores
+                    }
+                }
+
+                currentResults
+            }
+
+            scoresSheetLiveData.value = results
+        }
+    }
+
     private fun saveGameState() {
         dataProvider.insertState(Game.state)
     }
@@ -262,22 +283,6 @@ class RoundViewModel(
         SHOW_HINT_TEAM_TABLE,
         SHOW_INTERSTITIAL_ADS,
         EXIT
-    }
 
-    fun loadCurrrentBal(): List<TeamWithScores> {
-        val g = Game.getGameResults()
-        val f = round.results
-
-        g.forEach {
-            val map = it.scoresMap
-            it.team.players.forEach {
-                var scores: Int = f[it.id] ?: 0
-                scores += map[it.id] ?: 0
-                map[it.id] = scores
-            }
-
-        }
-
-        return g
     }
 }
