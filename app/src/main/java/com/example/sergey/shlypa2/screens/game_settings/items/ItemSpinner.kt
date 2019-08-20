@@ -10,6 +10,8 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.TypesArrayAdapter
 import com.example.sergey.shlypa2.beans.Type
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.items.AbstractExpandableHeaderItem
+import eu.davidea.flexibleadapter.items.AbstractExpandableItem
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
@@ -51,7 +53,10 @@ class ItemSpinner(
 
     override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?) = ItemSpinner.ViewHolder(view, adapter)
 
-    override fun equals(other: Any?) = other is ItemSpinner
+    override fun equals(other: Any?): Boolean {
+        other is ItemSpinner
+        return other.toString() == this.toString()
+    }
 
     override fun getLayoutRes() = R.layout.holder_spinner
 
@@ -60,7 +65,9 @@ class ItemSpinner(
 
         val title: TextView = view.findViewById<TextView>(R.id.titleDifficult)
         val spinner: Spinner = view.findViewById<Spinner>(R.id.spinnerDifficult)
+    }
 
-
+    override fun toString(): String {
+        return title
     }
 }

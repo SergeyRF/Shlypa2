@@ -2,10 +2,13 @@ package com.example.sergey.shlypa2.screens.game_settings
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.SettingsProviderImpl
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemPenaltySettings
+import com.example.sergey.shlypa2.screens.game_settings.items.WordItemSettings
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
@@ -38,9 +41,6 @@ class GameSettingsViewModel(application: Application,
         loadTypes()
     }
 
-    fun getTypesList() = typesList.toList()
-    fun getTypeSelected() = typeSelected
-
     fun getTime(): Int = settings.time
     fun setTime(i: Int) {
         settings.time = i
@@ -51,31 +51,41 @@ class GameSettingsViewModel(application: Application,
         settings.word = i
     }
 
-    fun getDifficulty(): Long = settings.typeId
     fun setDifficulty(wordType: Type) {
         Timber.d("$wordType")
         settings.typeId = wordType.id
         settings.typeName = wordType.name
     }
 
-    fun getAllowRandom(): Boolean = settings.allowRandomWords
-    fun setAllowRandom(b: Boolean) {
-        settings.allowRandomWords = b
+    fun getWordsSettings(): WordItemSettings {
+        return WordItemSettings(
+                settings.all_word_random,
+                { isChecked ->
+                    settings.all_word_random = isChecked
+                },
+                settings.allowRandomWords,
+                { allowRandom ->
+                    settings.allowRandomWords = allowRandom
+                },
+                typesList.toList(),
+                typeSelected
+        ) { type ->
+            setDifficulty(type)
+        }
     }
 
-    fun getPenaltyInclude(): Boolean = settings.penaltyInclude
-    fun setPenaltyInclude(b: Boolean) {
-        settings.penaltyInclude = b
-    }
-
-    fun getPenaltyPoint(): Int = settings.penaltyPoint
-    fun setPenaltyPoint(i: Int) {
-        settings.penaltyPoint = i
-    }
-
-    fun getAllWorldRandom() = settings.all_word_random
-    fun setAllWorldRandom(b: Boolean) {
-        settings.all_word_random = b
+    fun getPenalty(): ItemPenaltySettings {
+        return ItemPenaltySettings(
+                settings.penaltyInclude,
+                { penalty ->
+                    settings.penaltyInclude = penalty
+                },
+                Constants.MIN_MINUS_BAL,
+                Constants.MAX_MINUS_BAL,
+                settings.penaltyPoint
+        ) { penaltyPoint ->
+            settings.penaltyPoint = penaltyPoint
+        }
     }
 
     fun onFinish() {
@@ -113,3 +123,5 @@ class GameSettingsViewModel(application: Application,
         START_GAME
     }
 }
+
+

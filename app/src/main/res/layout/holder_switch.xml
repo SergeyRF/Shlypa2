@@ -5,7 +5,7 @@
     android:layout_height="@dimen/settings_margin">
 
     <com.example.sergey.shlypa2.views.SwitchSetting
-        android:id="@+id/itemSwitch"
+        android:id="@+id/itemSwitchSettings"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="20dp"

@@ -43,12 +43,14 @@ constructor(context: Context,
         return this
     }
 
-    fun setOnCheckedListener(listener: CompoundButton.OnCheckedChangeListener?) : SwitchSetting  {
-        switch.setOnCheckedChangeListener(listener)
+    fun setOnCheckedListener(listener: (Boolean) -> Unit): SwitchSetting {
+        switch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+            listener.invoke(isChecked)
+        })
         return this
     }
 
-    fun setTitle(title:String):SwitchSetting{
+    fun setTitle(title: String): SwitchSetting {
         this.title.text = title
         return this
     }

@@ -12,9 +12,9 @@ import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game.RoundActivity
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemPenalty
 import com.example.sergey.shlypa2.screens.game_settings.items.ItemSeekBar
-import com.example.sergey.shlypa2.screens.game_settings.items.ItemSpinner
-import com.example.sergey.shlypa2.screens.game_settings.items.ItemSwitch
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemWord
 import com.example.sergey.shlypa2.screens.words_in.WordsInActivity
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
@@ -83,55 +83,19 @@ class GameSettingsActivity : AppCompatActivity() {
             viewModel.setWordsLD(progress)
         }
 
-        val autoFillHatItem = ItemSwitch(
-                getString(R.string.add_all_word_random),
-                viewModel.getAllWorldRandom()
-        ) { isChecked ->
-            viewModel.setAllWorldRandom(isChecked)
-        }
+        val itemRandom = ItemWord(viewModel.getWordsSettings())
 
-        val allowRandomWord = ItemSwitch(
-                getString(R.string.allow_random),
-                viewModel.getAllowRandom()
-        ) { allowRandom ->
-            viewModel.setAllowRandom(allowRandom)
-        }
-
-        val difficultItem = ItemSpinner(
-                getString(R.string.dificult),
-                viewModel.getTypesList(),
-                viewModel.getTypeSelected()
-        ) { type ->
-            viewModel.setDifficulty(type)
-        }
-
-        val penaltyItem = ItemSwitch(
-                getString(R.string.penalty_include),
-                viewModel.getPenaltyInclude()
-        ) { penalty ->
-            viewModel.setPenaltyInclude(penalty)
-        }
-
-        val penaltyPointItem = ItemSeekBar(
-                getString(R.string.penalty_point),
-                Constants.MIN_MINUS_BAL,
-                Constants.MAX_MINUS_BAL,
-                viewModel.getPenaltyPoint()
-        ) { penaltyPoint ->
-            viewModel.setPenaltyPoint(penaltyPoint)
-        }
+        val itemPenalty = ItemPenalty(viewModel.getPenalty())
 
         val items = mutableListOf<IFlexible<*>>(
                 timeItem,
                 wordPointItem,
-                autoFillHatItem,
-                allowRandomWord,
-                difficultItem,
-                penaltyItem,
-                penaltyPointItem)
+                itemPenalty,
+                itemRandom)
 
         adapter.clear()
         adapter.addItems(0, items)
+        adapter.expandItemsAtStartUp()
 
     }
 
