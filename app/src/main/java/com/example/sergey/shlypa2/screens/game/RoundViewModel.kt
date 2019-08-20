@@ -46,9 +46,11 @@ class RoundViewModel(
     //First value - answered, second - skipped
     val answeredCountLiveData = MutableLiveData<Pair<Int, Int>>()
 
+    val timerStateLiveData = MutableLiveData<Boolean>()
     val timerLiveData = MutableLiveData<Int>()
     var timeLeft = Game.getSettings().time
     private var ticker: ReceiveChannel<Unit>? = null
+    private var timerStarted = true
 
     private var roundFinished = false
 
@@ -223,7 +225,25 @@ class RoundViewModel(
         }
     }
 
-    fun startTimer() {
+    fun toggleTimer() {
+        if(timerStarted) {
+            pauseTimer()
+        } else {
+            startTimer()
+        }
+        timerStarted = !timerStarted
+        timerStateLiveData.value = timerStarted
+    }
+
+    fun onGamePaused() {
+        pauseTimer()
+    }
+
+    fun onGameResumed() {
+        if(timerStarted) startTimer()
+    }
+
+    private fun startTimer() {
         launch {
             ticker?.cancel()
             ticker = ticker(1000, 1000)
@@ -238,7 +258,7 @@ class RoundViewModel(
         }
     }
 
-    fun pauseTimer() {
+    private fun pauseTimer() {
         ticker?.cancel()
     }
 
@@ -283,6 +303,5 @@ class RoundViewModel(
         SHOW_HINT_TEAM_TABLE,
         SHOW_INTERSTITIAL_ADS,
         EXIT
-
     }
 }

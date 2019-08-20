@@ -15,11 +15,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_round_result.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-
-/**
- * A simple [Fragment] subclass.
- */
-class RoundResultFragment : androidx.fragment.app.Fragment() {
+class RoundResultFragment : Fragment() {
 
     private val viewModel: RoundViewModel by sharedViewModel()
 
