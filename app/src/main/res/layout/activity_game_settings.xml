@@ -1,186 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     tools:context="com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity">
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSettings"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.example.sergey.shlypa2.views.SeekbarSetting
-                android:id="@+id/ssbTurnTime"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintBottom_toTopOf="@id/view"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:seek_setting_title="@string/timeN" />
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/settings_margin"
-                android:background="@color/divider_color"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.example.sergey.shlypa2.views.SeekbarSetting
-                android:id="@+id/ssbWordsCount"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintBottom_toTopOf="@id/view2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view"
-                app:seek_setting_title="@string/wordN" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/settings_margin"
-                android:background="@color/divider_color"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
-
-
-            <com.example.sergey.shlypa2.views.SwitchSetting
-                android:id="@+id/switchSettingAllowRandom"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintBottom_toTopOf="@id/view3"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view2"
-                app:switch_setting_title="@string/allow_random" />
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/settings_margin"
-                android:background="@color/divider_color"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-            <TextView
-                android:id="@+id/dificult"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="@string/dificult"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/text_settings"
-                app:layout_constraintBottom_toTopOf="@+id/view4"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/spinnerDificult"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-            <Spinner
-                android:id="@+id/spinnerDificult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:gravity="right"
-                app:layout_constraintBottom_toBottomOf="@+id/dificult"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/dificult" />
-
-            <View
-                android:id="@+id/view4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/settings_margin"
-                android:background="@color/divider_color"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-            <com.example.sergey.shlypa2.views.SwitchSetting
-                android:id="@+id/ssPenalty"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintBottom_toTopOf="@id/view5"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view4"
-                app:switch_setting_title="@string/minus_bal" />
-
-            <View
-                android:id="@+id/view5"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/settings_margin"
-                android:background="@color/divider_color"
-                app:layout_constraintTop_toBottomOf="@+id/view4" />
-
-            <com.example.sergey.shlypa2.views.SeekbarSetting
-                android:id="@+id/ssbPenalty"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintBottom_toTopOf="@id/view6"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view5"
-                app:seek_setting_title="@string/how_minus_bal" />
-
-            <View
-                android:id="@+id/view6"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/settings_margin"
-                android:background="@color/divider_color"
-                app:layout_constraintTop_toBottomOf="@+id/view5" />
-
-            <com.example.sergey.shlypa2.views.SwitchSetting
-                android:id="@+id/switchSettingAddAllWordRandom"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintBottom_toTopOf="@id/view7"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view6"
-                app:switch_setting_title="@string/add_all_word_random" />
-
-            <View
-                android:id="@+id/view7"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/settings_margin"
-                android:background="@color/divider_color"
-                app:layout_constraintTop_toBottomOf="@+id/view6" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
+        app:layout_constraintBottom_toTopOf="@id/btCompletedSettings"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btNextSettings"
+        android:id="@+id/btCompletedSettings"
         style="@style/btNextStyle"
-        android:layout_gravity="bottom"
         android:text="@string/play"
-        app:layout_constraintBottom_toBottomOf="parent" />
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

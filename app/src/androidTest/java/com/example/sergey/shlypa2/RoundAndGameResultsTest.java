@@ -138,8 +138,8 @@ public class RoundAndGameResultsTest {
         int expectedScores = 0;
         for (boolean answer : listOfAnswers) {
             if (answer) expectedScores++;
-            else if (Game.INSTANCE.getSettings().getMinusBal()) {
-                expectedScores -= Game.INSTANCE.getSettings().getNumberMinusBal();
+            else if (Game.INSTANCE.getSettings().getPenaltyInclude()) {
+                expectedScores -= Game.INSTANCE.getSettings().getPenaltyPoint();
             }
         }
 
@@ -179,7 +179,7 @@ public class RoundAndGameResultsTest {
         onView(withId(R.id.btGoNextPlayers)).perform(click());
         onView(withId(R.id.btNextWords)).perform(click());
 
-        onView(withId(R.id.btNextSettings)).perform(click());
+        onView(withId(R.id.btCompletedSettings)).perform(click());
 
         while (!(Utils.Companion.getCurrentActivity(InstrumentationRegistry.getInstrumentation())
                 instanceof RoundActivity)) {

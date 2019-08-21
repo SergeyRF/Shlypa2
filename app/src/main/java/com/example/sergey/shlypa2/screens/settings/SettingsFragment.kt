@@ -47,9 +47,9 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
 
         ssPrefSound.setChecked(soundEnabled)
 
-        ssPrefSound.setOnCheckedListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+        ssPrefSound.setOnCheckedListener{isChecked ->
             preferences[Constants.SOUND_ON_PREF] = isChecked
-        })
+        }
 
         since(Build.VERSION_CODES.LOLLIPOP) {
             //Theme setting

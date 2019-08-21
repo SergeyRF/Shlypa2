@@ -5,15 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.TypesArrayAdapter
-import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game.RoundActivity
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemPenalty
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemSeekBar
+import com.example.sergey.shlypa2.screens.game_settings.items.ItemWord
 import com.example.sergey.shlypa2.screens.words_in.WordsInActivity
+import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.activity_game_settings.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -33,6 +37,8 @@ class GameSettingsActivity : AppCompatActivity() {
 
     private val repeat by extraNotNull(REPEAT_GAME, false)
 
+    private val adapter = FlexibleAdapter(emptyList())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
         super.onCreate(savedInstanceState)
@@ -42,42 +48,74 @@ class GameSettingsActivity : AppCompatActivity() {
 
         if (repeat) {
             viewModel.onFinish()
+            return
         }
 
-        ssbTurnTime.setValues(Constants.MIN_ROUND_TIME, Constants.MAX_ROUMD_TIME)
-        ssbTurnTime.setProgress(viewModel.getTime())
-        ssbTurnTime.seekbarListener = { _, progress, _ ->
+        rvSettings.layoutManager = LinearLayoutManager(this)
+        rvSettings.adapter = adapter
+
+        initSubscription()
+
+        btCompletedSettings.setOnClickListener {
+            viewModel.onFinish()
+        }
+
+    }
+
+    private fun initItems() {
+
+        val timeItem = ItemSeekBar(
+                getString(R.string.timeN),
+                Constants.MIN_ROUND_TIME,
+                Constants.MAX_ROUMD_TIME,
+                viewModel.getTime())
+        { progress ->
             viewModel.setTime(progress)
         }
 
-        ssbWordsCount.setValues(Constants.MIN_WORDS_COUNT, Constants.MAX_WORDS_COUNT)
-        ssbWordsCount.setProgress(viewModel.getWordsCount())
-        ssbWordsCount.seekbarListener = { _, progress, _ ->
+        val wordPointItem = ItemSeekBar(
+                getString(R.string.wordN),
+                Constants.MIN_WORDS_COUNT,
+                Constants.MAX_WORDS_COUNT,
+                viewModel.getWordsCount())
+        { progress ->
             viewModel.setWordsLD(progress)
         }
 
-        ssbPenalty.setValues(Constants.MIN_MINUS_BAL, Constants.MAX_MINUS_BAL)
-        ssbPenalty.setProgress(viewModel.getnumberMinusBal())
-        ssbPenalty.seekbarListener = { _, progress, _ ->
-            viewModel.setnumberMInusBal(progress)
+        val itemRandom = ItemWord(
+                viewModel.getWordsSettings(),
+                { autoFill -> viewModel.setAutoFill(autoFill) },
+                { allowRandom -> viewModel.setAllowRandom(allowRandom) },
+                { type -> viewModel.setDifficulty(type) })
+
+        val itemPenalty = ItemPenalty(
+                viewModel.getPenalty(),
+                { include -> viewModel.setPenaltyInclude(include) },
+                { point -> viewModel.setPenaltyPoint(point) })
+
+        val items = mutableListOf<IFlexible<*>>(
+                timeItem,
+                wordPointItem,
+                itemPenalty,
+                itemRandom)
+
+        adapter.clear()
+        adapter.addItems(0, items)
+        adapter.expandItemsAtStartUp()
+
+    }
+
+    private fun initSubscription() {
+        viewModel.waitLoadingTypes.observeSafe(this) {
+            initItems()
         }
-
-        onSwitch(viewModel.getAllowRandom())
-        onBalSwitch(viewModel.getMinusBal())
-        onAllRandomSwitch(viewModel.getAllWorldRandom())
-
-        btNextSettings.setOnClickListener {
-            acceptSettings()
-        }
-
-        viewModel.typesLiveData.observeSafe(this) { onTypes(it) }
 
         viewModel.startNextActivity.observeSafe(this) {
             when (it) {
                 GameSettingsViewModel.StartActivity.START_GAME -> {
                     onStartActivity(RoundActivity())
                 }
-                GameSettingsViewModel.StartActivity.WORLD_IN -> {
+                GameSettingsViewModel.StartActivity.WORD_IN -> {
                     onStartActivity(WordsInActivity())
                 }
                 else -> {
@@ -85,40 +123,6 @@ class GameSettingsActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun onTypes(types: List<Type>) {
-        val typesAdapter = TypesArrayAdapter(this, android.R.layout.simple_list_item_1, types.toTypedArray())
-        spinnerDificult.adapter = typesAdapter
-        viewModel.selectedType?.let { onSelectedType(it) }
-    }
-
-    private fun acceptSettings() {
-        viewModel.setAllowRandom(switchSettingAllowRandom.isChecked())
-        (spinnerDificult.selectedItem as? Type)?.let {
-            viewModel.setDifficulty(it)
-        }
-        viewModel.setMinusBal(ssPenalty.isChecked())
-        viewModel.setAllWorldRandom(switchSettingAddAllWordRandom.isChecked())
-        viewModel.onFinish()
-    }
-
-    private fun onSelectedType(type: Type) {
-        (spinnerDificult.adapter as? TypesArrayAdapter)?.getPosition(type)
-                ?.let { spinnerDificult.setSelection(it) }
-    }
-
-    private fun onSwitch(b: Boolean) {
-        Timber.d("$b")
-        switchSettingAllowRandom.setChecked(b)
-    }
-
-    private fun onBalSwitch(b: Boolean) {
-        ssPenalty.setChecked(b)
-    }
-
-    private fun onAllRandomSwitch(b: Boolean) {
-        switchSettingAddAllWordRandom.setChecked(b)
     }
 
     private fun onStartActivity(activity: AppCompatActivity) {
@@ -138,5 +142,10 @@ class GameSettingsActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        viewModel.savedSettings()
     }
 }

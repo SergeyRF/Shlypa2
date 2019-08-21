@@ -2,6 +2,9 @@ package com.example.sergey.shlypa2.screens.game_settings
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.example.sergey.shlypa2.Constants
+import com.example.sergey.shlypa2.beans.ItemPenaltySettings
+import com.example.sergey.shlypa2.beans.ItemWordSettings
 import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
@@ -23,93 +26,103 @@ class GameSettingsViewModel(application: Application,
                             private val anal: AnalSender)
     : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
-    private var wordsCount = 0
-    private var wordsTypeId: Long = 0
-    private var allowRandom = false
-    private var minusBal = false
-    private var numberMinusBal = 1
-    private var turnTime = 0
-    private var allWordRandom = false
-
     private val settingsProvider = SettingsProviderImpl(application)
 
     private var settings = settingsProvider.getSettings()
 
-    val typesLiveData = MutableLiveData<List<Type>>()
-    var selectedType: Type? = null
+    val waitLoadingTypes = MutableLiveData<Boolean>()
+
+    private lateinit var typesList: List<Type>
+    private lateinit var typeSelected: Type
 
     val startNextActivity = SingleLiveEvent<StartActivity>()
 
     init {
-        turnTime = settings.time
-        wordsCount = settings.word
-        allowRandom = settings.allowRandomWords
-        wordsTypeId = settings.typeId
-        minusBal = settings.minusBal
-        numberMinusBal = settings.numberMinusBal
-        allWordRandom = settings.all_word_random
         loadTypes()
     }
 
-    fun getTime(): Int = turnTime
+    fun getTime(): Int = settings.time
     fun setTime(i: Int) {
         settings.time = i
     }
 
-    fun getWordsCount(): Int = wordsCount
+    fun getWordsCount(): Int = settings.word
     fun setWordsLD(i: Int) {
         settings.word = i
     }
 
-    fun getDifficulty(): Long = wordsTypeId
     fun setDifficulty(wordType: Type) {
         Timber.d("$wordType")
         settings.typeId = wordType.id
         settings.typeName = wordType.name
     }
 
-    fun getAllowRandom(): Boolean = allowRandom
+    fun setAutoFill(b: Boolean) {
+        settings.all_word_random = b
+    }
+
     fun setAllowRandom(b: Boolean) {
         settings.allowRandomWords = b
     }
 
-    fun getMinusBal(): Boolean = minusBal
-    fun setMinusBal(b: Boolean) {
-        settings.minusBal = b
+    fun setPenaltyInclude(b: Boolean) {
+        settings.penaltyInclude = b
     }
 
-    fun getnumberMinusBal(): Int = numberMinusBal
-    fun setnumberMInusBal(i: Int) {
-        settings.numberMinusBal = i
+    fun setPenaltyPoint(p: Int) {
+        settings.penaltyPoint = p
     }
 
-    fun getAllWorldRandom() = allWordRandom
-    fun setAllWorldRandom(b: Boolean) {
-        settings.all_word_random = b
+    fun getWordsSettings(): ItemWordSettings {
+        return ItemWordSettings(
+                settings.all_word_random,
+                settings.allowRandomWords,
+                typesList.toList(),
+                typeSelected
+        )
+    }
+
+    fun getPenalty(): ItemPenaltySettings {
+        return ItemPenaltySettings(
+                settings.penaltyInclude,
+                Constants.MIN_MINUS_BAL,
+                Constants.MAX_MINUS_BAL,
+                settings.penaltyPoint
+        )
     }
 
     fun onFinish() {
-        Game.setSettings(settings)
-        settingsProvider.writeSettings(settings)
+        savedSettings()
         anal.gameStarted(
                 Game.getSettings().allowRandomWords,
                 Game.getSettings().typeName,
                 true)
-        startNextActivity.value = StartActivity.WORLD_IN
+        startNextActivity.value = StartActivity.WORD_IN
+    }
+
+    fun savedSettings() {
+        Game.setSettings(settings)
+        settingsProvider.writeSettings(settings)
     }
 
     private fun loadTypes() {
-        launch {
+        launch(dispatchers.uiDispatcher) {
             val types = withContext(dispatchers.ioDispatcher) {
                 dataProvider.getTypes()
             }
+            typesList = types
 
-            typesLiveData.value = types
+            val typeId = settings.typeId
+            typeSelected = types.first { typeId == 0L || it.id == typeId }
+
+            waitLoadingTypes.value = true
         }
     }
 
     enum class StartActivity {
-        WORLD_IN,
+        WORD_IN,
         START_GAME
     }
 }
+
+
