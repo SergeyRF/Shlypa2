@@ -3,12 +3,12 @@ package com.example.sergey.shlypa2.screens.game_settings
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.Constants
+import com.example.sergey.shlypa2.beans.ItemPenaltySettings
+import com.example.sergey.shlypa2.beans.ItemWordSettings
 import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.SettingsProviderImpl
-import com.example.sergey.shlypa2.screens.game_settings.items.ItemPenaltySettings
-import com.example.sergey.shlypa2.screens.game_settings.items.WordItemSettings
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
@@ -57,35 +57,38 @@ class GameSettingsViewModel(application: Application,
         settings.typeName = wordType.name
     }
 
-    fun getWordsSettings(): WordItemSettings {
-        return WordItemSettings(
+    fun setAutoFill(b: Boolean) {
+        settings.all_word_random = b
+    }
+
+    fun setAllowRandom(b: Boolean) {
+        settings.allowRandomWords = b
+    }
+
+    fun setPenaltyInclude(b: Boolean) {
+        settings.penaltyInclude = b
+    }
+
+    fun setPenaltyPoint(p: Int) {
+        settings.penaltyPoint = p
+    }
+
+    fun getWordsSettings(): ItemWordSettings {
+        return ItemWordSettings(
                 settings.all_word_random,
-                { isChecked ->
-                    settings.all_word_random = isChecked
-                },
                 settings.allowRandomWords,
-                { allowRandom ->
-                    settings.allowRandomWords = allowRandom
-                },
                 typesList.toList(),
                 typeSelected
-        ) { type ->
-            setDifficulty(type)
-        }
+        )
     }
 
     fun getPenalty(): ItemPenaltySettings {
         return ItemPenaltySettings(
                 settings.penaltyInclude,
-                { penalty ->
-                    settings.penaltyInclude = penalty
-                },
                 Constants.MIN_MINUS_BAL,
                 Constants.MAX_MINUS_BAL,
                 settings.penaltyPoint
-        ) { penaltyPoint ->
-            settings.penaltyPoint = penaltyPoint
-        }
+        )
     }
 
     fun onFinish() {

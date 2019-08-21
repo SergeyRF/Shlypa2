@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.TypesArrayAdapter
+import com.example.sergey.shlypa2.beans.ItemWordSettings
 import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.extensions.setVisibility
 import com.example.sergey.shlypa2.views.SwitchSetting
@@ -15,10 +16,14 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
+import kotlinx.android.synthetic.main.holder_word_settings.view.*
 
 
 class ItemWord(
-        private val word: WordItemSettings
+        private val word: ItemWordSettings,
+        private val listenerAutoFill: (Boolean) -> Unit,
+        private val listenerAllowRandom: (Boolean) -> Unit,
+        private val typeListener: (Type) -> Unit
 ) : AbstractFlexibleItem<ItemWord.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
@@ -30,21 +35,21 @@ class ItemWord(
 
             switchAllWordRandom.setChecked(word.autoFill)
                     .setOnCheckedListener { isChecked ->
-                        word.listenerAutoFill.invoke(isChecked)
+                        listenerAutoFill.invoke(isChecked)
                         switchAllowRandom.setVisibility(!isChecked)
-                        if (isChecked) viewDifficult.setVisibility(false)
+                        if (isChecked) viewDifficult.setVisibility(true)
                         else viewDifficult.setVisibility(switchAllowRandom.isChecked())
                     }
 
             switchAllowRandom.setChecked(word.allowRandom)
                     .setOnCheckedListener { isChecked ->
-                        word.listenerAllowRandom.invoke(isChecked)
+                        listenerAllowRandom.invoke(isChecked)
                         viewDifficult.setVisibility(isChecked)
                     }
                     .setVisibility(!switchAllWordRandom.isChecked())
 
-            viewDifficult.setVisibility(switchAllowRandom.isChecked()
-                    && switchAllowRandom.visibility == View.VISIBLE)
+            viewDifficult.setVisibility(switchAllWordRandom.isChecked() ||
+                    switchAllowRandom.isChecked() && switchAllowRandom.visibility == View.VISIBLE)
             val typesAdapter = TypesArrayAdapter(
                     itemView.context,
                     android.R.layout.simple_list_item_1,
@@ -55,7 +60,7 @@ class ItemWord(
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    word.typeListener.invoke(word.typesList[position])
+                    typeListener.invoke(word.typesList[position])
                 }
             }
 
@@ -77,23 +82,12 @@ class ItemWord(
     class ViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?)
         : FlexibleViewHolder(view, adapter) {
 
-        val switchAllWordRandom: SwitchSetting = view.findViewById(R.id.itemSwitchSettings)
-        val switchAllowRandom: SwitchSetting = view.findViewById(R.id.itemAllowRandom)
-        val viewDifficult: Group = view.findViewById(R.id.viewDifficultSub)
-        val difficultSpinner: Spinner = view.findViewById(R.id.spinnerDifficult)
-
+        val switchAllWordRandom: SwitchSetting = view.itemSwitchSettings
+        val switchAllowRandom: SwitchSetting = view.itemAllowRandom
+        val viewDifficult: Group = view.viewDifficultSub
+        val difficultSpinner: Spinner = view.spinnerDifficult
     }
-
 
 }
 
-class WordItemSettings(
-        val autoFill: Boolean,
-        val listenerAutoFill: (Boolean) -> Unit,
-        val allowRandom: Boolean,
-        val listenerAllowRandom: (Boolean) -> Unit,
-        val typesList: List<Type>,
-        val selectedType: Type,
-        val typeListener: (Type) -> Unit
-)
 

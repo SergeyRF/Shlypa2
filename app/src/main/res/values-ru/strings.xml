@@ -80,7 +80,7 @@
     <string name="allow_random">Разрешить случайные слова</string>
     <string name="add_all_word_random">Автозаполнение шляпы </string>
     <string name="penalty_include">Штрафовать за пропуск</string>
-    <string name="penalty_point">Штрафные балы</string>
+    <string name="penalty_point">Штрафные баллы</string>
 
     <string name="shuffle_teams">Перемешать</string>
     <string name="words_answered">Отвечено: </string>
