@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
@@ -44,7 +45,11 @@ import timber.log.Timber
 /**
  * A simple [Fragment] subclass.
  */
-class PlayersFragment : androidx.fragment.app.Fragment(), AvatarSelectDialogListener {
+class PlayersFragment : androidx.fragment.app.Fragment(),
+        AvatarSelectDialogListener,
+        FlexibleAdapter.OnItemSwipeListener,
+        FlexibleAdapter.OnItemClickListener {
+
 
     val viewModel by sharedViewModel<PlayersViewModel>()
     private val playersAdapter = FlexibleAdapter(emptyList(), this)
@@ -80,8 +85,9 @@ class PlayersFragment : androidx.fragment.app.Fragment(), AvatarSelectDialogList
             stackFromEnd = true
             reverseLayout = true
         }
-        rvPlayers.adapter = playersAdapter
 
+        rvPlayers.adapter = playersAdapter
+        playersAdapter.isSwipeEnabled = true
         civPlayerAvatar.setOnClickListener {
             AvatarSelectDialogFragment.newInstance(viewModel.listOfAvatars, this)
                     .show(requireFragmentManager(), "AVATAR")
@@ -173,14 +179,36 @@ class PlayersFragment : androidx.fragment.app.Fragment(), AvatarSelectDialogList
 
     private fun onPlayersChanged(players: List<Player>) {
         players.map {
-            ItemPlayer(it, renameListener = {
-                viewModel.reNamePlayer(it)
-            }, removeListener = {
-                viewModel.removePlayer(it)
-            })
+            ItemPlayer(it)
         }.apply {
             playersAdapter.updateDataSet(this)
             rvPlayers.scrollToPosition(players.size - 1)
+        }
+    }
+
+    override fun onActionStateChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+
+    }
+
+    override fun onItemSwipe(position: Int, direction: Int) {
+        when (val item = playersAdapter.getItem(position)) {
+            is ItemPlayer -> {
+                viewModel.removePlayer(item.player)
+            }
+            else -> {
+            }
+        }
+    }
+
+    override fun onItemClick(view: View?, position: Int): Boolean {
+        return when (val item = playersAdapter.getItem(position)) {
+            is ItemPlayer -> {
+                viewModel.onClickPlayer(item.player)
+                true
+            }
+            else -> {
+                false
+            }
         }
     }
 

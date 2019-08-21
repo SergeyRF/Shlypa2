@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
@@ -50,6 +51,10 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
 
         viewModel.teamRenameLiveData.observeSafe(this) {
             showTeamRenameDialog(it)
+        }
+
+        viewModel.playerRenameLiveData.observeSafe(this) {
+            showPlayerRenameDialog(it)
         }
 
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
@@ -93,8 +98,30 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         ).show(supportFragmentManager, DIALOG_RENAME_TAG)
     }
 
+    private fun showPlayerRenameDialog(player: Player) {
+        (supportFragmentManager
+                .findFragmentByTag(DIALOG_RENAME_TAG) as? RenameDialogFragment)
+                ?.dismissAllowingStateLoss()
+
+        RenameDialogFragment.newInstance(
+                player.name,
+                getString(R.string.player_rename),
+                player.id,
+                RenameDialogFragment.EntityType.PLAYER
+        ).show(supportFragmentManager, DIALOG_RENAME_TAG)
+    }
+
     override fun onRenamed(newName: String, oldName: String, id: Long, type: RenameDialogFragment.EntityType) {
-        viewModel.renameTeam(newName, oldName)
+        when (type) {
+            RenameDialogFragment.EntityType.TEAM -> {
+                viewModel.renameTeam(newName, oldName)
+            }
+            RenameDialogFragment.EntityType.PLAYER -> {
+                viewModel.renamePlayer(Player(newName, id = id))
+            }
+        }
+
+
     }
 
     private fun startSettings() {
@@ -107,7 +134,7 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
     }
 
     override fun onBackPressed() {
-        if(supportFragmentManager.findFragmentById(R.id.container) is PlayersFragment) {
+        if (supportFragmentManager.findFragmentById(R.id.container) is PlayersFragment) {
             viewModel.onBackPressed()
         }
         super.onBackPressed()

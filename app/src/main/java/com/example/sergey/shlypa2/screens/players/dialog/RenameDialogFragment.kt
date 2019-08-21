@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.extraNotNull
+import com.example.sergey.shlypa2.extensions.hideKeyboard
 import kotlinx.android.synthetic.main.dialog_edit_text.*
 
 class RenameDialogFragment : DialogFragment() {
@@ -62,6 +63,7 @@ class RenameDialogFragment : DialogFragment() {
                 val newName = etDialog.text.toString()
                 listener?.onRenamed(newName, name, entityId, type)
             }
+            etDialog.hideKeyboard()
             dismissAllowingStateLoss()
         }
 

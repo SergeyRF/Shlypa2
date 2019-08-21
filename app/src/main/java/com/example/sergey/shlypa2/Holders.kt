@@ -65,45 +65,14 @@ class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
 }
 
 class PlayerHolder(val view: View) : BaseHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.wordInject)
-    val etName: EditText = view.findViewById(R.id.etRename)
-    val avatarImage: CircleImageView = view.findViewById(R.id.civPlayerAvatar)
-    val delPlayer: ImageButton = view.findViewById(R.id.ib_delPlayer)
+   private val tvName: TextView = view.findViewById(R.id.wordInject)
+   private val avatarImage: CircleImageView = view.findViewById(R.id.civPlayerAvatar)
 
     fun bind(player: Player) {
-        tvName.show()
-        etName.hide()
-        delPlayer.hide()
         tvName.text = player.name
 
         itemView.setOnClickListener {
-            tvName.hide()
-            etName.show()
-            delPlayer.show()
-            etName.setText("")
-            etName.append(player.name)
-            etName.requestFocus()
-            Functions.showKeyboard(view.context, etName)
-        }
-
-        delPlayer.setOnClickListener {
-            listenerTwo?.invoke(player)
-        }
-
-        etName.setOnFocusChangeListener { view, hasFocus ->
-            Timber.d(" focus changed$hasFocus")
-            if (!hasFocus) {
-                if (etName.text.isNotEmpty() && etName.text.toString() != player.name) {
-                    player.name = etName.text.toString()
-                    tvName.text = player.name
-
-                    listener?.invoke(player)
-                }
-
-                tvName.show()
-                etName.hide()
-                delPlayer.hide()
-            }
+            listener?.invoke(player.avatar)
         }
 
         Glide.with(itemView)
