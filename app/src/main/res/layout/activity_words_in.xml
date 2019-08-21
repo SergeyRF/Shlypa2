@@ -58,15 +58,18 @@
         android:id="@+id/rvWords"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingBottom="60dp"
+        android:clipToPadding="false"
         app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btNextWords"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etWord" />
 
     <Button
-        android:id="@+id/btNextWords"
+        android:id="@+id/btNextPlayer"
         style="@style/btNextStyle"
         android:text="@string/play"
         android:textSize="@dimen/text_smoll"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
+

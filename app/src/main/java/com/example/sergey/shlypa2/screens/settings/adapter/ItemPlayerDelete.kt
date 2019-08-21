@@ -14,10 +14,8 @@ import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
 
-class ItemPlayerDelete(playerD: Player,
-                       renameListenerD: (Player) -> Unit = {},
-                       removeListenerD: (Player) -> Unit = {})
-    : ItemPlayer(playerD, renameListenerD, removeListenerD) {
+class ItemPlayerDelete(playerD: Player)
+    : ItemPlayer(playerD) {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
                                 holder: ViewHolder,
@@ -25,13 +23,8 @@ class ItemPlayerDelete(playerD: Player,
                                 payloads: MutableList<Any>) {
         with(holder) {
 
-            tvName.show()
-            etName.hide()
-            delPlayer.show()
             tvName.text = player.name
-            delPlayer.setOnClickListener {
-                removeListener.invoke(player)
-            }
+
             Glide.with(itemView)
                     .load(player.getSmallImage(itemView.context))
                     .apply(RequestOptions()

@@ -14,6 +14,7 @@
     <string name="state_actyvity">Game settings</string>
     <string name="word_actyvity">Words input</string>
     <string name="team_rename">Team name</string>
+    <string name="player_rename">Rename player</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="penalty_include">Penalty for skipped words</string>
@@ -158,6 +159,7 @@
     <string name="teams_need_at_least_two">A team must have at least two players</string>
     <string name="team_reorder">Team reordering</string>
     <string name="team_reorder_guide">Long click and drag player to move it to another team</string>
+
 
 
 </resources>

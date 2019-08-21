@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.DataProvider
@@ -101,11 +102,6 @@ class WordsViewModel(
         anal.wordAdded(false)
     }
 
-    fun reNameWord(word: Word) {
-        //word.type = WordType.USER
-        //fixme
-    }
-
     fun fillWithRandomWords() {
         launch {
             withContext(dispatchers.ioDispatcher) {
@@ -146,16 +142,18 @@ class WordsViewModel(
     }
 
     fun newRandomWord(word: Word) {
+        val index = words.indexOfFirst { it.word == word.word }
         if (randomWords.isEmpty()) {
             launch {
                 withContext(dispatchers.ioDispatcher) {
                     loadRandomWords()
-                    words[words.indexOf(word)] = randomWords.poll()
+
+                    words[index] = randomWords.poll()
                 }
                 updateData()
             }
         } else {
-            words[words.indexOf(word)] = randomWords.poll()
+            words[index] = randomWords.poll()
             updateData()
         }
     }

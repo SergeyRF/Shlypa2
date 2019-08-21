@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.observeSafe
@@ -15,7 +16,9 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_delete_player.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DeletePlayerFragment : Fragment() {
+class DeletePlayerFragment : Fragment(),
+        FlexibleAdapter.OnItemSwipeListener {
+
 
     val viewModel: SettingsViewModel by viewModel()
 
@@ -30,6 +33,7 @@ class DeletePlayerFragment : Fragment() {
 
         rvDeletedPlayers.layoutManager = LinearLayoutManager(requireContext())
         rvDeletedPlayers.adapter = playersAdapter
+        playersAdapter.isSwipeEnabled = true
 
         viewModel.playersLiveData.observeSafe(this) {
             onPlayersChanged(it)
@@ -42,11 +46,22 @@ class DeletePlayerFragment : Fragment() {
             tvNotPlayer.show()
         }
         players.map {
-            ItemPlayerDelete(it, removeListenerD = { player ->
-                viewModel.removePlayer(player)
-            })
+            ItemPlayerDelete(it)
         }.apply {
             playersAdapter.updateDataSet(this)
+        }
+    }
+
+    override fun onActionStateChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+    }
+
+    override fun onItemSwipe(position: Int, direction: Int) {
+        when (val item = playersAdapter.getItem(position)) {
+            is ItemPlayerDelete -> {
+                viewModel.removePlayer(item.player)
+            }
+            else -> {
+            }
         }
     }
 }

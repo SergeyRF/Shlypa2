@@ -1,14 +1,20 @@
 package com.example.sergey.shlypa2.screens.players
 
 
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
@@ -19,11 +25,14 @@ import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
+import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.takusemba.spotlight.OnTargetStateChangedListener
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.fragment_players.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -33,7 +42,11 @@ import timber.log.Timber
 /**
  * A simple [Fragment] subclass.
  */
-class PlayersFragment : androidx.fragment.app.Fragment() {
+class PlayersFragment : androidx.fragment.app.Fragment(),
+        AvatarSelectDialogFragment.AvatarSelectDialogListener,
+        FlexibleAdapter.OnItemSwipeListener,
+        FlexibleAdapter.OnItemClickListener {
+
 
     val viewModel by sharedViewModel<PlayersViewModel>()
     private val playersAdapter = FlexibleAdapter(emptyList(), this)
@@ -69,8 +82,9 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             stackFromEnd = true
             reverseLayout = true
         }
-        rvPlayers.adapter = playersAdapter
 
+        rvPlayers.adapter = playersAdapter
+        playersAdapter.isSwipeEnabled = true
         civPlayerAvatar.setOnClickListener {
             viewModel.onChangeAvatarClicked()
         }
@@ -92,7 +106,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             addPlayer()
         }
 
-        btGoNextPlayers.setOnClickListener {
+        btCreateTeam.setOnClickListener {
             viewModel.onPlayersNextClicked()
         }
 
@@ -113,6 +127,10 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         viewModel.avatarLiveData.observeSafe(this) {
             showAvatar(it)
         }
+    }
+
+    override fun onSelectCustomAvatar() {
+        startCropImageActivity()
     }
 
     private fun addPlayer() {
@@ -139,14 +157,36 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
 
     private fun onPlayersChanged(players: List<Player>) {
         players.map {
-            ItemPlayer(it, renameListener = {
-                viewModel.reNamePlayer(it)
-            }, removeListener = {
-                viewModel.removePlayer(it)
-            })
+            ItemPlayer(it)
         }.apply {
             playersAdapter.updateDataSet(this)
             rvPlayers.scrollToPosition(players.size - 1)
+        }
+    }
+
+    override fun onActionStateChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+
+    }
+
+    override fun onItemSwipe(position: Int, direction: Int) {
+        when (val item = playersAdapter.getItem(position)) {
+            is ItemPlayer -> {
+                viewModel.removePlayer(item.player)
+            }
+            else -> {
+            }
+        }
+    }
+
+    override fun onItemClick(view: View?, position: Int): Boolean {
+        return when (val item = playersAdapter.getItem(position)) {
+            is ItemPlayer -> {
+                viewModel.onClickPlayer(item.player)
+                true
+            }
+            else -> {
+                false
+            }
         }
     }
 
@@ -212,5 +252,64 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
         }
     }
 
+    override fun onSelectAvatar(iconString: String) {
+        Timber.d("avatar select $iconString")
+        showAvatar(iconString)
+    }
 
+    //Load custom avatar
+
+    private fun setAvatarCustom(imageUri: Uri) {
+        viewModel.addImage(imageUri)
+    }
+
+    private fun startCropImageActivity(imageUri: Uri? = null) {
+        val cropImage: CropImage.ActivityBuilder = if (imageUri != null) {
+            CropImage.activity(imageUri)
+        } else {
+            CropImage.activity()
+        }
+        cropImage
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setAspectRatio(150, 150)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(requireContext(), this)
+
+
+    }
+
+    private var mCropImageUri: Uri? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (data != null) {
+            when (requestCode) {
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val result = CropImage.getActivityResult(data)
+                    if (resultCode == Activity.RESULT_OK) {
+                        val resultUri = result.uri
+                        setAvatarCustom(resultUri)
+                    } else {
+                        if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                            Timber.e(result.error)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.isNotEmpty()
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCropImageActivity(mCropImageUri)
+            } else {
+                //todo require refactoring
+                Toast.makeText(requireContext(),
+                        "Cancelling, required permissions are not granted",
+                        Toast.LENGTH_LONG)
+                        .show()
+            }
+        }
+    }
 }

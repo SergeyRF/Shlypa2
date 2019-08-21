@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.extensions.dismissDialogFragment
 import com.example.sergey.shlypa2.extensions.observeSafe
@@ -33,6 +34,7 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
     companion object {
         const val DIALOG_RENAME_TAG = "teams_rename_dialog_tag"
         const val DIALOG_AVATAR_TAG = "dialog_avatar_tag"
+        const val DIALOG_SELECT_PLAYER_TAG = "dialog_select_player"
 
         fun getIntent(context: Context) = Intent(context, PlayersActivity::class.java)
     }
@@ -60,6 +62,10 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
+        viewModel.teamRenameLiveData.observeSafe(this) {
+            showTeamRenameDialog(it)
+        }
+
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             startPlayersFragment()
         }
@@ -72,12 +78,13 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
             Command.ShowSelectPlayerDialog -> showPlayerSelectDialog()
             Command.ShowSelectAvatarDialog -> showAvatarDialog()
             is Command.ShowTeamRenameDialog -> showTeamRenameDialog(command.team)
+            is Command.ShowPlayerRenameDialog -> showPlayerRenameDialog(command.player)
         }
     }
 
     private fun showPlayerSelectDialog() {
-        dismissDialogFragment(DIALOG_RENAME_TAG)
-        SelectPlayerDialogFragment().show(supportFragmentManager, "SelectPlayer")
+        dismissDialogFragment(DIALOG_SELECT_PLAYER_TAG)
+        SelectPlayerDialogFragment().show(supportFragmentManager, DIALOG_SELECT_PLAYER_TAG)
     }
 
     private fun startPlayersFragment() {
@@ -114,8 +121,31 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         ).show(supportFragmentManager, DIALOG_RENAME_TAG)
     }
 
+    private fun showPlayerRenameDialog(player: Player) {
+        (supportFragmentManager
+                .findFragmentByTag(DIALOG_RENAME_TAG) as? RenameDialogFragment)
+                ?.dismissAllowingStateLoss()
+
+        RenameDialogFragment.newInstance(
+                player.name,
+                getString(R.string.player_rename),
+                player.id,
+                RenameDialogFragment.EntityType.PLAYER
+        ).show(supportFragmentManager, DIALOG_RENAME_TAG)
+    }
+
     override fun onRenamed(newName: String, oldName: String, id: Long, type: RenameDialogFragment.EntityType) {
-        viewModel.renameTeam(newName, oldName)
+        when (type) {
+            RenameDialogFragment.EntityType.TEAM -> {
+                viewModel.renameTeam(newName, oldName)
+            }
+            RenameDialogFragment.EntityType.PLAYER -> {
+                //todo don't create new player here
+                viewModel.renamePlayer(Player(newName, id = id))
+            }
+        }
+
+
     }
 
     private fun startSettings() {
