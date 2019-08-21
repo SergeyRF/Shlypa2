@@ -104,7 +104,7 @@ class PlayersFragment : androidx.fragment.app.Fragment(), AvatarSelectDialogList
             addPlayer()
         }
 
-        btGoNextPlayers.setOnClickListener {
+        btCreateTeam.setOnClickListener {
             viewModel.onPlayersNextClicked()
         }
 

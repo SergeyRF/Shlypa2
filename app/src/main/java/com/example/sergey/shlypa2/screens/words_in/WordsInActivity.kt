@@ -43,6 +43,7 @@ class WordsInActivity : AppCompatActivity() {
         wordsAdapter = RvAdapter()
         rvWords.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         rvWords.adapter = wordsAdapter
+        if (!viewModel.randomAllowed()) wordsAdapter.offChangeWordFlag()
 
         Timber.d("random allowed ${viewModel.randomAllowed()}")
 
@@ -75,7 +76,7 @@ class WordsInActivity : AppCompatActivity() {
             } else true
         }
 
-        btNextWords.setOnClickListener {
+        btNextPlayer.setOnClickListener {
             if (viewModel.needWord() && viewModel.randomAllowed()) {
                 viewModel.fillWithRandomWords()
             } else {
@@ -95,10 +96,11 @@ class WordsInActivity : AppCompatActivity() {
             wordsAdapter.notifyDataSetChanged()
         }
 
-        wordsAdapter.setData(listOf(Word("hello"), Word("hello2")))
+        wordsAdapter.setData(listOf(Word("${viewModel.randomAllowed()}"), Word("hello2")))
 
         onChangeEt()
     }
+
     private fun initToolbar() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -155,18 +157,18 @@ class WordsInActivity : AppCompatActivity() {
             onChangeEt()
 
             if (viewModel.randomAllowed()) {
-                btNextWords.text = getString(R.string.add_random)
+                btNextPlayer.text = getString(R.string.add_random)
             } else {
-                btNextWords.hide()
+                btNextPlayer.gone()
             }
             ibAddWord.show()
             etWord.show()
         } else {
             hideKeyboard()
-            btNextWords.show()
             ibAddWord.gone()
             etWord.gone()
-            btNextWords.text = getString(R.string.play)
+            btNextPlayer.show()
+            btNextPlayer.text = getString(R.string.play)
         }
     }
 

@@ -7,6 +7,7 @@ import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.extensions.getSmallImage
+import com.example.sergey.shlypa2.extensions.gone
 import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.game.GameState
@@ -111,13 +112,14 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
     }
 }
 
-class WordsHolder(val view: View) : BaseHolder(view) {
+class WordsHolder(val view: View, private val flagChange: Boolean) : BaseHolder(view) {
     private val tvName: TextView = view.findViewById(R.id.wordInject)
     private val ibDeleteWord: ImageButton = view.findViewById(R.id.ibDelWord)
     private val ibChangeWord: ImageButton = view.findViewById(R.id.ibChangeWord)
 
     fun bind(word: Word) {
         tvName.text = word.word
+        if (!flagChange) ibChangeWord.gone()
 
         ibDeleteWord.setOnClickListener {
             listenerTwo?.invoke(word)

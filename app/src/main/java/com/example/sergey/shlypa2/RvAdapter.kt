@@ -20,6 +20,8 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
 
     var altMode = false
 
+    private var flagChangeWord = true
+
 
     override fun onBindViewHolder(holder: BaseHolder, position: Int) {
         val item = data!![position]
@@ -37,7 +39,7 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
         val view: View = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         val holder = when (viewType) {
             VIEW_TYPE_PLAYER -> PlayerHolder(view)
-            VIEW_TYPE_WORD -> WordsHolder(view)
+            VIEW_TYPE_WORD -> WordsHolder(view, flagChangeWord)
             VIEW_TYPE_WORD_RESULT -> WordResultHolder(view)
             VIEW_TYPE_TEAM -> TeamHolder(view)
             VIEW_TYPE_TEAM_SCORES -> TeamWithScoreHolder(view)
@@ -70,6 +72,10 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
     fun setData(list: List<Any>?) {
         data = list
         notifyDataSetChanged()
+    }
+
+    fun offChangeWordFlag() {
+        flagChangeWord = false
     }
 
 
