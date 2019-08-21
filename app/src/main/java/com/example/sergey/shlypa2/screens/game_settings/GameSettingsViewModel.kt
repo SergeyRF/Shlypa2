@@ -113,11 +113,9 @@ class GameSettingsViewModel(application: Application,
             typesList = types
 
             val typeId = settings.typeId
-
-            typeSelected = types.first { it.id == typeId }
+            typeSelected = types.first { typeId == 0L || it.id == typeId }
 
             waitLoadingTypes.value = true
-
         }
     }
 
