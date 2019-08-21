@@ -146,16 +146,18 @@ class WordsViewModel(
     }
 
     fun newRandomWord(word: Word) {
+        val index = words.indexOfFirst { it.word == word.word }
         if (randomWords.isEmpty()) {
             launch {
                 withContext(dispatchers.ioDispatcher) {
                     loadRandomWords()
-                    words[words.indexOf(word)] = randomWords.poll()
+
+                    words[index] = randomWords.poll()
                 }
                 updateData()
             }
         } else {
-            words[words.indexOf(word)] = randomWords.poll()
+            words[index] = randomWords.poll()
             updateData()
         }
     }

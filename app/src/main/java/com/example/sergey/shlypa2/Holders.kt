@@ -112,53 +112,46 @@ class PlayerHolder(val view: View) : BaseHolder(view) {
 }
 
 class WordsHolder(val view: View) : BaseHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.wordInject)
-    val ibDeletWord: ImageButton = view.findViewById(R.id.ibDelWord)
-    val ibNextWord: ImageButton = view.findViewById(R.id.ibNextWord)
-    val etReNameW: TextView = view.findViewById(R.id.etWordRename)
+    private val tvName: TextView = view.findViewById(R.id.wordInject)
+    private val ibDeleteWord: ImageButton = view.findViewById(R.id.ibDelWord)
+    private val ibChangeWord: ImageButton = view.findViewById(R.id.ibChangeWord)
+    private val etRename: TextView = view.findViewById(R.id.etWordRename)
 
     fun bind(word: Word) {
-        etReNameW.text = word.word
-        etReNameW.hide()
+        etRename.text = word.word
+        etRename.hide()
         tvName.show()
-
-        /*if (word.type == WordType.USER) {
-            ibNextWord.hide()
-        }*/
-        //fixme
-
         tvName.text = word.word
-        Timber.d("${word.word}")
 
-        ibDeletWord.setOnClickListener {
+        ibDeleteWord.setOnClickListener {
             listenerTwo?.invoke(word)
         }
 
-        ibNextWord.setOnClickListener {
+        ibChangeWord.setOnClickListener {
             listenerThree?.invoke(word)
             Timber.d("NextWord")
         }
 
         tvName.setOnClickListener {
             tvName.hide()
-            etReNameW.show()
-            etReNameW.setText("")
-            etReNameW.append(word.word)
-            etReNameW.requestFocus()
-            Functions.showKeyboard(view.context, etReNameW)
+            etRename.show()
+            etRename.setText("")
+            etRename.append(word.word)
+            etRename.requestFocus()
+            Functions.showKeyboard(view.context, etRename)
         }
 
-        etReNameW.setOnFocusChangeListener { v, hasFocus ->
+        etRename.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
-                if (etReNameW.text.isNotEmpty() && etReNameW.text.toString() != word.word) {
-                    word.word = etReNameW.text.toString()
+                if (etRename.text.isNotEmpty() && etRename.text.toString() != word.word) {
+                    word.word = etRename.text.toString()
                     tvName.text = word.word
-                    ibNextWord.hide()
+                    ibChangeWord.hide()
                     listener?.invoke(word)
                 }
 
                 tvName.show()
-                etReNameW.hide()
+                etRename.hide()
             }
         }
 
