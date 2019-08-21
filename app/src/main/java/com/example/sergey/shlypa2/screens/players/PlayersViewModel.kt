@@ -31,7 +31,6 @@ class PlayersViewModel(application: Application,
     val playersLiveData = playersRepository.getPlayersLiveData()
     val teamsLiveData = playersRepository.getTeamsLiveData()
     val teamRenameLiveData = SingleLiveEvent<Team>()
-    val playerRenameLiveData = SingleLiveEvent<Player>()
     val avatarLiveData = MutableLiveData<String>()
     val toastResLD = MutableLiveData<Int>()
 
@@ -57,7 +56,7 @@ class PlayersViewModel(application: Application,
         }
     }
     fun onClickPlayer(player: Player){
-        playerRenameLiveData.value = player
+        commandLiveData.value = Command.ShowPlayerRenameDialog(player)
     }
 
     fun onTeamClicked(team: Team) {
@@ -205,5 +204,6 @@ class PlayersViewModel(application: Application,
         object ShowSelectPlayerDialog: Command()
         object ShowSelectAvatarDialog: Command()
         class ShowTeamRenameDialog(val team: Team): Command()
+        class ShowPlayerRenameDialog(val player: Player): Command()
     }
 }
