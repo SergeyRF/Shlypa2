@@ -36,7 +36,6 @@ class PlayersViewModel(application: Application,
     val toastResLD = MutableLiveData<Int>()
 
     val commandLiveData = SingleLiveEvent<Command>()
-    val playersCommandLiveData = SingleLiveEvent<Command>()
     val titleLiveData = MutableLiveData<Int>()
 
     val listOfAvatars: MutableList<String> = mutableListOf()
@@ -62,7 +61,7 @@ class PlayersViewModel(application: Application,
     }
 
     fun onTeamClicked(team: Team) {
-        teamRenameLiveData.value = team
+        commandLiveData.value = Command.ShowTeamRenameDialog(team)
     }
 
     fun renameTeam(newName: String, oldName: String) {
@@ -79,6 +78,10 @@ class PlayersViewModel(application: Application,
         }
     }
 
+    fun onChangeAvatarClicked() {
+        commandLiveData.value = Command.ShowSelectAvatarDialog
+    }
+
     fun addImage(image: Uri) {
         launch {
             withContext(dispatchers.ioDispatcher) {
@@ -90,6 +93,7 @@ class PlayersViewModel(application: Application,
 
     fun addImage(image: String) {
         playerImage = image
+        avatarLiveData.value = image
     }
 
     fun addNewPlayer(name: String) {
@@ -150,7 +154,7 @@ class PlayersViewModel(application: Application,
         if (playersRepository.playersList.size < 4) {
             toastResLD.value = R.string.not_enough_players
         } else {
-            commandLiveData.value = Command.START_TEAMS
+            commandLiveData.value = Command.StartTeams
         }
     }
 
@@ -160,7 +164,7 @@ class PlayersViewModel(application: Application,
         }
 
         if (hasSaved) {
-            playersCommandLiveData.value = Command.SHOW_SELECT_PLAYER_DIALOG
+            commandLiveData.value = Command.ShowSelectPlayerDialog
         } else {
             toastResLD.value = R.string.not_saved_players
         }
@@ -172,7 +176,7 @@ class PlayersViewModel(application: Application,
     }
 
     fun startSettings() {
-        commandLiveData.value = Command.START_SETTINGS
+        commandLiveData.value = Command.StartSettings
         anal.sendEventTeamsCreated(playersRepository.playersList.size, playersRepository.getTeams().size)
     }
 
@@ -195,9 +199,11 @@ class PlayersViewModel(application: Application,
         playersRepository.clear()
     }
 
-    enum class Command {
-        START_TEAMS,
-        START_SETTINGS,
-        SHOW_SELECT_PLAYER_DIALOG
+    sealed class Command {
+        object StartTeams: Command()
+        object StartSettings: Command()
+        object ShowSelectPlayerDialog: Command()
+        object ShowSelectAvatarDialog: Command()
+        class ShowTeamRenameDialog(val team: Team): Command()
     }
 }

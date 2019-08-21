@@ -18,8 +18,7 @@ import com.example.sergey.shlypa2.screens.game_settings.items.ItemWord
 import com.example.sergey.shlypa2.screens.words_in.WordsInActivity
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
-import kotlinx.android.synthetic.main.activity_game_settings.btCompletedSettings
-import kotlinx.android.synthetic.main.activity_game_settings_new.*
+import kotlinx.android.synthetic.main.activity_game_settings.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -43,7 +42,7 @@ class GameSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game_settings_new)
+        setContentView(R.layout.activity_game_settings)
 
         initToolbar()
 
@@ -83,9 +82,16 @@ class GameSettingsActivity : AppCompatActivity() {
             viewModel.setWordsLD(progress)
         }
 
-        val itemRandom = ItemWord(viewModel.getWordsSettings())
+        val itemRandom = ItemWord(
+                viewModel.getWordsSettings(),
+                { autoFill -> viewModel.setAutoFill(autoFill) },
+                { allowRandom -> viewModel.setAllowRandom(allowRandom) },
+                { type -> viewModel.setDifficulty(type) })
 
-        val itemPenalty = ItemPenalty(viewModel.getPenalty())
+        val itemPenalty = ItemPenalty(
+                viewModel.getPenalty(),
+                { include -> viewModel.setPenaltyInclude(include) },
+                { point -> viewModel.setPenaltyPoint(point) })
 
         val items = mutableListOf<IFlexible<*>>(
                 timeItem,

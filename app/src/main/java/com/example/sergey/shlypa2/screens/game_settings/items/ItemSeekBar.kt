@@ -9,6 +9,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
+import kotlinx.android.synthetic.main.holder_seekbar.view.*
 
 
 class ItemSeekBar(
@@ -43,7 +44,7 @@ class ItemSeekBar(
     class ViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?)
         : FlexibleViewHolder(view, adapter) {
 
-        val seekBar: SeekbarSetting = view.findViewById<SeekbarSetting>(R.id.itemSeekBar)
+        val seekBar: SeekbarSetting = view.itemSeekBar
 
     }
 }

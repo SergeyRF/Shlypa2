@@ -4,6 +4,7 @@ package com.example.sergey.shlypa2.screens.game_settings.items
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.beans.ItemPenaltySettings
 import com.example.sergey.shlypa2.extensions.setVisibility
 import com.example.sergey.shlypa2.views.SeekbarSetting
 import com.example.sergey.shlypa2.views.SwitchSetting
@@ -11,9 +12,14 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.davidea.viewholders.FlexibleViewHolder
+import kotlinx.android.synthetic.main.holder_penalty.view.*
 
 
-class ItemPenalty(private val penalty: ItemPenaltySettings) : AbstractFlexibleItem<ItemPenalty.ViewHolder>() {
+class ItemPenalty(
+        private val penalty: ItemPenaltySettings,
+        private val penaltyListener: (Boolean) -> Unit,
+        private val progressListener: (Int) -> Unit
+) : AbstractFlexibleItem<ItemPenalty.ViewHolder>() {
 
     override fun bindViewHolder(adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?,
                                 holder: ViewHolder,
@@ -25,7 +31,7 @@ class ItemPenalty(private val penalty: ItemPenaltySettings) : AbstractFlexibleIt
             penaltySwitch
                     .setChecked(penalty.penaltyCheck)
                     .setOnCheckedListener { isChecked ->
-                        penalty.penaltyListener.invoke(isChecked)
+                        penaltyListener.invoke(isChecked)
                         penaltySeekBar.setVisibility(isChecked)
                     }
 
@@ -33,7 +39,7 @@ class ItemPenalty(private val penalty: ItemPenaltySettings) : AbstractFlexibleIt
             penaltySeekBar.setValues(penalty.min, penalty.max)
                     .setProgress(penalty.progress)
                     .setProgressListener {
-                        penalty.progressListener.invoke(it)
+                        progressListener.invoke(it)
                     }
         }
 
@@ -49,16 +55,7 @@ class ItemPenalty(private val penalty: ItemPenaltySettings) : AbstractFlexibleIt
     class ViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?)
         : FlexibleViewHolder(view, adapter) {
 
-        val penaltySwitch: SwitchSetting = view.findViewById(R.id.itemSwitchSettings)
-        val penaltySeekBar: SeekbarSetting = view.findViewById(R.id.itemSeekBar)
+        val penaltySwitch: SwitchSetting = view.itemSwitchSettings
+        val penaltySeekBar: SeekbarSetting = view.itemSeekBar
     }
 }
-
-class ItemPenaltySettings(
-        val penaltyCheck: Boolean,
-        val penaltyListener: (Boolean) -> Unit,
-        val min: Int,
-        val max: Int,
-        val progress: Int,
-        val progressListener: (Int) -> Unit
-)

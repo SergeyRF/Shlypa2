@@ -1,7 +1,10 @@
 package com.example.sergey.shlypa2.screens.players
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -12,16 +15,25 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
+import com.example.sergey.shlypa2.extensions.dismissDialogFragment
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
+import com.example.sergey.shlypa2.screens.players.PlayersViewModel.Command
+import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
 import com.example.sergey.shlypa2.screens.players.dialog.RenameDialogFragment
+import com.example.sergey.shlypa2.screens.players.dialog.SelectPlayerDialogFragment
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
-class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogListener {
+class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogListener,
+        AvatarSelectDialogFragment.AvatarSelectDialogListener {
 
     companion object {
         const val DIALOG_RENAME_TAG = "teams_rename_dialog_tag"
+        const val DIALOG_AVATAR_TAG = "dialog_avatar_tag"
 
         fun getIntent(context: Context) = Intent(context, PlayersActivity::class.java)
     }
@@ -62,11 +74,19 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         }
     }
 
-    private fun onCommand(command: PlayersViewModel.Command) {
+    private fun onCommand(command: Command) {
         when (command) {
-            PlayersViewModel.Command.START_SETTINGS -> startSettings()
-            PlayersViewModel.Command.START_TEAMS -> startTeamsFragment()
+            Command.StartSettings -> startSettings()
+            Command.StartTeams -> startTeamsFragment()
+            Command.ShowSelectPlayerDialog -> showPlayerSelectDialog()
+            Command.ShowSelectAvatarDialog -> showAvatarDialog()
+            is Command.ShowTeamRenameDialog -> showTeamRenameDialog(command.team)
         }
+    }
+
+    private fun showPlayerSelectDialog() {
+        dismissDialogFragment(DIALOG_RENAME_TAG)
+        SelectPlayerDialogFragment().show(supportFragmentManager, "SelectPlayer")
     }
 
     private fun startPlayersFragment() {
@@ -85,10 +105,15 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
                 .commit()
     }
 
+    private fun showAvatarDialog() {
+        dismissDialogFragment(DIALOG_AVATAR_TAG)
+
+        AvatarSelectDialogFragment.newInstance(viewModel.listOfAvatars)
+                .show(supportFragmentManager, DIALOG_AVATAR_TAG)
+    }
+
     private fun showTeamRenameDialog(team: Team) {
-        (supportFragmentManager
-                .findFragmentByTag(DIALOG_RENAME_TAG) as? RenameDialogFragment)
-                ?.dismissAllowingStateLoss()
+        dismissDialogFragment(DIALOG_RENAME_TAG)
 
         RenameDialogFragment.newInstance(
                 team.name,
@@ -128,6 +153,16 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         startActivity(Intent(this, GameSettingsActivity::class.java))
     }
 
+    override fun onSelectAvatar(iconString: String) {
+        Timber.d("avatar select $iconString")
+        viewModel.addImage(iconString)
+    }
+
+    override fun onSelectCustomAvatar() {
+        startCropImageActivity()
+    }
+
+
     private fun initToolbar() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -150,4 +185,60 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         }
     }
 
+    //Load custom avatar
+
+    private fun setAvatarCustom(imageUri: Uri) {
+        viewModel.addImage(imageUri)
+    }
+
+    private fun startCropImageActivity(imageUri: Uri? = null) {
+        val cropImage: CropImage.ActivityBuilder = if (imageUri != null) {
+            CropImage.activity(imageUri)
+        } else {
+            CropImage.activity()
+        }
+        cropImage
+                .setCropShape(CropImageView.CropShape.OVAL)
+                .setAspectRatio(150, 150)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this)
+
+
+    }
+
+    private var mCropImageUri: Uri? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            when (requestCode) {
+                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                    val result = CropImage.getActivityResult(data)
+                    if (resultCode == Activity.RESULT_OK) {
+                        val resultUri = result.uri
+                        setAvatarCustom(resultUri)
+                    } else {
+                        if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                            Timber.e(result.error)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.isNotEmpty()
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCropImageActivity(mCropImageUri)
+            } else {
+                //todo require refactoring
+                Toast.makeText(this,
+                        "Cancelling, required permissions are not granted",
+                        Toast.LENGTH_LONG)
+                        .show()
+            }
+        }
+    }
 }
