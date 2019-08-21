@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.DataProvider
@@ -99,11 +100,6 @@ class WordsViewModel(
         words.add(Word(s))
         updateData()
         anal.wordAdded(false)
-    }
-
-    fun reNameWord(word: Word) {
-        //word.type = WordType.USER
-        //fixme
     }
 
     fun fillWithRandomWords() {

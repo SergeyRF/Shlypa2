@@ -33,7 +33,7 @@ class RenameDialogFragment : DialogFragment() {
 
     private val name by extraNotNull<String>(ARG_NAME)
     private val title by extraNotNull<String>(ARG_TITLE)
-    private val entytityId by extraNotNull<Long>(ARG_ID)
+    private val entityId by extraNotNull<Long>(ARG_ID)
     private val type by lazy {
         val ordinal = requireArguments()
                 .getInt(ARG_TYPE)
@@ -60,7 +60,7 @@ class RenameDialogFragment : DialogFragment() {
         btYesDialog.setOnClickListener {
             if (etDialog.text.isNotEmpty()) {
                 val newName = etDialog.text.toString()
-                listener?.onRenamed(newName, name, entytityId, type)
+                listener?.onRenamed(newName, name, entityId, type)
             }
             dismissAllowingStateLoss()
         }

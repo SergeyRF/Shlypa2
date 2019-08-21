@@ -81,14 +81,8 @@ class WordsInActivity : AppCompatActivity() {
             } else {
                 viewModel.nextPlayer()
                 etWord.text.clear()
-//                etWord.requestFocus()
                 etWord.showKeyboard()
             }
-        }
-
-        wordsAdapter.listener = { word: Any ->
-            // dialog(word as Word)
-            viewModel.reNameWord(word as Word)
         }
 
         wordsAdapter.listenerTwo = { word: Any ->

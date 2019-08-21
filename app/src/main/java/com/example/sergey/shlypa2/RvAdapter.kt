@@ -1,6 +1,5 @@
 package com.example.sergey.shlypa2
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,9 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
 
     private var data: List<Any>? = null
 
-    var listener:((Any) -> Unit)? = null
-    var listenerTwo:((Any)->Unit)? = null
-    var listenerThree:((Any)->Unit)? = null
+    var listener: ((Any) -> Unit)? = null
+    var listenerTwo: ((Any) -> Unit)? = null
+    var listenerThree: ((Any) -> Unit)? = null
 
     var altMode = false
 
@@ -47,7 +46,7 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
         }
 
         holder.listener = listener
-        holder.listenerTwo= listenerTwo
+        holder.listenerTwo = listenerTwo
         holder.listenerThree = listenerThree
         return holder
     }
@@ -60,7 +59,7 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
         val item = data!![position]
         return when (item) {
             is Player -> VIEW_TYPE_PLAYER
-            is Word -> if(altMode) VIEW_TYPE_WORD_RESULT else VIEW_TYPE_WORD
+            is Word -> if (altMode) VIEW_TYPE_WORD_RESULT else VIEW_TYPE_WORD
             is Team -> VIEW_TYPE_TEAM
             is TeamWithScores -> VIEW_TYPE_TEAM_SCORES
             is GameState -> VIEW_TYPE_SAVED_STATE

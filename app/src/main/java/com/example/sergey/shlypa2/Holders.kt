@@ -115,12 +115,8 @@ class WordsHolder(val view: View) : BaseHolder(view) {
     private val tvName: TextView = view.findViewById(R.id.wordInject)
     private val ibDeleteWord: ImageButton = view.findViewById(R.id.ibDelWord)
     private val ibChangeWord: ImageButton = view.findViewById(R.id.ibChangeWord)
-    private val etRename: TextView = view.findViewById(R.id.etWordRename)
 
     fun bind(word: Word) {
-        etRename.text = word.word
-        etRename.hide()
-        tvName.show()
         tvName.text = word.word
 
         ibDeleteWord.setOnClickListener {
@@ -129,32 +125,7 @@ class WordsHolder(val view: View) : BaseHolder(view) {
 
         ibChangeWord.setOnClickListener {
             listenerThree?.invoke(word)
-            Timber.d("NextWord")
         }
-
-        tvName.setOnClickListener {
-            tvName.hide()
-            etRename.show()
-            etRename.setText("")
-            etRename.append(word.word)
-            etRename.requestFocus()
-            Functions.showKeyboard(view.context, etRename)
-        }
-
-        etRename.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                if (etRename.text.isNotEmpty() && etRename.text.toString() != word.word) {
-                    word.word = etRename.text.toString()
-                    tvName.text = word.word
-                    ibChangeWord.hide()
-                    listener?.invoke(word)
-                }
-
-                tvName.show()
-                etRename.hide()
-            }
-        }
-
 
     }
 
