@@ -140,8 +140,7 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
                 viewModel.renameTeam(newName, oldName)
             }
             RenameDialogFragment.EntityType.PLAYER -> {
-                //todo don't create new player here
-                viewModel.renamePlayer(Player(newName, id = id))
+                viewModel.renamePlayer(newName, id)
             }
         }
 

@@ -77,6 +77,24 @@ class PlayersRepository(
         notifyPlayers()
     }
 
+    fun reNamePlayer(newName:String, id:Long) {
+        if (players[id]?.type==PlayerType.USER){
+            players[id]?.name=newName
+            players[id]?.let {
+                dataProvider.insertPlayer(it)
+            }
+        }else{
+            val player = players.getValue(id)
+            player.name = newName
+            player.id = 0
+            player.type = PlayerType.USER
+            players.remove(id)
+            val newId = dataProvider.insertPlayer(player)
+            players[newId] = player
+        }
+        notifyPlayers()
+    }
+
     fun addPlayer(player: Player) {
         players[player.id] = player
         notifyPlayers()
