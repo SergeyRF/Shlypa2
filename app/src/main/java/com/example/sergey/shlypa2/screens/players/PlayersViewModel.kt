@@ -50,9 +50,9 @@ class PlayersViewModel(application: Application,
         playersRepository.removePlayer(player)
     }
 
-    fun renamePlayer(player: Player) {
+    fun renamePlayer(newName:String, id:Long) {
         launch(dispatchers.ioDispatcher) {
-            playersRepository.reNamePlayer(player)
+            playersRepository.reNamePlayer(newName, id)
         }
     }
     fun onClickPlayer(player: Player){
