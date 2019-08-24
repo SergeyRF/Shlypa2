@@ -7,6 +7,7 @@ import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.db.DataBase
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.screens.game.RoundViewModel
+import com.example.sergey.shlypa2.screens.game_result.GameResultViewModel
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsViewModel
 import com.example.sergey.shlypa2.screens.main.WelcomeViewModel
 import com.example.sergey.shlypa2.screens.players.PlayersViewModel
@@ -33,6 +34,7 @@ val appModule = module {
     viewModel { SettingsViewModel(get(),get(),get()) }
     viewModel { LaunchViewModel(get(), get(), get()) }
     viewModel { PlayerSelectViewModel(get(), get()) }
+    viewModel { GameResultViewModel(get(), get()) }
 
     single<DispatchersProvider> { DispatchersProviderImpl() }
 
