@@ -34,7 +34,7 @@ val appModule = module {
     viewModel { RoundViewModel(get(), get(), get(), get()) }
     viewModel { WordsViewModel(get(), get(), get(), get(), get()) }
     viewModel { SettingsViewModel(get(),get(),get()) }
-    viewModel { LaunchViewModel(get(), get(), get()) }
+    viewModel { LaunchViewModel(get(), get(), get(), get()) }
     viewModel { PlayerSelectViewModel(get(), get()) }
     viewModel { GameResultViewModel(get(), get()) }
 
@@ -54,7 +54,7 @@ val appModule = module {
     single { PlayersRepository(get())}
     single { PreferencesProvider(get(), null)}
     single { SoundManager(get(), get())}
-    single { ConsentManager()}
+    single { ConsentManager(get())}
     single { AdsManager(get(), get())}
     factory { DbExporter(get()) }
 }

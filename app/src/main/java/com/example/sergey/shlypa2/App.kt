@@ -3,7 +3,6 @@ package com.example.sergey.shlypa2
 import androidx.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.crashlytics.android.Crashlytics
-import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.TimberDebugTree
@@ -12,7 +11,6 @@ import com.flurry.android.FlurryAgent
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import io.fabric.sdk.android.Fabric
-import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -22,7 +20,6 @@ import timber.log.Timber
  */
 class App : MultiDexApplication() {
 
-    private val adsManager by inject<AdsManager>()
 
     override fun onCreate() {
         super.onCreate()
@@ -37,8 +34,6 @@ class App : MultiDexApplication() {
         } else {
             Timber.plant(TimberReleaseTree())
         }
-
-        adsManager.initAds()
 
         //todo refactor this shit  !!!
         val namesArray = resources.getStringArray(R.array.teams)
