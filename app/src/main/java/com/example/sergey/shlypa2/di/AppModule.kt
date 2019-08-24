@@ -2,6 +2,8 @@ package com.example.sergey.shlypa2.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.sergey.shlypa2.ads.AdsManager
+import com.example.sergey.shlypa2.ads.ConsentManager
 import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.db.DataBase
@@ -52,6 +54,8 @@ val appModule = module {
     single { PlayersRepository(get())}
     single { PreferencesProvider(get(), null)}
     single { SoundManager(get(), get())}
+    single { ConsentManager()}
+    single { AdsManager(get(), get())}
     factory { DbExporter(get()) }
 }
 

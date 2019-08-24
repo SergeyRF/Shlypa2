@@ -13,6 +13,7 @@ import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_result.GameResultActivity
 import com.google.android.gms.ads.AdListener
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 typealias Command = RoundViewModel.Command
@@ -20,6 +21,7 @@ typealias Command = RoundViewModel.Command
 class RoundActivity : AppCompatActivity() {
 
     private val viewModel: RoundViewModel by viewModel()
+    private val adsManager: AdsManager by inject()
     private var interstitial: Interstitial? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +33,8 @@ class RoundActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0F
 
-        if (AdsManager.initialized) {
-            interstitial = AdsManager.getInterstitial(this)
+        if (adsManager.initialized) {
+            interstitial = adsManager.getInterstitial(this)
             interstitial?.loadAd()
             interstitial?.setAdListener(object : AdListener() {
                 override fun onAdClosed() {

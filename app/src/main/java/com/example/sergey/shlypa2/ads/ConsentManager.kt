@@ -3,12 +3,11 @@ package com.example.sergey.shlypa2.ads
 import android.content.Context
 import android.preference.PreferenceManager
 
-import java.net.MalformedURLException
-import java.net.URL
+class ConsentManager {
 
-object ConsentManager {
-
-    private const val SAVED_STATUS = "saved_status"
+    companion object {
+        private const val SAVED_STATUS = "saved_status"
+    }
 
     var testDeviceId: String? = null
     var publisherId: String? = null

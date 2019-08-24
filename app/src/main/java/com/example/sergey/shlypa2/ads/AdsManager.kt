@@ -1,33 +1,33 @@
 package com.example.sergey.shlypa2.ads
 
 import android.content.Context
-import com.crashlytics.android.Crashlytics
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import android.os.Bundle
 import com.example.sergey.shlypa2.BuildConfig
 import com.google.ads.mediation.admob.AdMobAdapter
-import com.google.gson.JsonObject
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import org.json.JSONObject
 import timber.log.Timber
 
 
 /**
  * Created by alex on 5/8/18.
  */
-object AdsManager {
+class AdsManager(
+        private val context: Context,
+        private val consentManager: ConsentManager) {
 
-    private const val APP_ID_KEY = "app_id"
-    private const val BANNER_ID_KEY = "banner_id"
-    private const val TEST_DEVICE_KEY = "test_device_id"
-    private const val INTERSTITIAL_ID_KEY = "interstitial_id"
-    private const val PUBLISHER_ID_KEY = "publisher_id"
-    private const val PRIVACY_LINK = "privacy_link"
+    companion object {
+        private const val APP_ID_KEY = "app_id"
+        private const val BANNER_ID_KEY = "banner_id"
+        private const val TEST_DEVICE_KEY = "test_device_id"
+        private const val INTERSTITIAL_ID_KEY = "interstitial_id"
+        private const val PUBLISHER_ID_KEY = "publisher_id"
+        private const val PRIVACY_LINK = "privacy_link"
 
-    private const val BANNER_TEST_ID = "ca-app-pub-3940256099942544/6300978111"
-    private const val INTERSTITIAL_TEST_ID = "ca-app-pub-3940256099942544/1033173712"
+        private const val BANNER_TEST_ID = "ca-app-pub-3940256099942544/6300978111"
+        private const val INTERSTITIAL_TEST_ID = "ca-app-pub-3940256099942544/1033173712"
+    }
 
     private var appId: String? = null
     private var bannerId: String? = null
@@ -38,9 +38,10 @@ object AdsManager {
 
     var initialized = false
 
-    fun initAds(context: Context) {
+    fun initAds() {
         try {
-            val jsonObject = loadIds(context)
+            val jsonObject = loadIds(context) ?: return
+            Timber.d("TESTING json object $jsonObject")
             appId = jsonObject.optString(APP_ID_KEY)
             bannerId = jsonObject.optString(BANNER_ID_KEY)
             interstitialId = jsonObject.optString(INTERSTITIAL_ID_KEY)
@@ -50,10 +51,10 @@ object AdsManager {
 
             MobileAds.initialize(context, appId)
 
-            ConsentManager.publisherId = publisherId
-            ConsentManager.testDeviceId = testDeviceId
-            ConsentManager.privacyLink = privacyLink
-            ConsentManager.initConsent(context)
+            consentManager.publisherId = publisherId
+            consentManager.testDeviceId = testDeviceId
+            consentManager.privacyLink = privacyLink
+            consentManager.initConsent(context)
 
             initialized = true
         } catch (ex: Exception) {
@@ -63,11 +64,11 @@ object AdsManager {
     }
 
     fun checkConsent(context: Context) {
-        ConsentManager.showConsentIfNeed(context)
+        consentManager.showConsentIfNeed(context)
     }
 
     fun createBannerRequest(): AdRequest? {
-        if(ConsentManager.canShowAds().not()) {
+        if(consentManager.canShowAds().not()) {
             return null
         }
         val adRequestBuilder = AdRequest.Builder()
@@ -75,7 +76,7 @@ object AdsManager {
             adRequestBuilder.addTestDevice(testDeviceId)
         }
 
-        if(ConsentManager.nonPersonalizedOnly()) {
+        if(consentManager.nonPersonalizedOnly()) {
             val extras = Bundle()
             extras.putString("npa", "1")
             adRequestBuilder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
@@ -89,7 +90,7 @@ object AdsManager {
     }
 
     fun getInterstitial(context: Context): Interstitial? {
-        if(ConsentManager.canShowAds().not()){
+        if(consentManager.canShowAds().not()){
             return null
         }
 
@@ -98,31 +99,21 @@ object AdsManager {
             builder.addTestDevice(testDeviceId)
         }
 
-        if(ConsentManager.nonPersonalizedOnly()) {
+        if(consentManager.nonPersonalizedOnly()) {
             val extras = Bundle()
             extras.putString("npa", "1")
             builder.addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
         }
 
-        interstitialId?.let {
-            return Interstitial(context, it, builder.build())
-        } ?: kotlin.run {
-            return null
+        return interstitialId?.let {
+            Interstitial(context, it, builder.build())
         }
     }
 
-    private fun loadIds(context: Context): JSONObject {
-        val inputStream = context.assets.open("ads.json")
-
-        val builder = StringBuilder()
-        BufferedReader(InputStreamReader(inputStream)).use {
-            var line = it.readLine()
-            while (line != null) {
-                builder.append(line)
-                line = it.readLine()
-            }
+    private fun loadIds(context: Context): JSONObject? {
+        context.assets.open("ads.json").use {
+            return JSONObject(String(it.readBytes()))
         }
-        return JSONObject(builder.toString())
     }
 
 
