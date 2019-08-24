@@ -4,8 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import com.example.sergey.shlypa2.extensions.debug
 import com.google.ads.mediation.admob.AdMobAdapter
+import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import org.json.JSONObject
 import timber.log.Timber
 
@@ -76,6 +78,18 @@ class AdsManager(
         return interstitialId?.let {
             Interstitial(context, it, request)
         }
+    }
+
+    fun getNativeAd(context: Context, onLoaded: (UnifiedNativeAd) -> Unit): AdLoader? {
+        val request = buildRequest() ?: return null
+        val loader =  AdLoader.Builder(context, NATIVE_TEST_ID)
+                .forUnifiedNativeAd { nativeAd ->
+                    onLoaded.invoke(nativeAd)
+                }
+                .build()
+
+        loader.loadAd(request)
+        return loader
     }
 
     /**

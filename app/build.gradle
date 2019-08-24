@@ -9,7 +9,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.attiladroid.shlypa"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 23
         versionName "1.1.42"
@@ -44,6 +44,7 @@ ext {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(project(':nativetemplates'))
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -53,11 +54,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.preference:preference:1.0.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
     //firebase
     implementation "com.google.firebase:firebase-core:17.1.0"
-    implementation 'com.google.android.gms:play-services-ads:18.1.1'
+    implementation "com.google.android.gms:play-services-ads:$google_ads_version"
     //implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
     implementation "com.google.firebase:firebase-messaging:20.0.0"

@@ -1,6 +1,6 @@
 package com.example.sergey.shlypa2
 
-import androidx.multidex.MultiDexApplication
+import android.app.Application
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.crashlytics.android.Crashlytics
 import com.example.sergey.shlypa2.di.appModule
@@ -18,7 +18,7 @@ import timber.log.Timber
 /**
  * Created by alex on 4/4/18.
  */
-class App : MultiDexApplication() {
+class App : Application() {
 
 
     override fun onCreate() {
