@@ -3,7 +3,6 @@ package com.example.sergey.shlypa2.game
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
-import java.util.*
 
 /**
  * Created by sergey on 3/29/18.
@@ -133,7 +132,7 @@ object Game {
             teams.addAll(state.teams)
             setSettings(state.settings)
         }
-        return state.settings.all_word_random
 
+        return state.settings.all_word_random
     }
 }

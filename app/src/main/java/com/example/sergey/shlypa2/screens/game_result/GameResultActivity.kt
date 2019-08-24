@@ -2,58 +2,69 @@ package com.example.sergey.shlypa2.screens.game_result
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.RvAdapter
-import com.example.sergey.shlypa2.extensions.gone
+import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.TeamWithScores
+import com.example.sergey.shlypa2.screens.game.adapter.ItemTeamWithScores
+import com.example.sergey.shlypa2.screens.game_result.GameResultViewModel.Command
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
 import com.example.sergey.shlypa2.screens.main.FirstActivity
-import com.example.sergey.shlypa2.utils.SoundManager
-import com.example.sergey.shlypa2.utils.Sounds
+import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.activity_game_result.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class GameResultActivity: AppCompatActivity() {
+class GameResultActivity : AppCompatActivity() {
 
-    private val soundManager: SoundManager by inject()
-    var animated = false
-    val resultsAdapter = RvAdapter()
+    private val viewModel: GameResultViewModel by viewModel()
+    private var animated = false
+    private val adapter = FlexibleAdapter(emptyList())
+    private val playersPool = RecyclerView.RecycledViewPool()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_result)
 
-        soundManager.playSound(Sounds.FANFAIR)
-
-        val resultsList: List<TeamWithScores> = Game.getGameResults().sortedByDescending { it.getScores() }
-        resultsAdapter.setData(resultsList)
-
-        val tm = resultsList.maxBy { it.getScores() }
-
-        tv_winner.text = tm?.team?.name ?: "Unknown"
+        viewModel.onActivityCreated()
 
         rvGameResults.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
-        rvGameResults.adapter = resultsAdapter
+        rvGameResults.adapter = adapter
+
+        viewModel.teamsLiveData.observeSafe(this) { teams ->
+            adapter.updateDataSet(teams.map { ItemTeamWithScores(it, playersPool) })
+        }
+
+        viewModel.winnerNameLiveData.observeSafe(this) {
+            tvWinner.text = it
+        }
+
+        viewModel.commandLiveData.observeSafe(this) { command ->
+            when (command) {
+                Command.RUN_ANIMATION -> runAnimation()
+                Command.START_GAME_SETTINGS -> {
+                    startActivity(GameSettingsActivity.getIntent(this@GameResultActivity, true))
+                    finish()
+                }
+                Command.START_MAIN_ACTIVITY -> {
+                    startActivity(
+                            FirstActivity.getIntent(this@GameResultActivity, true)
+                                    .apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
+                    )
+                    finish()
+                }
+            }
+        }
+
         btCreateNewGame.setOnClickListener {
             dialogRepeatGame()
         }
 
-        rvGameResults.gone()
-        tv_game_resalt.gone()
-
         civWinnerAvatar.setOnClickListener {
             runAnimation()
         }
-
-        Handler().postDelayed({
-            runAnimation()
-        }, 3000)
     }
 
     private fun runAnimation() {
@@ -69,15 +80,12 @@ class GameResultActivity: AppCompatActivity() {
             setTitle(R.string.repeatTitle)
             setMessage(R.string.repaetMessage)
             setPositiveButton(R.string.repeatPositive) { dialog, _ ->
-                Game.repeatGame()
-                startActivity(GameSettingsActivity.getIntent(this@GameResultActivity, true))
-                finish()
+                dialog.dismiss()
+                viewModel.onRepeatGameClicked()
             }
             setNegativeButton(R.string.repeatNegative) { dialog, _ ->
-                startActivity(FirstActivity.getIntent(this@GameResultActivity, true)
-                        .apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP })
                 dialog.dismiss()
-                finish()
+                viewModel.onFinishGameClicked()
             }
         }
                 .create()

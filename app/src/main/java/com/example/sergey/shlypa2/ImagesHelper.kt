@@ -21,13 +21,18 @@ object ImagesHelper {
         else imageNameToUrl("player_avatars/large/$image")
     }
 
-    fun imageNameToUrl(name: String): String {
-        return "file:///android_asset/$name"
+
+    fun getRoundImage(image: String): String {
+        return imageNameToUrl("round_avatars/$image")
     }
 
     private fun imageCustomNameToUrl(name: String, context: Context): String {
         val filesDir = context.filesDir
-        return Uri.fromFile(filesDir).toString() + name//"file:///android_asset/$name"
+        return Uri.fromFile(filesDir).toString() + name
+    }
+
+    private fun imageNameToUrl(name: String): String {
+        return "file:///android_asset/$name"
     }
 
     fun saveImage(uri: Uri, context: Context): String {

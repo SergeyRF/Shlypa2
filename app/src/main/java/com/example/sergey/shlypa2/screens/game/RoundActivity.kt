@@ -6,21 +6,20 @@ import android.os.PersistableBundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.ads.Interstitial
+import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_result.GameResultActivity
 import com.google.android.gms.ads.AdListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 typealias Command = RoundViewModel.Command
 
 class RoundActivity : AppCompatActivity() {
 
-    private val viewModel by viewModel<RoundViewModel>()
+    private val viewModel: RoundViewModel by viewModel()
     private var interstitial: Interstitial? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +41,7 @@ class RoundActivity : AppCompatActivity() {
             })
         }
 
-        viewModel.commandCallback.observe(this, Observer { command ->
+        viewModel.commandCallback.observeSafe(this) { command ->
             when (command) {
                 Command.GET_READY -> startGetReadyFragment()
                 Command.START_TURN -> startGameFragment()
@@ -54,15 +53,15 @@ class RoundActivity : AppCompatActivity() {
                 Command.SHOW_INTERSTITIAL_ADS -> showInterstitial()
                 Command.EXIT -> finish()
             }
-        })
+        }
+
+        viewModel.roundLiveData.observeSafe(this){
+            it?.let { setTitle(it.description) }
+        }
 
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {
             startStartFragment()
         }
-
-        viewModel.roundLiveData.observe(this, Observer {
-            it?.let { setTitle(it.description) }
-        })
     }
 
     override fun onBackPressed() {
@@ -79,45 +78,25 @@ class RoundActivity : AppCompatActivity() {
         viewModel.saveState()
     }
 
-    private fun startHintTeam() {
-        val fragment = TeamHintFragment()
-        startFragment(fragment, true)
-    }
+    private fun startHintTeam() = startFragment(TeamHintFragment(), true)
 
-    private fun startStartFragment() {
-        val fragment = RoundStartFragment()
-        startFragment(fragment, true)
-    }
+    private fun startStartFragment() = startFragment(RoundStartFragment(), true)
 
-    private fun startGetReadyFragment() {
-        val fragment = TurnStartFragment()
-        startFragment(fragment)
-    }
+    private fun startGetReadyFragment() = startFragment(TurnStartFragment())
 
-    private fun startGameFragment() {
-        val fragment = GameFragment()
-        startFragment(fragment)
-    }
+    private fun startGameFragment() = startFragment(GameFragment())
 
-    private fun startTurnResultFragment() {
-        val fragment = TurnResultFragment()
-        startFragment(fragment)
-    }
+    private fun startTurnResultFragment() = startFragment(TurnResultFragment())
 
-    private fun startRoundResultsFragment() {
-        val fragment = RoundResultFragment()
-        startFragment(fragment)
-    }
+    private fun startRoundResultsFragment() = startFragment(RoundResultFragment())
 
     private fun startNextRound() {
         startActivity(Intent(this, RoundActivity::class.java))
-        Timber.d("Start next round")
         finish()
     }
 
     private fun startGameResults() {
         startActivity(Intent(this, GameResultActivity::class.java))
-        Timber.d("No more rounds ")
         finish()
     }
 

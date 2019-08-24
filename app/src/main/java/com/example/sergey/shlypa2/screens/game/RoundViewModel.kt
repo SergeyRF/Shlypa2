@@ -19,9 +19,6 @@ import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import kotlin.collections.List
-import kotlin.collections.forEach
-import kotlin.collections.mutableListOf
 import kotlin.collections.set
 
 
@@ -43,14 +40,17 @@ class RoundViewModel(
     private lateinit var round: Round
     val roundLiveData = MutableLiveData<Round>()
     val rounResultLiveData = MutableLiveData<List<TeamWithScores>>()
+    val scoresSheetLiveData = MutableLiveData<List<TeamWithScores>>()
 
     val wordLiveData = MutableLiveData<Word>()
     //First value - answered, second - skipped
     val answeredCountLiveData = MutableLiveData<Pair<Int, Int>>()
 
+    val timerStateLiveData = MutableLiveData<Boolean>()
     val timerLiveData = MutableLiveData<Int>()
     var timeLeft = Game.getSettings().time
     private var ticker: ReceiveChannel<Unit>? = null
+    private var timerStarted = true
 
     private var roundFinished = false
 
@@ -97,7 +97,7 @@ class RoundViewModel(
         }
     }
 
-    fun loadHintTeam() {
+    fun showScoresTable() {
         commandCallback.value = Command.SHOW_HINT_TEAM_TABLE
     }
 
@@ -225,8 +225,25 @@ class RoundViewModel(
         }
     }
 
-    fun startTimer() {
-        Timber.d("TESTING startTimer - ticker is $ticker")
+    fun toggleTimer() {
+        if(timerStarted) {
+            pauseTimer()
+        } else {
+            startTimer()
+        }
+        timerStarted = !timerStarted
+        timerStateLiveData.value = timerStarted
+    }
+
+    fun onGamePaused() {
+        pauseTimer()
+    }
+
+    fun onGameResumed() {
+        if(timerStarted) startTimer()
+    }
+
+    private fun startTimer() {
         launch {
             ticker?.cancel()
             ticker = ticker(1000, 1000)
@@ -241,13 +258,34 @@ class RoundViewModel(
         }
     }
 
-    fun pauseTimer() {
+    private fun pauseTimer() {
         ticker?.cancel()
     }
 
     fun saveState() {
         launch(dispatchers.ioDispatcher) {
             saveGameState()
+        }
+    }
+
+    fun updateCurrentScoresSheet() {
+        launch {
+            scoresSheetLiveData.value = emptyList()
+            val results = withContext(dispatchers.ioDispatcher) {
+                val currentResults = Game.getGameResults()
+                val roundScores = round.results
+
+                currentResults.forEach {
+                    it.team.players.forEach { player ->
+                        val scores = (roundScores[player.id] ?: 0) + (it.scoresMap[player.id] ?: 0)
+                        it.scoresMap[player.id] = scores
+                    }
+                }
+
+                currentResults
+            }
+
+            scoresSheetLiveData.value = results
         }
     }
 
@@ -265,22 +303,5 @@ class RoundViewModel(
         SHOW_HINT_TEAM_TABLE,
         SHOW_INTERSTITIAL_ADS,
         EXIT
-    }
-
-    fun loadCurrrentBal(): List<TeamWithScores> {
-        val g = Game.getGameResults()
-        val f = round.results
-
-        g.forEach {
-            val map = it.scoresMap
-            it.team.players.forEach {
-                var scores: Int = f[it.id] ?: 0
-                scores += map[it.id] ?: 0
-                map[it.id] = scores
-            }
-
-        }
-
-        return g
     }
 }

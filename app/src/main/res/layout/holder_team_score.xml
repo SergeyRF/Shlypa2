@@ -51,8 +51,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTeamName"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearPlayers"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlayers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
