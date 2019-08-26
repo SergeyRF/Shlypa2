@@ -46,6 +46,8 @@ constructor(context: Context,
 
         val secondaryText: String
 
+        native_ad_view.adChoicesView
+
         native_ad_view.callToActionView = btCta
         native_ad_view.headlineView = primary
         native_ad_view.mediaView = media_view
