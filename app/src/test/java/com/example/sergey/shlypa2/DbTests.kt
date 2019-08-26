@@ -1,3 +1,4 @@
+/*
 package com.example.sergey.shlypa2
 
 import com.example.sergey.shlypa2.beans.Player
@@ -10,9 +11,11 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
+*/
 /**
  * Created by alex on 4/10/18.
- */
+ *//*
+
 
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
@@ -53,4 +56,4 @@ class DbTests {
     fun shutdown() {
         dataBase.close()
     }
-}
+}*/

@@ -9,6 +9,7 @@ import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.GameStateSaver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber
@@ -23,6 +24,7 @@ class DataProvider(
         private val gson: Gson,
         private val context: Context
 ) {
+    private val gameStateSaver = GameStateSaver()
 
     private val playersDao = db.playersDao()
     private val wordsDao = db.wordDao()
@@ -65,7 +67,7 @@ class DataProvider(
     }
 
     fun getSavedStates(): List<GameState> {
-        var savedList = stateDao.getAllStates()
+       /* var savedList = stateDao.getAllStates()
 
         //keep only 5 states
         if (savedList.size > 5) {
@@ -76,24 +78,28 @@ class DataProvider(
             savedList = stateDao.getAllStates()
         }
 
-        return savedList.map { gson.fromJson(it.state, GameState::class.java) }
+        return savedList.map { gson.fromJson(it.state, GameState::class.java) }*/
+        return gameStateSaver.loadState()
     }
 
     fun getLastSavedState(): GameState? {
-        val savedList = stateDao.getAllStates()
+       /* val savedList = stateDao.getAllStates()
         val lastSaved = savedList.maxBy { it.time }
 
-        return lastSaved?.let { gson.fromJson(lastSaved.state, GameState::class.java) }
+        return lastSaved?.let { gson.fromJson(lastSaved.state, GameState::class.java) }*/
+        return gameStateSaver.getLastSavedState()
     }
 
     fun insertState(state: GameState) {
-        val represent = StateRepresent(0, state.gameId, System.currentTimeMillis(), gson.toJson(state))
+        /*val represent = StateRepresent(0, state.gameId, System.currentTimeMillis(), gson.toJson(state))
         Timber.d(represent.state)
-        stateDao.insertState(represent)
+        stateDao.insertState(represent)*/
+        gameStateSaver.insertState(state)
     }
 
     fun deleteState(gameId: Int) {
-        stateDao.deleteState(gameId)
+        //stateDao.deleteState(gameId)
+        gameStateSaver.deleteState(gameId)
     }
 
     fun getListOfAvatars(): List<String> {

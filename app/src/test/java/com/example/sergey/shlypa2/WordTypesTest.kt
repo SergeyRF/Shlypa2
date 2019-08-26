@@ -1,3 +1,4 @@
+/*
 package com.example.sergey.shlypa2
 
 import androidx.room.Room
@@ -72,4 +73,4 @@ class WordTypesTest {
         val wordsOfSecondType = wordsDao.getWordsOfType(type2Id)
         assertEquals(2, wordsOfSecondType.size)
     }
-}
+}*/

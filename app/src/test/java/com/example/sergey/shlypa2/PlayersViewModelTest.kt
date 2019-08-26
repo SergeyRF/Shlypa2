@@ -1,3 +1,4 @@
+/*
 package com.example.sergey.shlypa2
 
 import com.example.sergey.shlypa2.beans.Player
@@ -52,4 +53,4 @@ class PlayersViewModelTest {
         val playersLiveData = playersViewModel.getPlayersLiveData()
         assertEquals(2, playersLiveData.value!!.size)
     }
-}
+}*/
