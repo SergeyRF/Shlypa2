@@ -5,7 +5,7 @@
     <com.google.android.gms.ads.formats.UnifiedNativeAdView
         android:id="@+id/native_ad_view"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="400dp"
         android:background="@drawable/gnt_outline_shape">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,29 +20,28 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/cta"
+                android:id="@+id/btCta"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/gnt_blue"
+                android:layout_margin="4dp"
+                android:background="?attr/colorPrimary"
                 android:gravity="center"
                 android:lines="1"
                 android:textColor="@color/gnt_white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/body" />
+                app:layout_constraintTop_toBottomOf="@id/tvBody" />
 
             <TextView
-                android:id="@+id/body"
+                android:id="@+id/tvBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/gnt_no_size"
                 android:layout_marginBottom="@dimen/gnt_default_margin"
                 android:paddingLeft="@dimen/gnt_default_margin"
                 android:paddingBottom="@dimen/gnt_default_margin"
-                app:layout_constraintBottom_toTopOf="@+id/cta"
+                app:layout_constraintBottom_toTopOf="@+id/btCta"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/middle" />
@@ -52,13 +51,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="@dimen/gnt_default_margin"
-                app:layout_constraintBottom_toTopOf="@+id/body"
+                app:layout_constraintBottom_toTopOf="@+id/tvBody"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/media_view">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-
                     android:layout_width="@dimen/gnt_no_size"
                     android:layout_height="@dimen/gnt_no_size"
                     android:orientation="horizontal"
@@ -68,7 +66,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/icon"
+                        android:id="@+id/ivIcon"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/gnt_default_margin"
@@ -91,7 +89,7 @@
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/icon"
+                        app:layout_constraintStart_toEndOf="@id/ivIcon"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
@@ -121,7 +119,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></TextView>
+                                app:layout_constraintTop_toTopOf="parent"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -170,7 +168,7 @@
                                 android:textStyle="bold"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></TextView>
+                                app:layout_constraintTop_toTopOf="parent"/>
 
                             <TextView
                                 android:id="@+id/secondary"
@@ -188,7 +186,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/ad_notification_view"
-                                app:layout_constraintTop_toTopOf="parent"></TextView>
+                                app:layout_constraintTop_toTopOf="parent"/>
 
                         </LinearLayout>
 

@@ -5,9 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.google.android.ads.nativetemplates.TemplateView
+    <com.example.sergey.shlypa2.ads.NativeAdsView
         android:id="@+id/my_template"
-        app:gnt_template_type="@layout/gnt_medium_template_view"
+        app:nativeAdsSize="@layout/native_ads_medium"
         android:layout_width="match_parent"
         android:layout_height="500dp" />
 
