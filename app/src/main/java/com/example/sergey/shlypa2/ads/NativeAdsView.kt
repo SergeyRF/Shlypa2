@@ -6,7 +6,7 @@ import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.FrameLayout
+import androidx.cardview.widget.CardView
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.gone
 import com.example.sergey.shlypa2.extensions.hide
@@ -14,11 +14,12 @@ import com.example.sergey.shlypa2.extensions.show
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import kotlinx.android.synthetic.main.native_ads_medium.view.*
 
+
 /** Base class for a template view. *  */
 class NativeAdsView @JvmOverloads
 constructor(context: Context,
             attrs: AttributeSet? = null,
-            defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
+            defStyleAttr: Int = 0) : CardView(context, attrs, defStyleAttr) {
 
     private var templateType: Int = 0
     private var nativeAd: UnifiedNativeAd? = null
@@ -46,35 +47,35 @@ constructor(context: Context,
 
         val secondaryText: String
 
-        native_ad_view.adChoicesView
+        nativeAdView.adChoicesView
 
-        native_ad_view.callToActionView = btCta
-        native_ad_view.headlineView = primary
-        native_ad_view.mediaView = media_view
-        secondary.show()
+        nativeAdView.callToActionView = btCta
+        nativeAdView.headlineView = tvPrimary
+        nativeAdView.mediaView = mediaView
+        tvSecondary.show()
         if (adHasOnlyStore(nativeAd)) {
-            native_ad_view.storeView = secondary
+            nativeAdView.storeView = tvSecondary
             secondaryText = store
         } else if (!TextUtils.isEmpty(advertiser)) {
-            native_ad_view.advertiserView = secondary
+            nativeAdView.advertiserView = tvSecondary
             secondaryText = advertiser
         } else {
             secondaryText = ""
         }
 
-        primary.text = headline
+        tvPrimary.text = headline
         btCta.text = cta
 
         //  Set the secondary view to be the star rating if available.
         if (starRating != null && starRating > 0) {
-            secondary.hide()
-            rating_bar.show()
-            rating_bar.max = 5
-            native_ad_view.starRatingView = rating_bar
+            tvSecondary.hide()
+            ratingBar.show()
+            ratingBar.max = 5
+            nativeAdView.starRatingView = ratingBar
         } else {
-            secondary.text = secondaryText
-            secondary.show()
-            rating_bar.gone()
+            tvSecondary.text = secondaryText
+            tvSecondary.show()
+            ratingBar.gone()
         }
 
         if (icon != null) {
@@ -86,10 +87,10 @@ constructor(context: Context,
 
         if (tvBody != null) {
             tvBody.text = body
-            native_ad_view.bodyView = tvBody
+            nativeAdView.bodyView = tvBody
         }
 
-        native_ad_view.setNativeAd(nativeAd)
+        nativeAdView.setNativeAd(nativeAd)
     }
 
     /**

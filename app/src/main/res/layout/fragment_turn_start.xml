@@ -3,61 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@color/white"
     tools:context="com.example.sergey.shlypa2.screens.game.TurnStartFragment">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvTeamName"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/civPlayerAvatar"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:text="@string/Teem"
-        android:gravity="center"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_big"
-        />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civPlayerAvatar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:civ_border_color="@color/LightGray"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toTopOf="@id/tvTurnPlayerName"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.38"
-        app:layout_constraintWidth_percent="0.50"
-        app:layout_constraintVertical_chainStyle="packed"/>
-
-    <TextView
-        android:id="@+id/tvTurnPlayerName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-        android:layout_marginTop="@dimen/big_margin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btTurnStart"
-        app:layout_constraintTop_toBottomOf="@id/civPlayerAvatar"
-        android:gravity="center"
-        android:textSize="@dimen/text_medium"
-        tools:text="Name"/>
-
     <Button
         android:id="@+id/btTurnStart"
-        android:text="@string/go"
         style="@style/btNextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/go"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <com.example.sergey.shlypa2.ads.NativeAdsView
+        android:id="@+id/adsTurnStart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:nativeAdsSize="@layout/native_ads_medium2"
+        app:layout_constraintBottom_toTopOf="@id/btTurnStart"
+        app:layout_constraintTop_toBottomOf="@id/civPlayerAvatar"
+        app:layout_constraintHeight_max="400dp"
+        app:layout_constraintVertical_bias="1"
+        android:layout_margin="@dimen/medium_margin"/>
+
+    <TextView
+        android:id="@+id/tvTurnPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_big"
+        app:layout_constraintLeft_toLeftOf="@id/tvTeamName"
+        app:layout_constraintTop_toBottomOf="@id/tvTeamName"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/tvTeamName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/medium_margin"
+        android:layout_marginRight="@dimen/medium_margin"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_big"
+        app:layout_constraintLeft_toRightOf="@id/civPlayerAvatar"
+        app:layout_constraintTop_toTopOf="@id/civPlayerAvatar"
+        tools:text="Good guys" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civPlayerAvatar"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginLeft="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/big_margin"
+        app:civ_border_color="@color/LightGray"
+        app:civ_border_width="2dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

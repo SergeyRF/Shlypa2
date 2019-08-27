@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.gms.ads.formats.UnifiedNativeAdView
-        android:id="@+id/native_ad_view"
+        android:id="@+id/nativeAdView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:background="@color/white">
@@ -54,7 +54,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/tvBody"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/media_view">
+                app:layout_constraintTop_toBottomOf="@id/mediaView">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
@@ -104,7 +104,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
-                                android:id="@+id/primary"
+                                android:id="@+id/tvPrimary"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="10dp"
@@ -134,7 +134,7 @@
                             app:layout_constraintTop_toBottomOf="@id/headline">
 
                             <RatingBar
-                                android:id="@+id/rating_bar"
+                                android:id="@+id/ratingBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="0dp"
@@ -154,7 +154,7 @@
                             </RatingBar>
 
                             <TextView
-                                android:id="@+id/ad_notification_view"
+                                android:id="@+id/tvAdNotification"
                                 android:layout_width="25dp"
                                 android:layout_height="20dp"
                                 android:layout_marginStart="0dp"
@@ -171,7 +171,7 @@
                                 app:layout_constraintTop_toTopOf="parent"/>
 
                             <TextView
-                                android:id="@+id/secondary"
+                                android:id="@+id/tvSecondary"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="0dp"
@@ -198,7 +198,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.gms.ads.formats.MediaView
-                android:id="@+id/media_view"
+                android:id="@+id/mediaView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="0dp"

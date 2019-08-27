@@ -120,13 +120,8 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
     }
 
     private fun initSubscriptions() {
-        viewModel.playersLiveData.observeSafe(this) { list ->
-            onPlayersChanged(list)
-        }
-
-        viewModel.avatarLiveData.observeSafe(this) {
-            showAvatar(it)
-        }
+        viewModel.playersLiveData.observeSafe(this, ::onPlayersChanged)
+        viewModel.avatarLiveData.observeSafe(this, ::showAvatar)
     }
 
     override fun onSelectCustomAvatar() {

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.AdsManager
-import kotlinx.android.synthetic.main.fragment_testing.*
+import kotlinx.android.synthetic.main.fragment_turn_start.*
 import org.koin.android.ext.android.inject
 
 
@@ -18,13 +18,13 @@ class MotionTestFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_testing, container, false)
+        return inflater.inflate(R.layout.fragment_turn_start, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adsManager.getNativeAd(requireContext()) {
-            my_template.setNativeAd(it)
+            adsTurnStart.setNativeAd(it)
         }
     }
 }
