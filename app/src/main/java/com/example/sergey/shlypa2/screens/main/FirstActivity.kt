@@ -11,17 +11,19 @@ import androidx.core.app.ShareCompat
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.screens.features_testing.MotionTestFragment
 import com.example.sergey.shlypa2.screens.main.pages.LoadStateFragment
-import com.example.sergey.shlypa2.screens.main.pages.RulesFragment
 import com.example.sergey.shlypa2.screens.main.pages.WelcomeFragment
 import com.example.sergey.shlypa2.screens.players.PlayersActivity
 import com.example.sergey.shlypa2.screens.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.since
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -35,6 +37,8 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private val viewModel by viewModel<WelcomeViewModel>()
+    private val adsManager by inject<AdsManager>()
+
     var themeId: Int = 0
 
     private val showRate by extraNotNull(EXTRA_SHOW_RATE, false)
@@ -76,6 +80,7 @@ class FirstActivity : AppCompatActivity() {
                     .commit()
         }
 
+        adsManager.showConsentIfRequired(this)
     }
 
     override fun setTheme(resid: Int) {
@@ -132,8 +137,8 @@ class FirstActivity : AppCompatActivity() {
     }
 
     private fun startRulesFragment() {
-        val fragment = RulesFragment()
-//        val fragment = MotionTestFragment()
+//        val fragment = RulesFragment()
+        val fragment = MotionTestFragment()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)

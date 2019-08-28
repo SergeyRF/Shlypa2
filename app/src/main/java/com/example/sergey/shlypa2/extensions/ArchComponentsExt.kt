@@ -9,3 +9,12 @@ fun <T> LiveData<T>.observeSafe(owner: LifecycleOwner, block: (T) -> Unit) {
         it?.let { block(it) }
     })
 }
+
+fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, block: (T) -> Unit) {
+    this.observe(owner, Observer {
+        it?.let {
+            removeObservers(owner)
+            block(it)
+        }
+    })
+}
