@@ -13,6 +13,7 @@ import com.example.sergey.shlypa2.utils.Sounds
 import com.example.sergey.shlypa2.utils.anal.AnalSender
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.channels.ticker
@@ -42,6 +43,8 @@ class RoundViewModel(
     val rounResultLiveData = MutableLiveData<List<TeamWithScores>>()
     val scoresSheetLiveData = MutableLiveData<List<TeamWithScores>>()
 
+    val nativeAdLiveData = SingleLiveEvent<UnifiedNativeAd>()
+
     val wordLiveData = MutableLiveData<Word>()
     //First value - answered, second - skipped
     val answeredCountLiveData = MutableLiveData<Pair<Int, Int>>()
@@ -58,7 +61,6 @@ class RoundViewModel(
 
 
     init {
-
         val gameRound = Game.getRound()
 
         when {
@@ -76,6 +78,8 @@ class RoundViewModel(
                 loadLastSaved()
             }
         }
+
+        commandCallback.value = Command.LOAD_NATIVE_AD
     }
 
     private fun loadLastSaved() {
@@ -143,6 +147,14 @@ class RoundViewModel(
 
     fun beginRound() {
         commandCallback.value = Command.GET_READY
+    }
+
+    fun nativeAdLoaded(ad: UnifiedNativeAd) {
+        nativeAdLiveData.value = ad
+    }
+
+    fun nativeAdShown() {
+        commandCallback.value = Command.LOAD_NATIVE_AD
     }
 
     fun onFinishGameAccepted() {
@@ -302,6 +314,7 @@ class RoundViewModel(
         SHOW_GAME_RESULTS,
         SHOW_HINT_TEAM_TABLE,
         SHOW_INTERSTITIAL_ADS,
+        LOAD_NATIVE_AD,
         EXIT
     }
 }

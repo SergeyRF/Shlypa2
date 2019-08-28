@@ -93,6 +93,8 @@ class AdsManager(
         return loader
     }
 
+    fun getAdRequest() = buildRequest()
+
     /**
      * Creates ad request if showing ads is allowed by the consentManager
      * otherwise returns null

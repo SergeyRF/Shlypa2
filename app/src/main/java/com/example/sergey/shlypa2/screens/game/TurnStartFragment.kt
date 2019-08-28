@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.extensions.getLargeImage
+import com.example.sergey.shlypa2.extensions.observeOnce
 import com.example.sergey.shlypa2.extensions.observeSafe
+import com.example.sergey.shlypa2.extensions.show
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import kotlinx.android.synthetic.main.fragment_turn_start.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -32,7 +35,20 @@ class TurnStartFragment : Fragment() {
                     .into(civPlayerAvatar)
         }
 
+        viewModel.nativeAdLiveData.observeOnce(this, ::onNativeAd)
+
         btTurnStart.setOnClickListener { viewModel.startTurn() }
+    }
+
+    private fun onNativeAd(ad: UnifiedNativeAd) {
+        adsTurnStart.show()
+        adsTurnStart.setNativeAd(ad)
+        viewModel.nativeAdShown()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adsTurnStart.destroyNativeAd()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -49,5 +65,4 @@ class TurnStartFragment : Fragment() {
             else -> false
         }
     }
-
 }

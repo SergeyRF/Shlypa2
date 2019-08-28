@@ -13,6 +13,8 @@ import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.game_result.GameResultActivity
 import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,6 +25,13 @@ class RoundActivity : AppCompatActivity() {
     private val viewModel: RoundViewModel by viewModel()
     private val adsManager: AdsManager by inject()
     private var interstitial: Interstitial? = null
+    private var nativeAd: UnifiedNativeAd? = null
+    private val adLoader: AdLoader? by lazy {
+        adsManager.getNativeAd(this) { ad ->
+            nativeAd = ad
+            viewModel.nativeAdLoaded(ad)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
@@ -30,8 +39,6 @@ class RoundActivity : AppCompatActivity() {
         setContentView(R.layout.activity_round)
 
         initToolbar()
-
-        supportActionBar?.elevation = 0F
 
         if (adsManager.initialized) {
             interstitial = adsManager.getInterstitial(this)
@@ -53,6 +60,7 @@ class RoundActivity : AppCompatActivity() {
                 Command.SHOW_GAME_RESULTS -> startGameResults()
                 Command.SHOW_HINT_TEAM_TABLE -> startHintTeam()
                 Command.SHOW_INTERSTITIAL_ADS -> showInterstitial()
+                Command.LOAD_NATIVE_AD -> loadNativeAd()
                 Command.EXIT -> finish()
             }
         }
@@ -65,6 +73,8 @@ class RoundActivity : AppCompatActivity() {
             startStartFragment()
         }
     }
+
+
 
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(R.id.container)
@@ -116,8 +126,15 @@ class RoundActivity : AppCompatActivity() {
         interstitial?.showAd()
     }
 
-    private fun leaveGameDialog() {
+    private fun loadNativeAd() {
+        if(adLoader != null) {
+            adsManager.getAdRequest()?.let {
+                adLoader!!.loadAd(it)
+            }
+        }
+    }
 
+    private fun leaveGameDialog() {
         AlertDialog.Builder(this).apply {
             setTitle(R.string.leaveTitle)
             setMessage(R.string.leaveMessage)
@@ -133,6 +150,7 @@ class RoundActivity : AppCompatActivity() {
     private fun initToolbar() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.elevation = 0F
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
