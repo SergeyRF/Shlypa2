@@ -3,6 +3,7 @@ package com.example.sergey.shlypa2
 import android.app.Application
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.TimberDebugTree
@@ -41,12 +42,20 @@ class App : Application() {
 
         buildCaoc()
 
-        Fabric.with(this, Crashlytics())
+        val crashlytics = Crashlytics.Builder()
+                .core(
+                        CrashlyticsCore.Builder()
+                                .disabled(BuildConfig.DEBUG)
+                                .build()
+                )
+                .build()
+
+        Fabric.with(this, crashlytics)
         FirebaseAnalytics.getInstance(this)
                 .setAnalyticsCollectionEnabled(BuildConfig.DEBUG.not())
 
         FlurryAgent.Builder()
-                .withLogEnabled(true)
+                .withLogEnabled(BuildConfig.DEBUG.not())
                 .build(this, "S85BYYPTT7FXNJZCTPB3")
 
         initFcm()

@@ -78,11 +78,12 @@ class AdsManager(
         return interstitialId?.let {
             Interstitial(context, it, request)
         }
+
     }
 
     fun getNativeAd(context: Context, onLoaded: (UnifiedNativeAd) -> Unit): AdLoader? {
         val request = buildRequest() ?: return null
-        val loader =  AdLoader.Builder(context, NATIVE_TEST_ID)
+        val loader =  AdLoader.Builder(context, NATIVE_TEST_ID) //todo add real id
                 .forUnifiedNativeAd { nativeAd ->
                     onLoaded.invoke(nativeAd)
                 }

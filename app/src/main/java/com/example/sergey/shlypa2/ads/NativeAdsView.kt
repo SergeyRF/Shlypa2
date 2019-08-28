@@ -44,7 +44,6 @@ constructor(context: Context,
         val cta = nativeAd.callToAction
         val starRating = nativeAd.starRating
         val icon = nativeAd.icon
-
         val secondaryText: String
 
         nativeAdView.adChoicesView
@@ -93,13 +92,8 @@ constructor(context: Context,
         nativeAdView.setNativeAd(nativeAd)
     }
 
-    /**
-     * To prevent memory leaks, make sure to destroy your ad when you don't need it anymore. This
-     * method does not destroy the template view.
-     * https://developers.google.com/admob/android/native-unified#destroy_ad
-     */
     fun destroyNativeAd() {
-        nativeAd!!.destroy()
+        nativeAd?.destroy()
     }
 
     private fun initView(context: Context, attributeSet: AttributeSet?) {
