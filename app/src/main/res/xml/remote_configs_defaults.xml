@@ -8,4 +8,8 @@
         <key>interstitial_delay</key>
         <value>900</value>
     </entry>
+    <entry>
+        <key>native_before_turn_enabled</key>
+        <value>true</value>
+    </entry>
 </defaultsMap>

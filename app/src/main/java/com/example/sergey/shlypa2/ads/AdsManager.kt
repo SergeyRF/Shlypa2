@@ -78,7 +78,6 @@ class AdsManager(
         return interstitialId?.let {
             Interstitial(context, it, request)
         }
-
     }
 
     fun getNativeAd(context: Context, onLoaded: (UnifiedNativeAd) -> Unit): AdLoader? {

@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.screens.game
 
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.data.ConfigsProvider
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.GameState
@@ -30,11 +31,9 @@ class RoundViewModel(
         private val dispatchers: DispatchersProvider,
         private val dataProvider: DataProvider,
         private val anal: AnalSender,
-        private val soundManager: SoundManager) : CoroutineViewModel(dispatchers.uiDispatcher) {
+        private val soundManager: SoundManager,
+        configsProvider: ConfigsProvider) : CoroutineViewModel(dispatchers.uiDispatcher) {
 
-    companion object {
-        private const val ADS_TIME_LIMIT = 10 * 60 * 1000
-    }
 
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()
 
@@ -58,6 +57,9 @@ class RoundViewModel(
     private var roundFinished = false
 
     private var adsShowedTime = System.currentTimeMillis()
+    private val interstitialDelay = configsProvider.interstitialDelaySec * 1000
+    val interstitialEnabled = configsProvider.interstitialEnabled
+    val nativeAdEnabled = configsProvider.nativeBeforeTurnEnabled
 
 
     init {
@@ -79,7 +81,7 @@ class RoundViewModel(
             }
         }
 
-        commandCallback.value = Command.LOAD_NATIVE_AD
+        if(nativeAdEnabled) commandCallback.value = Command.LOAD_NATIVE_AD
     }
 
     private fun loadLastSaved() {
@@ -154,7 +156,7 @@ class RoundViewModel(
     }
 
     fun nativeAdShown() {
-        commandCallback.value = Command.LOAD_NATIVE_AD
+        if(nativeAdEnabled) commandCallback.value = Command.LOAD_NATIVE_AD
     }
 
     fun onFinishGameAccepted() {
@@ -191,7 +193,9 @@ class RoundViewModel(
     }
 
     private fun showAds() {
-        commandCallback.value = Command.SHOW_INTERSTITIAL_ADS
+        if(interstitialEnabled) {
+            commandCallback.value = Command.SHOW_INTERSTITIAL_ADS
+        }
     }
 
     fun startTurn() {
@@ -231,7 +235,7 @@ class RoundViewModel(
     }
 
     private fun showTimeAds() {
-        if (System.currentTimeMillis() > adsShowedTime + ADS_TIME_LIMIT) {
+        if (System.currentTimeMillis() > adsShowedTime + interstitialDelay) {
             adsShowedTime = System.currentTimeMillis()
             showAds()
         }

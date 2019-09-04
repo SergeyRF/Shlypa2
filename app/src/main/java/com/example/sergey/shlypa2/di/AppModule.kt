@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.example.sergey.shlypa2.BuildConfig
 import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.ads.ConsentManager
+import com.example.sergey.shlypa2.data.AppLifecycleObserver
+import com.example.sergey.shlypa2.data.ConfigsProvider
 import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.db.Contract
 import com.example.sergey.shlypa2.db.DataBase
@@ -27,6 +29,7 @@ import com.example.sergey.shlypa2.utils.anal.FlurryFacadeRelease
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProviderImpl
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.GsonBuilder
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -35,7 +38,7 @@ val appModule = module {
     viewModel { WelcomeViewModel(get(), get(), get()) }
     viewModel { PlayersViewModel(get(), get(), get(), get(), get()) }
     viewModel { GameSettingsViewModel(get(), get(), get(), get()) }
-    viewModel { RoundViewModel(get(), get(), get(), get()) }
+    viewModel { RoundViewModel(get(), get(), get(), get(), get()) }
     viewModel { WordsViewModel(get(), get(), get(), get(), get()) }
     viewModel { SettingsViewModel(get(), get(), get()) }
     viewModel { LaunchViewModel(get(), get(), get(), get()) }
@@ -62,6 +65,9 @@ val appModule = module {
     single { SoundManager(get(), get()) }
     single { ConsentManager(get()) }
     single { AdsManager(get(), get()) }
+    single { FirebaseRemoteConfig.getInstance() }
+    single { ConfigsProvider(get()) }
+    single { AppLifecycleObserver(get())}
     factory { DbExporter(get()) }
 }
 
