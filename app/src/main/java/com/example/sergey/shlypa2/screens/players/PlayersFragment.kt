@@ -34,6 +34,7 @@ import com.takusemba.spotlight.Spotlight
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_players.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -49,7 +50,7 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
 
 
     val viewModel by sharedViewModel<PlayersViewModel>()
-    private val playersAdapter = FlexibleAdapter(emptyList(), this)
+    private lateinit var playersAdapter: FlexibleAdapter<IFlexible<*>>
 
     companion object {
         const val SHOW_SPOTLIGHT = "spotlight_show"
@@ -78,13 +79,18 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
     }
 
     private fun initViews() {
-        rvPlayers.layoutManager = LinearLayoutManager(requireContext()).apply {
-            stackFromEnd = true
-            reverseLayout = true
-        }
+        playersAdapter = FlexibleAdapter(emptyList(), this)
 
-        rvPlayers.adapter = playersAdapter
+        with(rvPlayers) {
+            layoutManager = LinearLayoutManager(requireContext()).apply {
+                stackFromEnd = true
+                reverseLayout = true
+            }
+            adapter = playersAdapter
+        }
+        // set swipe enabled only allowed after attaching to recycler view
         playersAdapter.isSwipeEnabled = true
+
         civPlayerAvatar.setOnClickListener {
             viewModel.onChangeAvatarClicked()
         }
