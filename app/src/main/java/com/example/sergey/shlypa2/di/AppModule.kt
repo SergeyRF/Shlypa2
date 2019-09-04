@@ -16,6 +16,7 @@ import com.example.sergey.shlypa2.screens.settings.SettingsViewModel
 import com.example.sergey.shlypa2.screens.splash.LaunchViewModel
 import com.example.sergey.shlypa2.screens.words_in.WordsViewModel
 import com.example.sergey.shlypa2.utils.DbExporter
+import com.example.sergey.shlypa2.utils.GameStateSaver
 import com.example.sergey.shlypa2.utils.PreferencesProvider
 import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.utils.anal.AnalSender
@@ -40,13 +41,15 @@ val appModule = module {
 
     single { createGson() }
 
+    single{GameStateSaver(get())}
+
     single { createDb(get()) }
     single { (db: DataBase) -> db.typesDap() }
     single { (db: DataBase) -> db.playersDao() }
     single { (db: DataBase) -> db.stateDao() }
     single { (db: DataBase) -> db.wordDao() }
 
-    single { DataProvider(get(), get(), get()) }
+    single { DataProvider(get(), get(), get(),get()) }
 
     single { AnalSender(get())}
     single { PlayersRepository(get())}

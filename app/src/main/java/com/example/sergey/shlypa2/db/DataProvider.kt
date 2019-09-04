@@ -22,9 +22,9 @@ import java.util.*
 class DataProvider(
         db: DataBase,
         private val gson: Gson,
-        private val context: Context
+        private val context: Context,
+        private val gameStateSaver:GameStateSaver
 ) {
-    private val gameStateSaver = GameStateSaver()
 
     private val playersDao = db.playersDao()
     private val wordsDao = db.wordDao()
@@ -67,33 +67,14 @@ class DataProvider(
     }
 
     fun getSavedStates(): List<GameState> {
-       /* var savedList = stateDao.getAllStates()
-
-        //keep only 5 states
-        if (savedList.size > 5) {
-            val sortesList = savedList.sortedByDescending { it.time }
-            sortesList.subList(4, sortesList.size - 1)
-                    .forEach { stateDao.deleteState(it.gameId) }
-
-            savedList = stateDao.getAllStates()
-        }
-
-        return savedList.map { gson.fromJson(it.state, GameState::class.java) }*/
         return gameStateSaver.loadState()
     }
 
     fun getLastSavedState(): GameState? {
-       /* val savedList = stateDao.getAllStates()
-        val lastSaved = savedList.maxBy { it.time }
-
-        return lastSaved?.let { gson.fromJson(lastSaved.state, GameState::class.java) }*/
         return gameStateSaver.getLastSavedState()
     }
 
     fun insertState(state: GameState) {
-        /*val represent = StateRepresent(0, state.gameId, System.currentTimeMillis(), gson.toJson(state))
-        Timber.d(represent.state)
-        stateDao.insertState(represent)*/
         gameStateSaver.insertState(state)
     }
 
