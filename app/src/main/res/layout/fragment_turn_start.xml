@@ -24,7 +24,7 @@
         app:nativeAdsSize="@layout/native_ads_medium"
         app:layout_constraintBottom_toTopOf="@id/btTurnStart"
         app:layout_constraintTop_toBottomOf="@id/civPlayerAvatar"
-        app:layout_constraintHeight_max="400dp"
+        app:layout_constraintHeight_max="350dp"
         app:layout_constraintVertical_bias="1"
         android:layout_margin="@dimen/medium_margin"
         android:visibility="gone"

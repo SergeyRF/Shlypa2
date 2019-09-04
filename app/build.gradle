@@ -61,6 +61,7 @@ dependencies {
     //implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
     implementation "com.google.firebase:firebase-messaging:20.0.0"
+    implementation 'com.google.firebase:firebase-config:19.0.0'
     implementation 'com.google.android.ads.consent:consent-library:1.0.7'
     implementation 'com.flurry.android:analytics:11.6.0@aar'
 
