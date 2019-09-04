@@ -7,6 +7,26 @@
     app:layoutDescription="@xml/round_start_motion"
     tools:context="com.example.sergey.shlypa2.screens.game.RoundStartFragment">
 
+    <Button
+        android:id="@+id/btBeginRound"
+        style="@style/btNextStyle"
+        android:text="@string/play"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvRoundRules"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_margin"
+        android:alpha="0"
+        android:gravity="center"
+        android:paddingLeft="@dimen/big_margin"
+        android:paddingRight="@dimen/big_margin"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
+        app:layout_constraintTop_toBottomOf="@id/civRulesAvatar" />
+
     <TextView
         android:id="@+id/tvRoundName"
         android:layout_width="wrap_content"
@@ -16,7 +36,6 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="First round" />
 
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civRulesAvatar"
         android:layout_width="0dp"
@@ -24,26 +43,5 @@
         app:civ_border_color="@color/LightGray"
         app:civ_border_width="2dp"
         tools:src="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvRoundRules"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/big_margin"
-        android:layout_marginTop="@dimen/big_margin"
-        android:layout_marginRight="@dimen/big_margin"
-        android:alpha="0"
-        android:gravity="center"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/civRulesAvatar" />
-
-    <Button
-        android:id="@+id/btBeginRound"
-        style="@style/btNextStyle"
-        android:text="@string/play"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

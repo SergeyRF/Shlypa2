@@ -64,7 +64,7 @@
             app:layout_constraintWidth_percent="0.20" />
 
         <Constraint android:id="@id/tvRoundRules">
-            <PropertySet android:alpha="1" />
+            <PropertySet android:alpha="1"/>
         </Constraint>
 
         <Constraint
