@@ -1,15 +1,11 @@
 package com.example.sergey.shlypa2
 
-import androidx.multidex.MultiDexApplication
+import android.app.Application
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.crashlytics.android.Crashlytics
-import com.example.sergey.shlypa2.ads.AdsManager
-import com.example.sergey.shlypa2.db.Contract
+import com.crashlytics.android.core.CrashlyticsCore
 import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.DbExporter
-import com.example.sergey.shlypa2.utils.PreferenceHelper
-import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.TimberDebugTree
 import com.example.sergey.shlypa2.utils.TimberReleaseTree
 import com.flurry.android.FlurryAgent
@@ -23,7 +19,8 @@ import timber.log.Timber
 /**
  * Created by alex on 4/4/18.
  */
-class App : MultiDexApplication() {
+class App : Application() {
+
 
     override fun onCreate() {
         super.onCreate()
@@ -39,19 +36,26 @@ class App : MultiDexApplication() {
             Timber.plant(TimberReleaseTree())
         }
 
-        AdsManager.initAds(this)
         //todo refactor this shit  !!!
         val namesArray = resources.getStringArray(R.array.teams)
         Game.teamNames = namesArray.toMutableList()
 
         buildCaoc()
 
-        Fabric.with(this, Crashlytics())
+        val crashlytics = Crashlytics.Builder()
+                .core(
+                        CrashlyticsCore.Builder()
+                                .disabled(BuildConfig.DEBUG)
+                                .build()
+                )
+                .build()
+
+        Fabric.with(this, crashlytics)
         FirebaseAnalytics.getInstance(this)
                 .setAnalyticsCollectionEnabled(BuildConfig.DEBUG.not())
 
         FlurryAgent.Builder()
-                .withLogEnabled(true)
+                .withLogEnabled(BuildConfig.DEBUG.not())
                 .build(this, "S85BYYPTT7FXNJZCTPB3")
 
         initFcm()

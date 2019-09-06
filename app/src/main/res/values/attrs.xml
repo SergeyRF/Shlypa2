@@ -16,4 +16,8 @@
     <declare-styleable name="RecyclerViewMaxHeight">
         <attr name="rvMaxHeight" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="NativeAdsView">
+        <attr name="nativeAdsSize" format="reference"/>
+    </declare-styleable>
 </resources>

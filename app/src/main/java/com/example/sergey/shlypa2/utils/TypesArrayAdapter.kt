@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2
+package com.example.sergey.shlypa2.utils
 
 import android.content.Context
 import android.view.View
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.sergey.shlypa2.beans.Type
-import com.example.sergey.shlypa2.game.WordType
 
 /**
  * Created by alex on 4/25/18.

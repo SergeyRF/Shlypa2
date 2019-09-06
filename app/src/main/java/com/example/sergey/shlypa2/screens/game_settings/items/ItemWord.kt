@@ -7,10 +7,10 @@ import android.widget.Spinner
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.TypesArrayAdapter
 import com.example.sergey.shlypa2.beans.ItemWordSettings
 import com.example.sergey.shlypa2.beans.Type
 import com.example.sergey.shlypa2.extensions.setVisibility
+import com.example.sergey.shlypa2.utils.TypesArrayAdapter
 import com.example.sergey.shlypa2.views.SwitchSetting
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.AbstractFlexibleItem

@@ -1,11 +1,11 @@
 package com.example.sergey.shlypa2.utils.anal
 
-import android.content.Context
 import android.os.Bundle
-import com.flurry.android.FlurryAgent
 import com.google.firebase.analytics.FirebaseAnalytics
 
-class AnalSender(val context: Context) {
+class AnalSender(
+        private val flurryFacade: FlurryFacade,
+        private val firebase: FirebaseAnalytics) {
 
     companion object {
         private const val TEAMS_CREATED = "teams_created"
@@ -34,8 +34,6 @@ class AnalSender(val context: Context) {
         private const val GAME_ALL_WORD_AUTOFILL = "game_all_word_autofill"
     }
 
-    private val firebase = FirebaseAnalytics.getInstance(context)
-
     fun sendEventTeamsCreated(playersCount: Int, teamsCount: Int) {
         val bundle = Bundle()
         bundle.putInt(PLAYERS_COUNT, playersCount)
@@ -43,46 +41,47 @@ class AnalSender(val context: Context) {
 
         firebase.logEvent(TEAMS_CREATED, bundle)
 
-        FlurryAgent.logEvent(
+        flurryFacade.logEvent(
                 TEAMS_CREATED, mapOf(PLAYERS_COUNT to playersCount.toString(),
                 TEAMS_COUNT to teamsCount.toString()))
     }
 
     fun rateDialogOpened() {
-        FlurryAgent.logEvent(RATE_OPENED)
+        flurryFacade.logEvent(RATE_OPENED)
         firebase.logEvent(RATE_OPENED, null)
     }
 
     fun rateDialogNeverClicked() {
-        FlurryAgent.logEvent(RATE_NEVER_CLICKED)
+        flurryFacade.logEvent(RATE_NEVER_CLICKED)
         firebase.logEvent(RATE_NEVER_CLICKED, null)
     }
 
     fun rateDialogCanceled() {
-        FlurryAgent.logEvent(RATE_CANCELED)
+        flurryFacade.logEvent(RATE_CANCELED)
         firebase.logEvent(RATE_CANCELED, null)
     }
 
     fun rateStarred(stars: Int) {
-        FlurryAgent.logEvent(RATE_STARS_SELECTED, mapOf(RATE_STARS_COUNT to stars.toString()))
+        flurryFacade.logEvent(RATE_STARS_SELECTED, mapOf(RATE_STARS_COUNT to stars.toString()))
         firebase.logEvent(RATE_STARS_SELECTED, Bundle().apply {
             putInt(RATE_STARS_SELECTED, stars)
         })
     }
 
     fun wordAdded(auto: Boolean) {
-        FlurryAgent.logEvent(WORD_WRITTEN, mapOf(WORDS_ADDED_AUTOMATTICALLY to auto.toString()))
+        flurryFacade.logEvent(WORD_WRITTEN, mapOf(WORDS_ADDED_AUTOMATTICALLY to auto.toString()))
     }
 
     fun playerAdded(auto: Boolean) {
-        FlurryAgent.logEvent(PLAYER_ADDED, mapOf(PLAYER_ADDED_AUTO to auto.toString()))
-    }
-    fun playerAddedFromSaved(){
-        FlurryAgent.logEvent(PLAYER_FROM_SAVED)
+        flurryFacade.logEvent(PLAYER_ADDED, mapOf(PLAYER_ADDED_AUTO to auto.toString()))
     }
 
-    fun gameStarted(autoAllowed: Boolean, wordType: String, wordAutofill:Boolean = false) {
-        FlurryAgent.logEvent(GAME_STARTED, mapOf(
+    fun playerAddedFromSaved() {
+        flurryFacade.logEvent(PLAYER_FROM_SAVED)
+    }
+
+    fun gameStarted(autoAllowed: Boolean, wordType: String, wordAutofill: Boolean = false) {
+        flurryFacade.logEvent(GAME_STARTED, mapOf(
                 GAME_AUTO_ALLOWED to autoAllowed.toString(),
                 GAME_WORDS_TYPE to wordType,
                 GAME_ALL_WORD_AUTOFILL to wordAutofill.toString()
@@ -92,12 +91,12 @@ class AnalSender(val context: Context) {
 
     fun gameLoaded() {
         firebase.logEvent(GAME_LOADED, null)
-        FlurryAgent.logEvent(GAME_LOADED)
+        flurryFacade.logEvent(GAME_LOADED)
     }
 
     fun gameFinished() {
         firebase.logEvent(GAME_FINISHED, null)
-        FlurryAgent.logEvent(GAME_FINISHED)
+        flurryFacade.logEvent(GAME_FINISHED)
     }
 
 }
