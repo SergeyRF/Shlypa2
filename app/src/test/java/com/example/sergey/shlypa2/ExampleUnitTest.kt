@@ -13,23 +13,4 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
-
-    @Test
-    fun testStrategy() {
-
-        val someAnimal = Animal()
-        someAnimal.makeSound()
-        someAnimal.makeSound = fun() {
-            println("Woof")
-        }
-        someAnimal.makeSound
-
-    }
-
-}
-
-class Animal {
-    var makeSound = fun() {
-        println("Mew")
-    }
 }

@@ -13,40 +13,25 @@ class GameStateSaver(context: Context) {
     private val fileName = "/gameState"
     private val pFile = "/state"
     private val gson = Gson()
-    private var file: File? = null
+    private val fileDir = File(context.filesDir, fileName)
+    private val file: File by lazy { File(fileDir, pFile).apply { mkdirs() } }
     private val savedCount = 5
 
-    init {
-        val fileDir = File(context.filesDir, fileName)
-        fileDir.mkdirs()
-        file = File(fileDir, pFile)
-    }
 
     private fun saveState(gameState: List<GameState>) {
 
-        file?.printWriter().use {
-            it?.print(gson.toJson(gameState))
+        file.printWriter().use {
+            it.print(gson.toJson(gameState))
         }
     }
 
     @Synchronized
     fun loadState(): MutableList<GameState> {
-
-        var inputStream: FileInputStream?
         kotlin.runCatching {
-            inputStream = file?.inputStream()
-
             val list = mutableListOf<GameState>()
-            inputStream?.let {
-                val size = it.available()
-                val buffer = ByteArray(size)
-                it.read(buffer)
-                it.close()
-                val json = String(buffer)
-                val state: List<GameState> = gson.fromJson(json, object : TypeToken<MutableList<GameState>>() {}.type)
-                print(state)
-                list.addAll(state)
-            }
+            val json = file.readText()
+            val state: List<GameState> = gson.fromJson(json, object : TypeToken<MutableList<GameState>>() {}.type)
+            list.addAll(state)
             return list
         }.onFailure {
             Timber.e(it)
@@ -65,8 +50,8 @@ class GameStateSaver(context: Context) {
             savedState.remove(savedState.minBy { it.savedTime })
         }
         savedState.add(state)
-        file?.printWriter().use {
-            it?.print(gson.toJson(savedState))
+        file.printWriter().use {
+            it.print(gson.toJson(savedState))
         }
     }
 

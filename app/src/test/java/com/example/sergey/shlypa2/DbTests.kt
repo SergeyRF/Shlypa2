@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
 
 */
 /**
- * Created by alex on 4/10/18.
+ * Created by alex on4/10/18.
  *//*
 
 
@@ -56,4 +56,5 @@ class DbTests {
     fun shutdown() {
         dataBase.close()
     }
-}*/
+}
+*/
