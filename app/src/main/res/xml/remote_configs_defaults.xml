@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>interstitial_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>interstitial_delay</key>
+        <value>900</value>
+    </entry>
+    <entry>
+        <key>native_before_turn_enabled</key>
+        <value>true</value>
+    </entry>
+</defaultsMap>

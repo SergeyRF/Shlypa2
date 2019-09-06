@@ -27,7 +27,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class FirstActivity : AppCompatActivity() {
+class FirstActivity : AppCompatActivity(R.layout.activity_first) {
 
     companion object {
         private const val EXTRA_SHOW_RATE = "extra_show_rate"
@@ -46,7 +46,6 @@ class FirstActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_first)
 
         if (showRate) {
             AppRater().rateAppIfRequired(this)

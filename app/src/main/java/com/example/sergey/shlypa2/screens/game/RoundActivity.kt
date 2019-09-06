@@ -40,7 +40,7 @@ class RoundActivity : AppCompatActivity() {
 
         initToolbar()
 
-        if (adsManager.initialized) {
+        if (viewModel.interstitialEnabled && adsManager.initialized) {
             interstitial = adsManager.getInterstitial(this)
             interstitial?.loadAd()
             interstitial?.setAdListener(object : AdListener() {
