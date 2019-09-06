@@ -11,7 +11,7 @@ import com.example.sergey.shlypa2.extensions.observeOnce
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.show
 import com.google.android.gms.ads.formats.UnifiedNativeAd
-import kotlinx.android.synthetic.main.fragment_turn_start.*
+import kotlinx.android.synthetic.main.fragment_turn_start_with_ads.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -22,7 +22,9 @@ class TurnStartFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_turn_start, container, false)
+        val layout = if(viewModel.nativeAdEnabled)
+            R.layout.fragment_turn_start_with_ads else R.layout.fragment_turn_start
+        return inflater.inflate(layout, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,14 +43,16 @@ class TurnStartFragment : Fragment() {
     }
 
     private fun onNativeAd(ad: UnifiedNativeAd) {
-        adsTurnStart.show()
-        adsTurnStart.setNativeAd(ad)
-        viewModel.nativeAdShown()
+        adsTurnStart?.let {
+            it.show()
+            it.setNativeAd(ad)
+            viewModel.nativeAdShown()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        adsTurnStart.destroyNativeAd()
+        adsTurnStart?.destroyNativeAd()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

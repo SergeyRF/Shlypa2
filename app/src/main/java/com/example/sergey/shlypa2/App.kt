@@ -1,9 +1,11 @@
 package com.example.sergey.shlypa2
 
 import android.app.Application
+import androidx.lifecycle.ProcessLifecycleOwner
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
+import com.example.sergey.shlypa2.data.AppLifecycleObserver
 import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.utils.TimberDebugTree
@@ -12,6 +14,7 @@ import com.flurry.android.FlurryAgent
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -21,6 +24,7 @@ import timber.log.Timber
  */
 class App : Application() {
 
+    private val lifecycleObserver by inject<AppLifecycleObserver>()
 
     override fun onCreate() {
         super.onCreate()
@@ -59,6 +63,10 @@ class App : Application() {
                 .build(this, "S85BYYPTT7FXNJZCTPB3")
 
         initFcm()
+
+        ProcessLifecycleOwner.get().lifecycle
+                .addObserver(lifecycleObserver)
+
     }
 
     fun buildCaoc() {
