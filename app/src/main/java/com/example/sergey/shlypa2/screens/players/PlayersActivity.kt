@@ -96,9 +96,11 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
     private fun startTeamsFragment() {
         val fragment = TeamsFragment()
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                        android.R.animator.fade_in, android.R.animator.fade_out,
+                        android.R.animator.fade_in, android.R.animator.fade_out)
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .commit()
     }
 
