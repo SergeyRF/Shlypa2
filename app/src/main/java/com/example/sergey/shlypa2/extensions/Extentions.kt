@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.os.Handler
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.SeekBar
@@ -98,6 +100,43 @@ fun View.onPreDraw(block: () -> Unit) {
             return true
         }
     })
+}
+fun EditText.onActionDone(returnCompleted: Boolean = true,
+                          returnNotCompleted: Boolean = true, block: () -> Unit) {
+    onAction(EditorInfo.IME_ACTION_DONE, returnCompleted, returnNotCompleted, block)
+}
+
+fun EditText.onActionNext(returnCompleted: Boolean = true,
+                          returnNotCompleted: Boolean = true,
+                          block: () -> Unit) {
+    onAction(EditorInfo.IME_ACTION_NEXT, returnCompleted, returnNotCompleted, block)
+}
+
+fun EditText.onTouchRightDrawable(block: () -> Unit) {
+    setOnTouchListener { _, event ->
+        if (event.action == MotionEvent.ACTION_UP) {
+            if (event.rawX >= (right - compoundDrawables[2].bounds.width())) {
+                block.invoke()
+                return@setOnTouchListener true
+            }
+        }
+        false
+    }
+}
+
+fun EditText.onAction(action: Int,
+                      returnCompleted: Boolean = true,
+                      returnNotCompleted: Boolean = true,
+                      block: () -> Unit) {
+    setOnEditorActionListener { _, actionId, _ ->
+        return@setOnEditorActionListener when (actionId) {
+            action -> {
+                block.invoke()
+                returnCompleted
+            }
+            else -> returnNotCompleted
+        }
+    }
 }
 
 /**

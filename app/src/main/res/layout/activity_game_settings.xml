@@ -10,8 +10,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSettings"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btCompletedSettings"
+        android:layout_height="match_parent"
+        android:paddingBottom="60dp"
+        android:clipToPadding="false"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button

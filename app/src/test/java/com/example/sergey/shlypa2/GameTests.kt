@@ -1,3 +1,5 @@
+/*
+
 package com.example.sergey.shlypa2
 
 import com.example.sergey.shlypa2.beans.Player
@@ -9,9 +11,13 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
+
+*/
 /**
  * Created by alex on 3/31/18.
- */
+ *//*
+
+
 class GameTests {
 
     @Before
@@ -64,3 +70,4 @@ class GameTests {
         assertEquals(scoredTeamList[0].scoresMap[3], 6)
     }
 }
+*/
