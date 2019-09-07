@@ -42,7 +42,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvTeamName"
             app:layout_constraintBottom_toBottomOf="@id/tvTeamName"
-            app:srcCompat="@drawable/ic_create_black_24dp" />
+            app:srcCompat="@drawable/ic_create_grey_24dp" />
 
         <View
             android:id="@+id/nameDivider"
