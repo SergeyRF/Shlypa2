@@ -16,8 +16,8 @@ import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.setThemeApi21
-import com.example.sergey.shlypa2.screens.features_testing.MotionTestFragment
 import com.example.sergey.shlypa2.screens.main.pages.LoadStateFragment
+import com.example.sergey.shlypa2.screens.main.pages.RulesFragment
 import com.example.sergey.shlypa2.screens.main.pages.WelcomeFragment
 import com.example.sergey.shlypa2.screens.players.PlayersActivity
 import com.example.sergey.shlypa2.screens.settings.SettingsActivity
@@ -136,8 +136,8 @@ class FirstActivity : AppCompatActivity(R.layout.activity_first) {
     }
 
     private fun startRulesFragment() {
-//        val fragment = RulesFragment()
-        val fragment = MotionTestFragment()
+        val fragment = RulesFragment()
+//        val fragment = MotionTestFragment()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
