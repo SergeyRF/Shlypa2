@@ -159,7 +159,9 @@
     <string name="teams_need_at_least_two">A team must have at least two players</string>
     <string name="team_reorder">Team reordering</string>
     <string name="team_reorder_guide">Long click and drag player to move it to another team</string>
-
+    <string name="choose_photo">Choose photo</string>
+    <string name="photo">Photo</string>
+    <string name="gallery">Gallery</string>
 
 
 </resources>

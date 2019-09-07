@@ -4,21 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/btPhoto"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_camera"
+        android:drawablePadding="@dimen/big_margin"
+        android:padding="@dimen/big_margin"
+        android:text="@string/photo"
+        android:textColor="@color/primary_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btGallery" />
+
+
+    <Button
+        android:id="@+id/btGallery"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_image"
+        android:drawablePadding="@dimen/big_margin"
+        android:padding="@dimen/big_margin"
+        android:text="@string/gallery"
+        android:textColor="@color/primary_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAvatarDialog"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/medium_margin"
-        app:layout_constraintBottom_toTopOf="@+id/btAddUserImage"
+        app:layout_constraintBottom_toTopOf="@+id/btPhoto"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Button
-        android:id="@+id/btAddUserImage"
-        style="@style/btNextStyle"
-        android:text="@string/add_user_avatar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
