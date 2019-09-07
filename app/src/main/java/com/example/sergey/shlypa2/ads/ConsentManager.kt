@@ -42,12 +42,18 @@ class ConsentManager(val context: Context) {
         }
     }
 
+    fun consentRequired() = consentInfo.isRequestLocationInEeaOrUnknown
+
     fun showConsentIfNeed(context: Context, buyCallBack: () -> Unit = {}) {
         when (currentConsentStatus) {
             InnerConsentStatus.UNKNOWN -> if (consentForm?.isShowing != true) showConsent(context)
             InnerConsentStatus.NOT_SET -> checkConsent { showConsentIfNeed(context, buyCallBack) }
             else -> return
         }
+    }
+
+    fun forceShowConsent(context: Context, buyCallBack: () -> Unit = {}) {
+        showConsent(context, buyCallBack)
     }
 
     fun canShowAds(): Boolean =

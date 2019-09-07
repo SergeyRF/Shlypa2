@@ -162,6 +162,7 @@
     <string name="choose_photo">Choose photo</string>
     <string name="photo">Photo</string>
     <string name="gallery">Gallery</string>
+    <string name="data_usage_consent_change">Revoke data usage consent</string>
 
 
 </resources>
