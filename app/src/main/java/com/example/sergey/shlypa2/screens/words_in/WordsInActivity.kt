@@ -3,32 +3,28 @@ package com.example.sergey.shlypa2.screens.words_in
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.extensions.*
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.screens.game.RoundActivity
 import com.example.sergey.shlypa2.utils.anal.AnalSender
+import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.activity_words_in.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 
 class WordsInActivity : AppCompatActivity() {
 
-
-    private lateinit var wordsAdapter: RvAdapter
     private val viewModel by viewModel<WordsViewModel>()
     private val anal by inject<AnalSender>()
 
-    private var animated = false
+    private var wordsAdapter = FlexibleAdapter(emptyList())
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,68 +33,76 @@ class WordsInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_words_in)
 
         initToolbar()
-
         container.setTransition(R.id.start, R.id.end)
 
-        wordsAdapter = RvAdapter()
-        rvWords.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        initViews()
+        initSubscriptions()
+    }
+
+    private fun initViews() {
+        rvWords.layoutManager = LinearLayoutManager(this)
         rvWords.adapter = wordsAdapter
-        if (!viewModel.randomAllowed()) wordsAdapter.offChangeWordFlag()
-
-        Timber.d("random allowed ${viewModel.randomAllowed()}")
-
-        viewModel.getWordsLiveData().observe(this, Observer { list -> setWordRv(list) })
-
-        viewModel.getPlayerLiveData().observe(this, Observer { setPlayer(it) })
-
-        viewModel.getNeedWordsLive()
-                .observe(this, Observer { needWords ->
-                    needWords?.let { onNeedWordsChanged(it) }
-                })
-
-        viewModel.inputFinishCallBack.observeSafe(this) { bool ->
-            if (bool) onStartGame()
-        }
 
         ibAddWord.setOnClickListener {
-            if (etWord.text.toString().isNotEmpty()) {
-                viewModel.addWord(etWord.text.toString())
-                etWord.text.clear()
-            }
+            addWord()
         }
 
-        etWord.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_NEXT && etWord.text.isNotEmpty()) {
-                // обработка нажатия Enter
-                viewModel.addWord(etWord.text.toString())
-                etWord.text.clear()
-                true
-            } else true
+        etWord.onActionNext {
+            // обработка нажатия Enter
+            addWord()
         }
 
         btNextPlayer.setOnClickListener {
-            if (viewModel.needWord() && viewModel.randomAllowed()) {
-                viewModel.fillWithRandomWords()
-            } else {
-                viewModel.nextPlayer()
+            viewModel.clickNext()
+        }
+    }
+
+    private fun initSubscriptions() {
+
+        viewModel.wordsLiveData.observeSafe(this) {
+            setWordItem(it.first, it.second)
+        }
+
+        viewModel.playerLiveData.observeSafe(this) {
+            setPlayer(it)
+        }
+
+        viewModel.inputFinishCallBackLD.observeSafe(this) {
+            onStartGame()
+        }
+
+        viewModel.animateLiveData.observeSafe(this) {
+            if (it) showList()
+            else hideList()
+        }
+
+        viewModel.buttonNextLiveData.observeSafe(this) {
+            btNextPlayer.setVisibility(it.first)
+            btNextPlayer.setText(it.second)
+        }
+
+        viewModel.ediTextChangedLiveData.observeSafe(this) {
+            if (it) {
+                ibAddWord.show()
+                etWord.show()
                 etWord.text.clear()
                 etWord.showKeyboard()
+            } else {
+                hideKeyboard()
+                ibAddWord.gone()
+                etWord.gone()
             }
         }
 
-        wordsAdapter.listenerTwo = { word: Any ->
-            viewModel.deleteWord(word as Word)
-            wordsAdapter.notifyDataSetChanged()
+    }
+
+    private fun addWord() {
+        with(etWord.text) {
+            if (isNotEmpty()) {
+                onChangeEt(viewModel.addWord(this.toString()))
+                clear()
+            }
         }
-
-        wordsAdapter.listenerThree = { word: Any ->
-            viewModel.newRandomWord(word as Word)
-            wordsAdapter.notifyDataSetChanged()
-        }
-
-        wordsAdapter.setData(listOf(Word("${viewModel.randomAllowed()}"), Word("hello2")))
-
-        onChangeEt()
     }
 
     private fun initToolbar() {
@@ -116,21 +120,21 @@ class WordsInActivity : AppCompatActivity() {
         }
     }
 
-    private fun setWordRv(words: List<Word>?) {
-        if (words == null || words.isEmpty()) {
-            if (animated) {
-                hideList()
-                animated = false
+    private fun setWordItem(listWords: List<Word>, randomAllowed: Boolean) {
+        listWords.map { word ->
+            WordItem(randomAllowed, word) {
+                when (it.first) {
+                    WordAct.CHANGE -> {
+                        viewModel.changeWord(it.second)
+                    }
+                    WordAct.DELETE -> {
+                        viewModel.deleteWord(it.second)
+                    }
+                }
             }
-        } else {
-            if (!animated) {
-                showList()
-                animated = true
-            }
-
+        }.apply {
+            wordsAdapter.updateDataSet(this)
         }
-
-        wordsAdapter.setData(words)
     }
 
     private fun showList() {
@@ -141,9 +145,8 @@ class WordsInActivity : AppCompatActivity() {
         container.transitionToStart()
     }
 
-    fun setPlayer(p: Player?) {
+    private fun setPlayer(p: Player?) {
         p?.let {
-            //            title = p.name
             Glide.with(this)
                     .load(p.getLargeImage(this))
                     .into(civPlayerAvatar)
@@ -152,30 +155,9 @@ class WordsInActivity : AppCompatActivity() {
         }
     }
 
-    private fun onNeedWordsChanged(needWords: Boolean) {
-        if (needWords) {
-            onChangeEt()
-
-            if (viewModel.randomAllowed()) {
-                btNextPlayer.text = getString(R.string.add_random)
-            } else {
-                btNextPlayer.gone()
-            }
-            ibAddWord.show()
-            etWord.show()
-        } else {
-            hideKeyboard()
-            ibAddWord.gone()
-            etWord.gone()
-            btNextPlayer.show()
-            btNextPlayer.text = getString(R.string.play)
-        }
+    private fun onChangeEt(needWordSize: Int) {
+        etWord.hint = getString(R.string.words_input_left, needWordSize)
     }
-
-    private fun onChangeEt() {
-        etWord.hint = getString(R.string.words_input_left, viewModel.needWordSize())
-    }
-
 
     private fun onStartGame() {
         anal.gameStarted(Game.getSettings().allowRandomWords, Game.getSettings().typeName)
