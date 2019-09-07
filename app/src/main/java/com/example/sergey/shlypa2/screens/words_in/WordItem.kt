@@ -40,6 +40,8 @@ class WordItem(private val flagChange: Boolean,
     override fun createViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?) = WordItem.ViewHolder(view, adapter)
 
     override fun equals(other: Any?) = other is WordItem
+            && other.word == word
+            && other.flagChange == flagChange
 
     override fun getLayoutRes() = R.layout.holder_word
 

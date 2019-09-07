@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.sergey.shlypa2.screens.words_in.WordsInActivity"
     android:id="@+id/container"
+    app:applyMotionScene="true"
     app:layoutDescription="@xml/words_in_motion">
 
     <EditText
