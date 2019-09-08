@@ -8,7 +8,20 @@ import com.example.sergey.shlypa2.beans.Word
 /**
  * Created by alex on 4/10/18.
  */
-class GameState {
+data class GameState(
+        var gameId: Int = 0,
+        var settings : Settings = Settings(),
+        val resultsList: MutableList<RoundResults> = mutableListOf(),
+        val teams: MutableList<Team> = mutableListOf(),
+        var currentTeamPosition: Int = 0,
+        var currentRoundPosition: Int = -1,
+        var currentRound : Round? = null,
+        val players: MutableMap<Long, Player> = mutableMapOf(),
+        val allWords: MutableList<Word> = mutableListOf(),
+        //Serialization
+        val savedTime: Long = System.currentTimeMillis(),
+        var needToRestore: Boolean = false
+) {
     var rounds = listOf(RoundDescriptor(R.string.round_first_number, R.string.round_first,
             R.string.round_first_name, "megaphone.png"),
             RoundDescriptor(R.string.round_two_number, R.string.round_two,
@@ -17,26 +30,7 @@ class GameState {
                     R.string.round_three, R.string.round_three_name,
                     "one.png"))
 
-    var gameId = 0
 
-    var settings : Settings = Settings()
-
-    val resultsList: MutableList<RoundResults> = mutableListOf()
-
-    val teams = mutableListOf<Team>()
-    var currentTeamPosition = 0
-
-
-    var currentRoundPosition = -1
-    var currentRound : Round? = null
-
-    val players = mutableMapOf<Long, Player>()
-
-    val allWords = mutableListOf<Word>()
-
-    //Serialization
-    val savedTime = System.currentTimeMillis()
-    var needToRestore = false
 
     fun saveRoundResults(results: RoundResults) {
         resultsList.add(results)

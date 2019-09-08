@@ -220,9 +220,9 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            when (requestCode) {
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+        when (requestCode) {
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                if (data != null) {
                     val result = CropImage.getActivityResult(data)
                     if (resultCode == Activity.RESULT_OK) {
                         val resultUri = result.uri
@@ -233,16 +233,16 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
                         }
                     }
                 }
-                REQUEST_GALLERY -> {
-                    data.data?.let {
-                        startCropImageActivity(it)
-                    }
+            }
+            REQUEST_GALLERY -> {
+                data?.data?.let {
+                    startCropImageActivity(it)
                 }
-                REQUEST_CAMERA -> {
-                    if (resultCode == Activity.RESULT_OK && cameraUri != null) {
-                        cameraUri?.let {
-                            startCropImageActivity(it)
-                        }
+            }
+            REQUEST_CAMERA -> {
+                if (resultCode == Activity.RESULT_OK && cameraUri != null) {
+                    cameraUri?.let {
+                        startCropImageActivity(it)
                     }
                 }
             }

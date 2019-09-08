@@ -16,7 +16,7 @@ class GameStateSaver(context: Context) {
         val fileDir = File(context.filesDir, folderName).apply { mkdirs() }
         File(fileDir, pFile)
     }
-    private val savedGamesLimit = 5
+    private val savedGamesLimit = 10
 
 
     private fun saveState(gameState: List<GameState>) {
@@ -45,11 +45,15 @@ class GameStateSaver(context: Context) {
     @Synchronized
     fun insertState(state: GameState) {
         val savedGames = loadState()
-                .sortedBy { it.savedTime }
-                .takeLast(savedGamesLimit - 1)
+                .asSequence()
+                .distinctBy { it.gameId }
+                .filter { it.gameId != state.gameId }
+                .sortedByDescending { it.savedTime }
+                .take(savedGamesLimit - 1)
+                .toList()
                 .toMutableList()
 
-        savedGames.add(state)
+        savedGames.add(state.copy(savedTime = System.currentTimeMillis()))
         saveState(savedGames)
     }
 
