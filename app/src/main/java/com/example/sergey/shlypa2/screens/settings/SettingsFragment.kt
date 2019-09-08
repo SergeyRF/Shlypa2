@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.screens.settings
 
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -19,6 +20,7 @@ import com.example.sergey.shlypa2.ads.ConsentManager
 import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.show
+import com.example.sergey.shlypa2.screens.premium.BuyPremiumActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
@@ -32,6 +34,10 @@ import org.koin.android.ext.android.inject
  * A simple [Fragment] subclass.
  */
 class SettingsFragment : Fragment() {
+
+    companion object {
+        private const val REQUEST_PREMIUM = 1022
+    }
 
     private val consentManager by inject<ConsentManager>()
 
@@ -106,7 +112,9 @@ class SettingsFragment : Fragment() {
         if(consentManager.consentRequired()) {
             tvConsent.show()
             tvConsent.setOnClickListener {
-                consentManager.forceShowConsent(requireContext())
+                consentManager.forceShowConsent(requireContext()) {
+                    startActivityForResult(Intent(requireContext(), BuyPremiumActivity::class.java), REQUEST_PREMIUM)
+                }
             }
         } else {
             tvConsent.hide()
@@ -123,5 +131,14 @@ class SettingsFragment : Fragment() {
             e.printStackTrace()
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+           REQUEST_PREMIUM -> {
+               consentManager.setPremium(resultCode == Activity.RESULT_OK)
+           }
+        }
     }
 }// Required empty public constructor

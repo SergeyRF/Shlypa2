@@ -42,11 +42,21 @@ class ConsentManager(val context: Context) {
         }
     }
 
+    fun setPremium(premium: Boolean){
+        if(premium) {
+            currentConsentStatus = InnerConsentStatus.PREMIUM
+            saveConsentStatus(InnerConsentStatus.PREMIUM)
+        } else {
+            currentConsentStatus = InnerConsentStatus.NOT_SET
+            saveConsentStatus(InnerConsentStatus.NOT_SET)
+        }
+    }
+
     fun consentRequired() = consentInfo.isRequestLocationInEeaOrUnknown
 
     fun showConsentIfNeed(context: Context, buyCallBack: () -> Unit = {}) {
         when (currentConsentStatus) {
-            InnerConsentStatus.UNKNOWN -> if (consentForm?.isShowing != true) showConsent(context)
+            InnerConsentStatus.UNKNOWN -> if (consentForm?.isShowing != true) showConsent(context, buyCallBack)
             InnerConsentStatus.NOT_SET -> checkConsent { showConsentIfNeed(context, buyCallBack) }
             else -> return
         }

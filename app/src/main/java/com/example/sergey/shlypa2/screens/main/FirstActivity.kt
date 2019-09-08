@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.screens.main
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -11,7 +12,7 @@ import androidx.core.app.ShareCompat
 import com.example.sergey.shlypa2.AppRater
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.ads.AdsManager
+import com.example.sergey.shlypa2.ads.ConsentManager
 import com.example.sergey.shlypa2.extensions.extraNotNull
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.selectTheme
@@ -20,6 +21,7 @@ import com.example.sergey.shlypa2.screens.main.pages.LoadStateFragment
 import com.example.sergey.shlypa2.screens.main.pages.RulesFragment
 import com.example.sergey.shlypa2.screens.main.pages.WelcomeFragment
 import com.example.sergey.shlypa2.screens.players.PlayersActivity
+import com.example.sergey.shlypa2.screens.premium.BuyPremiumActivity
 import com.example.sergey.shlypa2.screens.settings.SettingsActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.since
@@ -30,6 +32,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class FirstActivity : AppCompatActivity(R.layout.activity_first) {
 
     companion object {
+        private const val REQUEST_PREMIUM = 1020
         private const val EXTRA_SHOW_RATE = "extra_show_rate"
         fun getIntent(context: Context, showRate: Boolean = false) =
                 Intent(context, FirstActivity::class.java)
@@ -37,7 +40,7 @@ class FirstActivity : AppCompatActivity(R.layout.activity_first) {
     }
 
     private val viewModel by viewModel<WelcomeViewModel>()
-    private val adsManager by inject<AdsManager>()
+    private val consentManager by inject<ConsentManager>()
 
     var themeId: Int = 0
 
@@ -79,7 +82,9 @@ class FirstActivity : AppCompatActivity(R.layout.activity_first) {
                     .commit()
         }
 
-        adsManager.showConsentIfRequired(this)
+        consentManager.showConsentIfNeed(this) {
+            startActivityForResult(BuyPremiumActivity.getIntent(this), REQUEST_PREMIUM)
+        }
     }
 
     override fun setTheme(resid: Int) {
@@ -160,5 +165,13 @@ class FirstActivity : AppCompatActivity(R.layout.activity_first) {
         disableToolbar()
     }
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            REQUEST_PREMIUM -> {
+                consentManager.setPremium(resultCode == Activity.RESULT_OK)
+                consentManager.showConsentIfNeed(this)
+            }
+        }
+    }
 }

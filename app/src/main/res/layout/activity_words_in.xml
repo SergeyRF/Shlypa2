@@ -16,6 +16,7 @@
         android:layout_marginLeft="@dimen/in_card_horizontal_margin"
         android:layout_marginRight="@dimen/in_card_horizontal_margin"
         android:imeOptions="actionNext|flagNoExtractUi"
+        android:hint="@string/write_word"
         android:maxLines="1"
         android:singleLine="true"
         android:paddingStart="@dimen/big_margin"

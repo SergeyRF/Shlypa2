@@ -67,7 +67,7 @@ val appModule = module {
     single { PreferencesProvider(get(), null) }
     single { SoundManager(get(), get()) }
     single { ConsentManager(get()) }
-    single { AdsManager(get(), get()) }
+    single { AdsManager(get(), get(), get()) }
     single { FirebaseRemoteConfig.getInstance() }
     single { ConfigsProvider(get()) }
     single { AppLifecycleObserver(get())}

@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.ads
 
 import android.content.Context
 import android.os.Bundle
+import com.example.sergey.shlypa2.data.ConfigsProvider
 import com.example.sergey.shlypa2.extensions.debug
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdLoader
@@ -17,7 +18,8 @@ import timber.log.Timber
  */
 class AdsManager(
         private val context: Context,
-        private val consentManager: ConsentManager) {
+        private val consentManager: ConsentManager,
+        private val configsProvider: ConfigsProvider) {
 
     companion object {
         private const val APP_ID_KEY = "app_id"
@@ -32,6 +34,15 @@ class AdsManager(
         private const val INTERSTITIAL_TEST_ID = "ca-app-pub-3940256099942544/1033173712"
         private const val NATIVE_TEST_ID = "ca-app-pub-3940256099942544/2247696110"
     }
+
+    val nativeBeforeTurnEnabled: Boolean
+        get() = configsProvider.nativeBeforeTurnEnabled && consentManager.canShowAds()
+
+    val interstitialEnabled: Boolean
+        get() = configsProvider.interstitialEnabled && consentManager.canShowAds()
+
+    val interstitialDelayMs: Long
+        get() = configsProvider.interstitialDelaySec * 1000
 
     private var appId: String? = null
     private var bannerId: String? = null
@@ -66,10 +77,6 @@ class AdsManager(
             //Not initialized, do nothing just log
             Timber.e(ex)
         }
-    }
-
-    fun showConsentIfRequired(context: Context) {
-        consentManager.showConsentIfNeed(context)
     }
 
     fun getInterstitial(context: Context): Interstitial? {

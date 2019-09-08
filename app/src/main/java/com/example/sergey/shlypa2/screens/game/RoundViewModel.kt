@@ -1,8 +1,8 @@
 package com.example.sergey.shlypa2.screens.game
 
 import androidx.lifecycle.MutableLiveData
+import com.example.sergey.shlypa2.ads.AdsManager
 import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.data.ConfigsProvider
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.GameState
@@ -32,7 +32,7 @@ class RoundViewModel(
         private val dataProvider: DataProvider,
         private val anal: AnalSender,
         private val soundManager: SoundManager,
-        configsProvider: ConfigsProvider) : CoroutineViewModel(dispatchers.uiDispatcher) {
+        private val adsManager: AdsManager) : CoroutineViewModel(dispatchers.uiDispatcher) {
 
 
     val commandCallback: MutableLiveData<Command> = SingleLiveEvent()
@@ -57,9 +57,9 @@ class RoundViewModel(
     private var roundFinished = false
 
     private var adsShowedTime = System.currentTimeMillis()
-    private val interstitialDelay = configsProvider.interstitialDelaySec * 1000
-    val interstitialEnabled = configsProvider.interstitialEnabled
-    val nativeAdEnabled = configsProvider.nativeBeforeTurnEnabled
+    private val interstitialDelay = adsManager.interstitialDelayMs
+    val interstitialEnabled = adsManager.interstitialEnabled
+    val nativeAdEnabled = adsManager.nativeBeforeTurnEnabled
 
 
     init {
