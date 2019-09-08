@@ -79,7 +79,7 @@
     <string name="vvodi">Пиши слово</string>
     <string name="dificult">Сложность добавляемых слов</string>
     <string name="allow_random">Разрешить случайные слова</string>
-    <string name="add_all_word_random">Автозаполнение шляпы </string>
+    <string name="add_all_word_random">Не вводить слова</string>
     <string name="penalty_include">Штрафовать за пропуск</string>
     <string name="penalty_point">Штрафные баллы</string>
 
@@ -130,7 +130,7 @@
     <string name="hint_inject_random_player">Нажми на кнопку, чтобы добавить случайного игрока или выбрать из сохраненных</string>
     <string name="hint_team_shaffle">Генератор команд</string>
     <string name="hint_team_shaffle_button">Нажми, чтобы добавить, удалить или перемешать команды</string>
-    <string name="click_to_rename">Нажми, чтобы сменить имя коfманды</string>
+    <string name="click_to_rename">Нажми, чтобы сменить имя команды</string>
     <string name="rename">Переименовать</string>
 
     <!-- no winner-->
@@ -144,9 +144,7 @@
 
     <!-- leaveDialog-->
     <string name="leaveTitle">Покинуть игру</string>
-    <string name="leaveMessage">Вы точно этого хотите?</string>
-    <string name="leaveNegative">Нет</string>
-    <string name="leavePositive">Сохранить и выйти</string>
+    <string name="leaveMessage">Сохранить игру перед выходом?</string>
 
     <!-- RepeatGame-->
     <string name="repeatTitle">Игра завершена</string>
@@ -154,12 +152,18 @@
     <string name="repeatNegative">Нет</string>
     <string name="repeatPositive">Да</string>
 
-    <string name="add_user_avatar">Добавить вашу картинку</string>
+    <string name="add_user_avatar">Добавить свою картинку</string>
 
     <string name="add_user_player">Сохраненные игроки</string>
     <string name="add_random_player">Случайный игрок</string>
     <string name="teams_need_at_least_two">В команде должно быть как минимум два игрока</string>
     <string name="team_reorder">Переупорядочивание команд</string>
     <string name="team_reorder_guide">Нажмите и перетащите игрока, чтобы переместить его в другую команду.</string>
+    <string name="choose_photo">Выбрать фотографию</string>
+    <string name="gallery">Галерея</string>
+    <string name="photo">Фотография</string>
+    <string name="write_word">Напишите слово</string>
+    <string name="yes">да</string>
+    <string name="no">Нет</string>
 
 </resources>

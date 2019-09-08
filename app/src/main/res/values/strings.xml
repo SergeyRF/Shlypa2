@@ -160,11 +160,11 @@
     <string name="choose_photo">Choose photo</string>
     <string name="photo">Photo</string>
     <string name="gallery">Gallery</string>
-    <string name="data_usage_consent_change">Revoke data usage consent</string>
+    <string name="data_usage_consent_change" translatable="false">Change or revoke a data usage consent</string>
     <string name="write_word">some word</string>
-    <string name="premium_offer">Would you like to pay 10$ for ad free version?</string>
+    <string name="premium_offer" translatable="false">Would you like to pay 10$ for ad free version?</string>
     <string name="yes">Yes</string>
-    <string name="we_dont_have_premium">Sorry, currently  we don\'t have a paid version. But we have to provide an ad free option, so we just remove all ads for you since now</string>
+    <string name="we_dont_have_premium" translatable="false">Sorry, currently  we don\'t have a paid version. But we have to provide an ad free option, so we just remove all ads for you since now</string>
     <string name="no">no</string>
 
 
