@@ -159,11 +159,13 @@ class RoundViewModel(
         if(nativeAdEnabled) commandCallback.value = Command.LOAD_NATIVE_AD
     }
 
-    fun onFinishGameAccepted() {
+    fun onFinishGameAccepted(saveGame: Boolean) {
         launch {
-            withContext(dispatchers.ioDispatcher) {
-                saveGameState()
-                Game.portionClear()
+            if(saveGame) {
+                withContext(dispatchers.ioDispatcher) {
+                    saveGameState()
+                    Game.portionClear()
+                }
             }
             commandCallback.value = Command.EXIT
         }

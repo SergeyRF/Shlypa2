@@ -141,9 +141,7 @@
 
     <!-- leaveDialog-->
     <string name="leaveTitle">Leave Game</string>
-    <string name="leaveMessage">Are you sure?</string>
-    <string name="leaveNegative">No</string>
-    <string name="leavePositive">Save and quit</string>
+    <string name="leaveMessage">Save the game before exiting?</string>
 
     <!-- RepeatGame-->
     <string name="repeatTitle">Game completed</string>
@@ -167,6 +165,7 @@
     <string name="premium_offer">Would you like to pay 10$ for ad free version?</string>
     <string name="yes">Yes</string>
     <string name="we_dont_have_premium">Sorry, currently  we don\'t have a paid version. But we have to provide an ad free option, so we just remove all ads for you since now</string>
+    <string name="no">no</string>
 
 
 </resources>
