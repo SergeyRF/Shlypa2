@@ -66,7 +66,7 @@
     </style>
 
     <style name="btNextStyle" >
-        <item name="android:textSize">@dimen/text_smoll</item>
+        <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/text_or_icon</item>
         <item name="android:background">@color/Blue</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
@@ -75,7 +75,7 @@
     </style>
 
     <style name="Button_welcome">
-        <item name="android:textSize">@dimen/text_smoll</item>
+        <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/text_or_icon</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:background">@drawable/button_background</item>

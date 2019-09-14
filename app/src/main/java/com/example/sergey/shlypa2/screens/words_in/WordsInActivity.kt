@@ -17,6 +17,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.activity_words_in.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class WordsInActivity : AppCompatActivity() {
@@ -121,7 +122,7 @@ class WordsInActivity : AppCompatActivity() {
     }
 
     private fun setWordItem(listWords: List<Word>, randomAllowed: Boolean) {
-        listWords.map { word ->
+        val items = listWords.map { word ->
             WordItem(randomAllowed, word) {
                 when (it.first) {
                     WordAct.CHANGE -> {
@@ -132,13 +133,14 @@ class WordsInActivity : AppCompatActivity() {
                     }
                 }
             }
-        }.apply {
-            wordsAdapter.updateDataSet(this)
         }
+        Timber.d("TESTING set words size ${items.size}")
+        wordsAdapter.updateDataSet(items)
     }
 
+
     private fun showList() {
-        container.transitionToEnd()
+        container.post { container.transitionToEnd()  }
     }
 
     private fun hideList() {

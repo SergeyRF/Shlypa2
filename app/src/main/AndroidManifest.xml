@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sergey.shlypa2">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -16,10 +16,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeBlue">
+        <activity android:name=".screens.premium.BuyPremiumActivity"></activity>
         <activity
             android:name=".screens.splash.LaunchActivity"
-            android:theme="@style/AppTheme.SplashTheme"
-            >
+            android:theme="@style/AppTheme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,33 +29,46 @@
         <activity
             android:name=".screens.main.FirstActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screens.players.PlayersActivity"
             android:label="@string/player_actyvity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screens.game_settings.GameSettingsActivity"
             android:label="@string/state_actyvity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screens.words_in.WordsInActivity"
             android:label="@string/word_actyvity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screens.game.RoundActivity"
             android:label="@string/start_actyvity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".screens.game_result.GameResultActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.example.sergey.shlypa2.screens.settings.SettingsActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screens.game_result.GameResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screens.settings.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-6673435437020194~3003766624"/>
+            android:value="ca-app-pub-6673435437020194~3003766624" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -45,6 +45,8 @@ open class ItemPlayer(val player: Player)
 
     override fun getLayoutRes() = R.layout.holder_player
 
+    override fun isSwipeable() = true
+
     class ViewHolder(view: View, adapter: FlexibleAdapter<IFlexible<RecyclerView.ViewHolder>>?)
         : FlexibleViewHolder(view, adapter) {
         val tvName: TextView = itemView.tvPlayerName

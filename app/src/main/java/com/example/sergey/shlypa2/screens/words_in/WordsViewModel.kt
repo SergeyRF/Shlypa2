@@ -62,20 +62,14 @@ class WordsViewModel(application: Application,
 
     fun addWord(word: String): Int {
         wordsList.add(Word(word))
-        setWord()
+        notifyWords()
         anal.wordAdded(false)
         return wordSize - wordsList.size
     }
 
-    private fun addWord(word: Word) {
-        wordsList.add(word)
-        setWord()
-        anal.wordAdded(true)
-    }
-
     fun deleteWord(wordPosition: Int) {
         wordsList.removeAt(wordPosition)
-        setWord()
+        notifyWords()
     }
 
     fun changeWord(wordPosition: Int) {
@@ -88,7 +82,7 @@ class WordsViewModel(application: Application,
         }
     }
 
-    private fun setWord() {
+    private fun notifyWords() {
         wordsLiveData.value = Pair(wordsList, randomAllowed)
         checkAnimate()
         checkEditText()
@@ -114,21 +108,21 @@ class WordsViewModel(application: Application,
 
     fun clickNext() {
         if (randomAllowed && wordsList.size < wordSize) {
-            addRandomWord()
+            fillWithRandomWords()
         } else {
             nextPlayer()
         }
     }
 
-    private fun addRandomWord() {
+    private fun fillWithRandomWords() {
         val needWord = wordSize - wordsList.size
         launch(dispatchers.ioDispatcher) {
             if (randomWords.size < needWord) loadRandomWords()
-            for (i in 0 until needWord) {
-                withContext(dispatchers.uiDispatcher) {
-                    addWord(randomWords.poll())
-                }
+            repeat(needWord) {
+                wordsList.add(randomWords.poll())
             }
+            anal.wordAdded(true)
+            withContext(dispatchers.uiDispatcher) { notifyWords() }
         }
     }
 
@@ -138,7 +132,7 @@ class WordsViewModel(application: Application,
         wordsList.clear()
         playerList.getOrNull(playerPos)?.let {
             playerLiveData.value = it
-            setWord()
+            notifyWords()
         } ?: run {
             applyGameAndStart()
         }
@@ -153,13 +147,9 @@ class WordsViewModel(application: Application,
 
     private fun loadRandomWords() {
         val dbWords = dataProvider.getRandomWords(100, Game.getSettings().typeId)
-        for (w in dbWords) Timber.d("$w")
-
         val unicWords: List<Word> = dbWords.filter { !Game.getWords().contains(it) && !wordsList.contains(it) }
         Timber.d("unic words size ${unicWords.size}")
 
         randomWords.addAll(unicWords)
-        anal.wordAdded(true)
-
     }
 }

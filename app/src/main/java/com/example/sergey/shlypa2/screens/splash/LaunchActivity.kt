@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sergey.shlypa2.extensions.observeSafe
-import com.example.sergey.shlypa2.extensions.setThemeApi21
 import com.example.sergey.shlypa2.screens.main.FirstActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,7 +22,6 @@ class LaunchActivity : AppCompatActivity() {
     val viewModel by viewModel<LaunchViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setThemeApi21()
         super.onCreate(savedInstanceState)
 
         viewModel.startMainLD.observeSafe(this) {

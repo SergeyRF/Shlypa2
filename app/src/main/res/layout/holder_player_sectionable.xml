@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/in_card_horizontal_margin"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/text_smoll"
+            android:textSize="@dimen/text_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/ivPlayerAvatar"
             app:layout_constraintRight_toRightOf="parent"

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.sergey.shlypa2.screens.words_in.WordsInActivity"
     android:id="@+id/container"
+    app:applyMotionScene="true"
     app:layoutDescription="@xml/words_in_motion">
 
     <EditText
@@ -15,6 +16,7 @@
         android:layout_marginLeft="@dimen/in_card_horizontal_margin"
         android:layout_marginRight="@dimen/in_card_horizontal_margin"
         android:imeOptions="actionNext|flagNoExtractUi"
+        android:hint="@string/write_word"
         android:maxLines="1"
         android:singleLine="true"
         android:paddingStart="@dimen/big_margin"
@@ -74,7 +76,7 @@
         android:id="@+id/btNextPlayer"
         style="@style/btNextStyle"
         android:text="@string/play"
-        android:textSize="@dimen/text_smoll"
+        android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

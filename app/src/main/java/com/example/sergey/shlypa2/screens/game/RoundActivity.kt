@@ -65,7 +65,7 @@ class RoundActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.roundLiveData.observeSafe(this){
+        viewModel.roundLiveData.observeSafe(this) {
             it?.let { setTitle(it.description) }
         }
 
@@ -73,7 +73,6 @@ class RoundActivity : AppCompatActivity() {
             startStartFragment()
         }
     }
-
 
 
     override fun onBackPressed() {
@@ -127,7 +126,7 @@ class RoundActivity : AppCompatActivity() {
     }
 
     private fun loadNativeAd() {
-        if(adLoader != null) {
+        if (adLoader != null) {
             adsManager.getAdRequest()?.let {
                 adLoader!!.loadAd(it)
             }
@@ -135,14 +134,16 @@ class RoundActivity : AppCompatActivity() {
     }
 
     private fun leaveGameDialog() {
-        AlertDialog.Builder(this).apply {
-            setTitle(R.string.leaveTitle)
-            setMessage(R.string.leaveMessage)
-            setPositiveButton(R.string.leavePositive) { _, _ ->
-                viewModel.onFinishGameAccepted()
-            }
-            setNegativeButton(R.string.leaveNegative) { dialog, _ -> dialog.cancel() }
-        }
+        AlertDialog.Builder(this)
+                .setTitle(R.string.leaveTitle)
+                .setMessage(R.string.leaveMessage)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    viewModel.onFinishGameAccepted(true)
+                }
+                .setNegativeButton(R.string.no) { _, _ ->
+                    viewModel.onFinishGameAccepted(false)
+                }
+                .setNeutralButton(android.R.string.cancel) { d, _ -> d.dismiss() }
                 .create()
                 .show()
     }

@@ -19,13 +19,15 @@ class WelcomeViewModel(application: Application,
                        private val dataProvider: DataProvider) : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
 
-    val commandsCallBack : MutableLiveData<Commands> = SingleLiveEvent()
+    val commandsCallBack: MutableLiveData<Commands> = SingleLiveEvent()
     val savedStates = MutableLiveData<List<GameState>>()
 
     fun loadSavedStates() {
-      launch(dispatchers.ioDispatcher) {
-          savedStates.postValue(dataProvider.getSavedStates())
-      }
+        launch(dispatchers.ioDispatcher) {
+            savedStates.postValue(dataProvider.getSavedStates()
+                    .sortedByDescending { it.savedTime }
+            )
+        }
     }
 
     fun newGame() {

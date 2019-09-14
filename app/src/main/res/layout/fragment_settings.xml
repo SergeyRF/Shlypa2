@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="tvThemeTitle, spinnerThemes, view2" />
+        app:constraint_referenced_ids="tvThemeTitle,spinnerThemes,view2" />
 
     <TextView
         android:id="@+id/tvOpenSource"
@@ -172,6 +172,28 @@
         android:layout_marginTop="@dimen/settings_margin"
         android:background="@color/divider_color"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvConsent"
+        android:paddingLeft="20dp"
+        android:textColor="@color/primary_text"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:textSize="@dimen/text_settings"
+        app:layout_constraintTop_toBottomOf="@id/view6"
+        android:text="@string/data_usage_consent_change"/>
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_color"
+        app:layout_constraintTop_toBottomOf="@+id/tvConsent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

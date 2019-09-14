@@ -31,7 +31,7 @@ object HolderInflater {
         val margin = root.dimen(R.dimen.in_card_horizontal_margin)
         val smallMargin = root.dimen(R.dimen.small_margin)
         val avatarSize = root.dimen(R.dimen.player_in_team_avatar)
-        val textSizeMed = root.dimen(R.dimen.text_smoll).toFloat()
+        val textSizeMed = root.dimen(R.dimen.text_small).toFloat()
         val textSizeBig = root.dimen(R.dimen.text_medium).toFloat()
         val textColor = ContextCompat.getColor(context, R.color.darkGrey)
 

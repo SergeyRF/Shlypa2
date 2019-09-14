@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.screens.settings
 
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -11,26 +12,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.ads.ConsentManager
+import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.selectTheme
 import com.example.sergey.shlypa2.extensions.show
+import com.example.sergey.shlypa2.screens.premium.BuyPremiumActivity
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PreferenceHelper
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.since
 import kotlinx.android.synthetic.main.fragment_settings.*
+import org.koin.android.ext.android.inject
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class SettingsFragment : androidx.fragment.app.Fragment() {
+class SettingsFragment : Fragment() {
 
+    companion object {
+        private const val REQUEST_PREMIUM = 1022
+    }
+
+    private val consentManager by inject<ConsentManager>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -99,6 +108,17 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
         viewDeletePlayers.setOnClickListener {
             activity?.let { (it as SettingsActivity).showDeletePlayers() }
         }
+
+        if(consentManager.consentRequired()) {
+            tvConsent.show()
+            tvConsent.setOnClickListener {
+                consentManager.forceShowConsent(requireContext()) {
+                    startActivityForResult(Intent(requireContext(), BuyPremiumActivity::class.java), REQUEST_PREMIUM)
+                }
+            }
+        } else {
+            tvConsent.hide()
+        }
     }
 
     fun openWebPage(url: String) {
@@ -111,5 +131,14 @@ class SettingsFragment : androidx.fragment.app.Fragment() {
             e.printStackTrace()
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+           REQUEST_PREMIUM -> {
+               consentManager.setPremium(resultCode == Activity.RESULT_OK)
+           }
+        }
     }
 }// Required empty public constructor

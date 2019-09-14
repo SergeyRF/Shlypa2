@@ -174,16 +174,16 @@ class PlayersViewModel(application: Application,
         titleLiveData.value = resourceId
     }
 
-    fun startSettings() {
-        commandLiveData.value = Command.StartSettings
-        anal.sendEventTeamsCreated(playersRepository.playersList.size, playersRepository.getTeams().size)
-    }
-
     fun saveTeamsAndStartSettings(teams: List<Team>) {
         if (saveTeams(teams)) startSettings()
     }
 
-    fun saveTeams(teams: List<Team>): Boolean {
+    private fun startSettings() {
+        commandLiveData.value = Command.StartSettings
+        anal.sendEventTeamsCreated(playersRepository.playersList.size, playersRepository.getTeams().size)
+    }
+
+    private fun saveTeams(teams: List<Team>): Boolean {
         teams.firstOrNull { it.players.size < 2 }
                 ?.let {
                     toastResLD.value = R.string.teams_need_at_least_two

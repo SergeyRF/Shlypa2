@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.screens.players
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,15 +10,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
-import com.example.sergey.shlypa2.extensions.dismissDialogFragment
-import com.example.sergey.shlypa2.extensions.observeSafe
-import com.example.sergey.shlypa2.extensions.setThemeApi21
+import com.example.sergey.shlypa2.extensions.*
 import com.example.sergey.shlypa2.screens.game_settings.GameSettingsActivity
 import com.example.sergey.shlypa2.screens.players.PlayersViewModel.Command
 import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
@@ -32,9 +31,13 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         AvatarSelectDialogFragment.AvatarSelectDialogListener {
 
     companion object {
-        const val DIALOG_RENAME_TAG = "teams_rename_dialog_tag"
-        const val DIALOG_AVATAR_TAG = "dialog_avatar_tag"
-        const val DIALOG_SELECT_PLAYER_TAG = "dialog_select_player"
+        private const val DIALOG_RENAME_TAG = "teams_rename_dialog_tag"
+        private const val DIALOG_AVATAR_TAG = "dialog_avatar_tag"
+        private const val DIALOG_SELECT_PLAYER_TAG = "dialog_select_player"
+        private const val REQUEST_WRITE_STORAGE_PERMISSION = 1034
+        private const val REQUEST_CAMERA_PERMISSION = 1035
+        private const val REQUEST_GALLERY = 1036
+        private const val REQUEST_CAMERA = 1037
 
         fun getIntent(context: Context) = Intent(context, PlayersActivity::class.java)
     }
@@ -42,6 +45,8 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
     lateinit var adapter: RvAdapter
 
     val viewModel by viewModel<PlayersViewModel>()
+
+    private var cameraUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setThemeApi21()
@@ -97,9 +102,11 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
     private fun startTeamsFragment() {
         val fragment = TeamsFragment()
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                        android.R.animator.fade_in, android.R.animator.fade_out,
+                        android.R.animator.fade_in, android.R.animator.fade_out)
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
     }
 
@@ -143,8 +150,6 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
                 viewModel.renamePlayer(newName, id)
             }
         }
-
-
     }
 
     private fun startSettings() {
@@ -156,10 +161,28 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         viewModel.addImage(iconString)
     }
 
-    override fun onSelectCustomAvatar() {
-        startCropImageActivity()
+    override fun onSelectAddPhoto() {
+        if (isPermissionsGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)) {
+            cameraUri = photoFromCamera(REQUEST_CAMERA)
+        } else {
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
+                    REQUEST_CAMERA_PERMISSION
+            )
+        }
     }
 
+    override fun onSelectAddFromGallery() {
+        if (isPermissionsGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            openGalleryIntent(REQUEST_GALLERY)
+        } else {
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    REQUEST_WRITE_STORAGE_PERMISSION)
+        }
+    }
 
     private fun initToolbar() {
         supportActionBar?.setHomeButtonEnabled(true)
@@ -183,34 +206,23 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
         }
     }
 
-    //Load custom avatar
-
     private fun setAvatarCustom(imageUri: Uri) {
         viewModel.addImage(imageUri)
     }
 
-    private fun startCropImageActivity(imageUri: Uri? = null) {
-        val cropImage: CropImage.ActivityBuilder = if (imageUri != null) {
-            CropImage.activity(imageUri)
-        } else {
-            CropImage.activity()
-        }
-        cropImage
+    private fun startCropImageActivity(imageUri: Uri) {
+        CropImage.activity(imageUri)
                 .setCropShape(CropImageView.CropShape.OVAL)
                 .setAspectRatio(150, 150)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .start(this)
-
-
     }
-
-    private var mCropImageUri: Uri? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            when (requestCode) {
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+        when (requestCode) {
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                if (data != null) {
                     val result = CropImage.getActivityResult(data)
                     if (resultCode == Activity.RESULT_OK) {
                         val resultUri = result.uri
@@ -222,20 +234,27 @@ class PlayersActivity : AppCompatActivity(), RenameDialogFragment.RenameDialogLi
                     }
                 }
             }
+            REQUEST_GALLERY -> {
+                data?.data?.let {
+                    startCropImageActivity(it)
+                }
+            }
+            REQUEST_CAMERA -> {
+                if (resultCode == Activity.RESULT_OK && cameraUri != null) {
+                    cameraUri?.let {
+                        startCropImageActivity(it)
+                    }
+                }
+            }
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.isNotEmpty()
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCropImageActivity(mCropImageUri)
-            } else {
-                //todo require refactoring
-                Toast.makeText(this,
-                        "Cancelling, required permissions are not granted",
-                        Toast.LENGTH_LONG)
-                        .show()
+        if (grantResults.isNotEmpty()
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            when (requestCode) {
+                REQUEST_WRITE_STORAGE_PERMISSION -> onSelectAddFromGallery()
+                REQUEST_CAMERA_PERMISSION -> onSelectAddPhoto()
             }
         }
     }

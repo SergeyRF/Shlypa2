@@ -2,6 +2,8 @@ package com.example.sergey.shlypa2.ads
 
 import android.content.Context
 import android.os.Bundle
+import com.example.sergey.shlypa2.BuildConfig
+import com.example.sergey.shlypa2.data.ConfigsProvider
 import com.example.sergey.shlypa2.extensions.debug
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdLoader
@@ -17,7 +19,8 @@ import timber.log.Timber
  */
 class AdsManager(
         private val context: Context,
-        private val consentManager: ConsentManager) {
+        private val consentManager: ConsentManager,
+        private val configsProvider: ConfigsProvider) {
 
     companion object {
         private const val APP_ID_KEY = "app_id"
@@ -32,6 +35,15 @@ class AdsManager(
         private const val INTERSTITIAL_TEST_ID = "ca-app-pub-3940256099942544/1033173712"
         private const val NATIVE_TEST_ID = "ca-app-pub-3940256099942544/2247696110"
     }
+
+    val nativeBeforeTurnEnabled: Boolean
+        get() = configsProvider.nativeBeforeTurnEnabled && consentManager.canShowAds()
+
+    val interstitialEnabled: Boolean
+        get() = configsProvider.interstitialEnabled && consentManager.canShowAds()
+
+    val interstitialDelayMs: Long
+        get() = configsProvider.interstitialDelaySec * 1000
 
     private var appId: String? = null
     private var bannerId: String? = null
@@ -49,12 +61,20 @@ class AdsManager(
 
             with(jsonObject) {
                 appId = optString(APP_ID_KEY)
-                bannerId = optString(BANNER_ID_KEY)
-                interstitialId = optString(INTERSTITIAL_ID_KEY)
-                nativeAdsId = optString(NATIVE_ID_KEY)
+
                 testDeviceId = optString(TEST_DEVICE_KEY)
                 publisherId = optString(PUBLISHER_ID_KEY)
                 privacyLink = optString(PRIVACY_LINK)
+
+                if(BuildConfig.DEBUG) {
+                    bannerId = BANNER_TEST_ID
+                    interstitialId = INTERSTITIAL_TEST_ID
+                    nativeAdsId = NATIVE_TEST_ID
+                } else {
+                    bannerId = optString(BANNER_ID_KEY)
+                    interstitialId = optString(INTERSTITIAL_ID_KEY)
+                    nativeAdsId = optString(NATIVE_ID_KEY)
+                }
             }
 
             MobileAds.initialize(context, appId)
@@ -68,10 +88,6 @@ class AdsManager(
         }
     }
 
-    fun showConsentIfRequired(context: Context) {
-        consentManager.showConsentIfNeed(context)
-    }
-
     fun getInterstitial(context: Context): Interstitial? {
         val request = buildRequest() ?: return null
 
@@ -82,7 +98,7 @@ class AdsManager(
 
     fun getNativeAd(context: Context, onLoaded: (UnifiedNativeAd) -> Unit): AdLoader? {
         val request = buildRequest() ?: return null
-        val loader =  AdLoader.Builder(context, NATIVE_TEST_ID) //todo add real id
+        val loader =  AdLoader.Builder(context, nativeAdsId)
                 .forUnifiedNativeAd { nativeAd ->
                     onLoaded.invoke(nativeAd)
                 }

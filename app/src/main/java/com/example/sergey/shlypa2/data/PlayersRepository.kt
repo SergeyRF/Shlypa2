@@ -60,20 +60,15 @@ class PlayersRepository(
         if (player.type == PlayerType.STANDARD) {
             randomPlayers.offer(player)
         }
-        notifyPlayers()
-    }
 
-    fun reNamePlayer(player: Player) {
-        if (player.type == PlayerType.USER) {
-            players[player.id]?.name = player.name
-        } else {
-            players.remove(player.id)
-            //set id to zero before inserting
-            player.type = PlayerType.USER
-            player.id = 0
-            player.id = dataProvider.insertPlayer(player)
-            players[player.id] = player
-        }
+        // if there's a team with this player remove it from list
+        // if the team contains less than 2 players remove a team too
+        teams.find { it.players.contains(player) }
+                ?.let {
+                    it.players.remove(player)
+                    if(it.players.size < 2) teams.remove(it)
+                }
+
         notifyPlayers()
     }
 
@@ -152,7 +147,8 @@ class PlayersRepository(
      * add players which currently not in any team into existing teams
      */
     fun initTeams() {
-        if (teams.isEmpty()) {
+        //todo probably batter to create teams even if they was already created?
+        if (teams.size < 2) {
             createTeams(2)
             return
         }

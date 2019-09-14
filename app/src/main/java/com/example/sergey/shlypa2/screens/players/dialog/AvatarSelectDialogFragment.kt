@@ -55,8 +55,14 @@ class AvatarSelectDialogFragment
                     ItemIcon(it)
                 }
         )
-        btAddUserImage.setOnClickListener {
-            listener?.onSelectCustomAvatar()
+
+        btGallery.setOnClickListener {
+            listener?.onSelectAddFromGallery()
+            dismissAllowingStateLoss()
+        }
+
+        btPhoto.setOnClickListener {
+            listener?.onSelectAddPhoto()
             dismissAllowingStateLoss()
         }
 
@@ -96,7 +102,8 @@ class AvatarSelectDialogFragment
 
     interface AvatarSelectDialogListener {
         fun onSelectAvatar(iconString: String)
-        fun onSelectCustomAvatar()
+        fun onSelectAddPhoto()
+        fun onSelectAddFromGallery()
     }
 
 }

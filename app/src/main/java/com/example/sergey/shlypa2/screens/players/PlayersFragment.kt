@@ -1,15 +1,10 @@
 package com.example.sergey.shlypa2.screens.players
 
 
-import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -25,15 +20,13 @@ import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
-import com.example.sergey.shlypa2.screens.players.dialog.AvatarSelectDialogFragment
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.takusemba.spotlight.OnTargetStateChangedListener
 import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_players.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -43,13 +36,12 @@ import timber.log.Timber
  * A simple [Fragment] subclass.
  */
 class PlayersFragment : androidx.fragment.app.Fragment(),
-        AvatarSelectDialogFragment.AvatarSelectDialogListener,
         FlexibleAdapter.OnItemSwipeListener,
         FlexibleAdapter.OnItemClickListener {
 
 
     val viewModel by sharedViewModel<PlayersViewModel>()
-    private val playersAdapter = FlexibleAdapter(emptyList(), this)
+    private lateinit var playersAdapter: FlexibleAdapter<IFlexible<*>>
 
     companion object {
         const val SHOW_SPOTLIGHT = "spotlight_show"
@@ -78,13 +70,18 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
     }
 
     private fun initViews() {
-        rvPlayers.layoutManager = LinearLayoutManager(requireContext()).apply {
-            stackFromEnd = true
-            reverseLayout = true
-        }
+        playersAdapter = FlexibleAdapter(emptyList(), this)
 
-        rvPlayers.adapter = playersAdapter
+        with(rvPlayers) {
+            layoutManager = LinearLayoutManager(requireContext()).apply {
+                stackFromEnd = true
+                reverseLayout = true
+            }
+            adapter = playersAdapter
+        }
+        // set swipe enabled only allowed after attaching to recycler view
         playersAdapter.isSwipeEnabled = true
+
         civPlayerAvatar.setOnClickListener {
             viewModel.onChangeAvatarClicked()
         }
@@ -122,10 +119,6 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
     private fun initSubscriptions() {
         viewModel.playersLiveData.observeSafe(this, ::onPlayersChanged)
         viewModel.avatarLiveData.observeSafe(this, ::showAvatar)
-    }
-
-    override fun onSelectCustomAvatar() {
-        startCropImageActivity()
     }
 
     private fun addPlayer() {
@@ -244,67 +237,6 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onSelectAvatar(iconString: String) {
-        Timber.d("avatar select $iconString")
-        showAvatar(iconString)
-    }
-
-    //Load custom avatar
-
-    private fun setAvatarCustom(imageUri: Uri) {
-        viewModel.addImage(imageUri)
-    }
-
-    private fun startCropImageActivity(imageUri: Uri? = null) {
-        val cropImage: CropImage.ActivityBuilder = if (imageUri != null) {
-            CropImage.activity(imageUri)
-        } else {
-            CropImage.activity()
-        }
-        cropImage
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setAspectRatio(150, 150)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .start(requireContext(), this)
-
-
-    }
-
-    private var mCropImageUri: Uri? = null
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data != null) {
-            when (requestCode) {
-                CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                    val result = CropImage.getActivityResult(data)
-                    if (resultCode == Activity.RESULT_OK) {
-                        val resultUri = result.uri
-                        setAvatarCustom(resultUri)
-                    } else {
-                        if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                            Timber.e(result.error)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.isNotEmpty()
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCropImageActivity(mCropImageUri)
-            } else {
-                //todo require refactoring
-                Toast.makeText(requireContext(),
-                        "Cancelling, required permissions are not granted",
-                        Toast.LENGTH_LONG)
-                        .show()
-            }
         }
     }
 }

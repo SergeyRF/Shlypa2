@@ -21,3 +21,8 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class androidx.appcompat.widget.** { *; }
+
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}
