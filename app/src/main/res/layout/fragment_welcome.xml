@@ -56,7 +56,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/rules"
-        android:textSize="@dimen/text_smoll"
+        android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toTopOf="@+id/ivHat"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

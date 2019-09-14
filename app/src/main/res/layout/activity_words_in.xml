@@ -76,7 +76,7 @@
         android:id="@+id/btNextPlayer"
         style="@style/btNextStyle"
         android:text="@string/play"
-        android:textSize="@dimen/text_smoll"
+        android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
