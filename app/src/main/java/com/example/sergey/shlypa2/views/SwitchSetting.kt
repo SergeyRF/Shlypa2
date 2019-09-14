@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.CompoundButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.extensions.show
 import kotlinx.android.synthetic.main.switch_setting.view.*
 
 /**
@@ -24,6 +25,10 @@ constructor(context: Context,
             val array = context.obtainStyledAttributes(it, R.styleable.SwitchSetting)
 
             tvTitleSwitch.text = array.getText(R.styleable.SwitchSetting_switch_setting_title)
+            array.getText(R.styleable.SwitchSetting_switch_setting_hint)?.let { hint ->
+                tvHint.show()
+                tvHint.text = hint
+            }
         }
         setOnClickListener {
             setChecked(!isChecked())
@@ -49,4 +54,9 @@ constructor(context: Context,
         return this
     }
 
+    fun setHint(hint: String): SwitchSetting {
+        tvHint.text = hint
+        tvHint.show()
+        return this
+    }
 }

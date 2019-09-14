@@ -59,7 +59,7 @@
     <string name="timeN">Time for turn</string>
     <string name="wordN">Words per player</string>
     <string name="vvodi">Write a word</string>
-    <string name="dificult">Difficult of random words</string>
+    <string name="dificult">Complexity of added words</string>
     <string name="allow_random">Allow random words</string>
     <string name="name">Name</string>
     <string name="add_player">new player</string>
@@ -146,8 +146,8 @@
     <!-- RepeatGame-->
     <string name="repeatTitle">Game completed</string>
     <string name="repaetMessage">Do you want to play again with the same settings?</string>
-    <string name="repeatNegative">Нет</string>
-    <string name="repeatPositive">Да</string>
+    <string name="repeatNegative">No</string>
+    <string name="repeatPositive">Yes</string>
 
 
     <string name="add_user_avatar">Add yours picture</string>
@@ -166,6 +166,9 @@
     <string name="yes">Yes</string>
     <string name="we_dont_have_premium" translatable="false">Sorry, currently  we don\'t have a paid version. But we have to provide an ad free option, so we just remove all ads for you since now</string>
     <string name="no">no</string>
+    <string name="penalty_hint">If the player does not want to explain the word and skips it, her team will be fined</string>
+    <string name="all_random_hint">Players do not need to make up words. The hat will be filled randomly</string>
+    <string name="allow_random_hint">The player will be able to add random words</string>
 
 
 </resources>

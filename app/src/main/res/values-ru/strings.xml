@@ -165,5 +165,8 @@
     <string name="write_word">Напишите слово</string>
     <string name="yes">да</string>
     <string name="no">Нет</string>
+    <string name="penalty_hint">Если игрок не хочет объяснять слово и пропускает его, то команда будет оштрафована</string>
+    <string name="all_random_hint">Игрокам не нужно придумывать слова. Шляпа будет заполнена случайным образом</string>
+    <string name="allow_random_hint">Игрок сможет добавить случайные слова, если фантазия откажется работать</string>
 
 </resources>

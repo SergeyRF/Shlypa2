@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="SwitchSetting">
         <attr name="switch_setting_title" format="reference|string"/>
+        <attr name="switch_setting_hint" format="reference|string"/>
     </declare-styleable>
 
     <declare-styleable name="SeekbarSetting">
