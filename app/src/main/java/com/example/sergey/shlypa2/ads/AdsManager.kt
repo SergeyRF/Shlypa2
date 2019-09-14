@@ -2,6 +2,7 @@ package com.example.sergey.shlypa2.ads
 
 import android.content.Context
 import android.os.Bundle
+import com.example.sergey.shlypa2.BuildConfig
 import com.example.sergey.shlypa2.data.ConfigsProvider
 import com.example.sergey.shlypa2.extensions.debug
 import com.google.ads.mediation.admob.AdMobAdapter
@@ -60,12 +61,20 @@ class AdsManager(
 
             with(jsonObject) {
                 appId = optString(APP_ID_KEY)
-                bannerId = optString(BANNER_ID_KEY)
-                interstitialId = optString(INTERSTITIAL_ID_KEY)
-                nativeAdsId = optString(NATIVE_ID_KEY)
+
                 testDeviceId = optString(TEST_DEVICE_KEY)
                 publisherId = optString(PUBLISHER_ID_KEY)
                 privacyLink = optString(PRIVACY_LINK)
+
+                if(BuildConfig.DEBUG) {
+                    bannerId = BANNER_TEST_ID
+                    interstitialId = INTERSTITIAL_TEST_ID
+                    nativeAdsId = NATIVE_TEST_ID
+                } else {
+                    bannerId = optString(BANNER_ID_KEY)
+                    interstitialId = optString(INTERSTITIAL_ID_KEY)
+                    nativeAdsId = optString(NATIVE_ID_KEY)
+                }
             }
 
             MobileAds.initialize(context, appId)
@@ -89,7 +98,7 @@ class AdsManager(
 
     fun getNativeAd(context: Context, onLoaded: (UnifiedNativeAd) -> Unit): AdLoader? {
         val request = buildRequest() ?: return null
-        val loader =  AdLoader.Builder(context, NATIVE_TEST_ID) //todo add real id
+        val loader =  AdLoader.Builder(context, nativeAdsId)
                 .forUnifiedNativeAd { nativeAd ->
                     onLoaded.invoke(nativeAd)
                 }
