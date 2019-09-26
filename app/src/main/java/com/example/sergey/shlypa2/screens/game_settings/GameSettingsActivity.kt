@@ -46,20 +46,19 @@ class GameSettingsActivity : AppCompatActivity() {
 
         initToolbar()
 
-        if (repeat) {
-            viewModel.onFinish()
-            return
-        }
-
-        rvSettings.layoutManager = LinearLayoutManager(this)
-        rvSettings.adapter = adapter
-
         initSubscription()
 
         btCompletedSettings.setOnClickListener {
             viewModel.onFinish()
         }
 
+        rvSettings.layoutManager = LinearLayoutManager(this)
+        rvSettings.adapter = adapter
+
+        if (repeat) {
+            viewModel.onFinish()
+            return
+        }
     }
 
     private fun initItems() {

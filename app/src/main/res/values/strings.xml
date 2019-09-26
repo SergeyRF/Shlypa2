@@ -62,7 +62,7 @@
     <string name="dificult">Complexity of added words</string>
     <string name="allow_random">Allow random words</string>
     <string name="name">Name</string>
-    <string name="add_player">new player</string>
+    <string name="add_player">add player</string>
     <string name="add_all_word_random">Add all word random</string>
 
 
@@ -130,6 +130,8 @@
     <string name="hint_team_shaffle_button">Click a button to add, remove or shuffle teams </string>
     <string name="click_to_rename">Click to rename a team</string>
     <string name="rename">Rename</string>
+    <string name="hint_select_avatar">Select Avatar</string>
+    <string name="hint_select_avatar_description">Tap to change image</string>
 
     <!-- no winner-->
     <string name="no_winner">The winner is not defined</string>

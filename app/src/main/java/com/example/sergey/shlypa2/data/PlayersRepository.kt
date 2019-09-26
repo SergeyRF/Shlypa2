@@ -85,6 +85,7 @@ class PlayersRepository(
             player.type = PlayerType.USER
             players.remove(id)
             val newId = dataProvider.insertPlayer(player)
+            player.id = newId
             players[newId] = player
         }
         notifyPlayers()

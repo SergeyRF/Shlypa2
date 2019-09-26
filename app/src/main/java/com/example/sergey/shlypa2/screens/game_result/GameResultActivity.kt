@@ -41,25 +41,23 @@ class GameResultActivity : AppCompatActivity() {
             tvWinner.text = it
         }
 
-        viewModel.commandLiveData.observeSafe(this) { command ->
+       /* viewModel.commandLiveData.observeSafe(this) { command ->
             when (command) {
                 Command.RUN_ANIMATION -> runAnimation()
                 Command.START_GAME_SETTINGS -> {
-                    startActivity(GameSettingsActivity.getIntent(this@GameResultActivity, true))
+                    startActivity(GameSettingsActivity.getIntent(this@GameResultActivity, true)
+                            .apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP })
                     finish()
                 }
                 Command.START_MAIN_ACTIVITY -> {
-                    startActivity(
-                            FirstActivity.getIntent(this@GameResultActivity, true)
-                                    .apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
-                    )
-                    finish()
+                   startMain()
                 }
             }
-        }
+        }*/
 
         btCreateNewGame.setOnClickListener {
-            dialogRepeatGame()
+           // dialogRepeatGame()
+            startMain()
         }
 
         civWinnerAvatar.setOnClickListener {
@@ -73,6 +71,14 @@ class GameResultActivity : AppCompatActivity() {
             rootGameResult.setTransition(R.id.start, R.id.end)
             rootGameResult.transitionToEnd()
         }
+    }
+
+    private fun startMain(){
+        startActivity(
+                FirstActivity.getIntent(this@GameResultActivity, true)
+                        .apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }
+        )
+        finish()
     }
 
     private fun dialogRepeatGame() {
@@ -93,7 +99,8 @@ class GameResultActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        dialogRepeatGame()
+        //dialogRepeatGame()
+        startMain()
     }
 }
 

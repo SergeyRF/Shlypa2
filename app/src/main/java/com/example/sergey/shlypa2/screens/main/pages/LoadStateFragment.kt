@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.RvAdapter
+import com.example.sergey.shlypa2.extensions.gone
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.game.Game
@@ -58,6 +59,7 @@ class LoadStateFragment : androidx.fragment.app.Fragment() {
                 tvNoSavedGames.show()
             } else {
                 adapter.setData(it)
+                tvNoSavedGames.gone()
             }
         }
     }

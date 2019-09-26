@@ -3,7 +3,7 @@
 
 
     <string name="name">Имя игрока</string>
-    <string name="add_player">добавить</string>
+    <string name="add_player">добавить игрока</string>
 
 
     <!-- RoundRules -->
@@ -132,6 +132,8 @@
     <string name="hint_team_shaffle_button">Нажми, чтобы добавить, удалить или перемешать команды</string>
     <string name="click_to_rename">Нажми, чтобы сменить имя команды</string>
     <string name="rename">Переименовать</string>
+    <string name="hint_select_avatar">Выбрать Аватар</string>
+    <string name="hint_select_avatar_description">Нажми чтоб поменять картнку</string>
 
     <!-- no winner-->
     <string name="no_winner">Победитель неопределён</string>
