@@ -97,6 +97,11 @@ class GameSettingsViewModel(application: Application,
                 Game.getSettings().allowRandomWords,
                 Game.getSettings().typeName,
                 true)
+        with(Game.state){
+            currentRoundPosition=-1
+            currentTeamPosition = 0
+            allWords.clear()
+        }
         startNextActivity.value = StartActivity.WORD_IN
     }
 
