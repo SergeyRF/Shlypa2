@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/big_margin"
             android:layout_marginRight="@dimen/small_margin"
-            android:imeOptions="actionNext|flagNoExtractUi"
+            android:imeOptions="actionDone|flagNoExtractUi"
             android:maxLines="1"
             android:singleLine="true"
             app:layout_constraintBottom_toTopOf="@+id/btYesDialog"

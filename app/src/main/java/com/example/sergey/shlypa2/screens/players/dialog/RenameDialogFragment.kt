@@ -1,14 +1,12 @@
 package com.example.sergey.shlypa2.screens.players.dialog
 
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.extensions.extraNotNull
-import com.example.sergey.shlypa2.extensions.hideKeyboard
+import com.example.sergey.shlypa2.extensions.*
 import kotlinx.android.synthetic.main.dialog_edit_text.*
 
 class RenameDialogFragment : DialogFragment() {
@@ -48,28 +46,50 @@ class RenameDialogFragment : DialogFragment() {
         setStyle(STYLE_NO_FRAME, R.style.RenameDialogStyle)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(
-            R.layout.dialog_edit_text, container, false)
+    override fun setupDialog(dialog: Dialog, style: Int) {
+        dialog.setContentView(R.layout.dialog_edit_text)
+        initViews()
+    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dialog?.setCanceledOnTouchOutside(true)
+    private fun initViews() {
+        dialog?.let { dialog ->
+            dialog.tvReNameIt.text = title
 
-        tvReNameIt.text = title
-        etDialog.hint = name
+            with(dialog.etDialog) {
+                onDrawn { showKeyboard() }
+                setText(name)
+                setSelection(name.length)
+                onActionDone { onNameAccepted() }
+            }
 
-        btYesDialog.setOnClickListener {
-            if (etDialog.text.isNotEmpty()) {
-                val newName = etDialog.text.toString()
+            dialog.btYesDialog.setOnClickListener {
+                onNameAccepted()
+            }
+
+            dialog.btNoDialog.setOnClickListener {
+                dismiss()
+            }
+        }
+    }
+
+    private fun onNameAccepted() {
+        dialog?.let {
+            val newName = it.etDialog.text.toString()
+            if (newName != name) {
                 listener?.onRenamed(newName, name, entityId, type)
             }
-            etDialog.hideKeyboard()
-            dismissAllowingStateLoss()
+            dismiss()
         }
+    }
 
-        btNoDialog.setOnClickListener {
-            dismissAllowingStateLoss()
-        }
+    override fun dismiss() {
+        dialog?.etDialog?.hideKeyboard()
+        super.dismiss()
+    }
+
+    override fun onCancel(dialogInterface: DialogInterface) {
+        dialog?.etDialog?.hideKeyboard()
+        super.onCancel(dialogInterface)
     }
 
     override fun onAttach(context: Context) {
