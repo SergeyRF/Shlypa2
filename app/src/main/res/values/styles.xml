@@ -95,5 +95,10 @@
         <item name="android:windowMinWidthMinor">80%</item>
     </style>
 
+    <style name="GreenFlatColoredButton" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+        <item name="colorButtonNormal">@color/Green</item>
+        <item name="colorControlHighlight">@color/GreenDark</item>
+    </style>
+
 
 </resources>

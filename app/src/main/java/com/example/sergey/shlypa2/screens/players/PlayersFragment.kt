@@ -57,8 +57,7 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         // Inflate the layout for this fragment
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         return inflater.inflate(R.layout.fragment_players, container, false)
     }
@@ -99,7 +98,7 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
             } else true
         }
 
-        imageButton.setOnClickListener {
+        tvAddNewPlayer.setOnClickListener {
             addPlayer()
         }
 
@@ -210,15 +209,22 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
 
         val injectName = SimpleTarget.Builder(requireActivity())
                 .setRadius(80f)
-                .setPoint(imageButton)
+                .setPoint(tvAddNewPlayer)
                 .setTitle(getString(R.string.hint_inject_name))
                 .setDescription(getString(R.string.hint_inject_name_button))
+                .build()
+
+        val selectAvatar = SimpleTarget.Builder(requireActivity())
+                .setRadius(80f)
+                .setPoint(civPlayerAvatar)
+                .setTitle(getString(R.string.hint_select_avatar))
+                .setDescription(getString(R.string.hint_select_avatar_description))
                 .build()
 
         Spotlight.with(requireActivity())
                 .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
                 .setDuration(300L)
-                .setTargets(injectName, custom)
+                .setTargets(selectAvatar,injectName, custom)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
                 .start()
