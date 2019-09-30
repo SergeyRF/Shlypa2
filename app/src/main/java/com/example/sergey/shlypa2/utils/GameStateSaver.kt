@@ -57,6 +57,11 @@ class GameStateSaver(context: Context) {
         saveState(savedGames)
     }
 
+    @Synchronized
+    fun replaceStates(states: List<GameState>) {
+        saveState(states)
+    }
+
     fun deleteState(gameId: Int) {
         val savedState = loadState()
         savedState.remove(savedState.firstOrNull { it.gameId == gameId })

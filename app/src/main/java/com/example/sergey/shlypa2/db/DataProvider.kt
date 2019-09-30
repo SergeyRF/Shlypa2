@@ -4,7 +4,6 @@ import android.content.Context
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Lang
 import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.beans.StateRepresent
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.PlayerType
@@ -12,7 +11,6 @@ import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.GameStateSaver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import timber.log.Timber
 import java.util.*
 
 
@@ -91,4 +89,15 @@ class DataProvider(
     }
 
     fun getTypes() = typesDao.getTypesForLang(lang)
+
+    // Migrations
+    fun copyLegacyStates() {
+        val states = stateDao.getAllStates().map {
+            gson.fromJson(it.state, GameState::class.java)
+        }
+
+        if(states.isNotEmpty()) {
+            gameStateSaver.replaceStates(states)
+        }
+    }
 }

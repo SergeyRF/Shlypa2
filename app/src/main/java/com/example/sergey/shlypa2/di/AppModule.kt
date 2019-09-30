@@ -42,7 +42,7 @@ val appModule = module {
     viewModel { RoundViewModel(get(), get(), get(), get(), get()) }
     viewModel { WordsViewModel(get(), get(), get(), get(), get()) }
     viewModel { SettingsViewModel(get(), get(), get()) }
-    viewModel { LaunchViewModel(get(), get(), get(), get()) }
+    viewModel { LaunchViewModel(get(), get(), get(), get(), get()) }
     viewModel { PlayerSelectViewModel(get(), get()) }
     viewModel { GameResultViewModel(get(), get()) }
 
@@ -50,7 +50,7 @@ val appModule = module {
 
     single { createGson() }
 
-    single{GameStateSaver(get())}
+    single { GameStateSaver(get()) }
 
     single { createDb(get()) }
     single { (db: DataBase) -> db.typesDap() }
@@ -58,7 +58,7 @@ val appModule = module {
     single { (db: DataBase) -> db.stateDao() }
     single { (db: DataBase) -> db.wordDao() }
 
-    single { DataProvider(get(), get(), get(),get()) }
+    single { DataProvider(get(), get(), get(), get()) }
 
     single { FirebaseAnalytics.getInstance(get()) }
     single { if (BuildConfig.DEBUG) FlurryFacadeDebug() else FlurryFacadeRelease() }
@@ -70,7 +70,7 @@ val appModule = module {
     single { AdsManager(get(), get(), get()) }
     single { FirebaseRemoteConfig.getInstance() }
     single { ConfigsProvider(get()) }
-    single { AppLifecycleObserver(get())}
+    single { AppLifecycleObserver(get()) }
     factory { DbExporter(get()) }
 }
 
