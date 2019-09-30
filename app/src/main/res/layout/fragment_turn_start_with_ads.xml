@@ -26,7 +26,9 @@
         app:layout_constraintTop_toBottomOf="@id/civPlayerAvatar"
         app:layout_constraintHeight_max="350dp"
         app:layout_constraintVertical_bias="1"
-        android:layout_margin="@dimen/medium_margin"
+        android:layout_marginLeft="@dimen/medium_margin"
+        android:layout_marginRight="@dimen/medium_margin"
+        android:layout_marginBottom="24dp"
         android:visibility="gone"
         tools:visibility="visible"/>
 
