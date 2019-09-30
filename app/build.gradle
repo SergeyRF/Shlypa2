@@ -3,6 +3,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.getkeepsafe.dexcount'
 
 
 android {
@@ -17,8 +18,20 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            def creds = signKey()
+            storeFile file("../key/hat.jks")
+            storePassword creds.first
+            keyAlias creds.second
+            keyPassword creds.first
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -120,14 +133,12 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.1"
 }
 
-configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            if (!requested.name.startsWith("multidex")) {
-                details.useVersion "$support_version"
-            }
-        }
+private static Tuple2<String, String> signKey() {
+    try {
+        def content = new File("key/credentials").text.split()
+        return new Tuple2(content[0], content[1])
+    } catch ( Exception ex) {
+        return new Tuple("", "")
     }
 }
 
