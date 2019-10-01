@@ -22,4 +22,7 @@
     <item
         android:id="@+id/item_purple"
         android:title="Purple" />
+
+    <item android:id="@+id/item_clear_prefs"
+        android:title="Clear prefs"/>
 </menu>

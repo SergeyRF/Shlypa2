@@ -10,6 +10,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import com.example.sergey.shlypa2.AppRater
+import com.example.sergey.shlypa2.BuildConfig
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.ads.ConsentManager
@@ -93,7 +94,11 @@ class FirstActivity : AppCompatActivity(R.layout.activity_first) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
+        if(BuildConfig.DEBUG) {
+            menuInflater.inflate(R.menu.themes_menu, menu)
+        } else {
+            menuInflater.inflate(R.menu.main_menu, menu)
+        }
         return true
     }
 
@@ -107,6 +112,7 @@ class FirstActivity : AppCompatActivity(R.layout.activity_first) {
                 R.id.item_purple -> selectTheme(R.style.AppThemePurple)
                 R.id.item_green -> selectTheme(R.style.AppThemeGreen)
                 R.id.item_yellow -> selectTheme(R.style.AppThemeYellow)
+                R.id.item_clear_prefs -> viewModel.clearPrefs()
 
                 R.id.item_settings -> startActivity(Intent(this, SettingsActivity::class.java))
                 R.id.item_share -> share()

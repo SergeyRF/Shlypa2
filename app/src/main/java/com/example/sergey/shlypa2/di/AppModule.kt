@@ -36,7 +36,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { WelcomeViewModel(get(), get(), get()) }
+    viewModel { WelcomeViewModel(get(), get(), get(), get()) }
     viewModel { PlayersViewModel(get(), get(), get(), get(), get()) }
     viewModel { GameSettingsViewModel(get(), get(), get(), get()) }
     viewModel { RoundViewModel(get(), get(), get(), get(), get()) }

@@ -131,7 +131,7 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
     private fun runSpotlight() {
         requireContext().runOnceEver(PLAYING_HINT) {
-            view?.onDrawn { runGuide() }
+            view?.onDrawn(600) { runGuide() }
         }
     }
 
