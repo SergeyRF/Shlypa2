@@ -2,6 +2,9 @@ package com.example.sergey.shlypa2.utils
 
 import android.content.Context
 import com.example.sergey.shlypa2.game.GameState
+import com.example.sergey.shlypa2.game.GameStateOld
+import com.example.sergey.shlypa2.game.Round
+import com.example.sergey.shlypa2.game.RoundDescriptors
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber
@@ -58,14 +61,53 @@ class GameStateSaver(context: Context) {
     }
 
     @Synchronized
-    fun replaceStates(states: List<GameState>) {
-        saveState(states)
+    fun replaceStates(states: List<GameStateOld>) {
+        saveState(states.map { gameStateOldToNew(it) })
     }
 
     fun deleteState(gameId: Int) {
         val savedState = loadState()
         savedState.remove(savedState.firstOrNull { it.gameId == gameId })
         saveState(savedState)
+    }
+
+    /**
+     * For migrations from 1.1.4 to 1.2
+     */
+    private fun gameStateOldToNew(state: GameStateOld): GameState {
+        val round = state.currentRound?.let { r ->
+            Round(
+                    emptyList(),
+                    r.wordsQueue,
+                    r.wordsAnsweredByPlayer,
+                    r.results,
+                    r.currentTeam,
+                    r.currentPlayer,
+                    when(r.image) {
+                        "megaphone.png" -> RoundDescriptors.WORD_BY_SENTENCES
+                        "silence.png" -> RoundDescriptors.WORD_BY_GESTURES
+                        else -> RoundDescriptors.WORD_BY_WORD
+                    },
+                    null,
+                    r.turnFinished
+            )
+        }
+
+        with(state) {
+            return GameState(
+                  gameId,
+                    settings,
+                    resultsList,
+                    teams,
+                    currentTeamPosition,
+                    currentRoundPosition,
+                    round,
+                    players,
+                    allWords,
+                    savedTime,
+                    needToRestore
+            )
+        }
     }
 
 }

@@ -6,6 +6,7 @@ import com.example.sergey.shlypa2.beans.Lang
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.GameState
+import com.example.sergey.shlypa2.game.GameStateOld
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.GameStateSaver
@@ -93,7 +94,7 @@ class DataProvider(
     // Migrations
     fun copyLegacyStates() {
         val states = stateDao.getAllStates().map {
-            gson.fromJson(it.state, GameState::class.java)
+            gson.fromJson(it.state, GameStateOld::class.java)
         }
 
         if(states.isNotEmpty()) {

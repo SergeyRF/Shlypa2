@@ -25,11 +25,11 @@ class RoundStartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.roundLiveData.observeSafe(this) { round ->
-            tvRoundName.setText(round.name)
-            tvRoundRules.setText(round.rules)
+            tvRoundName.setText(round.descriptor.nameRes)
+            tvRoundRules.setText(round.descriptor.rules)
 
             Glide.with(this)
-                    .load(ImagesHelper.getRoundImage(round.image))
+                    .load(ImagesHelper.getRoundImage(round.descriptor.icon))
                     .into(civRulesAvatar)
 
         }
