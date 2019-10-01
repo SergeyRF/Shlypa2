@@ -52,7 +52,7 @@ class SettingsFragment : Fragment() {
 
         //Sound setting
         val preferences = PreferenceHelper.defaultPrefs(context!!)
-        val soundEnabled: Boolean = preferences[Constants.SOUND_ON_PREF] ?: true
+        val soundEnabled: Boolean = preferences[Constants.SOUND_ON_PREF,true] ?: true
 
         ssPrefSound.setChecked(soundEnabled)
 
