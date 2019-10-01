@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,9 +21,11 @@ import com.example.sergey.shlypa2.extensions.onDrawn
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
+import com.example.sergey.shlypa2.utils.spotligth.Square
 import com.takusemba.spotlight.OnTargetStateChangedListener
-import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.shape.Circle
+import com.takusemba.spotlight.target.SimpleTarget
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_players.*
@@ -98,7 +99,7 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
             } else true
         }
 
-        tvAddNewPlayer.setOnClickListener {
+        btAddNewPlayer.setOnClickListener {
             addPlayer()
         }
 
@@ -186,16 +187,11 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
 
     private fun runSpotlight() {
 
-        val locations = intArrayOf(0, 0)
-        floatingMenu.getLocationOnScreen(locations)
-
-        val fabX = locations[0] + floatingMenu.width - 32.dpToPx
-        val fabY = locations[1] + floatingMenu.height - 32.dpToPx
-
         val custom = SimpleTarget.Builder(activity!!)
-                .setPoint(fabX.toFloat(), fabY.toFloat())
-                .setRadius(70f)
+                .setPoint(floatingMenu.menuIconView)
+                .setShape(Circle(33f.dpToPx))
                 .setTitle(getString(R.string.hint_random_player))
+                .setDuration(700)
                 .setDescription(getString(R.string.hint_inject_random_player))
                 .setOnSpotlightStartedListener(object : OnTargetStateChangedListener<SimpleTarget> {
 
@@ -208,23 +204,26 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
                 .build()
 
         val injectName = SimpleTarget.Builder(requireActivity())
-                .setRadius(80f)
-                .setPoint(tvAddNewPlayer)
+                .setShape(Square(btAddNewPlayer.height, btAddNewPlayer.width))
+                .setPoint(btAddNewPlayer)
                 .setTitle(getString(R.string.hint_inject_name))
                 .setDescription(getString(R.string.hint_inject_name_button))
+                .setDuration(700)
                 .build()
 
         val selectAvatar = SimpleTarget.Builder(requireActivity())
-                .setRadius(80f)
+                .setShape(Circle((civPlayerAvatar.width / 1.8).toFloat()))
                 .setPoint(civPlayerAvatar)
                 .setTitle(getString(R.string.hint_select_avatar))
+                .setDuration(700)
                 .setDescription(getString(R.string.hint_select_avatar_description))
                 .build()
 
+
         Spotlight.with(requireActivity())
-                .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
-                .setDuration(300L)
-                .setTargets(selectAvatar,injectName, custom)
+                .setOverlayColor(R.color.anotherBlack)
+                .setDuration(700L)
+                .setTargets(selectAvatar, injectName, custom)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
                 .start()

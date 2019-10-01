@@ -101,6 +101,7 @@ fun View.onPreDraw(block: () -> Unit) {
         }
     })
 }
+
 fun EditText.onActionDone(returnCompleted: Boolean = true,
                           returnNotCompleted: Boolean = true, block: () -> Unit) {
     onAction(EditorInfo.IME_ACTION_DONE, returnCompleted, returnNotCompleted, block)
@@ -153,6 +154,8 @@ inline fun Any.debug(block: () -> Unit) {
 val Int.dpToPx: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 val Int.pxToDp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+
+val Float.dpToPx: Float get() = this * Resources.getSystem().displayMetrics.density
 
 fun MotionLayout.onTransitionCompletedOnce(action: () -> Unit) {
     setTransitionListener(object : MotionLayout.TransitionListener {

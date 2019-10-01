@@ -4,7 +4,6 @@ package com.example.sergey.shlypa2.screens.players
 import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Team
@@ -16,8 +15,10 @@ import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayerSectionable
 import com.example.sergey.shlypa2.screens.players.adapter.ItemTeamSectionable
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
-import com.takusemba.spotlight.SimpleTarget
+import com.example.sergey.shlypa2.utils.spotligth.Square
 import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.shape.Circle
+import com.takusemba.spotlight.target.SimpleTarget
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_teams.*
@@ -137,7 +138,8 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private fun runGuide() {
         val shuffleGuide = SimpleTarget.Builder(activity!!)
                 .setPoint(floatingMenu.menuIconView)
-                .setRadius(80f)
+                .setShape(Circle(33f.dpToPx))
+                .setDuration(700)
                 .setTitle(getString(R.string.hint_team_shaffle))
                 .setDescription(getString(R.string.hint_team_shaffle_button))
                 .build()
@@ -154,9 +156,12 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                         setPoint(x, y)
                     }
                 }
-                .setRadius(80f)
+                .setShape(Square(
+                        (teamNameView?.height ?: 35) + 16.dpToPx,
+                        (teamNameView?.width ?: 35) + 16.dpToPx))
                 .setTitle(getString(R.string.rename))
                 .setDescription(getString(R.string.click_to_rename))
+                .setDuration(700)
                 .build()
 
         val playerAvatarView = rvTeams.getChildAt(1)?.ivPlayerAvatar
@@ -168,15 +173,16 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                         setPoint(x, y + 50.dpToPx)
                     }
                 }
-                .setRadius(60f)
+                .setShape(Circle(30f.dpToPx))
                 .setTitle(getString(R.string.team_reorder))
                 .setDescription(getString(R.string.team_reorder_guide))
+                .setDuration(700)
                 .build()
 
 
         Spotlight.with(activity!!)
-                .setOverlayColor(ContextCompat.getColor(requireActivity(), R.color.anotherBlack))
-                .setDuration(100L)
+                .setOverlayColor(R.color.anotherBlack)
+                .setDuration(700L)
                 .setTargets(shuffleGuide, renameGuide, reorderGuide)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
