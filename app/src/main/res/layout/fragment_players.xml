@@ -43,7 +43,7 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textSize="@dimen/text_medium"
-                app:layout_constraintBottom_toTopOf="@+id/tvAddNewPlayer"
+                app:layout_constraintBottom_toTopOf="@+id/btAddNewPlayer"
                 app:layout_constraintLeft_toRightOf="@id/civPlayerAvatar"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvAddNewPlayer"
+                android:id="@+id/btAddNewPlayer"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/add_player"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
