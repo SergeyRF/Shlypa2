@@ -71,20 +71,26 @@ class GameStateSaver(context: Context) {
         saveState(savedState)
     }
 
+    /**
+     * For migrations from 1.1.4 to 1.2
+     */
     private fun gameStateOldToNew(state: GameStateOld): GameState {
         val round = state.currentRound?.let { r ->
-            Round(emptyList()).apply {
-                wordsQueue = r.wordsQueue
-                wordsAnsweredByPlayer = r.wordsAnsweredByPlayer
-                results = r.results
-                currentTeam = r.currentTeam
-                descriptor = when(r.image) {
-                    "megaphone.png" -> RoundDescriptors.WORD_BY_SENTENCES
-                    "silence.png" -> RoundDescriptors.WORD_BY_GESTURES
-                    else -> RoundDescriptors.WORD_BY_WORD
-                }
-                turnFinished = r.turnFinished
-            }
+            Round(
+                    emptyList(),
+                    r.wordsQueue,
+                    r.wordsAnsweredByPlayer,
+                    r.results,
+                    r.currentTeam,
+                    r.currentPlayer,
+                    when(r.image) {
+                        "megaphone.png" -> RoundDescriptors.WORD_BY_SENTENCES
+                        "silence.png" -> RoundDescriptors.WORD_BY_GESTURES
+                        else -> RoundDescriptors.WORD_BY_WORD
+                    },
+                    null,
+                    r.turnFinished
+            )
         }
 
         with(state) {

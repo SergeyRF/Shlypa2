@@ -19,7 +19,7 @@ class LaunchViewModel(private val dispatchers: DispatchersProvider,
                       private val adsManager: AdsManager) : CoroutineViewModel(dispatchers.uiDispatcher) {
 
     companion object {
-        private const val DB_IMPORTED = "db_imported_v1_2"
+        private const val DB_IMPORTED = "db_imported_v1_1_5"
         private const val STATES_MIGRATIONS_DONE = "states_migrations_done"
     }
 
