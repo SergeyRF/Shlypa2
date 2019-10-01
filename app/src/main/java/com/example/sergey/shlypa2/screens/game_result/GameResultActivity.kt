@@ -15,6 +15,7 @@ import com.example.sergey.shlypa2.screens.main.FirstActivity
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.activity_game_result.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class GameResultActivity : AppCompatActivity() {
 
@@ -41,7 +42,7 @@ class GameResultActivity : AppCompatActivity() {
             tvWinner.text = it
         }
 
-       /* viewModel.commandLiveData.observeSafe(this) { command ->
+        viewModel.commandLiveData.observeSafe(this) { command ->
             when (command) {
                 Command.RUN_ANIMATION -> runAnimation()
                 Command.START_GAME_SETTINGS -> {
@@ -52,8 +53,9 @@ class GameResultActivity : AppCompatActivity() {
                 Command.START_MAIN_ACTIVITY -> {
                    startMain()
                 }
+                else->{}
             }
-        }*/
+        }
 
         btCreateNewGame.setOnClickListener {
            // dialogRepeatGame()
