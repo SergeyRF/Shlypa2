@@ -107,7 +107,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.21"
 
     //Spotlight
-    implementation 'com.github.takusemba:spotlight:1.3.3'
+    implementation 'com.github.takusemba:spotlight:1.7.0'
 
     //FlexibleAdapter
     implementation "eu.davidea:flexible-adapter:5.1.0"

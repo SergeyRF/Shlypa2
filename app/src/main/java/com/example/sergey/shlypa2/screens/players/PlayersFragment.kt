@@ -23,8 +23,9 @@ import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import com.takusemba.spotlight.OnTargetStateChangedListener
-import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.shape.Circle
+import com.takusemba.spotlight.target.SimpleTarget
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_players.*
@@ -194,7 +195,7 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
 
         val custom = SimpleTarget.Builder(activity!!)
                 .setPoint(fabX.toFloat(), fabY.toFloat())
-                .setRadius(70f)
+                .setShape(Circle(80f))
                 .setTitle(getString(R.string.hint_random_player))
                 .setDescription(getString(R.string.hint_inject_random_player))
                 .setOnSpotlightStartedListener(object : OnTargetStateChangedListener<SimpleTarget> {
@@ -208,22 +209,22 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
                 .build()
 
         val injectName = SimpleTarget.Builder(requireActivity())
-                .setRadius(80f)
+                .setShape(Circle(80f))
                 .setPoint(tvAddNewPlayer)
                 .setTitle(getString(R.string.hint_inject_name))
                 .setDescription(getString(R.string.hint_inject_name_button))
                 .build()
 
         val selectAvatar = SimpleTarget.Builder(requireActivity())
-                .setRadius(80f)
+                .setShape(Circle(80f))
                 .setPoint(civPlayerAvatar)
                 .setTitle(getString(R.string.hint_select_avatar))
                 .setDescription(getString(R.string.hint_select_avatar_description))
                 .build()
 
         Spotlight.with(requireActivity())
-                .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
-                .setDuration(300L)
+                .setOverlayColor(R.color.anotherBlack)
+                .setDuration(6L)
                 .setTargets(selectAvatar,injectName, custom)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))

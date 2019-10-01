@@ -16,8 +16,9 @@ import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayerSectionable
 import com.example.sergey.shlypa2.screens.players.adapter.ItemTeamSectionable
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.PrecaheLayoutManager
-import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.shape.Circle
+import com.takusemba.spotlight.target.SimpleTarget
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_teams.*
@@ -137,7 +138,7 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
     private fun runGuide() {
         val shuffleGuide = SimpleTarget.Builder(activity!!)
                 .setPoint(floatingMenu.menuIconView)
-                .setRadius(80f)
+                .setShape(Circle(80f))
                 .setTitle(getString(R.string.hint_team_shaffle))
                 .setDescription(getString(R.string.hint_team_shaffle_button))
                 .build()
@@ -154,7 +155,7 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                         setPoint(x, y)
                     }
                 }
-                .setRadius(80f)
+                .setShape(Circle(80f))
                 .setTitle(getString(R.string.rename))
                 .setDescription(getString(R.string.click_to_rename))
                 .build()
@@ -168,15 +169,15 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
                         setPoint(x, y + 50.dpToPx)
                     }
                 }
-                .setRadius(60f)
+                .setShape(Circle(80f))
                 .setTitle(getString(R.string.team_reorder))
                 .setDescription(getString(R.string.team_reorder_guide))
                 .build()
 
 
         Spotlight.with(activity!!)
-                .setOverlayColor(ContextCompat.getColor(requireActivity(), R.color.anotherBlack))
-                .setDuration(100L)
+                .setOverlayColor(R.color.anotherBlack)
+                .setDuration(1000L)
                 .setTargets(shuffleGuide, renameGuide, reorderGuide)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
