@@ -62,11 +62,7 @@ class App : Application() {
                 .withLogEnabled(BuildConfig.DEBUG.not())
                 .build(this, "S85BYYPTT7FXNJZCTPB3")
 
-        initFcm()
-
-        ProcessLifecycleOwner.get().lifecycle
-                .addObserver(lifecycleObserver)
-
+        tryToInit()
     }
 
     fun buildCaoc() {
@@ -77,13 +73,20 @@ class App : Application() {
                 .apply()
     }
 
-    private fun initFcm() {
-        // todo review this strange error - IllegalStateException
+    private fun tryToInit() {
+        // will throw an exception in a CustomActivityOnCrash
         try {
             FirebaseMessaging.getInstance().subscribeToTopic(
                     if (BuildConfig.DEBUG) Constants.DEBUG_COMMON_TOPIC
                     else Constants.RELEASE_COMMON_TOPIC
             )
+        } catch (ex: Exception) {
+            Timber.e(ex)
+        }
+
+        try {
+            ProcessLifecycleOwner.get().lifecycle
+                    .addObserver(lifecycleObserver)
         } catch (ex: Exception) {
             Timber.e(ex)
         }

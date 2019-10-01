@@ -66,7 +66,7 @@ class RoundActivity : AppCompatActivity() {
         }
 
         viewModel.roundLiveData.observeSafe(this) {
-            it?.let { setTitle(it.description) }
+            it?.let { setTitle(it.descriptor.description) }
         }
 
         if (supportFragmentManager.findFragmentById(R.id.container) == null) {

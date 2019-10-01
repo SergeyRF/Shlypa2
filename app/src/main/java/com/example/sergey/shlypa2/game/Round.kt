@@ -24,6 +24,8 @@ class Round(words: List<Word>) {
     var currentTeam: Team =  Game.getCurrentTeam()
     var currentPlayer: Player = currentTeam.getPlayer()
 
+    var descriptor: RoundDescriptors = RoundDescriptors.WORD_BY_SENTENCES
+
     private var currentWord: Word? = null
 
     var turnFinished = false
@@ -37,39 +39,6 @@ class Round(words: List<Word>) {
     }
 
     fun getPlayer(): Player {
-        return currentPlayer
-    }
-
-    //todo remove
-    fun nextPlayer(): Player {
-        var playerScores = 0
-
-        if (results.containsKey(currentPlayer.id)) {
-            playerScores = results[currentPlayer.id]!!
-        }
-
-        wordsAnsweredByPlayer.forEach {
-            if (it.right) {
-                playerScores++
-            } else {
-                if(Game.getSettings().penaltyInclude) {
-                    playerScores -= Game.getSettings().penaltyPoint
-                }
-
-                if(Game.getSettings().returnSkipedToHat) {
-                    wordsQueue.add(it)
-                    Timber.d("ADDDDDd ${it.word}")
-                }
-            }
-        }
-
-        results[currentPlayer.id] = playerScores
-
-        wordsAnsweredByPlayer.clear()
-
-        currentTeam = Game.nextTeam()
-        currentPlayer = currentTeam.nextPlayer()
-
         return currentPlayer
     }
 
