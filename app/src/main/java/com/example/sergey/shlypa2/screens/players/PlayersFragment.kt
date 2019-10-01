@@ -222,7 +222,7 @@ class PlayersFragment : androidx.fragment.app.Fragment(),
 
         Spotlight.with(requireActivity())
                 .setOverlayColor(R.color.anotherBlack)
-                .setDuration(6L)
+                .setDuration(700L)
                 .setTargets(selectAvatar, injectName, custom)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))

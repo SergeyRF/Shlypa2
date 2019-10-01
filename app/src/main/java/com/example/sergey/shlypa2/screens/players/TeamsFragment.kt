@@ -182,7 +182,7 @@ class TeamsFragment : Fragment(), FlexibleAdapter.OnItemClickListener {
 
         Spotlight.with(activity!!)
                 .setOverlayColor(R.color.anotherBlack)
-                .setDuration(6L)
+                .setDuration(700L)
                 .setTargets(shuffleGuide, renameGuide, reorderGuide)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
