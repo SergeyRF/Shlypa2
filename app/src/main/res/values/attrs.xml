@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="SwitchSetting">
         <attr name="switch_setting_title" format="reference|string"/>
+        <attr name="switch_setting_hint" format="reference|string"/>
     </declare-styleable>
 
     <declare-styleable name="SeekbarSetting">
@@ -11,5 +12,13 @@
     <declare-styleable name="ArchView">
         <attr name="arch_color" format="color"/>
         <attr name="arch_height" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="RecyclerViewMaxHeight">
+        <attr name="rvMaxHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="NativeAdsView">
+        <attr name="nativeAdsSize" format="reference"/>
     </declare-styleable>
 </resources>

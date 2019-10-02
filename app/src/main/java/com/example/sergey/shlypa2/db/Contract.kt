@@ -6,6 +6,7 @@ package com.example.sergey.shlypa2.db
 object Contract {
     const val DB_VERSION = 2
     const val DB_NAME = "shlyapa2_db"
+    const val DB_FILE_NAME = "shlyapa_db"
 
     //Players table columns
     const val PLAYER_TABLE = "players"
@@ -14,6 +15,7 @@ object Contract {
     const val PLAYER_NAME = "player_name"
     const val PLAYER_LOCALE = "player_locale"
     const val PLAYER_TYPE = "player_type"
+    const val PLAYER_AVATAR_TYPE= "player_avatar_type"
 
     //Word table columns
     const val WORD_TABLE = "words"

@@ -1,3 +1,4 @@
+/*
 package com.example.sergey.shlypa2
 
 import com.example.sergey.shlypa2.beans.Player
@@ -10,9 +11,11 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+*/
 /**
  * Created by alex on 4/3/18.
- */
+ *//*
+
 
 class RoundTests {
 
@@ -71,4 +74,4 @@ class RoundTests {
     fun testPlayersQueue() {
         for(i in 0..50) println("${round.nextPlayer()}")
     }
-}
+}*/

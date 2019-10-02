@@ -1,35 +1,37 @@
 package com.example.sergey.shlypa2.screens.main
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.game.GameState
+import com.example.sergey.shlypa2.screens.players.PlayersFragment
+import com.example.sergey.shlypa2.screens.players.TeamsFragment
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.PreferencesProvider
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.coroutines.CoroutineAndroidViewModel
 import com.example.sergey.shlypa2.utils.coroutines.DispatchersProvider
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 /**
  * Created by alex on 4/17/18.
  */
 class WelcomeViewModel(application: Application,
                        private val dispatchers: DispatchersProvider,
-                       private val dataProvider: DataProvider) : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
+                       private val dataProvider: DataProvider,
+                       private val preferencesProvider: PreferencesProvider) : CoroutineAndroidViewModel(dispatchers.uiDispatcher, application) {
 
 
-    val commandsCallBack : MutableLiveData<Commands> = SingleLiveEvent()
+    val commandsCallBack: MutableLiveData<Commands> = SingleLiveEvent()
     val savedStates = MutableLiveData<List<GameState>>()
 
     fun loadSavedStates() {
-      launch(dispatchers.ioDispatcher) {
-          savedStates.postValue(dataProvider.getSavedStates())
-      }
+        launch(dispatchers.ioDispatcher) {
+            savedStates.postValue(dataProvider.getSavedStates()
+                    .sortedByDescending { it.savedTime }
+            )
+        }
     }
 
     fun newGame() {
@@ -44,6 +46,11 @@ class WelcomeViewModel(application: Application,
 
     fun rules() {
         commandsCallBack.value = Commands.RULES
+    }
+
+    fun clearPrefs() {
+        preferencesProvider[PlayersFragment.SHOW_SPOTLIGHT] = true
+        preferencesProvider[TeamsFragment.PLAYING_HINT] = false
     }
 
     enum class Commands {

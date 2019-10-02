@@ -5,28 +5,29 @@ import android.os.Bundle
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.example.sergey.shlypa2.ImagesHelper
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dpToPx
 import com.example.sergey.shlypa2.extensions.observeSafe
 import com.example.sergey.shlypa2.extensions.onDrawn
-import com.example.sergey.shlypa2.game.Game
 import com.example.sergey.shlypa2.screens.players.adapter.ItemPlayer
-import com.example.sergey.shlypa2.ui.dialogs.AvatarSelectDialog
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
+import com.example.sergey.shlypa2.utils.spotligth.Square
 import com.takusemba.spotlight.OnTargetStateChangedListener
-import com.takusemba.spotlight.SimpleTarget
 import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.shape.Circle
+import com.takusemba.spotlight.target.SimpleTarget
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.fragment_players.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -35,10 +36,13 @@ import timber.log.Timber
 /**
  * A simple [Fragment] subclass.
  */
-class PlayersFragment : androidx.fragment.app.Fragment() {
+class PlayersFragment : androidx.fragment.app.Fragment(),
+        FlexibleAdapter.OnItemSwipeListener,
+        FlexibleAdapter.OnItemClickListener {
+
 
     val viewModel by sharedViewModel<PlayersViewModel>()
-    private val playersAdapter = FlexibleAdapter(emptyList(), this)
+    private lateinit var playersAdapter: FlexibleAdapter<IFlexible<*>>
 
     companion object {
         const val SHOW_SPOTLIGHT = "spotlight_show"
@@ -54,8 +58,7 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         // Inflate the layout for this fragment
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN or
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         return inflater.inflate(R.layout.fragment_players, container, false)
     }
@@ -67,20 +70,23 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun initViews() {
-        rvPlayers.layoutManager = LinearLayoutManager(requireContext()).apply {
-            stackFromEnd = true
-            reverseLayout = true
+        playersAdapter = FlexibleAdapter(emptyList(), this)
+
+        with(rvPlayers) {
+            layoutManager = LinearLayoutManager(requireContext()).apply {
+                stackFromEnd = true
+                reverseLayout = true
+            }
+            adapter = playersAdapter
         }
-        rvPlayers.adapter = playersAdapter
+        // set swipe enabled only allowed after attaching to recycler view
+        playersAdapter.isSwipeEnabled = true
 
         civPlayerAvatar.setOnClickListener {
-            val dialog = AvatarSelectDialog(requireContext(), viewModel.listOfAvatars)
-            dialog.onSelect = dialogOnSelect
-            dialog.show()
+            viewModel.onChangeAvatarClicked()
         }
 
-        //enter
-        etName.setOnEditorActionListener { v, actionId, event ->
+        etName.setOnEditorActionListener { _, actionId, _ ->
             if (this.isResumed/* strange error */ && actionId == EditorInfo.IME_ACTION_NEXT) {
                 // обработка нажатия Enter
                 runCatching {
@@ -93,38 +99,30 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
             } else true
         }
 
-        imageButton.setOnClickListener {
+        btAddNewPlayer.setOnClickListener {
             addPlayer()
         }
 
-        btGoNextPlayers.setOnClickListener {
-            if (Game.getPlayers().size < 4) {
-                Toast.makeText(context, R.string.not_enough_players, Toast.LENGTH_LONG).show()
-            } else viewModel.startTeams()
+        btCreateTeam.setOnClickListener {
+            viewModel.onPlayersNextClicked()
         }
 
-        btAddRandomPlayer.setOnClickListener {
+        fabPlayerRandom.setOnClickListener {
             viewModel.addRandomPlayer()
+        }
+
+        fabPlayerUser.setOnClickListener {
+            viewModel.onAddFromSavedClicked()
         }
     }
 
     private fun initSubscriptions() {
-        viewModel.getPlayersLiveData().observeSafe(this) { list ->
-            onPlayersChanged(list)
-        }
-
-        viewModel.avatarLiveData.observeSafe(this) {
-            showAvatar(it)
-        }
-    }
-
-    val dialogOnSelect: (String) -> Unit = { fileName ->
-        Timber.d("avatar select $fileName")
-        showAvatar(fileName)
+        viewModel.playersLiveData.observeSafe(this, ::onPlayersChanged)
+        viewModel.avatarLiveData.observeSafe(this, ::showAvatar)
     }
 
     private fun addPlayer() {
-        viewModel.addPlayer(etName.text.toString())
+        viewModel.addNewPlayer(etName.text.toString())
         etName.text.clear()
     }
 
@@ -147,20 +145,42 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
 
     private fun onPlayersChanged(players: List<Player>) {
         players.map {
-            ItemPlayer(it, renameListener = {
-                viewModel.reNamePlayer(it)
-            }, removeListener = {
-                viewModel.removePlayer(it)
-            })
+            ItemPlayer(it)
         }.apply {
             playersAdapter.updateDataSet(this)
             rvPlayers.scrollToPosition(players.size - 1)
         }
     }
 
+    override fun onActionStateChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+
+    }
+
+    override fun onItemSwipe(position: Int, direction: Int) {
+        when (val item = playersAdapter.getItem(position)) {
+            is ItemPlayer -> {
+                viewModel.removePlayer(item.player)
+            }
+            else -> {
+            }
+        }
+    }
+
+    override fun onItemClick(view: View?, position: Int): Boolean {
+        return when (val item = playersAdapter.getItem(position)) {
+            is ItemPlayer -> {
+                viewModel.onClickPlayer(item.player)
+                true
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
     private fun showAvatar(fileName: String) {
         Glide.with(this)
-                .load(Player.smallImagePath(fileName))
+                .load(ImagesHelper.smallImagePathPlayer(fileName, requireContext()))
                 .apply(avatarOptions)
                 .into(civPlayerAvatar)
     }
@@ -168,9 +188,10 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
     private fun runSpotlight() {
 
         val custom = SimpleTarget.Builder(activity!!)
-                .setPoint(btAddRandomPlayer)
-                .setRadius(80f)
+                .setPoint(floatingMenu.menuIconView)
+                .setShape(Circle(33f.dpToPx))
                 .setTitle(getString(R.string.hint_random_player))
+                .setDuration(700)
                 .setDescription(getString(R.string.hint_inject_random_player))
                 .setOnSpotlightStartedListener(object : OnTargetStateChangedListener<SimpleTarget> {
 
@@ -181,30 +202,41 @@ class PlayersFragment : androidx.fragment.app.Fragment() {
                     }
                 })
                 .build()
-        val injectName = SimpleTarget.Builder(activity!!)
-                .setRadius(80f)
-                .setPoint(imageButton)
+
+        val injectName = SimpleTarget.Builder(requireActivity())
+                .setShape(Square(btAddNewPlayer.height, btAddNewPlayer.width))
+                .setPoint(btAddNewPlayer)
                 .setTitle(getString(R.string.hint_inject_name))
                 .setDescription(getString(R.string.hint_inject_name_button))
+                .setDuration(700)
                 .build()
 
-        Spotlight.with(activity!!)
-                .setOverlayColor(ContextCompat.getColor(activity!!, R.color.anotherBlack))
-                .setDuration(300L)
-                .setTargets(injectName, custom)
+        val selectAvatar = SimpleTarget.Builder(requireActivity())
+                .setShape(Circle((civPlayerAvatar.width / 1.8).toFloat()))
+                .setPoint(civPlayerAvatar)
+                .setTitle(getString(R.string.hint_select_avatar))
+                .setDuration(700)
+                .setDescription(getString(R.string.hint_select_avatar_description))
+                .build()
+
+
+        Spotlight.with(requireActivity())
+                .setOverlayColor(R.color.anotherBlack)
+                .setDuration(700L)
+                .setTargets(selectAvatar, injectName, custom)
                 .setClosedOnTouchedOutside(true)
                 .setAnimation(DecelerateInterpolator(2f))
                 .start()
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.hint_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.hint_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when(item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.item_show_hint -> {
                 runSpotlight()
                 true

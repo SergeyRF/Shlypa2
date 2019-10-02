@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <TextView
-        android:id="@+id/tvTitleSetting"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_vertical"
-        android:text="@string/allow_random"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_settings" />
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <Switch
         android:id="@+id/switchSetting"
-        android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleSwitch"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvTitleSwitch" />
 
+    <TextView
+        android:id="@+id/tvTitleSwitch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/big_margin"
+        android:text="@string/allow_random"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_settings"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvHint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:visibility="gone"
+        android:lineSpacingExtra="3dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/switchSetting"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleSwitch"
+        tools:maxLength="101"
+        tools:text="@tools:sample/lorem/random"
+        tools:visibility="visible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/big_margin"
+        android:background="@color/divider_color"
+        app:layout_constraintTop_toBottomOf="@id/barrier" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tvTitleSwitch,tvHint" />
 
 </merge>

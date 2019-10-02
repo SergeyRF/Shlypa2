@@ -14,10 +14,11 @@
     <string name="state_actyvity">Game settings</string>
     <string name="word_actyvity">Words input</string>
     <string name="team_rename">Team name</string>
+    <string name="player_rename">Rename player</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="minus_bal">Penalty for skipped words</string>
-    <string name="how_minus_bal">Penalty points</string>
+    <string name="penalty_include">Penalty for skipped words</string>
+    <string name="penalty_point">Penalty points</string>
     <string name="player_game">Explains player:</string>
     <string name="game_winner">The winner is</string>
     <string name="game_resalt">Game results</string>
@@ -58,10 +59,11 @@
     <string name="timeN">Time for turn</string>
     <string name="wordN">Words per player</string>
     <string name="vvodi">Write a word</string>
-    <string name="dificult">Difficult of random words</string>
+    <string name="dificult">Complexity of added words</string>
     <string name="allow_random">Allow random words</string>
     <string name="name">Name</string>
-    <string name="add_player">new player</string>
+    <string name="add_player">add player</string>
+    <string name="add_all_word_random">Add all word random</string>
 
 
     <string name="shuffle_teams">Shuffle teams</string>
@@ -108,6 +110,8 @@
     <string name="opensource_title">Opensourse libraries used in this project</string>
     <string name="used_content">Images and sounds used in project</string>
     <string name="privasy_policy">Privacy policy</string>
+    <string name="delete_players">Delete saved Player</string>
+    <string name="not_saved_players">You don\'t have saved Player</string>
 
     <string name="no_saved_games">No games saved yet..</string>
 
@@ -126,6 +130,8 @@
     <string name="hint_team_shaffle_button">Click a button to add, remove or shuffle teams </string>
     <string name="click_to_rename">Click to rename a team</string>
     <string name="rename">Rename</string>
+    <string name="hint_select_avatar">Select Avatar</string>
+    <string name="hint_select_avatar_description">Tap to change image</string>
 
     <!-- no winner-->
     <string name="no_winner">The winner is not defined</string>
@@ -134,6 +140,37 @@
     <string name="finish">finish game</string>
     <string name="share">Share</string>
     <string name="invite_friend">Share the Hat Game with your friends</string>
+
+    <!-- leaveDialog-->
+    <string name="leaveTitle">Leave Game</string>
+    <string name="leaveMessage">Save the game before exiting?</string>
+
+    <!-- RepeatGame-->
+    <string name="repeatTitle">Game completed</string>
+    <string name="repaetMessage">Do you want to play again with the same settings?</string>
+    <string name="repeatNegative">No</string>
+    <string name="repeatPositive">Yes</string>
+
+
+    <string name="add_user_avatar">Add yours picture</string>
+
+    <string name="add_user_player">Saved players</string>
+    <string name="add_random_player">Random player</string>
+    <string name="teams_need_at_least_two">A team must have at least two players</string>
+    <string name="team_reorder">Team reordering</string>
+    <string name="team_reorder_guide">Long click and drag player to move it to another team</string>
+    <string name="choose_photo">Choose photo</string>
+    <string name="photo">Photo</string>
+    <string name="gallery">Gallery</string>
+    <string name="data_usage_consent_change" translatable="false">Change or revoke a data usage consent</string>
+    <string name="write_word">some word</string>
+    <string name="premium_offer" translatable="false">Would you like to pay 10$ for ad free version?</string>
+    <string name="yes">Yes</string>
+    <string name="we_dont_have_premium" translatable="false">Sorry, currently  we don\'t have a paid version. But we have to provide an ad free option, so we just remove all ads for you since now</string>
+    <string name="no">no</string>
+    <string name="penalty_hint">If the player does not want to explain the word and skips it, her team will be fined.</string>
+    <string name="all_random_hint">Players do not need to make up words. The hat will be filled randomly.</string>
+    <string name="allow_random_hint">The player will be able to add random words.</string>
 
 
 </resources>

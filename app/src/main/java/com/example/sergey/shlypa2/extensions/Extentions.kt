@@ -4,11 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.os.Handler
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.SeekBar
+import androidx.constraintlayout.motion.widget.MotionLayout
 import com.example.sergey.shlypa2.BuildConfig
 import java.util.*
 
@@ -16,7 +19,7 @@ import java.util.*
  * Created by alex on 4/10/18.
  */
 
-fun SeekBar.onChange( listener : ((seekBar: SeekBar?, progress: Int, fromUser: Boolean) -> Unit)?) {
+fun SeekBar.onChange(listener: ((seekBar: SeekBar?, progress: Int, fromUser: Boolean) -> Unit)?) {
     this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             listener?.invoke(seekBar, progress, fromUser)
@@ -32,7 +35,7 @@ fun SeekBar.onChange( listener : ((seekBar: SeekBar?, progress: Int, fromUser: B
     })
 }
 
-fun View.hide(){
+fun View.hide() {
     this.visibility = View.INVISIBLE
 }
 
@@ -44,8 +47,12 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
-fun View.isVisible() : Boolean{
+fun View.isVisible(): Boolean {
     return this.visibility == View.VISIBLE
+}
+
+fun View.setVisibility(b: Boolean) {
+    visibility = if (b) View.VISIBLE else View.GONE
 }
 
 fun View.hideSmooth() {
@@ -70,7 +77,7 @@ fun Activity.hideKeyboard() {
     }
 }
 
-fun View.dimen(id: Int) : Int = resources.getDimensionPixelSize(id)
+fun View.dimen(id: Int): Int = resources.getDimensionPixelSize(id)
 
 fun View.onDrawn(delay: Long = 0, block: () -> Unit) {
     val view = this
@@ -95,13 +102,51 @@ fun View.onPreDraw(block: () -> Unit) {
     })
 }
 
+fun EditText.onActionDone(returnCompleted: Boolean = true,
+                          returnNotCompleted: Boolean = true, block: () -> Unit) {
+    onAction(EditorInfo.IME_ACTION_DONE, returnCompleted, returnNotCompleted, block)
+}
+
+fun EditText.onActionNext(returnCompleted: Boolean = true,
+                          returnNotCompleted: Boolean = true,
+                          block: () -> Unit) {
+    onAction(EditorInfo.IME_ACTION_NEXT, returnCompleted, returnNotCompleted, block)
+}
+
+fun EditText.onTouchRightDrawable(block: () -> Unit) {
+    setOnTouchListener { _, event ->
+        if (event.action == MotionEvent.ACTION_UP) {
+            if (event.rawX >= (right - compoundDrawables[2].bounds.width())) {
+                block.invoke()
+                return@setOnTouchListener true
+            }
+        }
+        false
+    }
+}
+
+fun EditText.onAction(action: Int,
+                      returnCompleted: Boolean = true,
+                      returnNotCompleted: Boolean = true,
+                      block: () -> Unit) {
+    setOnEditorActionListener { _, actionId, _ ->
+        return@setOnEditorActionListener when (actionId) {
+            action -> {
+                block.invoke()
+                returnCompleted
+            }
+            else -> returnNotCompleted
+        }
+    }
+}
+
 /**
  * Returns a random element.
  */
 fun <E> List<E>.random(): E? = if (size > 0) get(Random().nextInt(size)) else null
 
-inline fun Any.debug(block : () -> Unit) {
-    if(BuildConfig.DEBUG) {
+inline fun Any.debug(block: () -> Unit) {
+    if (BuildConfig.DEBUG) {
         block.invoke()
     }
 }
@@ -109,3 +154,20 @@ inline fun Any.debug(block : () -> Unit) {
 val Int.dpToPx: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 val Int.pxToDp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+
+val Float.dpToPx: Float get() = this * Resources.getSystem().displayMetrics.density
+
+fun MotionLayout.onTransitionCompletedOnce(action: () -> Unit) {
+    setTransitionListener(object : MotionLayout.TransitionListener {
+        override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
+
+        override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
+
+        override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}
+
+        override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+            action.invoke()
+            p0?.setTransitionListener(null)
+        }
+    })
+}

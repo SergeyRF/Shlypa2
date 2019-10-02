@@ -16,6 +16,7 @@ import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.extensions.dimen
 import com.example.sergey.shlypa2.extensions.dpToPx
+import com.example.sergey.shlypa2.extensions.getSmallImage
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.glide.CircleBorderTransform
 import de.hdodenhof.circleimageview.CircleImageView
@@ -30,7 +31,7 @@ object HolderInflater {
         val margin = root.dimen(R.dimen.in_card_horizontal_margin)
         val smallMargin = root.dimen(R.dimen.small_margin)
         val avatarSize = root.dimen(R.dimen.player_in_team_avatar)
-        val textSizeMed = root.dimen(R.dimen.text_smoll).toFloat()
+        val textSizeMed = root.dimen(R.dimen.text_small).toFloat()
         val textSizeBig = root.dimen(R.dimen.text_medium).toFloat()
         val textColor = ContextCompat.getColor(context, R.color.darkGrey)
 
@@ -78,7 +79,7 @@ object HolderInflater {
 
             val borderColor = Functions.getThemedBgColor(root.context)
             Glide.with(root)
-                    .load(player.getSmallImage())
+                    .load(player.getSmallImage(root.context))
                     .apply(RequestOptions()
                             .transforms(CircleCrop(), CircleBorderTransform(borderColor, 1.dpToPx)))
                     .into(avatarView)

@@ -3,24 +3,36 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
+apply plugin: 'com.getkeepsafe.dexcount'
 
 
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.attiladroid.shlypa"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
-        versionCode 23
-        versionName "1.1.42"
+        versionCode 31
+        versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
+
+    signingConfigs {
+        release {
+            def creds = signKey()
+            storeFile file("../key/hat.jks")
+            storePassword creds.first
+            keyAlias creds.second
+            keyPassword creds.first
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -32,20 +44,21 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+        animationsDisabled = true
     }
 }
 
 ext {
     support_version = "28.0.0"
-    anko_version='0.10.5'
-    koinVersion = "1.0.1"
-    coroutinesVersion = "1.0.1"
+    anko_version = '0.10.5'
+    koinVersion = "2.0.1"
+    coroutinesVersion = "1.3.0-RC"
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
@@ -53,17 +66,19 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.preference:preference:1.0.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta2"
 
     //firebase
-    implementation "com.google.firebase:firebase-core:16.0.7"
-    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+    implementation "com.google.firebase:firebase-core:17.1.0"
+    implementation "com.google.android.gms:play-services-ads:$google_ads_version"
     //implementation 'com.google.android.gms:play-services-location:16.0.0'
-    implementation 'com.google.android.gms:play-services-gcm:16.1.0'
-    implementation "com.google.firebase:firebase-messaging:17.4.0"
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation "com.google.firebase:firebase-messaging:20.0.0"
+    implementation 'com.google.firebase:firebase-config:19.0.0'
+    implementation 'com.google.android.ads.consent:consent-library:1.0.7'
     implementation 'com.flurry.android:analytics:11.6.0@aar'
 
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     //Dependency injection
     implementation "org.koin:koin-android:$koinVersion"
@@ -73,8 +88,6 @@ dependencies {
     //Images & views
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.github.florent37:shapeofview:1.0.7'
-    implementation 'com.github.florent37:kotlinpleaseanimate:1.0.2'
     implementation 'com.github.clans:fab:1.6.4'
 
     //Architecture components
@@ -89,13 +102,12 @@ dependencies {
     //Other
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.artit-k:license-fragment-support-v4:1.3.0'
+    implementation "com.mikepenz:aboutlibraries:7.0.3"
     implementation 'cat.ereza:customactivityoncrash:2.2.0'
-    implementation "org.jetbrains.anko:anko:$anko_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.21"
 
     //Spotlight
-    implementation 'com.github.takusemba:spotlight:1.3.3'
+    implementation 'com.github.takusemba:spotlight:1.7.0'
 
     //FlexibleAdapter
     implementation "eu.davidea:flexible-adapter:5.1.0"
@@ -104,22 +116,14 @@ dependencies {
     //coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
 
+    //Image Cropper
+    implementation "com.theartofdev.edmodo:android-image-cropper:2.8.0"
+
     //Testing libraries
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test:rules:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-core:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-attr:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-measurement:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-disk:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-recorder:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-phoenix:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-crash:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-geiger-counter:0.9.23'
-    debugImplementation 'com.willowtreeapps.hyperion:hyperion-timber:0.9.23'
 
     testImplementation 'junit:junit:4.12'
 
@@ -129,14 +133,12 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.1"
 }
 
-configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            if (!requested.name.startsWith("multidex")) {
-                details.useVersion "$support_version"
-            }
-        }
+private static Tuple2<String, String> signKey() {
+    try {
+        def content = new File("key/credentials").text.split()
+        return new Tuple2(content[0], content[1])
+    } catch ( Exception ex) {
+        return new Tuple("", "")
     }
 }
 

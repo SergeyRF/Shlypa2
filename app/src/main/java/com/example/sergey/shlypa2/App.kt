@@ -1,39 +1,38 @@
 package com.example.sergey.shlypa2
 
-import androidx.multidex.MultiDexApplication
+import android.app.Application
+import androidx.lifecycle.ProcessLifecycleOwner
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.crashlytics.android.Crashlytics
-import com.example.sergey.shlypa2.ads.AdsManager
-import com.example.sergey.shlypa2.db.Contract
+import com.crashlytics.android.core.CrashlyticsCore
+import com.example.sergey.shlypa2.data.AppLifecycleObserver
 import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.utils.DbExporter
-import com.example.sergey.shlypa2.utils.PreferenceHelper
-import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.TimberDebugTree
 import com.example.sergey.shlypa2.utils.TimberReleaseTree
 import com.flurry.android.FlurryAgent
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import io.fabric.sdk.android.Fabric
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /**
  * Created by alex on 4/4/18.
  */
-class App : MultiDexApplication() {
+class App : Application() {
 
-    companion object {
-        private const val DB_IMPORTED = "db_imported_v1_1_5"
-    }
+    private val lifecycleObserver by inject<AppLifecycleObserver>()
 
     override fun onCreate() {
         super.onCreate()
 
-        manageDb()
-
-        startKoin(this, listOf(appModule))
+        startKoin {
+            androidContext(this@App)
+            modules(listOf(appModule))
+        }
 
         if (BuildConfig.DEBUG) {
             Timber.plant(TimberDebugTree())
@@ -41,22 +40,29 @@ class App : MultiDexApplication() {
             Timber.plant(TimberReleaseTree())
         }
 
-        AdsManager.initAds(this)
         //todo refactor this shit  !!!
         val namesArray = resources.getStringArray(R.array.teams)
         Game.teamNames = namesArray.toMutableList()
 
         buildCaoc()
 
-        Fabric.with(this, Crashlytics())
+        val crashlytics = Crashlytics.Builder()
+                .core(
+                        CrashlyticsCore.Builder()
+                                .disabled(BuildConfig.DEBUG)
+                                .build()
+                )
+                .build()
+
+        Fabric.with(this, crashlytics)
         FirebaseAnalytics.getInstance(this)
                 .setAnalyticsCollectionEnabled(BuildConfig.DEBUG.not())
 
         FlurryAgent.Builder()
-                .withLogEnabled(true)
+                .withLogEnabled(BuildConfig.DEBUG.not())
                 .build(this, "S85BYYPTT7FXNJZCTPB3")
 
-        initFcm()
+        tryToInit()
     }
 
     fun buildCaoc() {
@@ -67,8 +73,8 @@ class App : MultiDexApplication() {
                 .apply()
     }
 
-    private fun initFcm() {
-        // todo review this strange error - IllegalStateException
+    private fun tryToInit() {
+        // will throw an exception in a CustomActivityOnCrash
         try {
             FirebaseMessaging.getInstance().subscribeToTopic(
                     if (BuildConfig.DEBUG) Constants.DEBUG_COMMON_TOPIC
@@ -77,16 +83,12 @@ class App : MultiDexApplication() {
         } catch (ex: Exception) {
             Timber.e(ex)
         }
-    }
 
-    private fun manageDb() {
-        val preferences = PreferenceHelper.defaultPrefs(this)
-        val dbImported = preferences.getBoolean(DB_IMPORTED, false)
-        if (!dbImported) {
-            val success = DbExporter().importDbFromAsset(this, Contract.DB_NAME, "shlyapa_db")
-            preferences[DB_IMPORTED] = success
-        } else {
-            Timber.d("Db already imported")
+        try {
+            ProcessLifecycleOwner.get().lifecycle
+                    .addObserver(lifecycleObserver)
+        } catch (ex: Exception) {
+            Timber.e(ex)
         }
     }
 }

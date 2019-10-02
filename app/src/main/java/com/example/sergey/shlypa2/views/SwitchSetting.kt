@@ -4,40 +4,59 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.CompoundButton
-import android.widget.LinearLayout
-import android.widget.Switch
-import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.sergey.shlypa2.R
+import com.example.sergey.shlypa2.extensions.show
+import kotlinx.android.synthetic.main.switch_setting.view.*
 
 /**
  * Created by alex on 4/25/18.
  */
-class SwitchSetting : LinearLayout {
+class SwitchSetting @JvmOverloads
+constructor(context: Context,
+            attrs: AttributeSet? = null,
+            defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var title: TextView
-    private var switch: Switch
 
-    constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    init {
         LayoutInflater.from(context).inflate(R.layout.switch_setting, this, true)
-
-        title = findViewById(R.id.tvTitleSetting)
-        switch = findViewById(R.id.switchSetting)
 
         attrs?.let {
             val array = context.obtainStyledAttributes(it, R.styleable.SwitchSetting)
 
-            title.setText(array.getText(R.styleable.SwitchSetting_switch_setting_title))
+            tvTitleSwitch.text = array.getText(R.styleable.SwitchSetting_switch_setting_title)
+            array.getText(R.styleable.SwitchSetting_switch_setting_hint)?.let { hint ->
+                tvHint.show()
+                tvHint.text = hint
+            }
+        }
+        setOnClickListener {
+            setChecked(!isChecked())
         }
     }
 
-    fun isChecked(): Boolean = switch.isChecked
+    fun isChecked(): Boolean = switchSetting.isChecked
 
-    fun setChecked(checked: Boolean) = switch.setChecked(checked)
+    fun setChecked(checked: Boolean): SwitchSetting {
+        switchSetting.isChecked = checked
+        return this
+    }
 
-    fun setOnCheckedListener(listner : CompoundButton.OnCheckedChangeListener?)
-            = switch.setOnCheckedChangeListener(listner)
+    fun setOnCheckedListener(listener: (Boolean) -> Unit): SwitchSetting {
+        switchSetting.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+            listener.invoke(isChecked)
+        })
+        return this
+    }
 
+    fun setTitle(title: String): SwitchSetting {
+        tvTitleSwitch.text = title
+        return this
+    }
+
+    fun setHint(hint: String): SwitchSetting {
+        tvHint.text = hint
+        tvHint.show()
+        return this
+    }
 }

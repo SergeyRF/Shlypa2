@@ -3,7 +3,7 @@
 
 
     <string name="name">Имя игрока</string>
-    <string name="add_player">добавить</string>
+    <string name="add_player">добавить игрока</string>
 
 
     <!-- RoundRules -->
@@ -38,13 +38,13 @@
     <string name="teem_actyvity">Команды</string>
     <string name="state_actyvity">Параметры игры</string>
     <string name="word_actyvity">Ввод слов</string>
+    <string name="player_rename">Изменить имя</string>
 
     <string name="team_rename">Название команды</string>
     <string name="ok">OK</string>
     <string name="cancel">Отмена</string>
 
-    <string name="minus_bal">Штрафовать за пропуск</string>
-    <string name="how_minus_bal">Штрафные балы</string>
+
     <string name="player_game">Объясняет игрок:</string>
     <string name="game_winner">Победила команда</string>
     <string name="game_resalt">Результаты игры</string>
@@ -79,7 +79,9 @@
     <string name="vvodi">Пиши слово</string>
     <string name="dificult">Сложность добавляемых слов</string>
     <string name="allow_random">Разрешить случайные слова</string>
-
+    <string name="add_all_word_random">Не вводить слова</string>
+    <string name="penalty_include">Штрафовать за пропуск</string>
+    <string name="penalty_point">Штрафные баллы</string>
 
     <string name="shuffle_teams">Перемешать</string>
     <string name="words_answered">Отвечено: </string>
@@ -114,6 +116,8 @@
     <string name="opensource_title">Лицензии сторонних библиотек</string>
     <string name="used_content">Использованные изображения и звуки</string>
     <string name="privasy_policy">Политика конфиденциальности</string>
+    <string name="delete_players">Удалить сохраненых игроков</string>
+    <string name="not_saved_players">У вас нет сохраненных игроков</string>
 
     <!-- fatal error activity -->
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">Произошла неожиданная ошибка.\nВиновные будут наказаны.</string>
@@ -123,19 +127,48 @@
     <string name="hint_inject_name">Напиши имя игрока</string>
     <string name="hint_inject_name_button">Нажми на кнопку чтобы добавить его в игру. Для игры нужно как минимум 4 игрока</string>
     <string name="hint_random_player">Случайный игрок</string>
-    <string name="hint_inject_random_player">Нажми на кнопку, чтобы добавить игрока со случайным именем</string>
+    <string name="hint_inject_random_player">Нажми на кнопку, чтобы добавить случайного игрока или выбрать из сохраненных</string>
     <string name="hint_team_shaffle">Генератор команд</string>
     <string name="hint_team_shaffle_button">Нажми, чтобы добавить, удалить или перемешать команды</string>
-    <string name="click_to_rename">Нажми, чтобы сменить имя коfманды</string>
+    <string name="click_to_rename">Нажми, чтобы сменить имя команды</string>
     <string name="rename">Переименовать</string>
+    <string name="hint_select_avatar">Выбрать Аватар</string>
+    <string name="hint_select_avatar_description">Нажми чтоб поменять картнку</string>
 
     <!-- no winner-->
     <string name="no_winner">Победитель неопределён</string>
     <string name="no_winner_draw">Ничья</string>
     <string name="turn_player">Now it\'s turn of:</string>
     <string name="finish">Закончить игру</string>
-
+    <string name="share">Share</string>
     <string name="no_saved_games">Вы пока не сохраняли игр…</string>
     <string name="invite_friend">Расскажите друзьям о Шляпе</string>
+
+    <!-- leaveDialog-->
+    <string name="leaveTitle">Покинуть игру</string>
+    <string name="leaveMessage">Сохранить игру перед выходом?</string>
+
+    <!-- RepeatGame-->
+    <string name="repeatTitle">Игра завершена</string>
+    <string name="repaetMessage">Хотите сыграть еще раз с теми-же настройками?</string>
+    <string name="repeatNegative">Нет</string>
+    <string name="repeatPositive">Да</string>
+
+    <string name="add_user_avatar">Добавить свою картинку</string>
+
+    <string name="add_user_player">Сохраненные игроки</string>
+    <string name="add_random_player">Случайный игрок</string>
+    <string name="teams_need_at_least_two">В команде должно быть как минимум два игрока</string>
+    <string name="team_reorder">Переупорядочивание команд</string>
+    <string name="team_reorder_guide">Нажмите и перетащите игрока, чтобы переместить его в другую команду.</string>
+    <string name="choose_photo">Выбрать фотографию</string>
+    <string name="gallery">Галерея</string>
+    <string name="photo">Фотография</string>
+    <string name="write_word">Напишите слово</string>
+    <string name="yes">да</string>
+    <string name="no">Нет</string>
+    <string name="penalty_hint">Если игрок не хочет объяснять слово и пропускает его, то команда будет оштрафована.</string>
+    <string name="all_random_hint">Игрокам не нужно придумывать слова. Шляпа будет заполнена случайным образом.</string>
+    <string name="allow_random_hint">Игрок сможет добавить случайные слова, если фантазия откажется работать.</string>
 
 </resources>

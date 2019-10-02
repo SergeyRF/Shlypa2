@@ -1,21 +1,22 @@
 package com.example.sergey.shlypa2.utils
 
-import android.app.Activity
 import android.content.Context
 import android.os.Build
+import android.os.Environment
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
+import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
 import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import timber.log.Timber
+import java.io.File
 import java.io.IOException
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
-import android.util.TypedValue
-import androidx.core.content.ContextCompat
-import com.example.sergey.shlypa2.BuildConfig
-import com.example.sergey.shlypa2.Constants
 
 
 /**
@@ -23,7 +24,7 @@ import com.example.sergey.shlypa2.Constants
  */
 
 fun since(version: Int, block: () -> Unit) {
-    if(Build.VERSION.SDK_INT >= version) {
+    if (Build.VERSION.SDK_INT >= version) {
         block.invoke()
     }
 }
@@ -33,7 +34,7 @@ object Functions {
     fun timeToLocalDateWithTime(time: Long, context: Context): String {
         val date = Date(time)
         val dateFormat: DateFormat = android.text.format.DateFormat.getDateFormat(context)
-        val dateString =  dateFormat.format(date)
+        val dateString = dateFormat.format(date)
 
         val timeFormat = android.text.format.DateFormat.getTimeFormat(context)
         val timeString = timeFormat.format(time)
@@ -60,7 +61,10 @@ object Functions {
     }
 
     fun imageNameToUrl(name: String): String {
+        return "file:///android_asset/$name"
+    }
 
+    fun imageCustomNameToUrl(name: String): String {
         return "file:///android_asset/$name"
     }
 
@@ -82,11 +86,7 @@ object Functions {
         return result
     }
 
-
-
-
-
-    fun getSelectedThemeId(context: Context) : Int {
+    fun getSelectedThemeId(context: Context): Int {
         val preferences = PreferenceHelper.defaultPrefs(context)
         return preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
     }
@@ -96,15 +96,16 @@ object Functions {
         return display.widthPixels
     }
 
-    fun dpToPx(context: Context, dp : Float) : Float {
+    fun dpToPx(context: Context, dp: Float): Float {
         val r = context.getResources()
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics())
     }
 
     fun getThemedBgColor(context: Context): Int {
         val preferences = PreferenceHelper.defaultPrefs(context)
-        val themeRes: Int = preferences[Constants.THEME_PREF] ?: com.example.sergey.shlypa2.R.style.AppTheme
-        val colorRes = when(themeRes) {
+        val themeRes: Int = preferences[Constants.THEME_PREF]
+                ?: com.example.sergey.shlypa2.R.style.AppTheme
+        val colorRes = when (themeRes) {
             R.style.AppThemeBlue -> R.color.BlueAvatarBg
             R.style.AppThemeCyan -> R.color.CyanAvatarBg
             R.style.AppThemeGreen -> R.color.GreenAvatarBg
@@ -115,5 +116,36 @@ object Functions {
         }
 
         return ContextCompat.getColor(context, colorRes)
+    }
+
+    private val fileStamp = SimpleDateFormat("yyyyMMdd_HHmmss")
+    private const val JPEG_FILE_SUFFIX = ".jpg"
+    private const val JPEG_FILE_PREFIX = "IMG_"
+    private const val ALBUM_NAME = "HAT"
+
+    fun getAlbumDirectory(): File? {
+        var file: File? = null
+        if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
+            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    ALBUM_NAME)
+            if (!file.mkdirs()) {
+                if (!file.exists()) {
+                    return null
+                }
+            }
+        }
+        return file
+    }
+
+    @Throws(IOException::class)
+    fun createImageFile(): File {
+        val timeStamp = fileStamp.format(Date())
+        val imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
+        val albumF = getAlbumDirectory()
+        return File.createTempFile(
+                imageFileName, /* prefix */
+                JPEG_FILE_SUFFIX, /* suffix */
+                albumF      /* directory */
+        );
     }
 }

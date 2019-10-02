@@ -66,7 +66,7 @@
     </style>
 
     <style name="btNextStyle" >
-        <item name="android:textSize">@dimen/text_smoll</item>
+        <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/text_or_icon</item>
         <item name="android:background">@color/Blue</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
@@ -75,11 +75,29 @@
     </style>
 
     <style name="Button_welcome">
-        <item name="android:textSize">@dimen/text_smoll</item>
+        <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@color/text_or_icon</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:background">@drawable/button_background</item>
         <item name="android:layout_marginBottom">@dimen/medium_margin</item>
+    </style>
+
+    <style name="CustomDialog" parent="AppTheme">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowMinWidthMajor">85%</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+    </style>
+
+    <style name="RenameDialogStyle" parent="CustomDialog">
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
+    </style>
+
+    <style name="GreenFlatColoredButton" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+        <item name="colorButtonNormal">@color/Green</item>
+        <item name="colorControlHighlight">@color/GreenDark</item>
     </style>
 
 

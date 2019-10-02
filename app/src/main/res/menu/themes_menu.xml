@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Teal" android:id="@+id/item_teal" />
-    <item android:title="Blue" android:id="@+id/item_blue" />
-    <item android:title="Yellow" android:id="@+id/item_yellow" />
-    <item android:title="Green" android:id="@+id/item_green" />
-    <item android:title="Cyan" android:id="@+id/item_cyan"/>
-    <item android:title="Indigo" android:id="@+id/item_indigo" />
-    <item android:title="Purple" android:id="@+id/item_purple" />
+    <item
+        android:id="@+id/item_teal"
+        android:title="Teal" />
+    <item
+        android:id="@+id/item_blue"
+        android:title="Blue" />
+    <item
+        android:id="@+id/item_yellow"
+        android:title="Yellow" />
+    <item
+        android:id="@+id/item_green"
+        android:title="Green" />
+    <item
+        android:id="@+id/item_cyan"
+        android:title="Cyan" />
+    <item
+        android:id="@+id/item_indigo"
+        android:title="Indigo" />
+    <item
+        android:id="@+id/item_purple"
+        android:title="Purple" />
+
+    <item android:id="@+id/item_clear_prefs"
+        android:title="Clear prefs"/>
 </menu>

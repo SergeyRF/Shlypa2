@@ -1,21 +1,22 @@
 package com.example.sergey.shlypa2;
 
 import android.os.SystemClock;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.recyclerview.widget.RecyclerView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 
 import com.example.sergey.shlypa2.beans.Player;
 import com.example.sergey.shlypa2.beans.Word;
 import com.example.sergey.shlypa2.game.Game;
 import com.example.sergey.shlypa2.game.Round;
 import com.example.sergey.shlypa2.game.TeamWithScores;
-import com.example.sergey.shlypa2.testUtils.Utils;
+import com.example.sergey.shlypa2.screens.game.RoundActivity;
 import com.example.sergey.shlypa2.screens.main.FirstActivity;
-import com.example.sergey.shlypa2.ui.RoundActivity;
+import com.example.sergey.shlypa2.testUtils.Utils;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -137,8 +138,8 @@ public class RoundAndGameResultsTest {
         int expectedScores = 0;
         for (boolean answer : listOfAnswers) {
             if (answer) expectedScores++;
-            else if (Game.INSTANCE.getSettings().getMinusBal()) {
-                expectedScores -= Game.INSTANCE.getSettings().getNumberMinusBal();
+            else if (Game.INSTANCE.getSettings().getPenaltyInclude()) {
+                expectedScores -= Game.INSTANCE.getSettings().getPenaltyPoint();
             }
         }
 
@@ -169,15 +170,16 @@ public class RoundAndGameResultsTest {
 
     public void startGame() {
         onView(withId(R.id.btNewGame)).perform(click());
+        onView(withId(R.id.floatingMenu)).perform(click());
 
         for (int i = 0; i <= PLAYERS_COUNT; i++) {
-            onView(withId(R.id.btAddRandomPlayer)).perform(click());
+            onView(withId(R.id.fabPlayerRandom)).perform(click());
         }
 
         onView(withId(R.id.btGoNextPlayers)).perform(click());
         onView(withId(R.id.btNextWords)).perform(click());
 
-        onView(withId(R.id.btNextSettings)).perform(click());
+        onView(withId(R.id.btCompletedSettings)).perform(click());
 
         while (!(Utils.Companion.getCurrentActivity(InstrumentationRegistry.getInstrumentation())
                 instanceof RoundActivity)) {

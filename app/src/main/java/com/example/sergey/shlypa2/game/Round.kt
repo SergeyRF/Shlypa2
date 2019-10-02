@@ -9,67 +9,24 @@ import java.util.*
 /**
  * Created by alex on 4/3/18.
  */
-class Round(words: List<Word>) {
-
-    var description = 1
-    var rules = 2
-    var name = 3
-    var image = ""
-
-    var wordsQueue: ArrayDeque<Word>
-    var wordsAnsweredByPlayer = mutableListOf<Word>()
-
-    var results: MutableMap<Long, Int> = mutableMapOf()
-
-    var currentTeam: Team =  Game.getCurrentTeam()
-    var currentPlayer: Player = currentTeam.getPlayer()
-
-    private var currentWord: Word? = null
-
-    var turnFinished = false
+class Round(
+        words: List<Word>,
+        var wordsQueue: ArrayDeque<Word> = ArrayDeque(),
+        var wordsAnsweredByPlayer: MutableList<Word> = mutableListOf(),
+        var results: MutableMap<Long, Int> = mutableMapOf(),
+        var currentTeam: Team = Game.getCurrentTeam(),
+        var currentPlayer: Player = currentTeam.getPlayer(),
+        var descriptor: RoundDescriptors = RoundDescriptors.WORD_BY_SENTENCES,
+        private var currentWord: Word? = null,
+        var turnFinished: Boolean = false) {
 
     init {
         val listCopy = words.toMutableList()
         Collections.shuffle(listCopy)
-
-        wordsQueue = ArrayDeque()
         wordsQueue.addAll(listCopy)
     }
 
     fun getPlayer(): Player {
-        return currentPlayer
-    }
-
-    //todo remove
-    fun nextPlayer(): Player {
-        var playerScores = 0
-
-        if (results.containsKey(currentPlayer.id)) {
-            playerScores = results[currentPlayer.id]!!
-        }
-
-        wordsAnsweredByPlayer.forEach {
-            if (it.right) {
-                playerScores++
-            } else {
-                if(Game.getSettings().minusBal) {
-                    playerScores -= Game.getSettings().numberMinusBal
-                }
-
-                if(Game.getSettings().returnSkipedToHat) {
-                    wordsQueue.add(it)
-                    Timber.d("ADDDDDd ${it.word}")
-                }
-            }
-        }
-
-        results[currentPlayer.id] = playerScores
-
-        wordsAnsweredByPlayer.clear()
-
-        currentTeam = Game.nextTeam()
-        currentPlayer = currentTeam.nextPlayer()
-
         return currentPlayer
     }
 
@@ -81,14 +38,14 @@ class Round(words: List<Word>) {
 
         wordsAnsweredByPlayer.forEach {
             it.right = checkedIds.contains(it.id)
-            if(it.right) {
+            if (it.right) {
                 scores++
             } else {
-                if(Game.getSettings().minusBal) {
-                    scores -= Game.getSettings().numberMinusBal
+                if (Game.getSettings().penaltyInclude) {
+                    scores -= Game.getSettings().penaltyPoint
                 }
 
-                if(Game.getSettings().returnSkipedToHat) {
+                if (Game.getSettings().returnSkipedToHat) {
                     wordsQueue.add(it)
                 }
             }
@@ -102,7 +59,7 @@ class Round(words: List<Word>) {
     }
 
     fun getWord(): Word? {
-        if (currentWord!=null){
+        if (currentWord != null) {
             wordsQueue.add(currentWord)
         }
         if (!wordsQueue.isEmpty()) {
@@ -134,12 +91,12 @@ class Round(words: List<Word>) {
      * Returns count of words answered by current player
      * first value - correct, second  - skipped
      */
-    fun getTurnAnswersCount() : Pair<Int, Int> {
+    fun getTurnAnswersCount(): Pair<Int, Int> {
         var correct = 0
         var skipped = 0
 
         wordsAnsweredByPlayer.forEach {
-            if(it.right) correct++
+            if (it.right) correct++
             else skipped++
         }
 

@@ -3,7 +3,6 @@ package com.example.sergey.shlypa2.game
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
-import java.util.*
 
 /**
  * Created by sergey on 3/29/18.
@@ -17,61 +16,10 @@ object Game {
     fun maxTeamsCount(): Int = state.players.size / 2
 
 
-    fun addPlayer(player: Player): Boolean {
-        val playerExists = state.players.values
-                .firstOrNull {
-                    it.id == player.id || it.name.equals(player.name, ignoreCase = true)
-                } != null
-
-        return if (playerExists) {
-            false
-        } else {
-            state.players[player.id] = player
-            true
-        }
-    }
-
     fun getSettings(): Settings = state.settings
 
     fun setSettings(settings: Settings) {
         state.settings = settings
-    }
-
-    fun removePlayer(player: Player) {
-        state.players.remove(player.id)
-    }
-
-    fun reNamePlayer(player: Player) {
-        state.players[player.id]?.name = player.name
-    }
-
-    fun getPlayers(): List<Player> {
-        return state.players.values.toList()
-    }
-
-    fun createTeams(count: Int) {
-        val shuffledPlayers: MutableList<Player> = state.players.values.toMutableList()
-        Collections.shuffle(shuffledPlayers)
-
-        val playersQueue = ArrayDeque<Player>()
-        playersQueue.addAll(shuffledPlayers)
-
-        // why not?
-        state.teams.clear()
-
-        Collections.shuffle(teamNames)
-
-        for (i in 0 until count) {
-            val teamName = teamNames.getOrElse(i, { _ -> "Team $i" })
-            state.teams.add(Team(teamName))
-        }
-
-        var currentTeam = 0
-        while (playersQueue.isNotEmpty()) {
-            state.teams[currentTeam].players.add(playersQueue.remove())
-
-            currentTeam = if (currentTeam >= state.teams.size - 1) 0 else currentTeam + 1
-        }
     }
 
     fun getTeams(): List<Team> = state.teams
@@ -93,6 +41,19 @@ object Game {
         }
 
         return teamWithScores
+    }
+
+    //todo refactor this shit  !!!
+    fun setTeams(teams: List<Team>) {
+        state.teams.clear()
+        state.teams.addAll(teams)
+    }
+
+    fun setPlayers(players: List<Player>) {
+        state.players.clear()
+        players.forEach {
+            state.players[it.id] = it
+        }
     }
 
     fun getGameResults(): List<TeamWithScores> {
@@ -137,6 +98,7 @@ object Game {
     }
 
     fun addWord(word: Word) = state.allWords.add(word)
+    fun addWord(words: List<Word>) = state.allWords.addAll(words)
 
     fun getWords(): List<Word> = state.allWords
 
@@ -154,7 +116,7 @@ object Game {
 
 
     fun portionClear() {
-        var newState: GameState = GameState()
+        val newState = GameState()
         newState.players.putAll(state.players)
         newState.teams.addAll(state.teams)
         state = newState
@@ -162,5 +124,15 @@ object Game {
 
     fun clear() {
         state = GameState()
+    }
+
+    fun repeatGame(): Boolean {
+        state = GameState().apply {
+            players.putAll(state.players)
+            teams.addAll(state.teams)
+            setSettings(state.settings)
+        }
+
+        return state.settings.all_word_random
     }
 }

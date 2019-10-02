@@ -6,6 +6,8 @@ import com.bumptech.glide.Glide
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.extensions.getSmallImage
+import com.example.sergey.shlypa2.extensions.gone
 import com.example.sergey.shlypa2.extensions.hide
 import com.example.sergey.shlypa2.extensions.show
 import com.example.sergey.shlypa2.game.GameState
@@ -47,120 +49,54 @@ class TeamHolder(val view: View) : BaseHolder(view) {
 }
 
 class TeamWithScoreHolder(val view: View) : BaseHolder(view) {
-    private val teamName: TextView = view.findViewById(R.id.tvTeamName)
+    /*private val teamName: TextView = view.findViewById(R.id.tvTeamName)
     private val teemScores: TextView = view.findViewById(R.id.tvTeamScores)
-    private val listPlayers: LinearLayout = view.findViewById(R.id.linearPlayers)
+    private val listPlayers: LinearLayout = view.findViewById(R.id.linearPlayers)*/
 
     fun bind(scoredTeam: TeamWithScores) {
-        teamName.text = scoredTeam.team.name
+        /*teamName.text = scoredTeam.team.name
         teemScores.text = scoredTeam.getScores().toString()
 
         listPlayers.removeAllViews()
         listPlayers.addView(HolderInflater.inflatePlayers(scoredTeam.team.players,
                 view.context,
-                scoredTeam.scoresMap))
+                scoredTeam.scoresMap))*/
     }
 }
 
 class PlayerHolder(val view: View) : BaseHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.wordInject)
-    val etName: EditText = view.findViewById(R.id.etRename)
-    val avatarImage: CircleImageView = view.findViewById(R.id.civPlayerAvatar)
-    val delPlayer: ImageButton = view.findViewById(R.id.ib_delPlayer)
+   private val tvName: TextView = view.findViewById(R.id.wordInject)
+   private val avatarImage: CircleImageView = view.findViewById(R.id.civPlayerAvatar)
 
     fun bind(player: Player) {
-        tvName.show()
-        etName.hide()
-        delPlayer.hide()
         tvName.text = player.name
 
         itemView.setOnClickListener {
-            tvName.hide()
-            etName.show()
-            delPlayer.show()
-            etName.setText("")
-            etName.append(player.name)
-            etName.requestFocus()
-            Functions.showKeyboard(view.context, etName)
-        }
-
-        delPlayer.setOnClickListener {
-            listenerTwo?.invoke(player)
-        }
-
-        etName.setOnFocusChangeListener { view, hasFocus ->
-            Timber.d(" focus changed$hasFocus")
-            if (!hasFocus) {
-                if (etName.text.isNotEmpty() && etName.text.toString() != player.name) {
-                    player.name = etName.text.toString()
-                    tvName.text = player.name
-
-                    listener?.invoke(player)
-                }
-
-                tvName.show()
-                etName.hide()
-                delPlayer.hide()
-            }
+            listener?.invoke(player.avatar)
         }
 
         Glide.with(itemView)
-                .load(player.getSmallImage())
+                .load(player.getSmallImage(view.context))
                 .into(avatarImage)
     }
 }
 
-class WordsHolder(val view: View) : BaseHolder(view) {
-    val tvName: TextView = view.findViewById(R.id.wordInject)
-    val ibDeletWord: ImageButton = view.findViewById(R.id.ibDelWord)
-    val ibNextWord: ImageButton = view.findViewById(R.id.ibNextWord)
-    val etReNameW: TextView = view.findViewById(R.id.etWordRename)
+class WordsHolder(val view: View, private val flagChange: Boolean) : BaseHolder(view) {
+    private val tvName: TextView = view.findViewById(R.id.wordInject)
+    private val ibDeleteWord: ImageButton = view.findViewById(R.id.ibDelWord)
+    private val ibChangeWord: ImageButton = view.findViewById(R.id.ibChangeWord)
 
     fun bind(word: Word) {
-        etReNameW.text = word.word
-        etReNameW.hide()
-        tvName.show()
-
-        /*if (word.type == WordType.USER) {
-            ibNextWord.hide()
-        }*/
-        //fixme
-
         tvName.text = word.word
-        Timber.d("${word.word}")
+        if (!flagChange) ibChangeWord.gone()
 
-        ibDeletWord.setOnClickListener {
+        ibDeleteWord.setOnClickListener {
             listenerTwo?.invoke(word)
         }
 
-        ibNextWord.setOnClickListener {
+        ibChangeWord.setOnClickListener {
             listenerThree?.invoke(word)
-            Timber.d("NextWord")
         }
-
-        tvName.setOnClickListener {
-            tvName.hide()
-            etReNameW.show()
-            etReNameW.setText("")
-            etReNameW.append(word.word)
-            etReNameW.requestFocus()
-            Functions.showKeyboard(view.context, etReNameW)
-        }
-
-        etReNameW.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                if (etReNameW.text.isNotEmpty() && etReNameW.text.toString() != word.word) {
-                    word.word = etReNameW.text.toString()
-                    tvName.text = word.word
-                    ibNextWord.hide()
-                    listener?.invoke(word)
-                }
-
-                tvName.show()
-                etReNameW.hide()
-            }
-        }
-
 
     }
 

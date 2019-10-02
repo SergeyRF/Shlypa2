@@ -1,6 +1,5 @@
 package com.example.sergey.shlypa2
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +14,13 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
 
     private var data: List<Any>? = null
 
-    var listener:((Any) -> Unit)? = null
-    var listenerTwo:((Any)->Unit)? = null
-    var listenerThree:((Any)->Unit)? = null
+    var listener: ((Any) -> Unit)? = null
+    var listenerTwo: ((Any) -> Unit)? = null
+    var listenerThree: ((Any) -> Unit)? = null
 
     var altMode = false
+
+    private var flagChangeWord = true
 
 
     override fun onBindViewHolder(holder: BaseHolder, position: Int) {
@@ -38,7 +39,7 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
         val view: View = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         val holder = when (viewType) {
             VIEW_TYPE_PLAYER -> PlayerHolder(view)
-            VIEW_TYPE_WORD -> WordsHolder(view)
+            VIEW_TYPE_WORD -> WordsHolder(view, flagChangeWord)
             VIEW_TYPE_WORD_RESULT -> WordResultHolder(view)
             VIEW_TYPE_TEAM -> TeamHolder(view)
             VIEW_TYPE_TEAM_SCORES -> TeamWithScoreHolder(view)
@@ -47,7 +48,7 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
         }
 
         holder.listener = listener
-        holder.listenerTwo= listenerTwo
+        holder.listenerTwo = listenerTwo
         holder.listenerThree = listenerThree
         return holder
     }
@@ -60,7 +61,7 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
         val item = data!![position]
         return when (item) {
             is Player -> VIEW_TYPE_PLAYER
-            is Word -> if(altMode) VIEW_TYPE_WORD_RESULT else VIEW_TYPE_WORD
+            is Word -> if (altMode) VIEW_TYPE_WORD_RESULT else VIEW_TYPE_WORD
             is Team -> VIEW_TYPE_TEAM
             is TeamWithScores -> VIEW_TYPE_TEAM_SCORES
             is GameState -> VIEW_TYPE_SAVED_STATE
@@ -71,6 +72,10 @@ class RvAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<BaseHolder>(
     fun setData(list: List<Any>?) {
         data = list
         notifyDataSetChanged()
+    }
+
+    fun offChangeWordFlag() {
+        flagChangeWord = false
     }
 
 

@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sergey.shlypa2.ui.GameResultActivity">
-
+    app:layoutDescription="@xml/game_result_motion"
+    android:id="@+id/rootGameResult"
+    tools:context="com.example.sergey.shlypa2.screens.game_result.GameResultActivity">
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/tvGameWinner"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_medium"
-        android:gravity="center"
-        android:text="@string/game_winner"
-        />
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvGameWinner"
+        android:gravity="center"
+        android:text="@string/game_winner"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_medium"
+        android:layout_marginTop="@dimen/big_margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/tv_winner"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvWinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_huge"
-        android:gravity="center"
-        />
+        tools:text="Good guys"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvGameWinner" />
 
 
     <TextView
+        android:id="@+id/tvGameResult"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/tv_game_resalt"
         android:gravity="center"
+        android:text="@string/game_resalt"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_medium"
-        android:text="@string/game_resalt"
-        app:layout_constraintTop_toBottomOf="@+id/tv_winner"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/rvGameResults"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWinner"
 
         />
 
@@ -50,35 +54,33 @@
         android:id="@+id/rvGameResults"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/text_huge"
         app:layout_constraintBottom_toTopOf="@+id/btCreateNewGame"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_winner"
-        android:layout_marginTop="@dimen/text_huge"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvWinner" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civWinnerAvatar"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:src="@drawable/trophy"
         app:civ_border_color="@color/LightGray"
         app:civ_border_width="2dp"
-        app:layout_goneMarginTop="@dimen/medium_margin"
+        app:layout_constraintBottom_toTopOf="@+id/btCreateNewGame"
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_winner"
-        app:layout_constraintBottom_toTopOf="@+id/tv_game_resalt"
+        app:layout_constraintTop_toBottomOf="@+id/tvWinner"
         app:layout_constraintVertical_bias="0.38"
         app:layout_constraintWidth_percent="0.50"
-        android:src = "@drawable/trophy"
-        />
+        app:layout_goneMarginTop="@dimen/medium_margin" />
 
     <Button
+        android:id="@+id/btCreateNewGame"
         style="@style/btNextStyle"
         android:text="@string/finish"
-        android:id="@+id/btCreateNewGame"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

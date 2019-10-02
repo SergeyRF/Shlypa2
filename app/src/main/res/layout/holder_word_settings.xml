@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.sergey.shlypa2.views.SwitchSetting
+        android:id="@+id/itemSwitchSettings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:switch_setting_title="@string/add_all_word_random"
+        app:switch_setting_hint="@string/all_random_hint"/>
+
+
+    <com.example.sergey.shlypa2.views.SwitchSetting
+        android:id="@+id/itemAllowRandom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemSwitchSettings"
+        app:switch_setting_title="@string/allow_random"
+        app:switch_setting_hint="@string/allow_random_hint"/>
+
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/viewDifficultSub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="titleDifficult,spinnerDifficult,view4"
+        app:layout_constraintTop_toBottomOf="@+id/itemAllowRandom"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/titleDifficult"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center_vertical"
+        android:text="@string/dificult"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_settings"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/spinnerDifficult"
+        app:layout_constraintTop_toBottomOf="@+id/itemAllowRandom" />
+
+    <Spinner
+        android:id="@+id/spinnerDifficult"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginRight="10dp"
+        android:gravity="right"
+        app:layout_constraintBottom_toBottomOf="@+id/titleDifficult"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleDifficult" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_color"
+        app:layout_constraintBottom_toBottomOf="@+id/titleDifficult" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

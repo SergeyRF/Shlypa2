@@ -1,16 +1,17 @@
 package com.example.sergey.shlypa2.db
 
 import android.content.Context
+import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.beans.Lang
 import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.beans.StateRepresent
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.game.GameState
+import com.example.sergey.shlypa2.game.GameStateOld
 import com.example.sergey.shlypa2.game.PlayerType
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.GameStateSaver
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import timber.log.Timber
 import java.util.*
 
 
@@ -20,7 +21,8 @@ import java.util.*
 class DataProvider(
         db: DataBase,
         private val gson: Gson,
-        private val context: Context
+        private val context: Context,
+        private val gameStateSaver:GameStateSaver
 ) {
 
     private val playersDao = db.playersDao()
@@ -29,6 +31,8 @@ class DataProvider(
     private val typesDao = db.typesDap()
 
     private val locale: String = Locale.getDefault().language.toLowerCase()
+
+    val teamNames by lazy { context.resources.getStringArray(R.array.teams) }
 
     //we only need to use locales for which we have a translate
     private val usefullLocale = when (locale) {
@@ -45,6 +49,8 @@ class DataProvider(
         return playersDao.getPlayersByType(type, locale = usefullLocale)
     }
 
+    fun getPlayersUser() = playersDao.getPlayersByType(PlayerType.USER)
+
 
     fun getPlayer(id: Long) = playersDao.getPlayerById(id)
 
@@ -52,40 +58,28 @@ class DataProvider(
         return playersDao.insertPlayer(player)
     }
 
+    fun deletePlayers(players:List<Player>) = playersDao.deletePlayers(players)
+    fun deletePlayer(player: Player) = playersDao.deletePlayers(player)
+
     fun getRandomWords(wordsLimit: Int, typeId: Long): List<Word> {
         return wordsDao.getRandomWords(wordsLimit, typeId)
     }
 
     fun getSavedStates(): List<GameState> {
-        var savedList = stateDao.getAllStates()
-
-        //keep only 5 states
-        if (savedList.size > 5) {
-            val sortesList = savedList.sortedByDescending { it.time }
-            sortesList.subList(4, sortesList.size - 1)
-                    .forEach { stateDao.deleteState(it.gameId) }
-
-            savedList = stateDao.getAllStates()
-        }
-
-        return savedList.map { gson.fromJson(it.state, GameState::class.java) }
+        return gameStateSaver.loadState()
     }
 
     fun getLastSavedState(): GameState? {
-        val savedList = stateDao.getAllStates()
-        val lastSaved = savedList.maxBy { it.time }
-
-        return lastSaved?.let { gson.fromJson(lastSaved.state, GameState::class.java) }
+        return gameStateSaver.getLastSavedState()
     }
 
     fun insertState(state: GameState) {
-        val represent = StateRepresent(0, state.gameId, System.currentTimeMillis(), gson.toJson(state))
-        Timber.d(represent.state)
-        stateDao.insertState(represent)
+        gameStateSaver.insertState(state)
     }
 
     fun deleteState(gameId: Int) {
-        stateDao.deleteState(gameId)
+        //stateDao.deleteState(gameId)
+        gameStateSaver.deleteState(gameId)
     }
 
     fun getListOfAvatars(): List<String> {
@@ -96,4 +90,15 @@ class DataProvider(
     }
 
     fun getTypes() = typesDao.getTypesForLang(lang)
+
+    // Migrations
+    fun copyLegacyStates() {
+        val states = stateDao.getAllStates().map {
+            gson.fromJson(it.state, GameStateOld::class.java)
+        }
+
+        if(states.isNotEmpty()) {
+            gameStateSaver.replaceStates(states)
+        }
+    }
 }

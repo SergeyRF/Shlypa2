@@ -33,6 +33,8 @@
         style="@style/btNextStyle"
         android:text="@string/play"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

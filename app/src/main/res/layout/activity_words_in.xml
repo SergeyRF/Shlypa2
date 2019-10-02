@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sergey.shlypa2.ui.WordsInActivity"
-    android:id="@+id/container">
+    tools:context="com.example.sergey.shlypa2.screens.words_in.WordsInActivity"
+    android:id="@+id/container"
+    app:applyMotionScene="true"
+    app:layoutDescription="@xml/words_in_motion">
 
     <EditText
         android:id="@+id/etWord"
@@ -14,10 +16,15 @@
         android:layout_marginLeft="@dimen/in_card_horizontal_margin"
         android:layout_marginRight="@dimen/in_card_horizontal_margin"
         android:imeOptions="actionNext|flagNoExtractUi"
+        android:hint="@string/write_word"
         android:maxLines="1"
         android:singleLine="true"
+        android:paddingStart="@dimen/big_margin"
+        android:paddingEnd="@dimen/big_margin"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_medium"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -26,7 +33,9 @@
         android:layout_height="40dp"
         android:background="@color/Transparent"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="@dimen/medium_margin"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/etWord"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
 
@@ -52,24 +61,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvWhoWrites" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/playerGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="tvWhoWrites, civPlayerAvatar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvWords"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btNextWords"
+        android:paddingBottom="60dp"
+        android:clipToPadding="false"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etWord" />
 
     <Button
-        android:id="@+id/btNextWords"
+        android:id="@+id/btNextPlayer"
         style="@style/btNextStyle"
         android:text="@string/play"
-        android:textSize="@dimen/text_smoll"
+        android:textSize="@dimen/text_small"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
+

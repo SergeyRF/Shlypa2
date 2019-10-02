@@ -1,3 +1,4 @@
+/*
 package com.example.sergey.shlypa2
 
 import com.example.sergey.shlypa2.game.Settings
@@ -9,9 +10,11 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 
+*/
 /**
  * Created by alex on 4/10/18.
- */
+ *//*
+
 
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
@@ -26,4 +29,4 @@ class SettingsTest {
         val newSetting = settingsProvider.getSettings()
 
     }
-}
+}*/

@@ -1,16 +1,17 @@
 package com.example.sergey.shlypa2;
 
 import android.os.SystemClock;
-import androidx.test.platform.app.InstrumentationRegistry;
+
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
 
 import com.example.sergey.shlypa2.game.Game;
+import com.example.sergey.shlypa2.screens.game.RoundActivity;
+import com.example.sergey.shlypa2.screens.main.FirstActivity;
 import com.example.sergey.shlypa2.testUtils.CustomActions;
 import com.example.sergey.shlypa2.testUtils.Utils;
-import com.example.sergey.shlypa2.screens.main.FirstActivity;
-import com.example.sergey.shlypa2.ui.RoundActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,15 +52,16 @@ public class HugeTeamsTest {
 
     private void playGame() {
         onView(withId(R.id.btNewGame)).perform(click());
+        onView(withId(R.id.floatingMenu)).perform(click());
 
         for (int i = 0; i <= PLAYERS_COUNT; i++) {
-            onView(withId(R.id.btAddRandomPlayer)).perform(click());
+            onView(withId(R.id.fabPlayerRandom)).perform(click());
         }
 
         onView(withId(R.id.btGoNextPlayers)).perform(click());
         onView(withId(R.id.btNextWords)).perform(click());
 
-        onView(withId(R.id.btNextSettings)).perform(click());
+        onView(withId(R.id.btCompletedSettings)).perform(click());
 
         while (!(Utils.Companion.getCurrentActivity(InstrumentationRegistry.getInstrumentation())
                 instanceof RoundActivity)) {
