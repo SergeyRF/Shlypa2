@@ -1,7 +1,6 @@
-package com.example.sergey.shlypa2.game
+package com.example.sergey.shlypa2.beans
 
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.beans.Team
 
 /**
  * Created by sergey on 3/29/18.
@@ -14,8 +13,6 @@ class TeamWithScores(val team: Team) {
 
     fun getScores(): Int = scoresMap.values.sum()
 }
-
-class RoundDescriptor(var description: Int, var rules: Int, var name: Int, var image: String)
 
 class Settings(var time: Int = 30,
                var word: Int = 5,

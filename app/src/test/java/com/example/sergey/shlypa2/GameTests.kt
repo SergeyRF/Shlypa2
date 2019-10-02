@@ -5,7 +5,7 @@ package com.example.sergey.shlypa2
 import com.example.sergey.shlypa2.beans.Player
 import com.example.sergey.shlypa2.data.PlayersRepository
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.TeamWithScores
+import com.example.sergey.shlypa2.beans.TeamWithScores
 
 import org.junit.Before
 import org.junit.Test

@@ -1,10 +1,10 @@
 package com.example.sergey.shlypa2.game
 
 import android.content.Context
+import com.example.sergey.shlypa2.beans.Settings
 import com.example.sergey.shlypa2.utils.PreferenceHelper
-
-import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.example.sergey.shlypa2.utils.PreferenceHelper.get
+import com.example.sergey.shlypa2.utils.PreferenceHelper.set
 import com.google.gson.GsonBuilder
 import timber.log.Timber
 

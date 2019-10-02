@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.PlayerType
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.db.DataProvider
-import com.example.sergey.shlypa2.game.PlayerType
 import java.util.*
 
 class PlayersRepository(
@@ -73,7 +73,7 @@ class PlayersRepository(
     }
 
     fun reNamePlayer(newName:String, id:Long) {
-        if (players[id]?.type==PlayerType.USER){
+        if (players[id]?.type== PlayerType.USER){
             players[id]?.name=newName
             players[id]?.let {
                 dataProvider.insertPlayer(it)

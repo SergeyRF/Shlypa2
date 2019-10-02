@@ -1,4 +1,4 @@
-package com.example.sergey.shlypa2.game
+package com.example.sergey.shlypa2.beans
 
 import androidx.annotation.StringRes
 import com.example.sergey.shlypa2.R

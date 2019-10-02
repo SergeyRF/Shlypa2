@@ -2,7 +2,6 @@ package com.example.sergey.shlypa2.beans
 
 import androidx.room.*
 import com.example.sergey.shlypa2.db.Contract
-import com.example.sergey.shlypa2.game.WordType
 
 /**
  * Created by alex on 4/10/18.

@@ -1,11 +1,10 @@
 package com.example.sergey.shlypa2.db
 
 import androidx.room.TypeConverter
+import com.example.sergey.shlypa2.beans.AvatarType
 import com.example.sergey.shlypa2.beans.Lang
-import com.example.sergey.shlypa2.beans.Type
-import com.example.sergey.shlypa2.game.AvatarType
-import com.example.sergey.shlypa2.game.PlayerType
-import com.example.sergey.shlypa2.game.WordType
+import com.example.sergey.shlypa2.beans.PlayerType
+import com.example.sergey.shlypa2.beans.WordType
 
 
 /**
@@ -66,7 +65,7 @@ class AvatarTypeConverter {
     }
 
     @TypeConverter
-    fun stringToAvatarType(avatarType: String):AvatarType{
+    fun stringToAvatarType(avatarType: String): AvatarType {
         return when(avatarType){
             AvatarType.USER.toString() -> AvatarType.USER
             AvatarType.STANDARD.toString() -> AvatarType.STANDARD

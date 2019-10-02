@@ -2,7 +2,7 @@ package com.example.sergey.shlypa2.db
 
 import androidx.room.*
 import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.game.PlayerType
+import com.example.sergey.shlypa2.beans.PlayerType
 
 /**
  * Created by alex on 4/10/18.

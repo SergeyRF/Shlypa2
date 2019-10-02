@@ -1,10 +1,10 @@
 package com.example.sergey.shlypa2.utils
 
 import android.content.Context
+import com.example.sergey.shlypa2.beans.RoundDescriptors
 import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.game.GameStateOld
 import com.example.sergey.shlypa2.game.Round
-import com.example.sergey.shlypa2.game.RoundDescriptors
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber

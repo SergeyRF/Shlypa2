@@ -1,7 +1,7 @@
 /*
 package com.example.sergey.shlypa2
 
-import com.example.sergey.shlypa2.game.Settings
+import com.example.sergey.shlypa2.beans.Settings
 import com.example.sergey.shlypa2.game.SettingsProvider
 import com.example.sergey.shlypa2.game.SettingsProviderImpl
 import org.junit.Test

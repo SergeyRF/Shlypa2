@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.sergey.shlypa2.db.Contract
-import com.example.sergey.shlypa2.game.PlayerType
 
 /**
  * Created by alex on 4/10/18.

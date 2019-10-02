@@ -1,6 +1,7 @@
 package com.example.sergey.shlypa2.game
 
 import com.example.sergey.shlypa2.beans.Player
+import com.example.sergey.shlypa2.beans.RoundDescriptors
 import com.example.sergey.shlypa2.beans.Team
 import com.example.sergey.shlypa2.beans.Word
 import timber.log.Timber

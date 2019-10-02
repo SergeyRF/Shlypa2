@@ -26,3 +26,6 @@
 -keep class **.R$* {
     <fields>;
 }
+
+# Beans
+-keep class com.example.sergey.shlypa2.beans.** { *; }
