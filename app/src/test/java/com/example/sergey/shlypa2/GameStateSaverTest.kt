@@ -1,13 +1,12 @@
 package com.example.sergey.shlypa2
 
-import com.example.sergey.shlypa2.game.GameState
+import com.example.sergey.shlypa2.beans.GameState
 import com.example.sergey.shlypa2.utils.GameStateSaver
 import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import kotlin.test.assertEquals
+
 @RunWith(RobolectricTestRunner::class)
 class GameStateSaverTest {
 

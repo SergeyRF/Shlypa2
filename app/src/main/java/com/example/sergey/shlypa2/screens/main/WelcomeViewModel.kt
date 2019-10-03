@@ -2,9 +2,9 @@ package com.example.sergey.shlypa2.screens.main
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.example.sergey.shlypa2.beans.GameState
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.screens.players.PlayersFragment
 import com.example.sergey.shlypa2.screens.players.TeamsFragment
 import com.example.sergey.shlypa2.utils.Functions

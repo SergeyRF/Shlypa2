@@ -2,12 +2,12 @@ package com.example.sergey.shlypa2.screens.game
 
 import androidx.lifecycle.MutableLiveData
 import com.example.sergey.shlypa2.ads.AdsManager
+import com.example.sergey.shlypa2.beans.GameState
+import com.example.sergey.shlypa2.beans.Round
 import com.example.sergey.shlypa2.beans.TeamWithScores
 import com.example.sergey.shlypa2.beans.Word
 import com.example.sergey.shlypa2.db.DataProvider
 import com.example.sergey.shlypa2.game.Game
-import com.example.sergey.shlypa2.game.GameState
-import com.example.sergey.shlypa2.game.Round
 import com.example.sergey.shlypa2.utils.SingleLiveEvent
 import com.example.sergey.shlypa2.utils.SoundManager
 import com.example.sergey.shlypa2.utils.Sounds
@@ -112,7 +112,7 @@ class RoundViewModel(
         state.needToRestore = false
         Game.state = state
 
-        round = state.currentRound!!
+        round = state.getOrCreateCurrentRound()!!
         roundLiveData.value = round
         //Finish round if there's no word
         val word = round.getWord()

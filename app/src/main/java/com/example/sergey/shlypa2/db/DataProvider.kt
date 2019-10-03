@@ -2,12 +2,7 @@ package com.example.sergey.shlypa2.db
 
 import android.content.Context
 import com.example.sergey.shlypa2.R
-import com.example.sergey.shlypa2.beans.Lang
-import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.beans.PlayerType
-import com.example.sergey.shlypa2.beans.Word
-import com.example.sergey.shlypa2.game.GameState
-import com.example.sergey.shlypa2.game.GameStateOld
+import com.example.sergey.shlypa2.beans.*
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.utils.GameStateSaver
 import com.google.gson.Gson

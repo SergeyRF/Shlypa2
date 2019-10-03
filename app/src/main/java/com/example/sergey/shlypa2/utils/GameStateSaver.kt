@@ -1,10 +1,10 @@
 package com.example.sergey.shlypa2.utils
 
 import android.content.Context
+import com.example.sergey.shlypa2.beans.GameState
+import com.example.sergey.shlypa2.beans.GameStateOld
+import com.example.sergey.shlypa2.beans.Round
 import com.example.sergey.shlypa2.beans.RoundDescriptors
-import com.example.sergey.shlypa2.game.GameState
-import com.example.sergey.shlypa2.game.GameStateOld
-import com.example.sergey.shlypa2.game.Round
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber
@@ -34,6 +34,7 @@ class GameStateSaver(context: Context) {
     fun loadState(): MutableList<GameState> {
         runCatching {
             val json = file.readText()
+            Timber.d("TESTING states : $json")
             return gson.fromJson(json, object : TypeToken<MutableList<GameState>>() {}.type)
         }.onFailure {
             Timber.e(it)
@@ -83,7 +84,7 @@ class GameStateSaver(context: Context) {
                     r.results,
                     r.currentTeam,
                     r.currentPlayer,
-                    when(r.image) {
+                    when (r.image) {
                         "megaphone.png" -> RoundDescriptors.WORD_BY_SENTENCES
                         "silence.png" -> RoundDescriptors.WORD_BY_GESTURES
                         else -> RoundDescriptors.WORD_BY_WORD
@@ -95,7 +96,7 @@ class GameStateSaver(context: Context) {
 
         with(state) {
             return GameState(
-                  gameId,
+                    gameId,
                     settings,
                     resultsList,
                     teams,

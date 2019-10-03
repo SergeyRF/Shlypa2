@@ -1,9 +1,7 @@
-package com.example.sergey.shlypa2.game
+package com.example.sergey.shlypa2.beans
 
-import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.beans.Settings
-import com.example.sergey.shlypa2.beans.Team
-import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.RoundResults
 import java.util.*
 
 data class GameStateOld(
@@ -33,7 +31,7 @@ class RoundOld(words: List<Word>) {
 
     var results: MutableMap<Long, Int> = mutableMapOf()
 
-    var currentTeam: Team =  Game.getCurrentTeam()
+    var currentTeam: Team = Game.getCurrentTeam()
     var currentPlayer: Player = currentTeam.getPlayer()
 
     private var currentWord: Word? = null

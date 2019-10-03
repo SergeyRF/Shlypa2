@@ -6,13 +6,9 @@ import android.widget.LinearLayout
 import android.widget.RadioGroup
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.beans.Team
-import com.example.sergey.shlypa2.beans.TeamWithScores
-import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.beans.*
 import com.example.sergey.shlypa2.extensions.getSmallImage
 import com.example.sergey.shlypa2.extensions.gone
-import com.example.sergey.shlypa2.game.GameState
 import com.example.sergey.shlypa2.utils.Functions
 import com.example.sergey.shlypa2.views.HolderInflater
 import de.hdodenhof.circleimageview.CircleImageView

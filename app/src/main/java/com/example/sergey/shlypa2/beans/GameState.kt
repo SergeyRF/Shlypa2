@@ -1,6 +1,6 @@
-package com.example.sergey.shlypa2.game
+package com.example.sergey.shlypa2.beans
 
-import com.example.sergey.shlypa2.beans.*
+import com.example.sergey.shlypa2.game.RoundResults
 
 /**
  * Created by alex on 4/10/18.
@@ -21,6 +21,11 @@ data class GameState(
 ) {
     fun saveRoundResults(results: RoundResults) {
         resultsList.add(results)
+    }
+
+    fun getOrCreateCurrentRound() : Round? {
+        if(currentRound == null) createRound()
+        return currentRound
     }
 
     fun createRound(): Boolean {

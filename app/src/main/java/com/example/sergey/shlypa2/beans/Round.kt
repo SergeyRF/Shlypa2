@@ -1,9 +1,7 @@
-package com.example.sergey.shlypa2.game
+package com.example.sergey.shlypa2.beans
 
-import com.example.sergey.shlypa2.beans.Player
-import com.example.sergey.shlypa2.beans.RoundDescriptors
-import com.example.sergey.shlypa2.beans.Team
-import com.example.sergey.shlypa2.beans.Word
+import com.example.sergey.shlypa2.game.Game
+import com.example.sergey.shlypa2.game.RoundResults
 import timber.log.Timber
 import java.util.*
 
