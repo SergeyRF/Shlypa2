@@ -3,8 +3,6 @@ package com.example.sergey.shlypa2
 import android.app.Application
 import androidx.lifecycle.ProcessLifecycleOwner
 import cat.ereza.customactivityoncrash.config.CaocConfig
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import com.example.sergey.shlypa2.data.AppLifecycleObserver
 import com.example.sergey.shlypa2.di.appModule
 import com.example.sergey.shlypa2.game.Game
@@ -13,7 +11,6 @@ import com.example.sergey.shlypa2.utils.TimberReleaseTree
 import com.flurry.android.FlurryAgent
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
-import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -46,15 +43,6 @@ class App : Application() {
 
         buildCaoc()
 
-        val crashlytics = Crashlytics.Builder()
-                .core(
-                        CrashlyticsCore.Builder()
-                                .disabled(BuildConfig.DEBUG)
-                                .build()
-                )
-                .build()
-
-        Fabric.with(this, crashlytics)
         FirebaseAnalytics.getInstance(this)
                 .setAnalyticsCollectionEnabled(BuildConfig.DEBUG.not())
 
