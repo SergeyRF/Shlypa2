@@ -37,10 +37,6 @@ class App : Application() {
             Timber.plant(TimberReleaseTree())
         }
 
-        //todo refactor this shit  !!!
-        val namesArray = resources.getStringArray(R.array.teams)
-        Game.teamNames = namesArray.toMutableList()
-
         buildCaoc()
 
         FirebaseAnalytics.getInstance(this)
