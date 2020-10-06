@@ -14,7 +14,7 @@ import com.example.sergey.shlypa2.beans.Type
 class TypesArrayAdapter(context : Context, layout : Int, types : Array<Type> )
     : ArrayAdapter<Type>(context, layout, types) {
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = super.getView(position, convertView, parent)
         val tv : TextView = view.findViewById(android.R.id.text1)
         tv.text = getItem(position)?.name ?: ""

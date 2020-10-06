@@ -3,7 +3,6 @@ package com.example.sergey.shlypa2.utils
 import android.content.Context
 import android.os.Environment
 import android.widget.Toast
-import com.crashlytics.android.Crashlytics
 import timber.log.Timber
 import java.io.*
 import java.nio.channels.FileChannel

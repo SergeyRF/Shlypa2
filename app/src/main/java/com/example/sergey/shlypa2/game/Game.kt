@@ -9,11 +9,6 @@ object Game {
 
     var state: GameState = GameState()
 
-    var teamNames: MutableList<String> = mutableListOf()
-
-    fun maxTeamsCount(): Int = state.players.size / 2
-
-
     fun getSettings(): Settings = state.settings
 
     fun setSettings(settings: Settings) {

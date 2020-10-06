@@ -1,8 +1,8 @@
 package com.example.sergey.shlypa2.utils
 
 import android.util.Log
-import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
 
 /**
@@ -24,9 +24,10 @@ class TimberDebugTree : Timber.DebugTree() {
 class TimberReleaseTree : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if(priority == Log.ERROR) {
-            Crashlytics.log(message)
+         FirebaseCrashlytics.getInstance().setCustomKey("Timber_log_error",message)
             t?.let {
-                Crashlytics.logException(it)
+                FirebaseCrashlytics.getInstance()
+                        .setCustomKey("Timber_throwable",it.message?:it.stackTrace.contentToString())
             }
         }
     }

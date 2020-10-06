@@ -1,11 +1,15 @@
 package com.example.sergey.shlypa2.utils
 
+import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.sergey.shlypa2.Constants
 import com.example.sergey.shlypa2.R
@@ -147,5 +151,18 @@ object Functions {
                 JPEG_FILE_SUFFIX, /* suffix */
                 albumF      /* directory */
         );
+    }
+
+    fun createImageUri(context: Context): Uri?{
+        val timeStamp = fileStamp.format(Date())
+        val imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
+        val resolver = context.contentResolver
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, imageFileName+JPEG_FILE_SUFFIX)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/PerracoLabs")
+        }
+
+        return resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
     }
 }
