@@ -102,8 +102,8 @@ class FirstActivity : AppCompatActivity(R.layout.activity_first) {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        item?.let {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        item.let {
             when (item.itemId) {
                 R.id.item_blue -> selectTheme(R.style.AppThemeBlue)
                 R.id.item_cyan -> selectTheme(R.style.AppThemeCyan)

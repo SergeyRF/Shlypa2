@@ -1,5 +1,6 @@
 package com.example.sergey.shlypa2.extensions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
 import android.content.Context
@@ -17,6 +18,7 @@ import androidx.preference.PreferenceManager
 import com.example.sergey.shlypa2.BuildConfig
 import com.example.sergey.shlypa2.R
 import com.example.sergey.shlypa2.utils.Functions
+import com.example.sergey.shlypa2.utils.Functions.createImageUri
 import timber.log.Timber
 
 fun Context.runOnceEver(prefKey: String, block: () -> Unit) {
@@ -72,27 +74,35 @@ fun AppCompatActivity.openGalleryIntent(
     startActivityForResult(Intent.createChooser(intent, title), selectRequestCode)
 }
 
+@SuppressLint("QueryPermissionsNeeded")
 fun AppCompatActivity.photoFromCamera(requestCode: Int): Uri? {
+
     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
     var imageUri: Uri? = null
-    if (takePictureIntent.resolveActivity(packageManager) != null) {
-        runCatching {
-            val file = Functions.createImageFile()
-            imageUri = Uri.fromFile(file)
-            val providerUri = FileProvider.getUriForFile(this,
-                    "${BuildConfig.APPLICATION_ID}.file_provider",
-                    file)
 
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerUri)
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
-                takePictureIntent.clipData = ClipData.newRawUri("", providerUri)
-                takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            runCatching {
+                val providerUri  =
+                        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.Q) {
+                            val file = Functions.createImageFile()
+                            imageUri = Uri.fromFile(file)
+                            FileProvider.getUriForFile(this,
+                                    "${BuildConfig.APPLICATION_ID}.file_provider",
+                                    file)
+                        }else{
+                            imageUri= createImageUri(this)
+                            imageUri
+                        }
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerUri)
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+                    takePictureIntent.clipData = ClipData.newRawUri("", providerUri)
+                    takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                startActivityForResult(takePictureIntent, requestCode)
+            }.onFailure {
+                Timber.e(it)
             }
-            startActivityForResult(takePictureIntent, requestCode)
-        }.onFailure {
-            Timber.e(it)
         }
-    }
     return imageUri
 }
 
