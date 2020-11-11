@@ -49,9 +49,9 @@
 
             <TextView
                 android:id="@+id/tvWord"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 android:textSize="@dimen/paper_text_size"
                 tools:text="note" />
         </FrameLayout>
@@ -124,8 +124,8 @@
             android:layout_width="@dimen/text_medium"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_margin"
-            android:tint="@color/darkGrey"
-            app:srcCompat="@drawable/ic_pause_circle_outline_black_24dp" />
+            app:srcCompat="@drawable/ic_pause_circle_outline_black_24dp"
+            app:tint="@color/darkGrey" />
 
         <TextView
             android:id="@+id/tvTime"
